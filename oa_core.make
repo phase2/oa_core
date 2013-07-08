@@ -101,6 +101,13 @@ projects[views_load_more][download][url] = http://git.drupal.org/project/views_l
 projects[views_load_more][download][branch] = 7.x-1.x
 projects[views_load_more][download][revision] = 28de384
 
+; Trash Flag
+projects[trash_flag][type] = module
+projects[trash_flag][download][type] = git
+projects[trash_flag][subdir] = contrib
+projects[trash_flag][download][url] = http://git.drupal.org/project/trash_flag.git
+projects[trash_flag][download][branch] = 7.x-1.x
+
 ; Jquery Update
 projects[jquery_update][subdir] = contrib
 projects[jquery_update][version] = 2.3
@@ -138,6 +145,5 @@ projects[og_variables][download][type] = git
 projects[og_variables][download][url] = http://git.drupal.org/project/og_variables.git
 projects[og_variables][download][branch] = 7.x-1.x
 projects[og_variables][type] = module
-
 
 
