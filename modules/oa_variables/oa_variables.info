@@ -1,0 +1,12 @@
+name = OA variables
+description = Configure variables overrides for oa
+core = 7.x
+package = Open Atrium
+php = 5.2.4
+dependencies[] = ctools
+dependencies[] = og_variables
+dependencies[] = strongarm
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[variable][] = variable_realm_list_og
+project path = profiles/openatrium/modules/features
