@@ -126,6 +126,7 @@ projects[og][patch][998094] = http://drupal.org/files/998094-og_membership_admin
 ; Organic Groups Vocabulary
 projects[og_vocab][subdir] = contrib
 projects[og_vocab][version] = 1.1
+projects[og_vocab][patch][1985316] = http://drupal.org/files/1985316-og_vocab-menu_get_item-1.patch
 
 ; Og menu single
 projects[og_menu_single][subdir] = contrib

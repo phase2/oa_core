@@ -650,7 +650,6 @@ function oa_core_refresh_section_values($element) {
 function oa_core_form_views_content_views_panes_content_type_edit_process($element, &$form_state) {
   if (isset($element['preview']['#ajax'])) {
     $element['preview']['#ajax']['callback'] = 'oa_core_refresh_oa_section_ref_target_id';
-    $form_state['executed'] = TRUE;
   }
   return $element;
 }
