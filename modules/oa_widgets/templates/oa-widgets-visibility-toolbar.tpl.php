@@ -1,9 +1,11 @@
 <?php
 /**
  * @file
- * Provides view for favorites button.
+ * Provides view for content visibility.
  *
- * $spaces_favorite - Rendered list for space favorites.
+ * $public - Shows either public or private.
+ * $title - name of the link
+ * $accessors - user's who have access
  */
 ?>
 <ul id="oa_visibility_toolbar">
@@ -12,9 +14,9 @@
       id="visibility-dropdown" data-toggle="dropdown" href="#"
       title="<?php print $title; ?>">
       <?php if ($public): ?>
-        <i class="icon-unlock"></i>
+        <i class="icon-unlock"></i><span><?php print t('This content is Public');?></span>
       <?php else: ?>
-        <i class="icon-lock"></i>
+        <i class="icon-lock"></i><span><?php print t('This content is Private');?></span>
       <?php endif; ?>
     </a>
     <ul class="dropdown-menu" role="menu" aria-labelledby="visibility-dropdown">
