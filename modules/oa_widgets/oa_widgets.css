@@ -2,6 +2,9 @@
   margin: 0;
   margin-top: 10px;
 }
+#contextual-tabs #oa_visibility_toolbar {
+  margin-top: 0px;
+}
 .pull-right #oa_visibility_toolbar {
   margin-right: 5px;
 }
