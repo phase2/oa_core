@@ -71,4 +71,4 @@ features[features_overrides][] = panelizer_defaults.user:user:default.display|pa
 features[features_overrides][] = panelizer_defaults.user:user:default.display|panels|sidebar
 features_exclude[field_base][field_user_about] = field_user_about
 features_exclude[field_base][field_user_picture] = field_user_picture
-project path = profiles/openatrium/modules/features
+project path = sites/all/modules/contrib/oa_core/modules

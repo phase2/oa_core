@@ -170,4 +170,4 @@ features[user_permission][] = view trash content
 features[variable][] = og_group_manager_admin_role
 features[variable][] = og_group_manager_full_access
 dependencies[] = trash_flag
-project path = profiles/openatrium/modules/features
+project path = sites/all/modules/contrib/oa_core/modules

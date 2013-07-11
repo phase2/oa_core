@@ -31,4 +31,4 @@ features[panels_renderer_pipeline][] = ipe_node_access
 features[variable][] = panelizer_defaults_node_oa_group
 features[variable][] = panelizer_defaults_node_oa_section
 features[variable][] = panelizer_defaults_node_oa_space
-project path = profiles/openatrium/modules/features
+project path = sites/all/modules/contrib/oa_core/modules

@@ -15,4 +15,4 @@ features[variable][] = chosen_minimum
 features[variable][] = file_default_scheme
 features[variable][] = og_context_negotiation_group_context
 features[variable][] = og_context_providers_weight_group_context
-project path = profiles/openatrium/modules/features
+project path = sites/all/modules/contrib/oa_core/modules
