@@ -1,7 +1,7 @@
 <ul id="oa_breadcrumb" class="oa_toolbar">
   <?php if (!empty($space_label)): ?>
     <li class="btn-group oa-breadcrumb">
-      <a href="<?php print $home_url; ?>"><i class="icon-home"></i></a>
+      <a href="<?php print $home_url; ?>"><i class="icon-home"></i><span class='element-invisible'>Home</span></a>
     </li>
     <?php if (!empty($parent_list)): ?>
       <li class="btn-group dropdown no-breadcrumb">

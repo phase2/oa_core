@@ -1,7 +1,7 @@
 <ul id="oa_toolbar" class="oa_toolbar">
   <?php if (!empty($space_label)): ?>
     <li class="btn-group">
-      <a href="<?php print $home_url; ?>"><i class="icon-home"></i></a>
+      <a href="<?php print $home_url; ?>"><i class="icon-home"></i><span class='element-invisible'>Home</span></a>
     </li>
     <li class="dropdown btn-group">
       <a href="<?php print $space_url; ?>" class="btn <?php print $oa_toolbar_btn_class; ?>"><?php print $space_label; ?></a>
