@@ -64,11 +64,13 @@ function oa_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE) {
   if (!isset($cache[$nid][$bundle])) {
     $query = db_select('og_membership', 'f');
     $query->leftJoin('node', 'n', "n.nid = f.etid");
+    if (isset($bundle)) {
+      $query->condition('n.type', $bundle);
+    }
     $result = $query
       ->fields('n', array('nid'))
       ->condition('f.gid', $nid)
       ->condition('f.entity_type', 'node')
-      ->condition('n.type', $bundle)
       ->orderBy('n.title')
       ->execute()
       ->fetchCol(0);

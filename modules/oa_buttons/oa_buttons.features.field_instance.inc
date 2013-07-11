@@ -241,7 +241,11 @@ function oa_buttons_field_default_field_instances() {
   // Exported field_instance: 'node-oa_space-field_oa_space_type'
   $field_instances['node-oa_space-field_oa_space_type'] = array(
     'bundle' => 'oa_space',
-    'default_value' => NULL,
+    'default_value' => array(
+      0 => array(
+        'tid' => 1,
+      ),
+    ),
     'deleted' => 0,
     'description' => '',
     'display' => array(
@@ -271,7 +275,7 @@ function oa_buttons_field_default_field_instances() {
     'options_limit' => 0,
     'options_limit_empty_behaviour' => 0,
     'options_limit_fields' => array(
-      'field_featured_image' => 0,
+      'field_oa_node_types' => 0,
     ),
     'required' => 1,
     'settings' => array(

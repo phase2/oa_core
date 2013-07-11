@@ -159,16 +159,15 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
   $vars['space_label'] = t('Spaces');
   $vars['space_url'] = url('spaces');
   $parent_id = NULL;
+  $space_type = OA_SPACE_TYPE;
   if (isset($space_id)) {
-    // get name of current space (without fully loading node)
-    $title = oa_core_get_titles(array($space_id));
-    if (!empty($title['titles'][0])) {
-      $vars['space_label'] = $title['titles'][0];
-      $vars['space_url'] = url('node/' . $space_id);
-    }
+    $space = node_load($space_id);
+    $title = $space->title;
+    $space_type = $space->type;
+    $vars['space_label'] = $title;
+    $vars['space_url'] = url('node/' . $space_id);
     if (isset($vars['show_parents'])) {
-      // get the parents that are Spaces
-      $parents = oa_core_get_parents($space_id, OA_SPACE_TYPE);
+      $parents = oa_core_get_parents($space_id, $space_type);
       if (count($parents)) {
         $items = oa_core_get_titles($parents);
         if (!empty($items['titles'][0])) {
@@ -183,6 +182,15 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
             'type' => 'ul',
           ));
         }
+        $siblings = oa_get_groups_by_parent($parent_id, $space_type);
+        if (count($siblings) > 1) {
+          $items = oa_core_get_titles($siblings);
+          $list = oa_core_truncate_list($items['links'], 15);
+          $vars['sibling_list'] = theme('item_list', array(
+            'items' => $list,
+            'type' => 'ul',
+          ));
+        }
       }
     }
   }
@@ -192,12 +200,8 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
   $spaces = NULL;
   // get names of spaces
   if (isset($vars['show_parents'])) {
-    if (isset($parent_id)) {
-      $spaces = oa_get_groups_by_parent($parent_id, OA_SPACE_TYPE);
-      $show_all = FALSE;
-    }
-    elseif (isset($space_id)) {
-      $spaces = oa_get_groups_by_parent($space_id, OA_SPACE_TYPE);
+    if (isset($space_id)) {
+      $spaces = oa_get_groups_by_parent($space_id, $space_type);
       $show_all = FALSE;
     }
   }
@@ -215,7 +219,7 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
     $list = array();
   }
   else {
-    $items = oa_core_get_titles($spaces, OA_SPACE_TYPE);
+    $items = oa_core_get_titles($spaces, $space_type);
     $list = oa_core_truncate_list($items['links'], 25,
       l(t('All spaces...'), 'spaces',
         array('attributes' => array('class' => array('more-link')))),
