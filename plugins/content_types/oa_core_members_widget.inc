@@ -65,6 +65,9 @@ function oa_core_members_widget_render($subtype, $conf, $args, $context = NULL) 
       }
     }
   }
+  if (empty($conf['hide_members'])) {
+    $members = array();
+  }
 
   $parents = array();
   if (empty($conf['hide_inherited']) && $is_admin && ($parent_field = field_get_items('node', $space, 'oa_parent_space'))) {
