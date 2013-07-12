@@ -65,7 +65,7 @@ function oa_core_members_widget_render($subtype, $conf, $args, $context = NULL) 
       }
     }
   }
-  if (empty($conf['hide_members'])) {
+  if (!empty($conf['hide_members'])) {
     $members = array();
   }
 
