@@ -27,8 +27,11 @@ class oa_core_oa_section_ref_views_handler_filter_in_operator extends views_hand
       }
     }
     $exposed = $this->view->get_exposed_input();
-    // Remove section value if seciton not in group.
-    if (!empty($id) && !empty($exposed[$id]) && is_numeric($exposed[$id]) && !empty($exposed['og_group_ref_target_id']) && ($section = node_load($exposed[$id])) && $section->og_group_ref[LANGUAGE_NONE][0]['target_id'] != $exposed['og_group_ref_target_id']) {
+    // Remove section value if section not in group.
+    if (!empty($id) && !empty($exposed[$id]) && is_numeric($exposed[$id]) &&
+      !empty($exposed['og_group_ref_target_id']) &&
+      ($section = node_load($exposed[$id])) && isset($section->{OA_SPACE_FIELD}[LANGUAGE_NONE][0]['target_id']) &&
+      $section->{OA_SPACE_FIELD}[LANGUAGE_NONE][0]['target_id'] != $exposed['og_group_ref_target_id']) {
       unset($exposed[$id]);
       $this->view->set_exposed_input($exposed);
     }
