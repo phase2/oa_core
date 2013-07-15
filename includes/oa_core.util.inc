@@ -183,8 +183,8 @@ function oa_core_create_node($bundle, $title = '', $context = NULL) {
 
   $wrapper->title = $title;
 
-  $space_id = $_SESSION['og_context']['gid'];
-  $section_id = $_SESSION[OA_SESSION_SECTION];
+  $space_id = oa_core_get_space_context();
+  $section_id = oa_core_get_section_context();
   if (isset($context)) {
     // copy space and section fields from context node
     $context_wrapper = entity_metadata_wrapper('node', $context);
