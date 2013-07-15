@@ -50,6 +50,9 @@ function oa_panopoly_users_panelizer_defaults_override_alter(&$data) {
     $data['user:user:default']->display->content['new-2']->configuration['context']['0'] = 'panelizer'; /* WAS: 'p' */
     $data['user:user:default']->display->content['new-2']->configuration['exposed']['type'] = 'oa_discussion_post'; /* WAS: '' */
     $data['user:user:default']->display->content['new-2']->configuration['header_type'] = 'none'; /* WAS: '' */
+    $data['user:user:default']->display->content['new-2']->configuration['items_per_page'] = ''; /* WAS: '' */
+    $data['user:user:default']->display->content['new-2']->configuration['pager_id'] = ''; /* WAS: '' */
+    $data['user:user:default']->display->content['new-2']->configuration['use_pager'] = 0; /* WAS: '' */
     $data['user:user:default']->display->content['new-2']->configuration['view_mode'] = 'teaser'; /* WAS: '' */
     $data['user:user:default']->display->content['new-2']->configuration['view_settings'] = 'fields'; /* WAS: '' */
     $data['user:user:default']->display->content['new-2']->panel = 'contentheader'; /* WAS: 'column2' */
@@ -187,6 +190,8 @@ function oa_panopoly_users_panelizer_defaults_override_alter(&$data) {
     unset($data['user:user:default']->display->content['new-2']->configuration['delta_limit']);
     unset($data['user:user:default']->display->content['new-2']->configuration['delta_offset']);
     unset($data['user:user:default']->display->content['new-2']->configuration['delta_reversed']);
+    unset($data['user:user:default']->display->content['new-2']->configuration['exposed']['sort_by']);
+    unset($data['user:user:default']->display->content['new-2']->configuration['exposed']['sort_order']);
     unset($data['user:user:default']->display->content['new-2']->configuration['formatter']);
     unset($data['user:user:default']->display->content['new-2']->configuration['formatter_settings']);
     unset($data['user:user:default']->display->content['new-2']->configuration['label']);
