@@ -40,7 +40,10 @@ function oa_core_summary_render($subtype, $conf, $args, $context = NULL) {
   $vars['links']['edit'] = '';
 
   if (!empty($conf['show_description'])) {
-    $vars['description'] = drupal_render(field_view_field('node', $space, 'body', array('label' => 'hidden')));
+    $field = field_view_field('node', $space, 'body', array('label' => 'hidden'));
+    if (!empty($field)) {
+      $vars['description'] = drupal_render($field);
+    }
 
     $picture = field_get_items('node', $space, 'field_featured_image');
     if (!empty($picture)) {
