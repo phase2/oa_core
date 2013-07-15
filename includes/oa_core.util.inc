@@ -326,7 +326,10 @@ function oa_core_get_all_groups() {
  * Returns the users that are in a space.
  */
 function oa_core_get_users_for_space($space_id, $state = OG_STATE_ACTIVE) {
-  return entity_metadata_wrapper('node', node_load($space_id))->{'members__' . $state}->value();
+  $space = node_load($space_id);
+  $wrapper = entity_metadata_wrapper('node', $space);
+  $members = isset($wrapper->{'members__' . $state}) ? $wrapper->{'members__' . $state}->value() : array();
+  return (!empty($members)) ? $members : array();
 }
 
 /**
