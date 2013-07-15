@@ -51,6 +51,7 @@ features[field_instance][] = node-oa_group-body
 features[field_instance][] = node-oa_group-field_featured_image
 features[field_instance][] = node-oa_group-group_access
 features[field_instance][] = node-oa_group-group_group
+features[field_instance][] = node-oa_group-og_roles_permissions
 features[field_instance][] = node-oa_space-body
 features[field_instance][] = node-oa_space-field_featured_image
 features[field_instance][] = node-oa_space-group_access
