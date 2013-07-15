@@ -479,7 +479,7 @@ function oa_buttons_og_permission() {
 function oa_buttons_create_term($taxonomy, $name, $node_options, $layout) {
   $vocab = taxonomy_vocabulary_machine_name_load($taxonomy);
   if (!($term = taxonomy_get_term_by_name($name, $taxonomy))) {
-    if (!$vocab || !field_info_instance('taxonomy_term', 'field_oa_section_layout', $vocab)) {
+    if (!$vocab || !field_info_instance('taxonomy_term', 'field_oa_section_layout', $taxonomy)) {
       features_revert(array('oa_buttons' => array('taxonomy','field_base', 'field_instance')));
       drupal_static('taxonomy_vocabulary_get_names');
       $vocab = taxonomy_vocabulary_machine_name_load($taxonomy);
