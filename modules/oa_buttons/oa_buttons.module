@@ -348,9 +348,7 @@ function oa_buttons_modules_enabled($modules) {
  * Create default terms for section and space type taxonomies.
  */
 function oa_buttons_create_default_terms() {
-  // Revert features to known proper state, also clear the static for taxonomy_get_term_by_name().
-  features_revert(array('oa_buttons' => array('taxonomy','field_base', 'field_instance')));
-  drupal_static('taxonomy_vocabulary_get_names');
+  // Revert features to known proper state, also clear the static for taxonomy_get_term_by_name().;
   $terms = oa_buttons_get_default_terms();
   foreach ($terms as $term) {
     oa_buttons_create_term($term['taxonomy'], $term['name'], $term['node_options'], $term['layout']);
@@ -481,6 +479,12 @@ function oa_buttons_og_permission() {
 function oa_buttons_create_term($taxonomy, $name, $node_options, $layout) {
   $vocab = taxonomy_vocabulary_machine_name_load($taxonomy);
   if (!($term = taxonomy_get_term_by_name($name, $taxonomy))) {
+    if (!$vocab || !field_info_instance('taxonomy_term', 'field_oa_section_layout', $vocab)) {
+      features_revert(array('oa_buttons' => array('taxonomy','field_base', 'field_instance')));
+      drupal_static('taxonomy_vocabulary_get_names');
+      $vocab = taxonomy_vocabulary_machine_name_load($taxonomy);
+    }
+
     $term = array(
       'vid' => $vocab->vid,
       'name' => $name,
