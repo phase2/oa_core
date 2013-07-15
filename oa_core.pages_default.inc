@@ -19,6 +19,17 @@ function oa_core_default_page_manager_pages() {
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
+    'plugins' => array(
+      0 => array(
+        'name' => 'perm',
+        'settings' => array(
+          'perm' => 'access content',
+        ),
+        'context' => 'logged-in-user',
+        'not' => FALSE,
+      ),
+    ),
+    'logic' => 'and',
   );
   $page->menu = array();
   $page->arguments = array();
@@ -170,6 +181,17 @@ function oa_core_default_page_manager_pages() {
         'context' => 'argument_entity_id:node_1',
         'not' => FALSE,
       ),
+      1 => array(
+        'name' => 'node_access',
+        'settings' => array(
+          'type' => 'view',
+        ),
+        'context' => array(
+          0 => 'logged-in-user',
+          1 => 'argument_entity_id:node_1',
+        ),
+        'not' => FALSE,
+      ),
     ),
     'logic' => 'and',
     'type' => 'none',
@@ -302,6 +324,25 @@ function oa_core_default_page_manager_pages() {
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
+    'plugins' => array(
+      0 => array(
+        'name' => 'perm',
+        'settings' => array(
+          'perm' => 'access content',
+        ),
+        'context' => 'logged-in-user',
+        'not' => FALSE,
+      ),
+      1 => array(
+        'name' => 'perm',
+        'settings' => array(
+          'perm' => 'access user profiles',
+        ),
+        'context' => 'logged-in-user',
+        'not' => FALSE,
+      ),
+    ),
+    'logic' => 'and',
   );
   $page->menu = array(
     'type' => 'tab',
