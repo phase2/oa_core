@@ -66,7 +66,7 @@ function oa_core_menu() {
     'type' => MENU_CALLBACK,
     'page callback' => 'oa_core_remove_member',
     'page arguments' => array(1, 2, 4, 5),
-    'access callback' => 'oa_core_user_access_group',
+    'access callback' => 'og_ui_user_access_group',
     'access arguments' => array('manage members', 1, 2),
   );
   $items['group/%/%/block/%'] = array(
@@ -74,7 +74,7 @@ function oa_core_menu() {
     'type' => MENU_CALLBACK,
     'page callback' => 'oa_core_block_member',
     'page arguments' => array(1, 2, 4),
-    'access callback' => 'oa_core_user_access_group',
+    'access callback' => 'og_ui_user_access_group',
     'access arguments' => array('manage members', 1, 2),
   );
   $items['group/%/%/add-member/%'] = array(
@@ -89,7 +89,7 @@ function oa_core_menu() {
     'type' => MENU_CALLBACK,
     'page callback' => 'oa_core_add_admin',
     'page arguments' => array(1, 2, 4),
-    'access callback' => 'oa_core_user_access_group',
+    'access callback' => 'og_ui_user_access_group',
     'access arguments' => array('manage members', 1, 2),
   );
   $items['group/%/%/remove-admin/%'] = array(
@@ -97,7 +97,7 @@ function oa_core_menu() {
     'type' => MENU_CALLBACK,
     'page callback' => 'oa_core_remove_admin',
     'page arguments' => array(1, 2, 4),
-    'access callback' => 'oa_core_user_access_group',
+    'access callback' => 'og_ui_user_access_group',
     'access arguments' => array('manage members', 1, 2),
   );
   return $items;
@@ -136,18 +136,6 @@ function oa_core_configure_form($form, &$form_state) {
   // blank for for now.  Other modules can alter this to add stuff
   $form = array();
   return system_settings_form($form);
-}
-
-/**
- * Wrapper around og_ui_user_access_group
- * Always give user-1 permission
- */
-function oa_core_user_access_group($perm, $group_type, $gid) {
-  global $user;
-  if ($user->uid == 1) {
-    return TRUE;
-  }
-  return og_ui_user_access_group($perm, $group_type, $gid);
 }
 
 /**
