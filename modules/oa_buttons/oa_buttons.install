@@ -47,7 +47,7 @@ function oa_buttons_update_7006(&$sandbox) {
             if ($node->type == 'oa_section') {
               $node->field_oa_section[$node->language][0]['tid'] = $t->tid;
             }
-            elseif($node->type == 'oa_space') {
+            elseif ($node->type == 'oa_space') {
               $node->field_oa_space_type[$node->language][0]['tid'] = $t->tid;
             }
           }

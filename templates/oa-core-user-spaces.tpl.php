@@ -18,7 +18,7 @@
   <?php if (count($space_groups) > 1): ?>
     <ul class="nav nav-tabs">
       <?php foreach ($space_groups as $category => $spaces): ?>
-        <li class='<?php if ($category == $active) {print 'active';}?>'><a href="#<?php print 'tab-'.$category?>" data-toggle="tab">
+        <li class='<?php if ($category == $active): print 'active'; endif; ?>'><a href="#<?php print 'tab-'.$category?>" data-toggle="tab">
           <?php print $category; ?>
         </a></li>
       <?php endforeach; ?>
@@ -26,7 +26,7 @@
   <?php endif; ?>
   <div class="tab-content">
     <?php foreach ($space_groups as $category => $spaces): ?>
-      <div class="tab-pane <?php if ($category == $active) {print 'active';}?>" id="<?php print 'tab-'.$category; ?>">
+      <div class="tab-pane <?php if ($category == $active): print 'active'; endif; ?>" id="<?php print 'tab-'.$category; ?>">
         <?php foreach ($spaces['spaces'] as $id => $space): ?>
           <?php $sections = !empty($space['sections']); ?>
           <div class="space clearfix space-<?php print $id; ?>">

@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file
+ * This template handles the layout of oa_breadcrumb.
+ */
+?>
 <ul id="oa_breadcrumb" class="oa_toolbar">
   <?php if (!empty($space_label)): ?>
     <li class="btn-group oa-breadcrumb">

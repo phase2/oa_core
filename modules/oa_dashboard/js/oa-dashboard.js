@@ -2,6 +2,7 @@
  * @file
  * Manage spacing for dashboard and navbar tray.
  */
+
 (function ($) {
 
   Drupal.behaviors.oaDashboard = {

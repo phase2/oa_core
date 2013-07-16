@@ -25,7 +25,7 @@
   <ul class="nav nav-tabs">
     <?php foreach ($categories as $cat): ?>
       <?php if (!empty($tabs[$cat]['items'])): ?>
-      <li class="tab-<?php print $cat; ?> <?php if ($cat == $active) {print 'active';}?>"><a href="#tab-<?php print $cat?>" data-toggle="tab">
+      <li class="tab-<?php print $cat; ?> <?php if ($cat == $active): print 'active'; endif; ?>"><a href="#tab-<?php print $cat?>" data-toggle="tab">
         <?php print $tabs[$cat]['caption']; ?>
       </a></li>
       <?php endif; ?>
@@ -36,7 +36,7 @@
 <?php foreach ($categories as $cat): ?>
   <?php if (!empty($tabs[$cat]['items'])): ?>
     <?php if ($show_as_tabs): ?>
-      <div class="tab-pane <?php if ($cat == $active) {print 'active';}?>" id="<?php print 'tab-'.$cat; ?>">
+      <div class="tab-pane <?php if ($cat == $active): print 'active'; endif; ?>" id="<?php print 'tab-'.$cat; ?>">
     <?php endif; ?>
     <?php
       $tab = $tabs[$cat];

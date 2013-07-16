@@ -1,3 +1,7 @@
+/**
+ * @file
+ * Javascript for oa_buttons
+ */
 (function ($) {
   Drupal.behaviors.oaButtons = {
     attach: function (context, settings) {

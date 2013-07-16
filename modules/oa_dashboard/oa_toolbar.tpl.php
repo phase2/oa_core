@@ -1,3 +1,9 @@
+<?php
+/**
+ * @file
+ * This template handles the layout of oa_toolbar.
+ */
+?>
 <ul id="oa_toolbar" class="oa_toolbar">
   <?php if (!empty($space_label)): ?>
     <li class="btn-group">
