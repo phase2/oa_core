@@ -11,3 +11,8 @@
      -moz-border-radius: 10px;
           border-radius: 10px;
 }
+
+.chzn-container,
+.chzn-container input[type="text"] {
+  min-width: 120px;
+}
