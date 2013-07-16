@@ -25,22 +25,22 @@ function oa_section_context_init() {
     return;
   }
 
+  $set_session = FALSE;
   if ($node->type == 'oa_section') {
     // get section id directly from section nodes
-    $_SESSION[OA_SESSION_SECTION] = $node->nid;
+    $set_session = $node->nid;
   }
-  elseif (isset($node->{OA_SECTION_FIELD})) {
+  elseif (isset($node->{OA_SECTION_FIELD}[LANGUAGE_NONE][0]['target_id'])) {
     // otherwise get section id from any section field reference
-    if (isset($node->{OA_SECTION_FIELD}[LANGUAGE_NONE][0]['target_id'])) {
-      $_SESSION[OA_SESSION_SECTION] = $node->{OA_SECTION_FIELD}[LANGUAGE_NONE][0]['target_id'];
-    }
-    else {
-      // clear this when there is a section field but it doesn't have any value
-      unset($_SESSION[OA_SESSION_SECTION]);
-    }
+    $set_session = $node->{OA_SECTION_FIELD}[LANGUAGE_NONE][0]['target_id'];
   }
-  else {
-    // If a node exists but does not have the section field, unset the section.
+
+  if ($set_session && ($node = node_load($set_session)) && node_access('view', $set_session)) {
+    $_SESSION[OA_SESSION_SECTION] = $set_session;
+  }
+  // Want to unset session context if viewing a node that is not a section and
+  // does not have a section reference.
+  elseif (isset($_SESSION[OA_SESSION_SECTION])) {
     unset($_SESSION[OA_SESSION_SECTION]);
   }
 }
@@ -52,14 +52,14 @@ function oa_section_context_init() {
  * session context if it exists.
  */
 function oa_section_context_form_node_form_alter(&$form, &$form_state, $form_id) {
-  if (!empty($_GET['oa_section_ref'])) {
-    $section = check_plain($_GET['oa_section_ref']);
+  if (!empty($_GET['oa_section_ref']) && is_numeric($_GET['oa_section_ref'])) {
+    $section = $_GET['oa_section_ref'];
   }
   elseif (!empty($_SESSION[OA_SESSION_SECTION])) {
     $section = $_SESSION[OA_SESSION_SECTION];
   }
 
-  if (empty($form[OA_SECTION_FIELD][LANGUAGE_NONE]['#default_value']) && !empty($section)) {
+  if (!empty($form[OA_SECTION_FIELD][LANGUAGE_NONE]['#options']) && empty($form[OA_SECTION_FIELD][LANGUAGE_NONE]['#default_value']) && !empty($section) && array_key_exists($section, $form[OA_SECTION_FIELD][LANGUAGE_NONE]['#options'])) {
     $form[OA_SECTION_FIELD][LANGUAGE_NONE]['#default_value'] = $section;
   }
 }
