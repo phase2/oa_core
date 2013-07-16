@@ -38,6 +38,7 @@ function oa_core_flag_default_flags_alter(&$data) {
     $data['trash']['flag_long'] = 'Move item to the site archive'; /* WAS: 'Move item to the site trash bin.' */
     $data['trash']['flag_message'] = 'Item has been archived'; /* WAS: 'Item has been trashed' */
     $data['trash']['flag_short'] = 'Archive This'; /* WAS: 'Move to Trash' */
+    $data['trash']['show_on_page'] = 0; /* WAS: 1 */
     $data['trash']['title'] = 'Archive'; /* WAS: 'Trash' */
     $data['trash']['unflag_confirmation'] = 'Are you sure you want to remove this item from archive?'; /* WAS: 'Are you sure you want to remove this item from trash?' */
     $data['trash']['unflag_denied_text'] = 'Archived'; /* WAS: 'trashed' */
