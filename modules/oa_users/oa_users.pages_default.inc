@@ -19,6 +19,25 @@ function oa_users_default_page_manager_pages() {
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
+    'plugins' => array(
+      0 => array(
+        'name' => 'perm',
+        'settings' => array(
+          'perm' => 'access content',
+        ),
+        'context' => 'logged-in-user',
+        'not' => FALSE,
+      ),
+      1 => array(
+        'name' => 'perm',
+        'settings' => array(
+          'perm' => 'access user profiles',
+        ),
+        'context' => 'logged-in-user',
+        'not' => FALSE,
+      ),
+    ),
+    'logic' => 'and',
   );
   $page->menu = array(
     'type' => 'tab',
