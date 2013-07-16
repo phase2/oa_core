@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the Open Atrium Contextual Tabs feature.
- */
-
-include_once 'oa_contextual_tabs.features.inc';

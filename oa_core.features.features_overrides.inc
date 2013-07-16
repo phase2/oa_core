@@ -16,6 +16,7 @@ function oa_core_features_override_default_overrides() {
   $overrides["flag.trash.flag_long"] = 'Move item to the site archive';
   $overrides["flag.trash.flag_message"] = 'Item has been archived';
   $overrides["flag.trash.flag_short"] = 'Archive This';
+  $overrides["flag.trash.show_on_page"] = 0;
   $overrides["flag.trash.title"] = 'Archive';
   $overrides["flag.trash.unflag_confirmation"] = 'Are you sure you want to remove this item from archive?';
   $overrides["flag.trash.unflag_denied_text"] = 'Archived';

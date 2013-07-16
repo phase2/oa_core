@@ -28,6 +28,7 @@ features[features_overrides][] = flag.trash.flag_confirmation
 features[features_overrides][] = flag.trash.flag_long
 features[features_overrides][] = flag.trash.flag_message
 features[features_overrides][] = flag.trash.flag_short
+features[features_overrides][] = flag.trash.show_on_page
 features[features_overrides][] = flag.trash.title
 features[features_overrides][] = flag.trash.unflag_confirmation
 features[features_overrides][] = flag.trash.unflag_denied_text
