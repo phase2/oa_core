@@ -30,7 +30,7 @@ function oa_team_members_render($subtype, $conf, $args, $context = NULL) {
   if (empty($group['node'])) {
     return;
   }
-  $space = array_shift(entity_load('node', $group['node']));
+  $space = current(entity_load('node', $group['node']));
 
   $is_admin = ($user->uid == 1) ? TRUE : FALSE;
   $members = oa_teams_get_team_members($space->nid);
