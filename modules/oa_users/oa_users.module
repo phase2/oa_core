@@ -53,7 +53,7 @@ function oa_users_build_user_details($user, $image_style = 'oa_small_thumbnail')
   $details['user'] = $user;
   $details['realname'] = empty($user->realname) ? $user->name : $user->realname;
   $details['name'] = $user->name;
-  $details['picture'] = oa_users_picture($image_style, $user);
+  $details['picture'] = oa_users_picture($user, $image_style);
   //Build out links
   $details['links']['dashboard'] = 'user';
   $details['links']['edit_profile'] = 'user/' . $user->uid . '/edit';
@@ -64,7 +64,7 @@ function oa_users_build_user_details($user, $image_style = 'oa_small_thumbnail')
 /**
  * Return a user's profile image
  */
-function oa_users_picture($image_style = 'oa_small_thumbnail', $user = NULL) {
+function oa_users_picture($user = NULL, $image_style = 'oa_small_thumbnail') {
   if (isset($user) && !empty($user->field_user_picture)) {
     $picture = $user->field_user_picture[LANGUAGE_NONE][0];
     $image = array(

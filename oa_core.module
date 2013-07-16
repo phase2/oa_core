@@ -242,7 +242,7 @@ function oa_core_preprocess_views_view_fields(&$vars) {
           if (isset($field->handler->options['settings']['image_style'])) {
             $image_style = $field->handler->options['settings']['image_style'];
           }
-          $vars[$id] = oa_users_picture($image_style);
+          $vars[$id] = oa_users_picture(NULL, $image_style);
         }
         break;
     }
