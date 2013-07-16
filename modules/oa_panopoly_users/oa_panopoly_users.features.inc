@@ -47,7 +47,8 @@ function oa_panopoly_users_panelizer_defaults_override_alter(&$data) {
     $data['user:user:default']->display->content['new-1']->panel = 'contentheader'; /* WAS: 'column1' */
     $data['user:user:default']->display->content['new-1']->subtype = 'user:field_user_about'; /* WAS: 'user_profile' */
     $data['user:user:default']->display->content['new-1']->type = 'entity_field'; /* WAS: 'user_profile' */
-    $data['user:user:default']->display->content['new-2']->configuration['context']['0'] = 'panelizer'; /* WAS: 'p' */
+    // @FIXME @see https://drupal.org/node/2022523#comment-7652649
+    $data['user:user:default']->display->content['new-2']->configuration['context'] = array('panelizer'); /* WAS: 'p' */
     $data['user:user:default']->display->content['new-2']->configuration['exposed']['type'] = 'oa_discussion_post'; /* WAS: '' */
     $data['user:user:default']->display->content['new-2']->configuration['header_type'] = 'none'; /* WAS: '' */
     $data['user:user:default']->display->content['new-2']->configuration['items_per_page'] = ''; /* WAS: '' */
