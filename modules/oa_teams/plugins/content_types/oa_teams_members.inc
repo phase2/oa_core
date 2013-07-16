@@ -44,7 +44,7 @@ function oa_team_members_render($subtype, $conf, $args, $context = NULL) {
 
   $members = oa_teams_get_team_members($team->nid);
   $members = user_load_multiple(array_keys($members));
-  uasort($members, '_oa_teams_sort_user_by_name');
+  uasort($members, 'oa_core_sort_users_by_name');
 
   $vars = array();
 
@@ -60,16 +60,6 @@ function oa_team_members_render($subtype, $conf, $args, $context = NULL) {
   }
   $block->content = theme('oa_teams_members', $vars);
   return $block;
-}
-
-/**
- * Sort function to sort users by name.
- */
-function _oa_teams_sort_user_by_name($u1, $u2) {
-  // Get last name for sorting.
-  $name1 = $u1->realname ? array_pop(explode(' ', $u1->realname)) : $u1->name;
-  $name2 = $u2->realname ? array_pop(explode(' ', $u2->realname)) : $u2->name;
-  return strcasecmp($name1, $name2);
 }
 
 /**

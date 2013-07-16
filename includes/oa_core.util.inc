@@ -383,3 +383,49 @@ function oa_core_get_group_from_node($nid, $allowed_types = array('oa_space', 'o
   }
   return FALSE;
 }
+
+/**
+ * Sort function to sort users by name.
+ */
+function oa_core_sort_users_by_name($u1, $u2) {
+  // Get last name for sorting.
+  $name1 = !empty($u1->realname) ? oa_core_get_last_word($u1->realname) : $u1->name;
+  $name2 = !empty($u2->realname) ? oa_core_get_last_word($u2->realname) : $u2->name;
+  return strcasecmp($name1, $name2);
+}
+
+function oa_core_get_last_word($string) {
+  return ($pos =  strrpos($string, ' ')) ?  substr($string, $pos + 1) : $string;
+}
+
+/**
+ * Convert known entities in to a simple array of title and picture.
+ */
+function oa_core_entity_build_display($entity, $id, $space) {
+  if (!empty($entity->nid)) {
+    if (node_access('view', $entity)) {
+      $display['title'] = l($entity->title, 'node/' . $entity->nid);
+    }
+    else {
+      $display['title'] = t('A @type', array('@type' => array('@type' => node_type_get_name($entity->type))));
+    }
+    $display['picture'] = '';
+    $display['uid'] = 0;
+    $display['options'] = array();
+  }
+  else {
+    $display['title'] = l(format_username($entity), 'user/' . $entity->uid);
+    $display['uid'] = $entity->uid;
+    $display['picture'] = oa_users_picture($entity);
+    $display['options'] = array(
+      'attributes' => array(
+        'class' => array('use-ajax'),
+      ),
+      'query' => drupal_get_destination() + array(
+        'token' => drupal_get_token('node_' . $space->nid . '_' . $entity->uid),
+      ),
+    );
+  }
+
+  return $display;
+}

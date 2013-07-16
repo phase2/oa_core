@@ -29,7 +29,7 @@ function oa_teams_menu() {
     'type' => MENU_CALLBACK,
     'page callback' => 'oa_teams_remove_member_menu',
     'page arguments' => array(4, 5),
-    'access callback' => 'oa_core_user_access_group',
+    'access callback' => 'og_ui_user_access_group',
     'access arguments' => array('manage members', 1, 2),
   );
   return $items;
@@ -128,7 +128,7 @@ function oa_teams_remove_member($team, $uid) {
  */
 function oa_teams_remove_member_menu($tid, $uid) {
   $account = user_load($uid);
-  $team = array_shift(entity_load('node', array($tid)));
+  $team = current(entity_load('node', array($tid)));
   oa_teams_remove_member($team, $uid);
   drupal_set_message(t('%user has been removed from the team %title.', array('%user' => format_username($account), '%title' => $team->title)));
   drupal_goto('node/' . $team->nid);
