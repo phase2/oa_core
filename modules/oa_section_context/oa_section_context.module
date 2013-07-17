@@ -15,7 +15,7 @@ define('OA_SESSION_SECTION', 'oa_section_id');
  */
 function oa_section_context_init() {
   $menu = menu_get_object();
-  if (!isset($menu->nid)) {
+  if (!isset($menu->nid) || !session_id()) {
     return;
   }
 
@@ -35,7 +35,7 @@ function oa_section_context_init() {
     $set_session = $node->{OA_SECTION_FIELD}[LANGUAGE_NONE][0]['target_id'];
   }
 
-  if ($set_session && ($node = node_load($set_session)) && node_access('view', $set_session)) {
+  if ($set_session && ($node = node_load($set_session)) && node_access('view', $node)) {
     $_SESSION[OA_SESSION_SECTION] = $set_session;
   }
   // Want to unset session context if viewing a node that is not a section and
