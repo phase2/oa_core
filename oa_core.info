@@ -12,6 +12,7 @@ dependencies[] = oa_buttons
 dependencies[] = oa_layouts
 dependencies[] = og_ui
 dependencies[] = og_vocab
+dependencies[] = og_session_context
 dependencies[] = page_manager
 dependencies[] = strongarm
 dependencies[] = views_content
