@@ -476,34 +476,39 @@ function oa_buttons_og_permission() {
  * @param $layout
  *   The panelizer layout key to use for this section.
  */
-function oa_buttons_create_term($taxonomy, $name, $node_options, $layout) {
+function oa_buttons_create_term($taxonomy, $name, $node_options, $layout, $update = FALSE) {
   $vocab = taxonomy_vocabulary_machine_name_load($taxonomy);
-  if (!($term = current(taxonomy_get_term_by_name($name, $taxonomy)))) {
+  if (!($term = current(taxonomy_get_term_by_name($name, $taxonomy))) || $update) {
     if (!$vocab) {
       features_revert(array('oa_buttons' => array('taxonomy','field_base', 'field_instance')));
       drupal_static('taxonomy_vocabulary_get_names');
       $vocab = taxonomy_vocabulary_machine_name_load($taxonomy);
     }
 
-    $term = array(
-      'vid' => $vocab->vid,
-      'name' => $name,
-      'field_oa_section_layout' => array(
-        LANGUAGE_NONE => array(
-          array('value' => $layout),
+    if ($term && $update) {
+      $term->field_oa_section_layout[LANGUAGE_NONE][0]['value'] = $layout;
+      $term->field_oa_node_types[LANGUAGE_NONE] = array();
+    }
+    else {
+      $term = (object) array(
+        'vid' => $vocab->vid,
+        'name' => $name,
+        'field_oa_section_layout' => array(
+          LANGUAGE_NONE => array(
+            array('value' => $layout),
+          ),
         ),
-      ),
-      'field_oa_node_types' => array(
-        LANGUAGE_NONE => array(),
-      ),
-    );
+        'field_oa_node_types' => array(
+          LANGUAGE_NONE => array(),
+        ),
+      );
+    }
 
     if (!empty($node_options)) {
       foreach ($node_options as $type) {
-        $term['field_oa_node_types'][LANGUAGE_NONE][] = array('value' => $type);
+        $term->field_oa_node_types[LANGUAGE_NONE][] = array('value' => $type);
       }
     }
-    $term = (object) $term;
     taxonomy_term_save($term);
   }
   return $term;
