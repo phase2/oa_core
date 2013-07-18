@@ -20,6 +20,7 @@ function oa_search_ctools_plugin_directory($owner, $plugin_type) {
  * Implements hook_theme().
  */
 function oa_search_theme() {
+  $path = drupal_get_path('module', 'oa_search') . '/templates';
   return array(
     'oa_toolbar_search' => array(
       'template' => 'oa-toolbar-search',
@@ -34,6 +35,16 @@ function oa_search_theme() {
         'options' => array(),
       ),
       'path' => drupal_get_path('module', 'oa_search') . '/templates',
+    ),
+    'views_view_fields__search_database_results' => array(
+      'template'  => 'views-view-fields--search-database-results',
+      'base hook' => 'views_view_fields',
+      'preprocess functions' => array(
+        'template_preprocess',
+        'template_preprocess_views_view_fields',
+      ),
+      'arguments' => array('view' => NULL, 'options' => NULL, 'row' => NULL),
+      'path' => $path,
     ),
   );
 }
