@@ -68,7 +68,7 @@ projects[command_buttons][subdir] = contrib
 projects[command_buttons][download][type] = git
 projects[command_buttons][download][url] = http://git.drupal.org/project/command_buttons.git
 projects[command_buttons][download][branch] = 7.x-1.x
-projects[command_buttons][download][revision] = e352fe5
+projects[command_buttons][download][revision] = 7e41e24
 
 ; Contextual Tabs
 projects[contextual_tabs][type] = module
