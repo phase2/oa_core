@@ -130,6 +130,7 @@ projects[og_vocab][patch][1985316] = http://drupal.org/files/1985316-og_vocab-me
 
 ; OG Session Context
 projects[og_session_context][subdir] = contrib
+projects[og_session_context][download][type] = git
 projects[og_session_context][download][url] = http://git.drupal.org/project/og_session_context.git
 projects[og_session_context][download][branch] = 7.x-1.x
 projects[og_session_context][download][revision] = d2b46226
