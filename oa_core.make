@@ -70,6 +70,14 @@ projects[command_buttons][download][url] = http://git.drupal.org/project/command
 projects[command_buttons][download][branch] = 7.x-1.x
 projects[command_buttons][download][revision] = e352fe5
 
+; Contextual Tabs
+projects[contextual_tabs][type] = module
+projects[contextual_tabs][subdir] = contrib
+projects[contextual_tabs][download][type] = git
+projects[contextual_tabs][download][url] = http://git.drupal.org/project/contextual_tabs.git
+projects[contextual_tabs][download][branch] = 7.x-1.x
+projects[contextual_tabs][download][revision] = 60a3c8
+
 projects[panels_customerror][type] = module
 projects[panels_customerror][subdir] = contrib
 projects[panels_customerror][download][type] = git
