@@ -75,13 +75,13 @@ function oa_search_default_page_manager_handlers() {
       'override_title_text' => '',
       'view_mode' => 'teaser',
       'widget_title' => '',
-      'use_pager' => NULL,
-      'pager_id' => NULL,
+      'use_pager' => 1,
+      'pager_id' => '',
       'offset' => NULL,
       'link_to_view' => NULL,
       'more_link' => NULL,
       'path' => NULL,
-      'view_settings' => 'nodes',
+      'view_settings' => 'fields',
       'header_type' => 'none',
     );
     $pane->cache = array();
