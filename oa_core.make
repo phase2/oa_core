@@ -128,6 +128,12 @@ projects[og_vocab][subdir] = contrib
 projects[og_vocab][version] = 1.1
 projects[og_vocab][patch][1985316] = http://drupal.org/files/1985316-og_vocab-menu_get_item-1.patch
 
+; OG Session Context
+projects[og_session_context][subdir] = contrib
+projects[og_session_context][download][url] = http://git.drupal.org/project/og_session_context.git
+projects[og_session_context][download][branch] = 7.x-1.x
+projects[og_session_context][download][revision] = d2b46226
+
 ; Og menu single
 projects[og_menu_single][subdir] = contrib
 projects[og_menu_single][download][type] = git
