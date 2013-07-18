@@ -14,6 +14,14 @@ define('OA_SESSION_SECTION', 'oa_section_id');
  * Determines the current section id value
  */
 function oa_section_context_init() {
+  global $user;
+
+  // don't create a session for anonymous users unless session already started
+  // needed to allow Varnish to cache anonymous pages
+  if (($user->uid == 0) && !drupal_session_started()) {
+    return;
+  }
+
   $menu = menu_get_object();
   if (!isset($menu->nid)) {
     return;
