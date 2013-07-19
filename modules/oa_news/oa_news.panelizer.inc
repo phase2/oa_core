@@ -221,45 +221,6 @@ function oa_news_panelizer_defaults() {
     $pane->locks = array();
     $display->content['new-5'] = $pane;
     $display->panels['sidebar'][1] = 'new-5';
-    $pane = new stdClass();
-    $pane->pid = 'new-6';
-    $pane->panel = 'sidebar';
-    $pane->type = 'oa_widgets_add_content';
-    $pane->subtype = 'oa_widgets_add_content';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'oa_widgets_types' => array(
-        'oa_wiki_page' => 'oa_wiki_page',
-        'oa_group' => 0,
-        'oa_space' => 0,
-        'oa_discussion_post' => 0,
-        'oa_section' => 0,
-        'oa_team' => 0,
-        'panopoly_page' => 0,
-      ),
-      'oa_widgets_use_all' => TRUE,
-      'return' => 'Finish',
-      'cancel' => 'Cancel',
-      'override_title' => 1,
-      'override_title_text' => '',
-      'form_build_id' => 'form-QGtCoCvfryVlELxN8824rIowT00IJX8qolPR2bWGbhw',
-      'form_token' => 'isC-J5K3dQfeMpsBqZG_34ROSt8JFxt7s9-jtqd79pI',
-      'form_id' => 'oa_widgets_add_content_edit_form',
-      'op' => 'Finish',
-      'button_class' => 'btn',
-      'title_prefix' => 'Add ',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 2;
-    $pane->locks = array();
-    $display->content['new-6'] = $pane;
-    $display->panels['sidebar'][2] = 'new-6';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $panelizer->display = $display;
