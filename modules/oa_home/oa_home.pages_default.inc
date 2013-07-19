@@ -118,45 +118,6 @@ function oa_home_default_page_manager_pages() {
     $display->content['new-1'] = $pane;
     $display->panels['contentmain'][0] = 'new-1';
     $pane = new stdClass();
-    $pane->pid = 'new-2';
-    $pane->panel = 'sidebar';
-    $pane->type = 'oa_widgets_add_content';
-    $pane->subtype = 'oa_widgets_add_content';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'oa_widgets_types' => array(
-        'oa_group' => 'oa_group',
-        'oa_space' => 'oa_space',
-        'oa_discussion_post' => 0,
-        'oa_section' => 0,
-        'oa_team' => 0,
-        'oa_wiki_page' => 0,
-        'panopoly_page' => 0,
-      ),
-      'oa_widgets_use_all' => TRUE,
-      'return' => 'Finish',
-      'cancel' => 'Cancel',
-      'override_title' => 1,
-      'override_title_text' => '',
-      'form_build_id' => 'form-xg4MVDRrDOwS85QXcLqk6cTkEqVBnqcjyM8U9Vg3RcE',
-      'form_token' => 'ZT14dmU8EIt-EIcxQG6v1Doq-mj7M-JeAqUDMaHcTAE',
-      'form_id' => 'oa_widgets_add_content_edit_form',
-      'op' => 'Finish',
-      'button_class' => 'btn btn-primary',
-      'title_prefix' => 'Create ',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $display->content['new-2'] = $pane;
-    $display->panels['sidebar'][0] = 'new-2';
-    $pane = new stdClass();
     $pane->pid = 'new-3';
     $pane->panel = 'sidebar';
     $pane->type = 'oa_core_user_spaces';

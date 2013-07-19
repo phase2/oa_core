@@ -135,45 +135,6 @@ function oa_teams_panelizer_defaults() {
     $pane->locks = array();
     $display->content['new-4'] = $pane;
     $display->panels['sidebar'][0] = 'new-4';
-    $pane = new stdClass();
-    $pane->pid = 'new-5';
-    $pane->panel = 'sidebar';
-    $pane->type = 'oa_widgets_add_content';
-    $pane->subtype = 'oa_widgets_add_content';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'oa_widgets_types' => array(
-        'oa_team' => 'oa_team',
-        'oa_group' => 0,
-        'oa_space' => 0,
-        'oa_discussion_post' => 0,
-        'oa_section' => 0,
-        'oa_wiki_page' => 0,
-        'panopoly_page' => 0,
-      ),
-      'oa_widgets_use_all' => TRUE,
-      'button_class' => 'btn',
-      'title_prefix' => 'Add new ',
-      'return' => 'Finish',
-      'cancel' => 'Cancel',
-      'override_title' => 1,
-      'override_title_text' => '',
-      'form_build_id' => 'form-IAvB9bt1xFEgd39d73weIG8VlZN29lAxb9XoVaVJeZU',
-      'form_token' => 'isC-J5K3dQfeMpsBqZG_34ROSt8JFxt7s9-jtqd79pI',
-      'form_id' => 'oa_widgets_add_content_edit_form',
-      'op' => 'Finish',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $display->content['new-5'] = $pane;
-    $display->panels['sidebar'][1] = 'new-5';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $panelizer->display = $display;
