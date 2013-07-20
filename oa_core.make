@@ -6,6 +6,10 @@ core = 7.x
 ; Message
 projects[message][subdir] = contrib
 projects[message][version] = 1.8
+projects[message][download][type] = git
+projects[message][download][url] = http://git.drupal.org/project/message.git
+projects[message][download][branch] = 7.x-1.x
+projects[message][patch][2046591] = http://drupal.org/files/message-token_replace-2046591-1.patch
 
 ; Message Notify
 projects[message_notify][subdir] = contrib

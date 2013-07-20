@@ -33,9 +33,9 @@ function oa_messages_default_message_type() {
     "arguments" : null,
     "message_text" : { "und" : [
         {
-          "value" : "[[message:field-oa-message-space]] [message:user:name] created [message:field-oa-node-ref:title] [#[message:field-oa-node-ref:nid]]",
+          "value" : "[[message:field-oa-message-space]] @{message:user:name} created [message:field-oa-node-ref:title] [#[message:field-oa-node-ref:nid]]",
           "format" : "plain_text",
-          "safe_value" : "\\u003Cp\\u003E[[message:field-oa-message-space]] [message:user:name] created [message:field-oa-node-ref:title] [#[message:field-oa-node-ref:nid]]\\u003C\\/p\\u003E\\n"
+          "safe_value" : "\\u003Cp\\u003E[[message:field-oa-message-space]] @{message:user:name} created [message:field-oa-node-ref:title] [#[message:field-oa-node-ref:nid]]\\u003C\\/p\\u003E\\n"
         },
         {
           "value" : "\\u003Cp\\u003E[message:field-oa-message-text:value]\\u0026nbsp;[message:field-oa-node-ref:body]\\u003C\\/p\\u003E",
@@ -43,9 +43,9 @@ function oa_messages_default_message_type() {
           "safe_value" : "\\u003Cp\\u003E[message:field-oa-message-text:value]\\u00a0[message:field-oa-node-ref:body]\\u003C\\/p\\u003E\\n"
         },
         {
-          "value" : "\\u003Ca href=\\u0022\\/user\\/[message:user:uid]\\u0022 class=\\u0022oa-userlink\\u0022\\u003E[message:user:name]\\u003C\\/a\\u003E created \\u003Ca href=\\u0022\\/node\\/[message:field-oa-node-ref:nid]\\u0022\\u003E\\u003Cstrong\\u003E[message:field-oa-node-ref:title]\\u003C\\/strong\\u003E\\u003C\\/a\\u003E",
+          "value" : "\\u003Ca href=\\u0022\\/user\\/@{message:user:uid}\\u0022 class=\\u0022oa-userlink\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E created \\u003Ca href=\\u0022\\/node\\/[message:field-oa-node-ref:nid]\\u0022\\u003E\\u003Cstrong\\u003E[message:field-oa-node-ref:title]\\u003C\\/strong\\u003E\\u003C\\/a\\u003E",
           "format" : "panopoly_html_text",
-          "safe_value" : "\\u003Cp\\u003E\\u003Ca href=\\u0022\\/user\\/[message:user:uid]\\u0022\\u003E[message:user:name]\\u003C\\/a\\u003E created \\u003Ca href=\\u0022\\/node\\/[message:field-oa-node-ref:nid]\\u0022\\u003E\\u003Cstrong\\u003E[message:field-oa-node-ref:title]\\u003C\\/strong\\u003E\\u003C\\/a\\u003E\\u003C\\/p\\u003E\\n"
+          "safe_value" : "\\u003Cp\\u003E\\u003Ca href=\\u0022\\/user\\/@{message:user:uid}\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E created \\u003Ca href=\\u0022\\/node\\/[message:field-oa-node-ref:nid]\\u0022\\u003E\\u003Cstrong\\u003E[message:field-oa-node-ref:title]\\u003C\\/strong\\u003E\\u003C\\/a\\u003E\\u003C\\/p\\u003E\\n"
         },
         {
           "value" : "[message:field-oa-message-text:value] [message:field-oa-node-ref:body]",
@@ -84,9 +84,9 @@ function oa_messages_default_message_type() {
           "safe_value" : "\\u003Cp\\u003E@{message:user:name} deleted [message:field-deleted-title]\\u003C\\/p\\u003E\\n"
         },
         {
-          "value" : "\\u003Ca href=\\u0022\\/user\\/[message:user:uid]\\u0022\\u003E[message:user:name]\\u003C\\/a\\u003E deleted \\u003Cstrong\\u003E[message:field-deleted-title]\\u003C\\/strong\\u003E",
+          "value" : "\\u003Ca href=\\u0022\\/user\\/@{message:user:uid}\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E deleted \\u003Cstrong\\u003E[message:field-deleted-title]\\u003C\\/strong\\u003E",
           "format" : "panopoly_html_text",
-          "safe_value" : "\\u003Cp\\u003E\\u003Ca href=\\u0022\\/user\\/[message:user:uid]\\u0022\\u003E[message:user:name]\\u003C\\/a\\u003E deleted \\u003Cstrong\\u003E[message:field-deleted-title]\\u003C\\/strong\\u003E\\u003C\\/p\\u003E\\n"
+          "safe_value" : "\\u003Cp\\u003E\\u003Ca href=\\u0022\\/user\\/@{message:user:uid}\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E deleted \\u003Cstrong\\u003E[message:field-deleted-title]\\u003C\\/strong\\u003E\\u003C\\/p\\u003E\\n"
         },
         {
           "value" : "[message:field-deleted-summary:value]",
@@ -125,9 +125,9 @@ function oa_messages_default_message_type() {
           "safe_value" : "\\u003Cp\\u003E[message:field-oa-message-space:title] : [message:field-oa-message-text:value]\\u003C\\/p\\u003E\\n"
         },
         {
-          "value" : "\\u003Ca href=\\u0022\\/user\\/[message:user:uid]\\u0022\\u003E[message:user:name]\\u003C\\/a\\u003E updated Space : \\u003Ca href=\\u0022\\/node\\/[message:field-oa-message-space:nid]\\u0022\\u003E[message:field-oa-message-space:title]\\u003C\\/a\\u003E",
+          "value" : "\\u003Ca href=\\u0022\\/user\\/@{message:user:uid}\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E updated Space : \\u003Ca href=\\u0022\\/node\\/[message:field-oa-message-space:nid]\\u0022\\u003E[message:field-oa-message-space:title]\\u003C\\/a\\u003E",
           "format" : "panopoly_html_text",
-          "safe_value" : "\\u003Cp\\u003E\\u003Ca href=\\u0022\\/user\\/[message:user:uid]\\u0022\\u003E[message:user:name]\\u003C\\/a\\u003E updated Space : \\u003Ca href=\\u0022\\/node\\/[message:field-oa-message-space:nid]\\u0022\\u003E[message:field-oa-message-space:title]\\u003C\\/a\\u003E\\u003C\\/p\\u003E\\n"
+          "safe_value" : "\\u003Cp\\u003E\\u003Ca href=\\u0022\\/user\\/@{message:user:uid}\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E updated Space : \\u003Ca href=\\u0022\\/node\\/[message:field-oa-message-space:nid]\\u0022\\u003E[message:field-oa-message-space:title]\\u003C\\/a\\u003E\\u003C\\/p\\u003E\\n"
         }
       ]
     }
@@ -146,9 +146,9 @@ function oa_messages_default_message_type() {
     "arguments" : null,
     "message_text" : { "und" : [
         {
-          "value" : "[message:field-oa-message-space] : [message:user:name] updated [message:field-oa-node-ref:title]",
+          "value" : "[message:field-oa-message-space] : @{message:user:name} updated [message:field-oa-node-ref:title]",
           "format" : "plain_text",
-          "safe_value" : "\\u003Cp\\u003E[message:field-oa-message-space] : [message:user:name] updated [message:field-oa-node-ref:title]\\u003C\\/p\\u003E\\n"
+          "safe_value" : "\\u003Cp\\u003E[message:field-oa-message-space] : @{message:user:name} updated [message:field-oa-node-ref:title]\\u003C\\/p\\u003E\\n"
         },
         {
           "value" : "\\u003Cp\\u003E[message:field-oa-message-text:value]\\u0026nbsp;[message:field-oa-node-ref:oa-log]\\u003C\\/p\\u003E\\u003Cp\\u003E[message:field-oa-node-ref:oa-diff:@{message:field-oa-node-ref:vid}]\\u003C\\/p\\u003E",
@@ -156,9 +156,9 @@ function oa_messages_default_message_type() {
           "safe_value" : "\\u003Cp\\u003E[message:field-oa-message-text:value]\\u00a0[message:field-oa-node-ref:oa-log]\\u003C\\/p\\u003E\\n\\u003Cp\\u003E[message:field-oa-node-ref:oa-diff:@{message:field-oa-node-ref:vid}]\\u003C\\/p\\u003E\\n"
         },
         {
-          "value" : "\\u003Ca href=\\u0022\\/user\\/[message:user:uid]\\u0022 class=\\u0022oa-userlink\\u0022\\u003E[message:user:name]\\u003C\\/a\\u003E updated \\u003Ca href=\\u0022\\/node\\/[message:field-oa-node-ref:nid]\\u0022\\u003E\\u003Cstrong\\u003E[message:field-oa-node-ref:title]\\u003C\\/strong\\u003E\\u003C\\/a\\u003E",
+          "value" : "\\u003Ca href=\\u0022\\/user\\/@{message:user:uid}\\u0022 class=\\u0022oa-userlink\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E updated \\u003Ca href=\\u0022\\/node\\/[message:field-oa-node-ref:nid]\\u0022\\u003E\\u003Cstrong\\u003E[message:field-oa-node-ref:title]\\u003C\\/strong\\u003E\\u003C\\/a\\u003E",
           "format" : "panopoly_html_text",
-          "safe_value" : "\\u003Cp\\u003E\\u003Ca href=\\u0022\\/user\\/[message:user:uid]\\u0022\\u003E[message:user:name]\\u003C\\/a\\u003E updated \\u003Ca href=\\u0022\\/node\\/[message:field-oa-node-ref:nid]\\u0022\\u003E\\u003Cstrong\\u003E[message:field-oa-node-ref:title]\\u003C\\/strong\\u003E\\u003C\\/a\\u003E\\u003C\\/p\\u003E\\n"
+          "safe_value" : "\\u003Cp\\u003E\\u003Ca href=\\u0022\\/user\\/@{message:user:uid}\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E updated \\u003Ca href=\\u0022\\/node\\/[message:field-oa-node-ref:nid]\\u0022\\u003E\\u003Cstrong\\u003E[message:field-oa-node-ref:title]\\u003C\\/strong\\u003E\\u003C\\/a\\u003E\\u003C\\/p\\u003E\\n"
         },
         {
           "value" : "@{message:field-oa-node-ref:log}",
