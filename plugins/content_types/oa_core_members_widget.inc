@@ -167,6 +167,7 @@ function oa_core_members_widget_render($subtype, $conf, $args, $context = NULL) 
     unset($tabs[key($tabs)]['title']);
   }
 
+  $ajax = (variable_get('oa_use_ajax', FALSE)) ? '/nojs' : '';
   $links = array(
     'dashboard' => array(
       'title' => t('Dashboard'),
@@ -174,28 +175,28 @@ function oa_core_members_widget_render($subtype, $conf, $args, $context = NULL) 
     ),
     'remove' => array(
       'title' => t('Remove from @label', array('@label' => $space_type)),
-      'url' => $is_admin ? 'group/node/' . $space->nid . '/remove/single/%uid/nojs' : '',
+      'url' => $is_admin ? 'group/node/' . $space->nid . '/remove/single/%uid' . $ajax : '',
     ),
     'add' => array(
       'title' => t('Approve/Add to @label', array('@label' => $space_type)),
-      'url' => $is_admin ? 'group/node/' . $space->nid . '/add-member/%uid/' . OA_SPACE_FIELD . '/nojs' : '',
+      'url' => $is_admin ? 'group/node/' . $space->nid . '/add-member/%uid/' . OA_SPACE_FIELD . $ajax : '',
     ),
     'block' => array(
       'title' => t('Block user'),
-      'url' => $is_admin ? 'group/node/' . $space->nid . '/block/%uid/nojs' : '',
+      'url' => $is_admin ? 'group/node/' . $space->nid . '/block/%uid' . $ajax : '',
     ),
     'add-admin' => array(
       'title' => t('Add as Admin'),
-      'url' => $is_admin ? 'group/node/' . $space->nid . '/add-admin/%uid/nojs' : '',
+      'url' => $is_admin ? 'group/node/' . $space->nid . '/add-admin/%uid' . $ajax : '',
     ),
     'remove-admin' => array(
       'title' => t('Remove as Admin'),
-      'url' => $is_admin ? 'group/node/' . $space->nid . '/remove-admin/%uid/nojs' : '',
+      'url' => $is_admin ? 'group/node/' . $space->nid . '/remove-admin/%uid' . $ajax : '',
     ),
     'remove-child' => array(
       'title' => t('Remove from @label and any children spaces', array('@label' => $space_type)),
       'url' => (og_user_access('node', $space->nid, 'administer group') && module_exists('oa_subspaces') && og_subgroups_children_load('node', $space->nid, FALSE))
-        ? 'group/node/' . $space->nid . '/remove/all/%uid/nojs'
+        ? 'group/node/' . $space->nid . '/remove/all/%uid' . $ajax
         : '',
     ),
   );

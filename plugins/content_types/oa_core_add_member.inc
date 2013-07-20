@@ -59,11 +59,13 @@ function oa_core_add_member_form($form, &$form_state, $space) {
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Add to @name', array('@name' => drupal_strtolower(node_type_get_name($space->type)))),
-    '#ajax' => array(
+  );
+  if (variable_get('oa_use_ajax', FALSE)) {
+    $form['submit']['#ajax'] = array(
       'callback' => 'oa_core_add_member_ajax',
       'wrapper' => 'og-core-member-replace-me',
-     ),
-  );
+    );
+  }
 
   return $form;
 }
