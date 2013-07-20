@@ -25,6 +25,7 @@ $plugin = array(
     'show_links' => TRUE,
     'link_class' => 'btn',
     'num_per_page' => 15,
+    'types' => array(OA_SPACE_TYPE => OA_SPACE_TYPE),
   ),
 );
 
@@ -39,16 +40,22 @@ function oa_core_user_spaces_render($subtype, $conf, $args, $context = NULL) {
   $account = $context->data;
   $vars = array();
 
+  if (isset($conf['types'])) {
+    $group_types = $conf['types'];
+  }
+  else {
+    $group_types = array(OA_SPACE_TYPE => OA_SPACE_TYPE);
+  }
   $spaces = node_load_multiple(oa_core_get_public_spaces());
-  $all_spaces = oa_core_build_space_display($spaces, $conf, $account);
+  $all_spaces = oa_core_build_space_display($spaces, $conf, $account, $group_types);
 
   $spaces = oa_core_get_user_spaces($account->uid);
   $spaces = node_load_multiple($spaces);
-  $active_spaces = oa_core_build_space_display($spaces, $conf, $account);
+  $active_spaces = oa_core_build_space_display($spaces, $conf, $account, $group_types);
 
   $spaces = oa_favorites_get_spaces($account);
   $spaces = node_load_multiple($spaces['ids']);
-  $featured_spaces = oa_core_build_space_display($spaces, $conf, $account);
+  $featured_spaces = oa_core_build_space_display($spaces, $conf, $account, $group_types);
 
   $page = 0;
   // set our maximum item per page
@@ -90,11 +97,23 @@ function oa_core_user_spaces_render($subtype, $conf, $args, $context = NULL) {
   $vars['main_class'] = ($conf['show_description']) ? 'member-full' : 'member-sidebar';
 
   $block = new stdClass();
+  $title = '';
+  if (!empty($group_types[OA_SPACE_TYPE])) {
+    $title = t('Spaces');
+  }
+  if (!empty($group_types[OA_GROUP_TYPE])) {
+    if (empty($title)) {
+      $title = t('Groups');
+    }
+    else {
+      $title = t('Spaces and Groups');
+    }
+  }
   if (count($vars['space_groups']) == 1) {
-    $block->title = key($vars['space_groups']) . ' ' . t('Spaces');
+    $block->title = key($vars['space_groups']) . ' ' . $title;
   }
   else {
-    $block->title = t('Spaces');
+    $block->title = $title;
   }
   $block->content = theme('oa_core_user_spaces', $vars);
   return $block;
@@ -104,11 +123,12 @@ function oa_core_user_spaces_render($subtype, $conf, $args, $context = NULL) {
 /**
  * Builds display variables for spaces. Optionally sections as well.
  */
-function oa_core_build_space_display($spaces, $conf, $account) {
+function oa_core_build_space_display($spaces, $conf, $account,
+  $group_types = array(OA_SPACE_TYPE => OA_SPACE_TYPE)) {
   $vars = array();
   usort($spaces, 'oa_core_sort_node_by_title');
   foreach ($spaces as $space) {
-    if ($space->type != 'oa_space' || !node_access('view', $space)) {
+    if (empty($group_types[$space->type]) || !node_access('view', $space)) {
       continue;
     }
     $vars[$space->nid]['title'] = check_plain($space->title);
@@ -295,6 +315,16 @@ function oa_core_sort_node_by_title($n1, $n2) {
  */
 function oa_core_user_spaces_edit_form($form, &$form_state) {
   $conf = $form_state['conf'];
+  $form['types'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Types to show'),
+    '#options' => array(
+      OA_SPACE_TYPE => t('Spaces'),
+      OA_GROUP_TYPE => t('Groups'),
+    ),
+    '#default_value' => $conf['types'],
+  );
+
   $form['tabs'] = array(
     '#type' => 'checkboxes',
     '#title' => t('Tabs'),
