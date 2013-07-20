@@ -21,3 +21,12 @@
   min-width: 100%;
 }
 
+.ctools-modal-content form > div > .form-item {
+  border-bottom: 1px solid #DDD;
+  padding-left: 10px;
+  padding-bottom: 6px;
+}
+
+.ctools-modal-content form > div > .form-item > label {
+  font-weight: bold;
+}
