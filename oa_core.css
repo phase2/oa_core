@@ -16,3 +16,16 @@
 .chzn-container input[type="text"] {
   min-width: 120px;
 }
+
+.field-widget-og-complex .chzn-container {
+  min-width: 100%;
+}
+
+li.dhtml-folder {
+  position: relative;
+}
+
+a.dhtml-menu-icon {
+  position: absolute;
+  left: -22px;
+}
