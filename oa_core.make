@@ -25,6 +25,17 @@ projects[flag][download][revision] = 32cac54
 projects[flag][patch][471212] = http://drupal.org/files/471212-14-flag-all-bundles.patch
 projects[flag][patch][2027091] = http://drupal.org/files/flag_hook_flag_default_flags_alter.patch
 
+; MimeMail
+projects[mimemail][type] = module
+projects[mimemail][subdir] = contrib
+projects[mimemail][download][type] = git
+projects[mimemail][download][url] = http://git.drupal.org/project/mimemail.git
+projects[mimemail][download][branch] = 7.x-1.x
+projects[mimemail][download][revision] = e742766
+
+projects[mailsystem][subdir] = contrib
+projects[mailsystem][version] = 2.34
+
 ; RealName
 projects[realname][subdir] = contrib
 projects[realname][version] = 1.1
