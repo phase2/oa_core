@@ -151,9 +151,9 @@ function oa_messages_default_message_type() {
           "safe_value" : "\\u003Cp\\u003E[message:field-oa-message-space] : @{message:user:name} updated [message:field-oa-node-ref:title]\\u003C\\/p\\u003E\\n"
         },
         {
-          "value" : "\\u003Cp\\u003E[message:field-oa-message-text:value]\\u0026nbsp;[message:field-oa-node-ref:oa-log]\\u003C\\/p\\u003E\\u003Cp\\u003E[message:field-oa-node-ref:oa-diff:@{message:field-oa-node-ref:vid}]\\u003C\\/p\\u003E",
+          "value" : "\\u003Cp\\u003E[message:field-oa-message-text:value]\\u0026nbsp;[message:field-oa-node-ref:oa-log]\\u003C\\/p\\u003E\\u003Cp\\u003E!{message:field-oa-node-ref:oa-diff}\\u003C\\/p\\u003E",
           "format" : "panopoly_wysiwyg_text",
-          "safe_value" : "\\u003Cp\\u003E[message:field-oa-message-text:value]\\u00a0[message:field-oa-node-ref:oa-log]\\u003C\\/p\\u003E\\n\\u003Cp\\u003E[message:field-oa-node-ref:oa-diff:@{message:field-oa-node-ref:vid}]\\u003C\\/p\\u003E\\n"
+          "safe_value" : "\\u003Cp\\u003E[message:field-oa-message-text:value]\\u00a0[message:field-oa-node-ref:oa-log]\\u003C\\/p\\u003E\\n\\u003Cp\\u003E!{message:field-oa-node-ref:oa-diff}\\u003C\\/p\\u003E\\n"
         },
         {
           "value" : "\\u003Ca href=\\u0022\\/user\\/@{message:user:uid}\\u0022 class=\\u0022oa-userlink\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E updated \\u003Ca href=\\u0022\\/node\\/[message:field-oa-node-ref:nid]\\u0022\\u003E\\u003Cstrong\\u003E[message:field-oa-node-ref:title]\\u003C\\/strong\\u003E\\u003C\\/a\\u003E",
@@ -165,7 +165,11 @@ function oa_messages_default_message_type() {
           "format" : "full_html",
           "safe_value" : "@{message:field-oa-node-ref:log}"
         },
-        { "value" : "", "format" : "panopoly_html_text", "safe_value" : "" }
+        {
+          "value" : "!{message:field-oa-node-ref:oa-diff}",
+          "format" : "panopoly_html_text",
+          "safe_value" : "\\u003Cp\\u003E!{message:field-oa-node-ref:oa-diff}\\u003C\\/p\\u003E\\n"
+        }
       ]
     }
   }');
