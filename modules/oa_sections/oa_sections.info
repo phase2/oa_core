@@ -29,7 +29,6 @@ features[field_base][] = field_oa_group_ref
 features[field_base][] = field_oa_section_weight
 features[field_base][] = field_oa_team_ref
 features[field_base][] = field_oa_user_ref
-features[field_base][] = field_weight
 features[field_group][] = group_access|node|oa_section|form
 features[field_instance][] = node-oa_section-body
 features[field_instance][] = node-oa_section-field_oa_group_ref
