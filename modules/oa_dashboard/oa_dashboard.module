@@ -239,7 +239,7 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
         array('attributes' => array('class' => array('more-link')))),
       $show_all);
   }
-  if ($user->uid == 1) {
+  if (user_access('create ' . OA_SPACE_TYPE . ' content', $user)) {
     $list[] = l(t('Create new space'), 'node/add/' . OA_SPACE_TYPE,
       array('attributes' => array('class' => array('more-link'))));
   }
