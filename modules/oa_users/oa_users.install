@@ -12,7 +12,7 @@ function oa_core_enable() {
   // Weight oa_core after panels so menu alter can take effect.
   db_update('system')
     ->fields(array('weight' =>  100))
-    ->condition('name', 'oa_core')
+    ->condition('name', 'oa_users')
     ->condition('type', 'module')
     ->execute();
 }
@@ -20,10 +20,15 @@ function oa_core_enable() {
 /**
  * Weight oa_core after panels so menu alter can take effect.
  */
-function oa_core_update_7201() {
+function oa_core_update_7202() {
+  db_update('system')
+    ->fields(array('weight' =>  0))
+    ->condition('name', 'oa_core')
+    ->condition('type', 'module')
+    ->execute();
   db_update('system')
     ->fields(array('weight' =>  100))
-    ->condition('name', 'oa_core')
+    ->condition('name', 'oa_users')
     ->condition('type', 'module')
     ->execute();
 }
