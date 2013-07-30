@@ -282,12 +282,20 @@ function oa_core_visibility_data($node) {
       $section_reference_field = field_get_items('node', $node, OA_SECTION_FIELD);
       $section_node = node_load($section_reference_field[0]['target_id']);
     }
-    $data['public'] = oa_core_section_is_public($section_node);
+    $space_reference_field = field_get_items('node', $section_node, OA_SPACE_FIELD);
+    $space_node = node_load($space_reference_field[0]['target_id']);
+    $visibility = field_get_items('node', $space_node, 'group_access');
+
+    $data['public'] = oa_core_section_is_public($section_node) && empty($visibility[0]['value']);
 
     if (!$data['public']) {
-      $space_reference_field = field_get_items('node', $section_node, OA_SPACE_FIELD);
-      $space_node = node_load($space_reference_field[0]['target_id']);
 
+      if (!empty($visibility[0]['value'])) {
+        $data['accessors']['space'] = array(
+          'links' => _oa_core_build_visibility_links('node', $section_node, OA_SPACE_FIELD, OA_SPACE_TYPE),
+          'label' => t('Spaces'),
+        );
+      }
       $data['accessors']['group'] = array(
         'links' => _oa_core_build_visibility_links('node', $section_node, OA_GROUP_FIELD),
         'label' => t('Groups'),
