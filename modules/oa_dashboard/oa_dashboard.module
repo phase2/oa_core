@@ -240,7 +240,7 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
       $show_all);
   }
   if (user_access('create ' . OA_SPACE_TYPE . ' content', $user)) {
-    $list[] = l(t('Create new space'), 'node/add/' . OA_SPACE_TYPE,
+    $list[] = l(t('Create new space'), 'node/add/' . str_replace('_', '-', OA_SPACE_TYPE),
       array('attributes' => array('class' => array('more-link'))));
   }
   if (!empty($list)) {
