@@ -8,7 +8,6 @@ project = oa_core
 dependencies[] = image
 dependencies[] = mimemail
 dependencies[] = number
-dependencies[] = oa_buttons
 dependencies[] = oa_layouts
 dependencies[] = og_session_context
 dependencies[] = og_ui
