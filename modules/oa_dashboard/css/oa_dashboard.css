@@ -11,6 +11,16 @@ ul.oa_toolbar {
   padding-top: 5px;
 }
 
+/* Hide Navbar module's navbar */
+#navbar-bar {
+  display: none;
+}
+.drupal-navbar .navbar-tray-vertical .navbar-toggle-orientation,
+.drupal-navbar .navbar-icon-toggle-horizontal,
+.drupal-navbar .navbar-icon-toggle-vertical {
+  display: none;
+}
+
 #oa-navbar .btn-toolbar {
   float: left;
   margin: 3px 0 0 10px;

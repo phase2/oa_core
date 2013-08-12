@@ -6,18 +6,27 @@
 
   Drupal.behaviors.toolbarMenuButton = {
     attach: function(context, settings) {
-      var $tray = $('#navbar .navbar-tray');
+      var $tray = $('#navbar-tray');
       var $button = $('#toolbar-menu-button');
       var $navbar = $('#oa-navbar');
 
-      if ($button.length) {
-        // if using the button in toolbar, hide the navbar module's nav bar
-        $('#navbar .navbar-bar').hide();
+      if ($navbar.length) {
+        // if using OA navbar, hide the navbar module's nav bar
+        $('#navbar-bar').hide();
+        // move the shortcuts tray to the top of the admin menu tray
+        var $shortcuts = $('#navbar-tray--2 .navbar-lining').children();
+        if ($shortcuts.length && $tray.length) {
+          var $short_tray = $shortcuts.detach();
+          $('#navbar-tray .navbar-lining').prepend($short_tray);
+        }
       }
       if ($tray.length && $button.length) {
         $button.unbind('click');
+        $tray.removeClass('active'); // start closed
+        $('body').removeClass('navbar-tray-open');
+        $tray.addClass('navbar-tray-vertical'); // use vertical admin menu
         $button.click(function(e) {
-          $('body').toggleClass('menu-tray-open');
+          $('body').toggleClass('navbar-tray-open');
           $tray.toggleClass('active');
 
           // When it's stickied, we need to push the tray down.
