@@ -8,11 +8,10 @@
     attach: function(context, settings) {
       var $tray = $('#navbar-tray');
       var $button = $('#toolbar-menu-button');
-      var $navbar = $('#oa-navbar');
+      var $oa_navbar = $('#oa-navbar');
+      var $navbar = $('#navbar-bar');
 
       if ($navbar.length) {
-        // if using OA navbar, hide the navbar module's nav bar
-        $('#navbar-bar').hide();
         // move the shortcuts tray to the top of the admin menu tray
         var $shortcuts = $('#navbar-tray--2 .navbar-lining').children();
         if ($shortcuts.length && $tray.length) {
@@ -30,9 +29,9 @@
           $tray.toggleClass('active');
 
           // When it's stickied, we need to push the tray down.
-          if (settings.oa_toolbar_sticky == 1 && $navbar.css('position') !== 'static') {
+          if (settings.oa_toolbar_sticky == 1 && $oa_navbar.css('position') !== 'static') {
             // Use attr for !important to override radix.
-            $tray.attr('style', 'top: ' + $navbar.height() + 'px !important');
+            $tray.attr('style', 'top: ' + $oa_navbar.height() + 'px !important');
           }
           else {
             $tray.attr('style', 'top: 0 !important');

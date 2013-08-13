@@ -67,6 +67,7 @@ function oa_dashboard_preprocess_page(&$vars) {
   $vars['oa_toolbar_class'] = variable_get('oa_toolbar_style', 0) ? '' : 'navbar-inverse';
   $vars['oa_toolbar_btn_class'] = variable_get('oa_toolbar_style', 0) ? '' : 'btn-inverse';
   $vars['oa_toolbar_sticky'] = variable_get('oa_toolbar_sticky', 1) ? 'navbar-fixed-top' : '';
+  $vars['oa_toolbar_attributes'] = variable_get('oa_toolbar_sticky', 1) ? 'data-offset-top' : '';
 }
 
 /**
