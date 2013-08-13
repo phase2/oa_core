@@ -14,6 +14,9 @@
         // if using OA navbar, hide the navbar module's nav bar and remove its offset
         $navbar.hide();
         $navbar.removeAttr('data-offset-top');
+        if (settings.oa_toolbar_sticky == 1 && $oa_navbar.css('position') !== 'static') {
+          $oa_navbar.attr('data-offset-top', '');
+        }
         Drupal.displace();  // recalculate offsets
       }
     }

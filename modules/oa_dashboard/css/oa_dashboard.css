@@ -21,6 +21,10 @@ ul.oa_toolbar {
   display: none;
 }
 
+#oa-navbar {
+  margin-bottom: 0;
+}
+
 #oa-navbar .btn-toolbar {
   float: left;
   margin: 3px 0 0 10px;
