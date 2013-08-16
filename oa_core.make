@@ -108,6 +108,7 @@ projects[panels_customerror][download][branch] = 7.x-1.x
 projects[conditional_fields][subdir] = contrib
 projects[conditional_fields][download][branch] = 7.x-3.x
 projects[conditional_fields][download][revision] = cd29b00
+projects[conditional_fields][download][type] = git
 projects[conditional_fields][patch][1982276] = http://drupal.org/files/conditional_fields-typo-in-if-condition-1982276-1.patch
 projects[conditional_fields][patch][2027307] = http://drupal.org/files/conditional_fields-export-0.patch
 projects[conditional_fields][patch][1916988] = http://drupal.org/files/1916988-conditional-fields-alter-3.patch
@@ -139,6 +140,8 @@ projects[trash_flag][download][branch] = 7.x-1.x
 ; Jquery Update
 projects[jquery_update][subdir] = contrib
 projects[jquery_update][version] = 2.3
+projects[jquery_update][download][type] = git
+projects[jquery_update][download][branch] = 7.x-2.x
 projects[jquery_update][patch][1448490] = http://drupal.org/files/jquery_update-fixes-states-js-1448490.patch
 
 ; ##### Organic Groups related #####
@@ -155,6 +158,8 @@ projects[og][patch][2060655] = http://drupal.org/files/og-field-user-membership-
 ; Organic Groups Vocabulary
 projects[og_vocab][subdir] = contrib
 projects[og_vocab][version] = 1.1
+projects[og_vocab][download][type] = git
+projects[og_vocab][download][branch] = 7.x-1.x
 projects[og_vocab][patch][1985316] = http://drupal.org/files/1985316-og_vocab-menu_get_item-1.patch
 
 ; OG Session Context
