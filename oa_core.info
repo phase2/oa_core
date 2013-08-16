@@ -15,6 +15,7 @@ dependencies[] = og_vocab
 dependencies[] = views
 dependencies[] = views_content
 dependencies[] = views_load_more
+dependencies[] = file_entity
 stylesheets[all][] = oa_core.css
 features[ctools][] = page_manager:pages_default:1
 features[ctools][] = panelizer:panelizer:1
