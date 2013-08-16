@@ -39,6 +39,10 @@ ul.oa_toolbar {
   border-bottom-color: #BBB;
 }
 
+#oa_toolbar .icon-home {
+  color: #333;
+}
+
 .navbar-inverse #oa-navbar .icon-home {
   color: #BBB;
 }
