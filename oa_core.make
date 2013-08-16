@@ -77,6 +77,11 @@ projects[feeds][download][url] = http://git.drupal.org/project/feeds.git
 projects[feeds][download][branch] = 7.x-2.x
 projects[feeds][download][revision] = 7e6679d
 
+libraries[simplepie][download][type] = file
+libraries[simplepie][download][url] = http://simplepie.org/downloads/simplepie_1.3.1.compiled.php
+libraries[simplepie][download][filename] = simplepie.compiled.php
+libraries[simplepie][directory_name] = simplepie
+
 ; Command buttons
 projects[command_buttons][type] = module
 projects[command_buttons][subdir] = contrib
