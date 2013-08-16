@@ -215,11 +215,7 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
   $menu_title = '';
   $spaces = NULL;
   // get names of spaces
-  if (isset($vars['show_parents']) && !empty($space)) {
-    $spaces = oa_get_groups_by_parent($space_id, $space_type);
-    $show_all = FALSE;
-  }
-  elseif (($user->uid == 0) || empty($space)) {
+  if (($user->uid == 0) || empty($space)) {
     // og_get_entity_groups doesn't return anything for anonymous users
     // so return list of all public spaces
     $spaces = oa_core_get_public_spaces();
@@ -228,6 +224,13 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
   else {
     $spaces = og_get_groups_by_user($user, 'node');
     $menu_title = t('Subscribed Spaces');
+  }
+  if (isset($vars['show_parents']) && !empty($space)) {
+    $home_spaces = $spaces;
+    $home_title = $menu_title;
+    $spaces = oa_get_groups_by_parent($space_id, $space_type);
+    $menu_title = '';
+    $show_all = FALSE;
   }
   if (empty($spaces)) {
     $list = array();

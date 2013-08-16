@@ -3,6 +3,101 @@
 api = 2
 core = 7.x
 
+; ************************************************
+; ************** PANOPOLY OVERRIDES **************
+
+; Override panopoly_core.make: a915408
+; Patch Panels to fix issue with custom region styles (#1838544)
+projects[panels][type] = module
+projects[panels][subdir] = contrib
+projects[panels][download][type] = git
+projects[panels][download][url] = http://git.drupal.org/project/panels.git
+projects[panels][download][revision] = 2bb470e
+projects[panels][download][branch] = 7.x-3.x
+projects[panels][patch][1354572] = http://drupal.org/files/ipe-duplicate-1354572-7.patch
+projects[panels][patch][2012188] = http://drupal.org/files/panels_ipe-title-ctools-2012188-3.patch
+projects[panels][patch][2024441] = http://drupal.org/files/2024441-panels_standard_render_form_include-5.patch
+
+projects[ctools][type] = module
+projects[ctools][subdir] = contrib
+projects[ctools][download][type] = git
+projects[ctools][download][url] = http://git.drupal.org/project/ctools.git
+projects[ctools][download][revision] = 83817fa
+projects[ctools][download][branch] = 7.x-1.x
+projects[ctools][patch][1901106] = http://drupal.org/files/1901106-ctools-views_content-exposed_form_override-13.patch
+projects[ctools][patch][2016559] = http://drupal.org/files/ctools_views_content_numeric_pager_id.patch
+projects[ctools][patch][2023705] = http://drupal.org/files/2023705-ctools-autosubmit-2.patch
+projects[ctools][patch][1910608] = http://drupal.org/files/1910608-views_content-ajax-7.patch
+
+; Override panopoly_core.make: 3.1
+; Update Panelizer to latest dev version
+projects[panelizer][type] = module
+projects[panelizer][subdir] = contrib
+projects[panelizer][download][type] = git
+projects[panelizer][download][url] = http://git.drupal.org/project/panelizer.git
+projects[panelizer][download][branch] = 7.x-3.x
+projects[panelizer][download][revision] = 1e050d3
+projects[panelizer][patch][1992106] = http://drupal.org/files/1992106_panelizer_features_pipe-1.patch
+projects[panelizer][patch][1982654] = http://drupal.org/files/1982654-panelizer-dontaskmethatagain-2.patch
+projects[panelizer][patch][2022541] = http://drupal.org/files/2022541-panelizer-node-page-unpublished-1.patch
+
+; Override panopoly_core.make: 1.0
+; Update Entity Reference to work with Devel Generate (#1852112)
+projects[entityreference][type] = module
+projects[entityreference][subdir] = contrib
+projects[entityreference][download][type] = git
+projects[entityreference][download][url] = http://git.drupal.org/project/entityreference.git
+projects[entityreference][download][branch] = 7.x-1.x
+projects[entityreference][download][revision] = 1c176da
+
+; Override panopoly_core.make: 1143ee2
+; Patch FAPE to fix warnings (#1846156)
+projects[fape][type] = module
+projects[fape][subdir] = contrib
+projects[fape][download][type] = git
+projects[fape][download][url] = http://git.drupal.org/project/fape.git
+projects[fape][download][branch] = 7.x-1.x
+projects[fape][download][revision] = 1143ee2
+projects[fape][patch][1846156] = http://drupal.org/files/fape-1846156-5.patch
+
+; Override panopoly_widgets.make: 5418cbe
+projects[media_youtube][subdir] = contrib
+projects[media_youtube][version] = 2.0-rc3
+
+; Override panopoly_core.make: 72f3d17
+; Update token to allow disabling of empty token errors during test runs
+projects[token][type] = module
+projects[token][subdir] = contrib
+projects[token][download][type] = git
+projects[token][download][url] = http://git.drupal.org/project/token.git
+projects[token][download][branch] = 7.x-1.x
+projects[token][version] = 1.5
+projects[token][patch][1999298] = http://drupal.org/files/1999298-disable-test-warnings.patch
+
+; Fix undefined did bug and installation issues.
+projects[defaultconfig][subdir] = contrib
+projects[defaultconfig][version] = 1.0-alpha9
+projects[defaultconfig][download][type] = git
+projects[defaultconfig][download][branch] = 7.x-1.x
+projects[defaultconfig][patch][2042799] = http://drupal.org/files/default_config_delete_only_if_overriden.patch
+projects[defaultconfig][patch][2043307] = http://drupal.org/files/defaultconfig_include_features_file.patch
+projects[defaultconfig][patch][2008178] = http://drupal.org/files/defaultconfig-rebuild-filters-2008178-4_0.patch
+
+; Features
+projects[features][version] = 2.0-rc2
+projects[features][subdir] = contrib
+
+; Views
+projects[views][version] = 3.7
+projects[views][subdir] = contrib
+projects[views][download][type] = git
+projects[views][download][branch] = 7.x-3.x
+projects[views][patch][1979926] = http://drupal.org/files/1979926-views-reset_fetch_data-2.patch
+projects[views][patch][1735096] = http://drupal.org/files/1735096-views-mltiple-instance-exposed-form-8.patch
+
+; ************ End Panopoly Overrides ************
+; ************************************************
+
 ; Message
 projects[message][subdir] = contrib
 projects[message][version] = 1.8
