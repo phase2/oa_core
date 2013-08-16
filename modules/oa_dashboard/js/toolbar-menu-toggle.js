@@ -24,6 +24,7 @@
         $tray.removeClass('active'); // start closed
         $('body').removeClass('navbar-tray-open');
         $tray.addClass('navbar-tray-vertical'); // use vertical admin menu
+        $tray.removeClass('navbar-tray-horizontal');
         $button.click(function(e) {
           $('body').toggleClass('navbar-tray-open');
           $tray.toggleClass('active');
