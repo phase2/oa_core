@@ -586,19 +586,17 @@ function oa_core_form_views_content_views_panes_content_type_edit_form_alter(&$f
   // Add in te Active options
   // @todo be a bit smarter on this, check type of field.
   $group = oa_core_get_space_context();
-  $has_active_space = ($group_node = node_load($group)) && $group_node->type == 'oa_space';
-  if (isset($form['exposed']['filter-oa_parent_space_target_id']['oa_parent_space_target_id']) && in_array($group_node, array('oa_space', 'oa_group'))) {
+  $has_active_space = ($group_node = node_load($group)) && ($group_node->type == OA_SPACE_TYPE);
+  if (isset($form['exposed']['filter-oa_parent_space_target_id']['oa_parent_space_target_id'])) {
     $form['exposed']['filter-oa_parent_space_target_id']['oa_parent_space_target_id']['#options'] = array('' => t('- Active Group -')) + $form['exposed']['filter-oa_parent_space_target_id']['oa_parent_space_target_id']['#options'];
     if (!isset($pane->configuration['exposed']['oa_parent_space_target_id'])) {
       $pane->configuration['exposed']['oa_parent_space_target_id'] = '';
     }
   }
   if (isset($form['exposed']['filter-og_group_ref_target_id']['og_group_ref_target_id'])) {
-    if ($has_active_space) {
-      $form['exposed']['filter-og_group_ref_target_id']['og_group_ref_target_id']['#options'] = array('' => t('- Active Space -')) + $form['exposed']['filter-og_group_ref_target_id']['og_group_ref_target_id']['#options'];
-      if (!isset($pane->configuration['exposed']['og_group_ref_target_id'])) {
-        $pane->configuration['exposed']['og_group_ref_target_id'] = '';
-      }
+    $form['exposed']['filter-og_group_ref_target_id']['og_group_ref_target_id']['#options'] = array('' => t('- Active Space -')) + $form['exposed']['filter-og_group_ref_target_id']['og_group_ref_target_id']['#options'];
+    if (!isset($pane->configuration['exposed']['og_group_ref_target_id'])) {
+      $pane->configuration['exposed']['og_group_ref_target_id'] = '';
     }
     $form['exposed']['filter-og_group_ref_target_id']['og_group_ref_target_id_mine'] = array(
       '#title' => t('Limit to groups of current user'),
@@ -624,11 +622,9 @@ function oa_core_form_views_content_views_panes_content_type_edit_form_alter(&$f
     }
     $form['exposed']['filter-oa_section_ref_target_id']['oa_section_ref_target_id']['#after_build'][] = 'oa_core_refresh_section_values';
 
-    if ($has_active_space && oa_core_get_section_context()) {
-      $form['exposed']['filter-oa_section_ref_target_id']['oa_section_ref_target_id']['#options'] = array('' => t('- Active Section -')) + $form['exposed']['filter-oa_section_ref_target_id']['oa_section_ref_target_id']['#options'];
-      if (!isset($pane->configuration['exposed']['oa_section_ref_target_id'])) {
-        $pane->configuration['exposed']['oa_section_ref_target_id'] = '';
-      }
+    $form['exposed']['filter-oa_section_ref_target_id']['oa_section_ref_target_id']['#options'] = array('' => t('- Active Section -')) + $form['exposed']['filter-oa_section_ref_target_id']['oa_section_ref_target_id']['#options'];
+    if (!isset($pane->configuration['exposed']['oa_section_ref_target_id'])) {
+      $pane->configuration['exposed']['oa_section_ref_target_id'] = '';
     }
   }
   if (!empty($form['exposed']['filter-uid'])) {
