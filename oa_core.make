@@ -267,7 +267,7 @@ projects[og_session_context][subdir] = contrib
 projects[og_session_context][download][type] = git
 projects[og_session_context][download][url] = http://git.drupal.org/project/og_session_context.git
 projects[og_session_context][download][branch] = 7.x-1.x
-projects[og_session_context][download][revision] = d2b46226
+projects[og_session_context][download][revision] = b19cf22
 
 ; Og menu single
 projects[og_menu_single][subdir] = contrib
