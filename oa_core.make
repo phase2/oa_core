@@ -83,6 +83,10 @@ projects[defaultconfig][patch][2042799] = http://drupal.org/files/default_config
 projects[defaultconfig][patch][2043307] = http://drupal.org/files/defaultconfig_include_features_file.patch
 projects[defaultconfig][patch][2008178] = http://drupal.org/files/defaultconfig-rebuild-filters-2008178-4_0.patch
 
+; Entity API
+projects[entity][version] = 1.2
+projects[entity][subdir] = contrib
+
 ; Features
 projects[features][version] = 2.0-rc2
 projects[features][subdir] = contrib
@@ -141,7 +145,7 @@ projects[realname][version] = 1.1
 
 ; Chosen
 projects[chosen][subdir] = contrib
-projects[chosen][version] = 2.0-alpha1
+projects[chosen][version] = 2.0-alpha2
 
 libraries[chosen][download][type]    = git
 libraries[chosen][download][url]     = https://github.com/harvesthq/chosen.git
