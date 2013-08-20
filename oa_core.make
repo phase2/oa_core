@@ -279,7 +279,7 @@ projects[og_menu_single][type] = module
 ; ##### oa_variables #####
 ; Variable
 projects[variable][subdir] = contrib
-projects[variable][version] = 2.2
+projects[variable][version] = 2.3
 
 ; Og Variables
 projects[og_variables][subdir] = contrib
