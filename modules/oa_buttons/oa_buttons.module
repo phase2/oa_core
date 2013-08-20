@@ -147,13 +147,17 @@ function oa_buttons_form_taxonomy_form_term_alter(&$form, &$form_state, $form_id
 
     // Provide default node creation options.
     $node_type_options = oa_buttons_get_node_type_options();
-    $form['field_oa_node_types'][$form['field_oa_node_types']['#language']]['#options'] = $node_type_options;
-    $form['field_oa_node_types'][$form['field_oa_node_types']['#language']]['#default_value'] = $node_options_defaults;
+    if (isset($form['field_oa_node_types'])) {
+      $form['field_oa_node_types'][$form['field_oa_node_types']['#language']]['#options'] = $node_type_options;
+      $form['field_oa_node_types'][$form['field_oa_node_types']['#language']]['#default_value'] = $node_options_defaults;
+    }
 
     // Provide section layout options.
     $section_layouts = oa_buttons_get_section_layout_options($sections[$vocab]);
-    $form['field_oa_section_layout'][$form['field_oa_section_layout']['#language']]['#options'] = $section_layouts;
-    $form['field_oa_section_layout'][$form['field_oa_section_layout']['#language']]['#default_value'] = $layout_defaults;
+    if (isset($form['field_oa_section_layout'])) {
+      $form['field_oa_section_layout'][$form['field_oa_section_layout']['#language']]['#options'] = $section_layouts;
+      $form['field_oa_section_layout'][$form['field_oa_section_layout']['#language']]['#default_value'] = $layout_defaults;
+    }
 
   }
 
