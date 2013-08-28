@@ -70,7 +70,8 @@
                   <li>
                     <?php
                       $url = str_replace('%uid', $item['uid'], $links[$lid]['url']);
-                      print l($links[$lid]['title'], $url, $item['options']); ?>
+                      print l($links[$lid]['title'], $url,
+                        empty($links[$lid]['noajax']) ? $item['options'] : array()); ?>
                   </li>
                   <?php endif; ?>
                 <?php endforeach; ?>

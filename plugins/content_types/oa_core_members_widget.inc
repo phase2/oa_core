@@ -172,6 +172,7 @@ function oa_core_members_widget_render($subtype, $conf, $args, $context = NULL) 
     'dashboard' => array(
       'title' => t('Dashboard'),
       'url' => 'user/%uid',
+      'noajax' => TRUE,
     ),
     'remove' => array(
       'title' => t('Remove from @label', array('@label' => $space_type)),
