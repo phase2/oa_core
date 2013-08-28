@@ -35,8 +35,9 @@ function oa_users_menu_alter(&$items) {
   $items['user/%user/view']['weight'] = $items['user/%pm_arg/activity']['weight'] - 1;
   unset($items['user/%user/view']['title callback'], $items['user/%user/view']['title arguments']);
 
-  $items['user/%user'] = $items['user/%pm_arg/activity'];
-  $items['user/%user']['type'] = MENU_NORMAL_ITEM;
+  unset($items['user/$user']);
+  $items['user/%pm_arg'] = $items['user/%pm_arg/activity'];
+  $items['user/%pm_arg']['type'] = MENU_NORMAL_ITEM;
   $items['user/%pm_arg/activity']['type'] = MENU_DEFAULT_LOCAL_TASK;
 }
 
