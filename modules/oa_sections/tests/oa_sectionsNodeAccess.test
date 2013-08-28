@@ -5,11 +5,11 @@
  * Tests permission inheritence for oa_subspaces
  */
 
-class oa_sectionsAccess extends oa_sectionsAccessBase {
+class oa_sectionsNodeAccess extends oa_sectionsNodeAccessBase {
   static function getInfo() {
     return array(
-      'name' => 'OA Section Permission test (fast)',
-      'description' => 'Test that can access sections correctly',
+      'name' => 'OA Section Node Access test (slow)',
+      'description' => 'Test that can access section nodes correctly',
       'group' => 'OA - Sections',
     );
   }
