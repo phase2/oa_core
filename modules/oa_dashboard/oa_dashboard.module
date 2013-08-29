@@ -23,7 +23,7 @@ function oa_dashboard_form_oa_core_configure_form_alter(&$form, &$form_state, $f
   $form['oa_toolbar']['oa_toolbar_hometext'] = array(
     '#title' => t('Caption for space home page'),
     '#type' => 'textfield',
-    '#default_value' => variable_get('oa_toolbar_hometext', t("Space home")),
+    '#default_value' => variable_get('oa_toolbar_hometext', ''),
     '#description' => t('Caption shown in toolbar when on a space landing page.'),
   );
 
@@ -204,6 +204,7 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
           $list = oa_core_truncate_list($items['links'], 15);
           $vars['sibling_list'] = theme('item_list', array(
             'items' => $list,
+            'title' => t('Subspaces'),
             'type' => 'ul',
           ));
         }
@@ -212,9 +213,7 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
   }
 
   $show_all = TRUE;
-  $menu_title = '';
   $spaces = NULL;
-  // get names of spaces
   if (($user->uid == 0) || empty($space)) {
     // og_get_entity_groups doesn't return anything for anonymous users
     // so return list of all public spaces
@@ -224,13 +223,6 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
   else {
     $spaces = og_get_groups_by_user($user, 'node');
     $menu_title = t('Subscribed Spaces');
-  }
-  if (isset($vars['show_parents']) && !empty($space)) {
-    $home_spaces = $spaces;
-    $home_title = $menu_title;
-    $spaces = oa_get_groups_by_parent($space_id, $space_type);
-    $menu_title = '';
-    $show_all = FALSE;
   }
   if (empty($spaces)) {
     $list = array();
@@ -247,11 +239,23 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
       array('attributes' => array('class' => array('more-link'))));
   }
   if (!empty($list)) {
-    $vars['spaces_recent'] = theme('item_list', array(
+    $vars['home_spaces'] = theme('item_list', array(
       'items' => $list,
       'title' => $menu_title,
       'type' => 'ul',
     ));
+  }
+
+  if (!empty($space)) {
+    $subspaces = oa_get_groups_by_parent($space_id, $space_type);
+    if (!empty($subspaces)) {
+      $items = oa_core_get_titles($subspaces, $space_type);
+      $vars['subspaces'] = theme('item_list', array(
+        'items' => $items['links'],
+        'title' => t('Subspaces'),
+        'type' => 'ul',
+      ));
+    }
   }
 
   if (module_exists('oa_favorites')) {
@@ -268,11 +272,11 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
 
   $current_section = oa_core_get_section_context();
 
-  $home_name = variable_get('oa_toolbar_hometext', t("Space home"));
+  $home_name = variable_get('oa_toolbar_hometext', '');
   $section_name = '';
   $section_url = '';
   if ($space_id) {
-    $space_link = l($home_name, 'node/' . $space_id);
+    $add_section = l('Add Section', 'node/add/oa-section');
     $section_name = $home_name;
     $section_url = url('node/' . $space_id);
     $items = array();
@@ -288,14 +292,15 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
         }
       }
       // add the Space home page link and create the ul list
-      array_unshift($items, $space_link);
     }
-    else {
-      $items[] = $space_link;
+    if (user_access('create ' . OA_SECTION_TYPE . ' content', $user)) {
+      $items[] = l(t('Create new section'), 'node/add/' . str_replace('_', '-', OA_SECTION_TYPE),
+        array('attributes' => array('class' => array('more-link'))));
     }
     if (!empty($items)) {
       $vars['sections_list'] = theme('item_list', array(
         'items' => $items,
+        'title' => t('Sections'),
         'type' => 'ul',
       ));
     }
