@@ -15,16 +15,8 @@
         </ul>
       <?php endif; ?>
     </li>
-    <?php if (!empty($parent_list)): ?>
-      <li class="btn-group dropdown no-breadcrumb">
-        <a class="dropdown-toggle btn <?php print $oa_toolbar_btn_class; ?>" id="parent-dropdown" data-toggle="dropdown" href="#"><b class="caret"></b></a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="parent-dropdown">
-          <li><?php print $parent_list; ?></li>
-        </ul>
-      </li>
-    <?php endif; ?>
     <?php if (!empty($parent_label)): ?>
-      <?php if (empty($sibling_list)): ?>
+      <?php if (empty($sibling_list) && empty($parent_list)): ?>
       <li class="btn-group oa-breadcrumb">
         <a href="<?php print $parent_url; ?>" class="btn <?php print $oa_toolbar_btn_class; ?>"><?php print $parent_label; ?></a>
       </li>
@@ -33,7 +25,12 @@
         <a href="<?php print $parent_url; ?>" class="btn <?php print $oa_toolbar_btn_class; ?>"><?php print $parent_label; ?></a>
         <a class="dropdown-toggle btn <?php print $oa_toolbar_btn_class; ?>" id="sibling-dropdown" data-toggle="dropdown" href="#"><b class="caret"></b></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="sibling-dropdown">
-          <li><?php print $sibling_list; ?></li>
+          <?php if (!empty($parent_list)): ?>
+            <li><?php print $parent_list; ?></li>
+          <?php endif; ?>
+          <?php if (!empty($sibling_list)): ?>
+            <li><?php print $sibling_list; ?></li>
+          <?php endif; ?>
         </ul>
       </li>
       <?php endif; ?>

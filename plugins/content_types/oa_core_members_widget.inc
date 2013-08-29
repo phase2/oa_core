@@ -103,7 +103,7 @@ function oa_core_members_widget_render($subtype, $conf, $args, $context = NULL) 
   // set the order the tabs/categories show on page
   $vars['categories'] = $vars['show_as_tabs']
     ? array('members', 'pending', 'blocked', 'owners', 'parents', 'teams')
-    : array('owners', 'parents', 'teams', 'pending', 'members', 'blocked');
+    : array('owners', 'teams', 'pending', 'members', 'blocked', 'parents');
 
   $space_type = node_type_get_name($space->type);
 
@@ -155,17 +155,20 @@ function oa_core_members_widget_render($subtype, $conf, $args, $context = NULL) 
       'url'   => url('node/add/' . str_replace('_', '-', OA_GROUP_TYPE)),
     );
   }
-  $tabs['teams'] = array(
-    'caption' => t('Teams'),
-    'title' => t('Teams'),
-    'items' => array($teams),
-    'links' => array(),
-  );
-  if (user_access('create ' . OA_TEAM_TYPE . ' content', $user)) {
-    $tabs['teams']['global_links'][] = array(
-      'title' => t('Add Team'),
-      'url'   => url('node/add/' . str_replace('_', '-', OA_TEAM_TYPE)),
+
+  if ($space_type == OA_SPACE_TYPE) {
+    $tabs['teams'] = array(
+      'caption' => t('Teams'),
+      'title' => t('Teams'),
+      'items' => array($teams),
+      'links' => array(),
     );
+    if (user_access('create ' . OA_TEAM_TYPE . ' content', $user)) {
+      $tabs['teams']['global_links'][] = array(
+        'title' => t('Add Team'),
+        'url'   => url('node/add/' . str_replace('_', '-', OA_TEAM_TYPE)),
+      );
+    }
   }
   foreach ($tabs as $category => $tab) {
     $tabs[$category]['items'] = array();
