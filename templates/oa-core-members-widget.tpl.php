@@ -80,6 +80,13 @@
           </div>
         <?php endif; ?>
       <?php endforeach; ?>
+      <?php if (!empty($tab['global_links'])):?>
+        <div class='clear-both oa-global-links'>
+        <?php foreach ($tab['global_links'] as $link):?>
+          <a href="<?php print $link['url']?>" class="btn btn-small"><?php print $link['title']?></a>
+        <?php endforeach; ?>
+        </div>
+      <?php endif;?>
     </div>
     <?php if ($show_as_tabs): ?>
       </div>

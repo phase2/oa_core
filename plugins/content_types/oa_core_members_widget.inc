@@ -144,6 +144,9 @@ function oa_core_members_widget_render($subtype, $conf, $args, $context = NULL) 
       'title' => t('Teams'),
       'items' => $teams,
       'links' => array(),
+      'global_links' => array(
+        $is_admin ? array('title' => t('Add Team'), 'url' => url('node/add/oa-team')) : '',
+      ),
     );
   }
 
