@@ -199,9 +199,7 @@ projects[contextual_tabs][download][revision] = 60a3c8
 
 projects[panels_customerror][type] = module
 projects[panels_customerror][subdir] = contrib
-projects[panels_customerror][download][type] = git
-projects[panels_customerror][download][url] = http://git.drupal.org/project/panels_customerror.git
-projects[panels_customerror][download][branch] = 7.x-1.x
+projects[panels_customerror][version] = 1.0-beta1
 
 ; Conditional Fields
 projects[conditional_fields][subdir] = contrib
@@ -231,10 +229,8 @@ projects[views_load_more][download][revision] = 28de384
 
 ; Trash Flag
 projects[trash_flag][type] = module
-projects[trash_flag][download][type] = git
 projects[trash_flag][subdir] = contrib
-projects[trash_flag][download][url] = http://git.drupal.org/project/trash_flag.git
-projects[trash_flag][download][branch] = 7.x-1.x
+projects[trash_flag][version] = 1.0-beta1
 
 ; Jquery Update
 projects[jquery_update][subdir] = contrib
@@ -259,22 +255,18 @@ projects[og_vocab][subdir] = contrib
 projects[og_vocab][version] = 1.1
 projects[og_vocab][download][type] = git
 projects[og_vocab][download][branch] = 7.x-1.x
+projects[og_vocab][download][revision] = bd5b341
 projects[og_vocab][patch][1985316] = http://drupal.org/files/1985316-og_vocab-menu_get_item-1.patch
 
 ; OG Session Context
 projects[og_session_context][type] = module
 projects[og_session_context][subdir] = contrib
-projects[og_session_context][download][type] = git
-projects[og_session_context][download][url] = http://git.drupal.org/project/og_session_context.git
-projects[og_session_context][download][branch] = 7.x-1.x
-projects[og_session_context][download][revision] = b19cf22
+projects[og_session_context][version] = 1.0-beta1
 
 ; Og menu single
-projects[og_menu_single][subdir] = contrib
-projects[og_menu_single][download][type] = git
-projects[og_menu_single][download][url] = http://git.drupal.org/project/og_menu_single.git
-projects[og_menu_single][download][branch] = 7.x-1.x
 projects[og_menu_single][type] = module
+projects[og_menu_single][subdir] = contrib
+projects[og_menu_single][version] = 1.0-beta1
 
 ; ##### oa_variables #####
 ; Variable
@@ -282,10 +274,8 @@ projects[variable][subdir] = contrib
 projects[variable][version] = 2.3
 
 ; Og Variables
-projects[og_variables][subdir] = contrib
-projects[og_variables][download][type] = git
-projects[og_variables][download][url] = http://git.drupal.org/project/og_variables.git
-projects[og_variables][download][branch] = 7.x-1.x
 projects[og_variables][type] = module
+projects[og_variables][subdir] = contrib
+projects[og_variables][version] = 1.0-beta1
 
 
