@@ -142,8 +142,8 @@ function oa_core_build_space_display($spaces, $conf, $account,
     }
 
     if ($conf['show_description']) {
-      $body = field_get_items('node', $space, 'body');
-      $vars[$space->nid]['body'] = drupal_render(field_view_field('node', $space, 'body', 'teaser'));
+      $body = field_view_field('node', $space, 'body', 'teaser');
+      $vars[$space->nid]['body'] = drupal_render($body);
     }
 
     $vars[$space->nid]['picture'] = '';
