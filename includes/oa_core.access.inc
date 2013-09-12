@@ -242,6 +242,10 @@ function oa_core_file_entity_access($op, $file, $account) {
           // image is not referenced by any node, so allow it
           return FILE_ENTITY_ACCESS_ALLOW;
         }
+        else {
+          // image is referenced by node that we don't have access to, so deny
+          return FILE_ENTITY_ACCESS_DENY;
+        }
       }
     }
   }
