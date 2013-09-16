@@ -337,7 +337,7 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
   }
 
   if (drupal_is_front_page()) {
-    $vars['subspaces'] = $vars['home_spaces'];
+    $vars['subspaces'] = (!empty($vars['home_spaces'])) ? $vars['home_spaces'] : '';
     unset($vars['home_spaces']);
   }
 
