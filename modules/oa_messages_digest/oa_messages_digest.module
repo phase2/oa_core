@@ -11,10 +11,9 @@
  */
 function oa_messages_digest_oa_message_notifiers_alter(&$notifiers) {
   $notifiers[] = array(
-    'title' => 'Daily Digest',
+    'title' => 'Daily Digest Email',
     'id'    => 'daily_message_digest');
   $notifiers[] = array(
-    'title' => 'Weekly Digest',
+    'title' => 'Weekly Digest Email',
     'id'    => 'weekly_message_digest');
-  return $notifiers;
 }
