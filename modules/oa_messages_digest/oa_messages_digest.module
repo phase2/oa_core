@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Code for the Open Atrium Messages Digest functionality.
+ */
+
+/**
+ * Implementation of hook_oa_message_notifiers_alter().
+ * Add in the Daily and Weekly Digest notifier types.
+ */
+function oa_messages_digest_oa_message_notifiers_alter(&$notifiers) {
+  $notifiers[] = array(
+    'title' => 'Daily Digest',
+    'id'    => 'daily_message_digest');
+  $notifiers[] = array(
+    'title' => 'Weekly Digest',
+    'id'    => 'weekly_message_digest');
+  return $notifiers;
+}
