@@ -45,14 +45,15 @@ function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE) {
   $cache = &drupal_static(__FUNCTION__);
 
   if (!isset($cache[$nid][$bundle])) {
-    $query = db_select('og_membership', 'f');
-    $query->leftJoin('node', 'n', "n.nid = f.gid");
+    $query = db_select('node', 'n');
+    $query->leftJoin('og_membership', 'f', "n.nid = f.gid");
     $result = $query
       ->fields('n', array('nid'))
       ->condition('f.etid', $nid)
       ->condition('f.entity_type', 'node')
       ->condition('n.type', $bundle)
       ->orderBy('n.title')
+      ->addTag('node_access')
       ->execute()
       ->fetchCol(0);
     $cache[$nid][$bundle] = $result;
@@ -70,8 +71,8 @@ function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE) {
   $cache = &drupal_static(__FUNCTION__);
 
   if (!isset($cache[$nid][$bundle])) {
-    $query = db_select('og_membership', 'f');
-    $query->leftJoin('node', 'n', "n.nid = f.etid");
+    $query = db_select('node', 'n');
+    $query->leftJoin('og_membership', 'f', "n.nid = f.etid");
     if (isset($bundle)) {
       $query->condition('n.type', $bundle);
     }
@@ -80,6 +81,7 @@ function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE) {
       ->condition('f.gid', $nid)
       ->condition('f.entity_type', 'node')
       ->orderBy('n.title')
+      ->addTag('node_access')
       ->execute()
       ->fetchCol(0);
     $cache[$nid][$bundle] = $result;
