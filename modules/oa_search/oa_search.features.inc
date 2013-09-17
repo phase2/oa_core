@@ -25,6 +25,9 @@ function oa_search_default_search_api_index_alter(&$data) {
       'type' => 'date',
     ); /* WAS: '' */
   }
+  if (isset($data['node_index'])) {
+    unset($data['node_index']->options['fields']['created']);
+  }
 }
 
 /**

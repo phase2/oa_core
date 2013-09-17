@@ -15,6 +15,7 @@ function oa_search_features_override_default_overrides() {
   $overrides["search_api_index.database_node_index.options|fields|created"] = array(
     'type' => 'date',
   );
+  $overrides["search_api_index.node_index.options|fields|created"]["DELETED"] = TRUE;
 
   // Exported overrides for: search_api_server
   $overrides["search_api_server.database_server.options|indexes|database_node_index|created|type"] = 'date';
