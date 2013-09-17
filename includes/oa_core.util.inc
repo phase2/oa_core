@@ -71,19 +71,36 @@ function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE) {
   $cache = &drupal_static(__FUNCTION__);
 
   if (!isset($cache[$nid][$bundle])) {
-    $query = db_select('node', 'n');
-    $query->leftJoin('og_membership', 'f', "n.nid = f.etid");
-    if (isset($bundle)) {
-      $query->condition('n.type', $bundle);
+
+    if ($nid == 0) {
+      $query = db_select('node', 'n');
+      $query->leftJoin('og_membership', 'f', "n.nid = f.etid");
+      if (isset($bundle)) {
+        $query->condition('n.type', $bundle);
+      }
+      $result = $query
+        ->fields('n', array('nid'))
+        ->isNull('f.gid')
+        ->orderBy('n.title')
+        ->addTag('node_access')
+        ->execute()
+        ->fetchCol(0);
     }
-    $result = $query
-      ->fields('n', array('nid'))
-      ->condition('f.gid', $nid)
-      ->condition('f.entity_type', 'node')
-      ->orderBy('n.title')
-      ->addTag('node_access')
-      ->execute()
-      ->fetchCol(0);
+    else {
+      $query = db_select('node', 'n');
+      $query->leftJoin('og_membership', 'f', "n.nid = f.etid");
+      if (isset($bundle)) {
+        $query->condition('n.type', $bundle);
+      }
+      $result = $query
+        ->fields('n', array('nid'))
+        ->condition('f.gid', $nid)
+        ->condition('f.entity_type', 'node')
+        ->orderBy('n.title')
+        ->addTag('node_access')
+        ->execute()
+        ->fetchCol(0);
+      }
     $cache[$nid][$bundle] = $result;
   }
   return $cache[$nid][$bundle];

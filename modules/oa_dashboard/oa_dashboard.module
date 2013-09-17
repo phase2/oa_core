@@ -58,6 +58,18 @@ function oa_dashboard_form_oa_core_configure_form_alter(&$form, &$form_state, $f
     '#description' => t('Select whether the toolbar sticks to the top of the page.'),
   );
 
+  $form['oa_toolbar']['oa_toolbar_toplevel'] = array(
+    '#title' => t('Only show top-level spaces'),
+    '#type' => 'select',
+    '#required' => TRUE,
+    '#options' => array(
+      '1' => 'Yes',
+      '0' => 'No',
+    ),
+    '#default_value' => variable_get('oa_toolbar_toplevel', 1),
+    '#description' => t('Select whether only top-level spaces are shown in list next to home button.'),
+  );
+
 }
 
 /**
@@ -240,6 +252,11 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
     $list = array();
   }
   else {
+    if (variable_get('oa_toolbar_toplevel', 1) == 1) {
+      // restrict spaces to just top-level (no parents)
+      $top_spaces = oa_core_get_groups_by_parent(0, $space_type);
+      $spaces = array_intersect($spaces, $top_spaces);
+    }
     $items = oa_core_get_titles($spaces, $space_type);
     $list = oa_core_truncate_list($items['links'], 25,
       l(t('All ' . $space_type_names . '...'), $all_spaces,
