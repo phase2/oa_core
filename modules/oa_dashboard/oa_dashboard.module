@@ -207,7 +207,7 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
             'type' => 'ul',
           ));
         }
-        $siblings = oa_get_groups_by_parent($parent_id, $space_type);
+        $siblings = oa_core_get_groups_by_parent($parent_id, $space_type);
         if (count($siblings) > 1) {
           $items = oa_core_get_titles($siblings);
           $list = oa_core_truncate_list($items['links'], 15);
@@ -259,7 +259,7 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
   }
 
   if (!empty($space)) {
-    $subspaces = oa_get_groups_by_parent($space_id, $space_type);
+    $subspaces = oa_core_get_groups_by_parent($space_id, $space_type);
     if (!empty($subspaces)) {
       $items = oa_core_get_titles($subspaces, $space_type);
       $vars['subspaces'] = theme('item_list', array(

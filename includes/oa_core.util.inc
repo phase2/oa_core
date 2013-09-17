@@ -66,7 +66,7 @@ function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE) {
  * @param  string $bundle node type
  * @return array of children nids
  */
-function oa_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE) {
+function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE) {
   $cache = &drupal_static(__FUNCTION__);
 
   if (!isset($cache[$nid][$bundle])) {
