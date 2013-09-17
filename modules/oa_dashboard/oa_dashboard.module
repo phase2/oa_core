@@ -164,7 +164,10 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
   // Spaces
   $space = NULL;
   $space_id = oa_core_get_space_context();
-  if (drupal_is_front_page()) {
+  $node = menu_get_object();
+  $front_panel = drupal_is_front_page() && !(isset($node) && ($node->type == OA_SPACE_TYPE));
+
+  if ($front_panel) {
     $space_id = 0;  // reset breadcrumbs on home page
   }
   $vars['spaces_label'] = '';
@@ -302,7 +305,7 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
         }
         // add the Space home page link and create the ul list
       }
-      if (user_access('create ' . OA_SECTION_TYPE . ' content', $user)) {
+      if (og_user_access('node', $space_id, "create " . OA_SECTION_TYPE . " content", $user)) {
         $items[] = l(t('Create new section'), 'node/add/' . str_replace('_', '-', OA_SECTION_TYPE),
           array('attributes' => array('class' => array('more-link'))));
       }
@@ -315,7 +318,6 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
       }
     }
     // Current Section Name from current page name
-    $node = menu_get_object();
     if (isset($node->type)) {
       switch ($node->type) {
         case OA_SECTION_TYPE:
@@ -336,7 +338,7 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
     $vars['section_url'] = $section_url;
   }
 
-  if (drupal_is_front_page()) {
+  if ($front_panel) {
     $vars['subspaces'] = (!empty($vars['home_spaces'])) ? $vars['home_spaces'] : '';
     unset($vars['home_spaces']);
   }
