@@ -12,12 +12,8 @@ function oa_search_features_override_default_overrides() {
   $overrides = array();
 
   // Exported overrides for: search_api_index
-  $overrides["search_api_index.database_node_index.options|fields|created|type"] = 'date';
-  $overrides["search_api_index.database_node_index.options|fields|oa_section_ref:title"] = array(
-    'type' => 'string',
-  );
-  $overrides["search_api_index.database_node_index.options|fields|og_group_ref:title"] = array(
-    'type' => 'string',
+  $overrides["search_api_index.database_node_index.options|fields|created"] = array(
+    'type' => 'date',
   );
 
   // Exported overrides for: search_api_server

@@ -7,12 +7,10 @@
 /**
  * Implements hook_ctools_plugin_api().
  */
-function oa_search_ctools_plugin_api() {
-  list($module, $api) = func_get_args();
+function oa_search_ctools_plugin_api($module = NULL, $api = NULL) {
   if ($module == "facetapi" && $api == "facetapi_defaults") {
     return array("version" => "1");
   }
-  list($module, $api) = func_get_args();
   if ($module == "page_manager" && $api == "pages_default") {
     return array("version" => "1");
   }
@@ -23,12 +21,8 @@ function oa_search_ctools_plugin_api() {
  */
 function oa_search_default_search_api_index_alter(&$data) {
   if (isset($data['database_node_index'])) {
-    $data['database_node_index']->options['fields']['created']['type'] = 'date'; /* WAS: 'integer' */
-    $data['database_node_index']->options['fields']['oa_section_ref:title'] = array(
-      'type' => 'string',
-    ); /* WAS: '' */
-    $data['database_node_index']->options['fields']['og_group_ref:title'] = array(
-      'type' => 'string',
+    $data['database_node_index']->options['fields']['created'] = array(
+      'type' => 'date',
     ); /* WAS: '' */
   }
 }
