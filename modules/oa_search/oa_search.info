@@ -18,6 +18,7 @@ features[facetapi][] = search_api@database_node_index::created
 features[facetapi][] = search_api@database_node_index::type
 features[facetapi][] = search_api@database_node_index:block:oa_section_ref:title
 features[facetapi][] = search_api@database_node_index:block:og_group_ref:title
+features[facetapi][] = search_api@node_index::created
 features[facetapi][] = search_api@node_index:block:oa_section_ref:title
 features[facetapi][] = search_api@node_index:block:og_group_ref:title
 features[features_api][] = api:2
