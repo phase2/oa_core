@@ -252,10 +252,20 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
     $list = array();
   }
   else {
-    if (variable_get('oa_toolbar_toplevel', 1) == 1) {
+    if (isset($vars['show_parents']) && variable_get('oa_toolbar_toplevel', 1) == 1) {
       // restrict spaces to just top-level (no parents)
-      $top_spaces = oa_core_get_groups_by_parent(0, $space_type);
-      $spaces = array_intersect($spaces, $top_spaces);
+      foreach ($spaces as $key => $value) {
+        // parents are cached, so this should be fast
+        $parents = oa_core_get_parents($value, $space_type);
+        foreach ($parents as $parent_id) {
+          if (isset($spaces[$parent_id])) {
+            // parent is also in spaces list, so remove child from list
+            unset($spaces[$key]);
+          }
+        }
+      }
+//      $top_spaces = oa_core_get_groups_by_parent(0, $space_type);
+//      $spaces = array_intersect($spaces, $top_spaces);
     }
     $items = oa_core_get_titles($spaces, $space_type);
     $list = oa_core_truncate_list($items['links'], 25,
