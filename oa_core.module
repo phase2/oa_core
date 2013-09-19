@@ -819,8 +819,8 @@ function oa_core_pathauto_bulk_update_batch_process(&$context) {
   $query->condition('n.nid', $context['sandbox']['current'], '>');
   $query->condition('n.type', array(OA_SPACE_TYPE, OA_GROUP_TYPE), 'IN');
   $query->orderBy('n.nid');
-//  $query->addTag('pathauto_bulk_update');
-//  $query->addMetaData('entity', 'node');
+  $query->addTag('pathauto_bulk_update');
+  $query->addMetaData('entity', 'node');
 
   // Get the total amount of items to process.
   if (!isset($context['sandbox']['total'])) {
