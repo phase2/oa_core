@@ -117,6 +117,7 @@ projects[message_notify][version] = 2.5
 ; Message Subscribe
 projects[message_subscribe][subdir] = contrib
 projects[message_subscribe][version] = 1.0-alpha5
+projects[message_subscribe][patch][2094129] = https://drupal.org/files/message_subscribe_empty_array_2094129_1.patch
 
 ; Flag
 projects[flag][subdir] = contrib
