@@ -759,90 +759,67 @@ function oa_core_token_info() {
 }
 
 /**
+ * Return what the defined alias will eventually be for $nid
+ */
+function oa_core_get_alias($nid) {
+  $cache = &drupal_static('oa_core_alias', array());
+
+  if (isset($cache[$nid])) {
+    return $cache[$nid];
+  }
+
+  $node = node_load($nid);
+  $uri = entity_uri('node', $node);
+  $path = drupal_get_path_alias($uri['path']);
+  if (!isset($node->path['pathauto'])) {
+    module_load_include('inc', 'pathauto');
+    // return what the proper alias for this node will eventually be
+    // don't use 'update' yet since the drupal_get_path_alias() will still be cached
+    $path = pathauto_create_alias('node', 'return', $uri['path'], array('node' => $node), $node->type, $langcode);
+  }
+  $cache[$nid] = $path;
+  return $path;
+}
+
+/**
  * Implements hook_tokens().
  */
 function oa_core_tokens($type, $tokens, array $data = array(), array $options = array()) {
- if ($type == 'node' && !empty($data['node']) && isset($tokens['group-or-section-alias'])) {
+  if ($type == 'node' && !empty($data['node']) && isset($tokens['group-or-section-alias'])) {
     $node = $data['node'];
     $replacements = array();
     $original = $tokens['group-or-section-alias'];
-    if (!empty($node->oa_section_ref[LANGUAGE_NONE][0]['target_id']) && ($path = drupal_get_path_alias('node/' . $node->oa_section_ref[LANGUAGE_NONE][0]['target_id']))) {
-      $replacements[$original] = $path;
+    $section = field_get_items('node', $node, OA_SECTION_FIELD);
+    $space = field_get_items('node', $node, OA_SPACE_FIELD);
+    $section_id = !empty($section[0]['target_id']) ? $section[0]['target_id'] : 0;
+    $space_id = !empty($space[0]['target_id']) ? $space[0]['target_id'] : 0;
+    if ($section_id > 0) {
+      $path = drupal_get_path_alias('node/' . $section_id);
+      if (module_exists('pathauto') && preg_match('#^node/(\d+)#', $path)) {
+        // section alias not defined yet, so define it
+        $path = oa_core_get_alias($section_id);
+      }
+      if (!empty($path)) {
+        $replacements[$original] = $path;
+      }
     }
-    elseif (!empty($node->og_group_ref[LANGUAGE_NONE][0]['target_id']) && ($path = drupal_get_path_alias('node/' . $node->og_group_ref[LANGUAGE_NONE][0]['target_id']))) {
-      $replacements[$original] = $path;
-      if ($node->type != 'oa_section') {
-        $replacements[$original] .= '/content';
+    elseif ($space_id > 0) {
+      $path = drupal_get_path_alias('node/' . $space_id);
+      if (module_exists('pathauto') && preg_match('#^node/(\d+)#', $path)) {
+        // space alias not defined yet, so define it
+        $path = oa_core_get_alias($space_id);
+      }
+      if (!empty($path)) {
+        $replacements[$original] = $path;
+        if ($node->type != OA_SECTION_TYPE) {
+          $replacements[$original] .= '/content';
+        }
       }
     }
     else {
       $replacements[$original] = 'content';
     }
     return $replacements;
-  }
-}
-
-/**
- * Implements hook_pathauto().
- */
-function oa_core_pathauto($op) {
-  switch ($op) {
-    case 'settings':
-      $settings = array();
-      $settings['module'] = 'oa_core';
-      $settings['token_type'] = 'node';
-      $settings['groupheader'] = t('Open Atrium Spaces/Groups');
-      $settings['patterndescr'] = t('Pattern for Spaces');
-      $settings['patterndefault'] = '(set Space/Group node patterns below) [node:title]';
-      $settings['batch_update_callback'] = 'oa_core_pathauto_bulk_update_batch_process';
-      $settings['batch_file'] = drupal_get_path('module', 'oa_core') . '/oa_core.module';
-      return (object) $settings;
-    default:
-      break;
-  }
-}
-
-/**
- * Batch processing callback; Generate aliases for nodes.
- * Copied from Nodes, modified slightly to only affect OA Spaces/Groups
- */
-function oa_core_pathauto_bulk_update_batch_process(&$context) {
-  if (!isset($context['sandbox']['current'])) {
-    $context['sandbox']['count'] = 0;
-    $context['sandbox']['current'] = 0;
-  }
-
-  $query = db_select('node', 'n');
-  $query->leftJoin('url_alias', 'ua', "CONCAT('node/', n.nid) = ua.source");
-  $query->addField('n', 'nid');
-  $query->isNull('ua.source');
-  $query->condition('n.nid', $context['sandbox']['current'], '>');
-  $query->condition('n.type', array(OA_SPACE_TYPE, OA_GROUP_TYPE), 'IN');
-  $query->orderBy('n.nid');
-  $query->addTag('pathauto_bulk_update');
-  $query->addMetaData('entity', 'node');
-
-  // Get the total amount of items to process.
-  if (!isset($context['sandbox']['total'])) {
-    $context['sandbox']['total'] = $query->countQuery()->execute()->fetchField();
-
-    // If there are no nodes to update, the stop immediately.
-    if (!$context['sandbox']['total']) {
-      $context['finished'] = 1;
-      return;
-    }
-  }
-
-  $query->range(0, 25);
-  $nids = $query->execute()->fetchCol();
-
-  pathauto_node_update_alias_multiple($nids, 'bulkupdate');
-  $context['sandbox']['count'] += count($nids);
-  $context['sandbox']['current'] = max($nids);
-  $context['message'] = t('Updated alias for node @nid.', array('@nid' => end($nids)));
-
-  if ($context['sandbox']['count'] != $context['sandbox']['total']) {
-    $context['finished'] = $context['sandbox']['count'] / $context['sandbox']['total'];
   }
 }
 

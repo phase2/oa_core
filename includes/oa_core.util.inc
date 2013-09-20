@@ -395,20 +395,35 @@ function oa_core_get_user_spaces($uid) {
   return array();
 }
 
-function oa_core_get_group_from_node($nid, $allowed_types = array('oa_space', 'oa_group')) {
-  if ($node =  node_load($nid)) {
-    if (in_array($node->type, $allowed_types)) {
-      return $node;
-    }
-    elseif ($items = field_get_items('node', $node, OA_SPACE_FIELD)) {
-      foreach ($items as $item) {
-        if (!empty($item['target_id']) && ($space = oa_core_get_group_from_node($item['target_id']))) {
-          return $space;
-        }
-      }
-    }
+/**
+ * Helper function to return the id of the space/group that contains the nid node
+ * This function is called a lot, so it needs to be fast
+ * Do not use node_load here!
+ */
+function oa_core_get_group_from_node($nid, $allowed_types = array(OA_SPACE_TYPE, OA_GROUP_TYPE)) {
+  $cache = &drupal_static('oa_core_groups', array());
+  if (isset($cache[$nid])) {
+    return $cache[$nid];
   }
-  return FALSE;
+
+  $query = db_select('og_membership', 'f');
+  $query->leftJoin('node', 'n', "n.nid = f.gid");
+  $result = $query
+    ->fields('f', array('gid'))
+    ->condition('f.etid', $nid)
+    ->condition('f.group_type', 'node')
+    ->condition('f.field_name', OA_SPACE_FIELD)
+    ->condition('n.type', $allowed_types, 'IN')
+    ->execute()
+    ->fetchAssoc();
+
+  if (!empty($result)) {
+    $cache[$nid] = $result['gid'];
+  }
+  else {
+    $cache[$nid] = $nid;
+  }
+  return $cache[$nid];
 }
 
 /**
