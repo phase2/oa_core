@@ -140,20 +140,22 @@ function oa_core_members_widget_render($subtype, $conf, $args, $context = NULL) 
       'links' => array('dashboard', 'remove-admin'),
     );
   }
-  $tabs['parents'] = array(
-    'caption' => t('Inherited'),
-    'title' => t('Inheriting members from:'),
-    'items' => array(
-      t('Spaces') => $parent_spaces,
-      t('Groups') => $parent_groups,
-    ),
-    'links' => array(),
-  );
-  if (user_access('create ' . OA_GROUP_TYPE . ' content', $user)) {
-    $tabs['parents']['global_links'][] = array(
-      'title' => t('Add Group'),
-      'url'   => url('node/add/' . str_replace('_', '-', OA_GROUP_TYPE)),
+  if (!$conf['hide_inherited']) {
+    $tabs['parents'] = array(
+      'caption' => t('Inherited'),
+      'title' => t('Inheriting members from:'),
+      'items' => array(
+        t('Spaces') => $parent_spaces,
+        t('Groups') => $parent_groups,
+      ),
+      'links' => array(),
     );
+    if (user_access('create ' . OA_GROUP_TYPE . ' content', $user)) {
+      $tabs['parents']['global_links'][] = array(
+        'title' => t('Add Group'),
+        'url'   => url('node/add/' . str_replace('_', '-', OA_GROUP_TYPE)),
+      );
+    }
   }
 
   if ($space_type == OA_SPACE_TYPE) {
