@@ -85,6 +85,13 @@ function oa_core_menu() {
     'page arguments' => array('oa_core_configure_form'),
     'access arguments' => array('administer site configuration'),
   );
+  $items['admin/openatrium/groups'] = array(
+    'title' => 'Groups',
+    'description' => 'Configure Open Atrium Groups',
+    'weight' => 0,
+    'access arguments' => array('administer site configuration'),
+    'page callback' => 'oa_core_show_groups',
+  );
   $items['group/%/%/remove/%/%'] = array(
     'title' => 'Remove member',
     'type' => MENU_CALLBACK,
@@ -315,6 +322,13 @@ function oa_core_space_template() {
   ctools_include('export-ui');
   $handler = panelizer_entity_plugin_get_handler('node');
   return panelizer_export_ui_switcher_page($handler, OA_SPACE_TYPE . '.page_manager', 'panelizer_defaults', 'list');
+}
+
+/**
+ * Menu callback for Groups
+ */
+function oa_core_show_groups() {
+  drupal_goto('groups');
 }
 
 /**

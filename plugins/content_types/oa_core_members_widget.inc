@@ -140,7 +140,7 @@ function oa_core_members_widget_render($subtype, $conf, $args, $context = NULL) 
       'links' => array('dashboard', 'remove-admin'),
     );
   }
-  if (!$conf['hide_inherited']) {
+  if (!isset($conf['hide_inherited']) || !$conf['hide_inherited']) {
     $tabs['parents'] = array(
       'caption' => t('Inherited'),
       'title' => t('Inheriting members from:'),
