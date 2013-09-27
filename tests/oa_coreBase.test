@@ -9,13 +9,13 @@
  * Base class for testing openatrium web interaction.
  *
  * It will try installing openatrium. For a quicker test, replace
- * SimpleTestCloneTestCase with SimpleTestCloneTestCase from the simpletest_clone
+ * DrupalWebTestCase with SimpleTestCloneTestCase from the simpletest_clone
  * module.
  *
  * See http://drupal.org/project/installprofiletest for patches need to have
  * a successful run w/o simpletest clone.
  */
-abstract class oa_coreBaseWebTest extends SimpleTestCloneTestCase {
+abstract class oa_coreBaseWebTest extends DrupalWebTestCase {
   protected $profile = 'openatrium';
 
   /**
