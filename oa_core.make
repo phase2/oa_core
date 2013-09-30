@@ -117,6 +117,15 @@ projects[message_notify][version] = 2.5
 ; Message Subscribe
 projects[message_subscribe][subdir] = contrib
 projects[message_subscribe][version] = 1.0-alpha5
+projects[message_subscribe][patch][2094129] = https://drupal.org/files/message_subscribe_empty_array_2094129_1.patch
+
+; Message Digest
+projects[message_digest][type] = module
+projects[message_digest][subdir] = contrib
+projects[message_digest][download][type] = git
+projects[message_digest][download][url] = http://git.drupal.org/project/message_digest.git
+projects[message_digest][download][branch] = 7.x-1.x
+projects[message_digest][download][revision] = 7af9897
 
 ; Flag
 projects[flag][subdir] = contrib

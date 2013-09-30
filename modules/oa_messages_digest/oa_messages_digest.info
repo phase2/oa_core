@@ -1,0 +1,7 @@
+name = Open Atrium Messages Digest
+description = Digest message types for Open Atrium
+package = Open Atrium
+core = 7.x
+php = 5.2.4
+
+dependencies[] = oa_messages
