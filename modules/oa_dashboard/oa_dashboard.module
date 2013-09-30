@@ -414,3 +414,34 @@ function oa_dashboard_preprocess_oa_toolbar_menu_button(&$vars) {
 
   $vars['oa_toolbar_btn_class'] = variable_get('oa_toolbar_style', 0) ? '' : 'btn-inverse';
 }
+
+/**
+ * Implements hook_responsive_panels_regions_positions_alter().
+ */
+function oa_dashboard_responsive_panels_regions_positions_alter(&$positions) {
+  // We use the top position for the breadcrumb only, so we unset it here.
+  unset($positions['top']);
+}
+
+/**
+ * Implements hook_responsive_panels_regions_alter().
+ */
+function oa_dashboard_responsive_panels_regions_alter(&$regions) {
+  // Manually add our top region here.
+  $regions['top'] = array(
+    'settings' => array(
+      'position' => 'top',
+    ),
+    'icon' => 'icon-list',
+  );
+}
+
+/**
+ * Implements hook_colorizer_instance_alter()
+ * Set the colorizer instance to a space-specific value
+ */
+function oa_dashboard_colorizer_instance_alter(&$instance) {
+  $space_id = oa_core_get_space_context();
+  $instance = $instance . '_' . $space_id;
+}
+
