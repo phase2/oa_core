@@ -248,6 +248,12 @@ projects[jquery_update][download][type] = git
 projects[jquery_update][download][branch] = 7.x-2.x
 projects[jquery_update][patch][1448490] = http://drupal.org/files/jquery_update-fixes-states-js-1448490.patch
 
+; Colorizer
+projects[colorizer][download][type] = git
+projects[colorizer][subdir] = contrib
+projects[colorizer][download][url] = http://git.drupal.org/project/colorizer.git
+projects[colorizer][download][branch] = 7.x-1.x
+
 ; ##### Organic Groups related #####
 ; Organic Groups
 projects[og][download][type] = git

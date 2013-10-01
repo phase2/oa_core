@@ -436,12 +436,3 @@ function oa_dashboard_responsive_panels_regions_alter(&$regions) {
   );
 }
 
-/**
- * Implements hook_colorizer_instance_alter()
- * Set the colorizer instance to a space-specific value
- */
-function oa_dashboard_colorizer_instance_alter(&$instance) {
-  $space_id = oa_core_get_space_context();
-  $instance = $instance . '_' . $space_id;
-}
-

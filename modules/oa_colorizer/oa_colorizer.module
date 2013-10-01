@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Provides integration between Open Atrium and Colorizer module
+ */
+
+/**
+ * Implements hook_colorizer_instance_alter()
+ * Set the colorizer instance to a space-specific value
+ */
+function oa_colorizer_colorizer_instance_alter(&$instance) {
+  $space_id = oa_core_get_space_context();
+  $instance = $instance . '_' . $space_id;
+}
