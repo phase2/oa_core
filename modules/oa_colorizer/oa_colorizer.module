@@ -13,3 +13,54 @@ function oa_colorizer_colorizer_instance_alter(&$instance) {
   $space_id = oa_core_get_space_context();
   $instance = $instance . '_' . $space_id;
 }
+
+/**
+ * Implements hook_menu().
+ */
+function oa_colorizer_menu() {
+  $items = array();
+  $items['group/%/%/admin/colorizer'] = array(
+    'title callback' => 'og_ui_menu_title_callback',
+    'title arguments' => array('Colors for group @group', 1, 2),
+    'description' => 'Manage theme colors for a group.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('oa_colorizer_edit_form', 1, 2),
+    'access callback' => 'og_ui_user_access_group',
+    'access arguments' => array('manage theme colors', 1, 2),
+  );
+
+  return $items;
+}
+
+/**
+ * Implement hook_og_permission().
+ */
+function oa_colorizer_og_permission() {
+  $items = array();
+
+  $items['manage theme colors'] = array(
+    'title' => t('Manage theme colors'),
+    'description' => t('Manage the theme colors for this group.'),
+    'default role' => array(OG_ADMINISTRATOR_ROLE),
+    'restrict access' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_og_ui_get_group_admin()
+ */
+function oa_colorizer_og_ui_get_group_admin($group_type, $gid) {
+  $items = array();
+
+  if (og_user_access($group_type, $gid, 'manage theme colors')) {
+    $items['manage_colors'] = array(
+      'title' => t('Theme colors'),
+      'description' => t('Manage theme colors'),
+      'href' => 'admin/colorizer',
+    );
+  }
+
+  return $items;
+}
