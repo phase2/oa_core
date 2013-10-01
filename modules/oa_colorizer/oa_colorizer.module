@@ -64,3 +64,28 @@ function oa_colorizer_og_ui_get_group_admin($group_type, $gid) {
 
   return $items;
 }
+
+/**
+ * Theme colors edit variable form.
+ */
+function oa_colorizer_edit_form($form, &$form_state, $entity_type, $entity_id) {
+  module_load_include('admin.inc', 'colorizer');
+  $form = colorizer_admin_form(FALSE, TRUE);
+  return $form;
+}
+
+/**
+ * Form validation handler for oa_colorizer_edit_form().
+ */
+function oa_colorizer_edit_form_validate($form, &$form_state) {
+  module_load_include('admin.inc', 'colorizer');
+  return colorizer_admin_form_validate($form, $form_state);
+}
+
+/**
+ * Form submission handler for oa_colorizer_edit_form().
+ */
+function oa_colorizer_edit_form_submit($form, &$form_state) {
+  module_load_include('admin.inc', 'colorizer');
+  return colorizer_admin_form_submit($form, $form_state);
+}
