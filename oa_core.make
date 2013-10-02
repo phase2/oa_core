@@ -88,8 +88,12 @@ projects[entity][version] = 1.2
 projects[entity][subdir] = contrib
 
 ; Features
-projects[features][version] = 2.0-rc3
 projects[features][subdir] = contrib
+projects[features][type] = module
+projects[features][download][branch] = 7.x-2.x
+projects[features][download][type] = git
+projects[features][download][url] = http://git.drupal.org/project/features.git
+projects[features][download][revision] = ac15c4e
 
 ; Views
 projects[views][version] = 3.7
