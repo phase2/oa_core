@@ -172,6 +172,7 @@ function oa_core_members_widget_render($subtype, $conf, $args, $context = NULL) 
       );
     }
   }
+  $ajax = (variable_get('oa_use_ajax', FALSE)) ? '/nojs' : '';
   foreach ($tabs as $category => $tab) {
     $tabs[$category]['items'] = array();
     if (!empty($tab['items'])) {
@@ -181,6 +182,9 @@ function oa_core_members_widget_render($subtype, $conf, $args, $context = NULL) 
           if ($entity->uid == $space->uid) {
             // don't show links for main space owner
             $tabs[$category]['items'][$key][$id]['uid'] = 0;
+          }
+          if (!$ajax) {
+            unset($tabs[$category]['items'][$key][$id]['options']['attributes']);
           }
         }
       }
@@ -193,7 +197,6 @@ function oa_core_members_widget_render($subtype, $conf, $args, $context = NULL) 
   if (count($tabs) == 1) {
     unset($tabs[key($tabs)]['title']);
   }
-  $ajax = (variable_get('oa_use_ajax', FALSE)) ? '/nojs' : '';
   $links = array(
     'dashboard' => array(
       'title' => t('Dashboard'),
