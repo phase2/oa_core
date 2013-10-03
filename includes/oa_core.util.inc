@@ -299,12 +299,12 @@ function oa_core_truncate_list($list, $count, $more_link = '', $always_link = FA
  * @return array
  * An array of public gids
  */
-function oa_core_get_public_spaces() {
+function oa_core_get_public_spaces($group_types = array(OA_SPACE_TYPE => OA_SPACE_TYPE)) {
   $public_spaces = &drupal_static(__FUNCTION__);
   if (!isset($public_spaces)) {
     $query = db_select('field_data_group_access', 'g')
       ->fields('g', array('entity_id'))
-      ->condition('bundle', OA_SPACE_TYPE)
+      ->condition('bundle', $group_types, 'IN')
       ->condition('entity_type', 'node')
       ->condition('group_access_value', 0);
     $public_spaces = $query->execute()->fetchCol(0);
