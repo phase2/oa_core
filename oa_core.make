@@ -88,7 +88,7 @@ projects[entity][version] = 1.2
 projects[entity][subdir] = contrib
 
 ; Features
-projects[features][version] = 2.0-rc4
+projects[features][version] = 2.0-rc5
 projects[features][subdir] = contrib
 
 ; Views
