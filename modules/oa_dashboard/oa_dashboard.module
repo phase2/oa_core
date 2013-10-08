@@ -414,3 +414,24 @@ function oa_dashboard_preprocess_oa_toolbar_menu_button(&$vars) {
 
   $vars['oa_toolbar_btn_class'] = variable_get('oa_toolbar_style', 0) ? '' : 'btn-inverse';
 }
+
+/**
+ * Implements hook_oa_responsive_regions_positions_alter().
+ */
+function oa_dashboard_oa_responsive_regions_positions_alter(&$positions) {
+  // We will keep the top position for the oa navbar so we unset it here.
+  unset($positions['top']);
+}
+
+/**
+ * Implements hook_oa_responsive_regions_alter().
+ */
+function oa_dashboard_oa_responsive_regions_alter(&$regions) {
+  // Manually add our top region here.
+  $regions['top'] = array(
+    'settings' => array(
+      'position' => 'top',
+    ),
+    'icon' => 'icon-list',
+  );
+}

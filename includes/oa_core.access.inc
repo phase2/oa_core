@@ -263,6 +263,11 @@ function oa_core_og_membership_insert($og_membership) {
 function oa_core_visibility_data($node) {
   $data = array();
   $data['published'] = !empty($node->status);
+  $data['archived'] = FALSE;
+  if (module_exists('flag')) {
+    $flag = flag_load('trash');
+    $data['archived'] = $flag->is_flagged($node->nid);
+  }
   if ($node->type == OA_SPACE_TYPE || $node->type == OA_GROUP_TYPE) {
     $visibility = field_get_items('node', $node, 'group_access');
     $data['public'] = empty($visibility[0]['value']);

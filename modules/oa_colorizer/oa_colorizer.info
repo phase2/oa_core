@@ -1,0 +1,7 @@
+name = Open Atrium Colorizer
+description = Colorize your theme
+package = Open Atrium
+core = 7.x
+
+dependencies[] = colorizer
+dependencies[] = oa_core

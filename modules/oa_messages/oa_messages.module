@@ -105,7 +105,7 @@ function oa_messages_create($message_type, $entity = NULL, $entity_type = 'node'
 
     $wrapper->save();
 
-    if ($send && isset($entity) && ($entity_type == 'node')) {
+    if ($send && module_exists('message_subscribe') && isset($entity) && ($entity_type == 'node')) {
       $notify_options = oa_messages_build_notify_options();
       $subscribe_options = oa_messages_build_subscribe_options($entity, $message);
       message_subscribe_send_message('node', $entity, $message, $notify_options, $subscribe_options);

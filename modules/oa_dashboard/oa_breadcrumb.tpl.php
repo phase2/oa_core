@@ -7,7 +7,7 @@
 <ul id="oa_breadcrumb" class="oa_toolbar">
   <?php if (!empty($space_label)): ?>
     <li class="btn-group oa-breadcrumb">
-      <a href="<?php print $home_url; ?>"><i class="icon-home"></i><span class='element-invisible'>Home</span></a>
+      <a href="<?php print $home_url; ?>" class="btn btn-home <?php print $oa_toolbar_btn_class; ?>"><i class="icon-home"></i><span class='element-invisible'>Home</span></a>
       <?php if (!empty($home_spaces)): ?>
         <a class="dropdown-toggle btn <?php print $oa_toolbar_btn_class; ?>" id="parent-dropdown" data-toggle="dropdown" href="#"><b class="caret"></b></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="home-dropdown">

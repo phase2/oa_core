@@ -88,7 +88,7 @@ projects[entity][version] = 1.2
 projects[entity][subdir] = contrib
 
 ; Features
-projects[features][version] = 2.0-rc3
+projects[features][version] = 2.0-rc5
 projects[features][subdir] = contrib
 
 ; Views
@@ -117,7 +117,7 @@ projects[message_notify][version] = 2.5
 ; Message Subscribe
 projects[message_subscribe][subdir] = contrib
 projects[message_subscribe][version] = 1.0-alpha5
-projects[message_subscribe][patch][2094129] = https://drupal.org/files/message_subscribe_empty_array_2094129_1.patch
+projects[message_subscribe][patch][2094129] = http://drupal.org/files/message_subscribe_empty_array_2094129_1.patch
 
 ; Message Digest
 projects[message_digest][type] = module
@@ -247,6 +247,12 @@ projects[jquery_update][version] = 2.3
 projects[jquery_update][download][type] = git
 projects[jquery_update][download][branch] = 7.x-2.x
 projects[jquery_update][patch][1448490] = http://drupal.org/files/jquery_update-fixes-states-js-1448490.patch
+
+; Colorizer
+projects[colorizer][download][type] = git
+projects[colorizer][subdir] = contrib
+projects[colorizer][download][url] = http://git.drupal.org/project/colorizer.git
+projects[colorizer][download][branch] = 7.x-1.x
 
 ; ##### Organic Groups related #####
 ; Organic Groups
