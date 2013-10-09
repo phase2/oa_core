@@ -9,7 +9,7 @@
  * Implements hook_colorizer_instance_alter()
  * Set the colorizer instance to a space-specific value
  */
-function oa_colorizer_colorizer_instance_alter(&$instance) {
+function oa_appearance_colorizer_instance_alter(&$instance) {
   $space_id = oa_core_get_space_context();
   $instance = $instance . '_' . $space_id;
 }
@@ -17,16 +17,16 @@ function oa_colorizer_colorizer_instance_alter(&$instance) {
 /**
  * Implements hook_menu().
  */
-function oa_colorizer_menu() {
+function oa_appearance_menu() {
   $items = array();
-  $items['group/%/%/admin/colorizer'] = array(
+  $items['group/%/%/admin/appearance'] = array(
     'title callback' => 'og_ui_menu_title_callback',
-    'title arguments' => array('Colors for group @group', 1, 2),
-    'description' => 'Manage theme colors for a group.',
+    'title arguments' => array('Appearance of group @group', 1, 2),
+    'description' => 'Manage appearance of a group.',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('oa_colorizer_edit_form', 1, 2),
+    'page arguments' => array('oa_appearance_edit_form', 1, 2),
     'access callback' => 'og_ui_user_access_group',
-    'access arguments' => array('manage theme colors', 1, 2),
+    'access arguments' => array('manage appearance', 1, 2),
   );
 
   return $items;
@@ -35,12 +35,12 @@ function oa_colorizer_menu() {
 /**
  * Implement hook_og_permission().
  */
-function oa_colorizer_og_permission() {
+function oa_appearance_og_permission() {
   $items = array();
 
-  $items['manage theme colors'] = array(
-    'title' => t('Manage theme colors'),
-    'description' => t('Manage the theme colors for this group.'),
+  $items['manage appearance'] = array(
+    'title' => t('Manage appearance'),
+    'description' => t('Manage the appearance for this group.'),
     'default role' => array(OG_ADMINISTRATOR_ROLE),
     'restrict access' => TRUE,
   );
@@ -51,14 +51,14 @@ function oa_colorizer_og_permission() {
 /**
  * Implements hook_og_ui_get_group_admin()
  */
-function oa_colorizer_og_ui_get_group_admin($group_type, $gid) {
+function oa_appearance_og_ui_get_group_admin($group_type, $gid) {
   $items = array();
 
-  if (og_user_access($group_type, $gid, 'manage theme colors')) {
-    $items['manage_colors'] = array(
-      'title' => t('Theme colors'),
-      'description' => t('Manage theme colors'),
-      'href' => 'admin/colorizer',
+  if (og_user_access($group_type, $gid, 'manage appearance')) {
+    $items['manage_appearance'] = array(
+      'title' => t('Appearance'),
+      'description' => t('Manage appearance'),
+      'href' => 'admin/appearance',
     );
   }
 
@@ -68,24 +68,24 @@ function oa_colorizer_og_ui_get_group_admin($group_type, $gid) {
 /**
  * Theme colors edit variable form.
  */
-function oa_colorizer_edit_form($form, &$form_state, $entity_type, $entity_id) {
+function oa_appearance_edit_form($form, &$form_state, $entity_type, $entity_id) {
   module_load_include('admin.inc', 'colorizer');
   $form = colorizer_admin_form(FALSE, TRUE);
   return $form;
 }
 
 /**
- * Form validation handler for oa_colorizer_edit_form().
+ * Form validation handler for oa_appearance_edit_form().
  */
-function oa_colorizer_edit_form_validate($form, &$form_state) {
+function oa_appearance_edit_form_validate($form, &$form_state) {
   module_load_include('admin.inc', 'colorizer');
   return colorizer_admin_form_validate($form, $form_state);
 }
 
 /**
- * Form submission handler for oa_colorizer_edit_form().
+ * Form submission handler for oa_appearance_edit_form().
  */
-function oa_colorizer_edit_form_submit($form, &$form_state) {
+function oa_appearance_edit_form_submit($form, &$form_state) {
   module_load_include('admin.inc', 'colorizer');
   return colorizer_admin_form_submit($form, $form_state);
 }
