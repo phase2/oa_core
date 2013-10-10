@@ -1,0 +1,16 @@
+.oa-banner-text {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 40px;
+  font-weight: bold;
+}
+.oa-banner {
+  position: relative;
+}
+.oa-banner-hidden {
+  opacity: 0;
+}
+.oa-banner-appeared {
+  opacity : 1;
+}

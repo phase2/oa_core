@@ -3,5 +3,6 @@ description = Change appearances of Spaces
 package = Open Atrium
 core = 7.x
 
+stylesheets[all][] = oa_appearance.css
 dependencies[] = colorizer
 dependencies[] = oa_core
