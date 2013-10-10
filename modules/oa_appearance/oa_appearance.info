@@ -1,5 +1,5 @@
-name = Open Atrium Colorizer
-description = Colorize your theme
+name = Open Atrium Appearance
+description = Change appearances of Spaces
 package = Open Atrium
 core = 7.x
 

@@ -78,8 +78,8 @@ function oa_permissions_og_features_default_permissions() {
     ),
   );
 
-  // Exported og permission: 'node:oa_group:manage theme colors'
-  $permissions['node:oa_group:manage theme colors'] = array(
+  // Exported og permission: 'node:oa_group:manage appearance'
+  $permissions['node:oa_group:manage appearance'] = array(
     'roles' => array(
       'administrator member' => 'administrator member',
     ),
@@ -208,8 +208,8 @@ function oa_permissions_og_features_default_permissions() {
     ),
   );
 
-  // Exported og permission: 'node:oa_space:manage theme colors'
-  $permissions['node:oa_space:manage theme colors'] = array(
+  // Exported og permission: 'node:oa_space:manage appearance'
+  $permissions['node:oa_space:manage appearance'] = array(
     'roles' => array(
       'administrator member' => 'administrator member',
     ),
