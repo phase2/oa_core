@@ -29,20 +29,20 @@ function oa_core_update_7003() {
 /**
  * Enable message_digest and bootstrap_tour.
  */
-function oa_core_update_7004() {
+function oa_core_update_7203() {
   module_enable(array('message_digest', 'bootstrap_tour'));
 }
 
 /**
  * Enable OA Appearance
  */
-function oa_core_update_7005() {
+function oa_core_update_7204() {
   module_enable(array('oa_appearance'));
 }
 
 /**
  * Enable oa_tour.
  */
-function oa_core_update_7006() {
+function oa_core_update_7205() {
   module_enable(array('oa_tour'));
 }
