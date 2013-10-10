@@ -28,11 +28,13 @@
 .oa-banner {
   position: relative;
 }
-.oa-banner-hidden {
+.oa-banner {
+  height: 0;
   opacity: 0;
+  transition: opacity 0.5s, height 0.25s;
 }
 .oa-banner-appeared {
-  opacity : 1;
+  opacity : 1; filter: alpha(opacity=100);
 }
 .oa-banner-img {
   vertical-align: top;
