@@ -34,30 +34,6 @@ function oa_dashboard_form_oa_core_configure_form_alter(&$form, &$form_state, $f
     '#description' => t('Caption shown in dropdown for Spaces menu.'),
   );
 
-  $form['oa_toolbar']['oa_toolbar_style'] = array(
-    '#title' => t('Toolbar Style'),
-    '#type' => 'select',
-    '#required' => TRUE,
-    '#options' => array(
-      '1' => 'Normal (light)',
-      '0' => 'Inverted (dark)',
-    ),
-    '#default_value' => variable_get('oa_toolbar_style', 0),
-    '#description' => t('Select the color/style of the site toolbar.'),
-  );
-
-  $form['oa_toolbar']['oa_toolbar_sticky'] = array(
-    '#title' => t('Toolbar Sticky'),
-    '#type' => 'select',
-    '#required' => TRUE,
-    '#options' => array(
-      '1' => 'Yes',
-      '0' => 'No',
-    ),
-    '#default_value' => variable_get('oa_toolbar_sticky', 1),
-    '#description' => t('Select whether the toolbar sticks to the top of the page.'),
-  );
-
   $form['oa_toolbar']['oa_toolbar_toplevel'] = array(
     '#title' => t('Only show top-level spaces'),
     '#type' => 'select',
@@ -76,9 +52,9 @@ function oa_dashboard_form_oa_core_configure_form_alter(&$form, &$form_state, $f
  * Implements template_preprocess_page().
  */
 function oa_dashboard_preprocess_page(&$vars) {
-  $vars['oa_toolbar_class'] = variable_get('oa_toolbar_style', 0) ? '' : 'navbar-inverse';
+  $vars['oa_toolbar_class'] = 'navbar-inverse';
   $vars['oa_toolbar_btn_class'] = variable_get('oa_toolbar_style', 0) ? '' : 'btn-inverse';
-  $vars['oa_toolbar_sticky'] = variable_get('oa_toolbar_sticky', 1) ? 'navbar-fixed-top' : '';
+  $vars['oa_toolbar_sticky'] = 'navbar-fixed-top';
 }
 
 /**
@@ -164,9 +140,6 @@ function oa_dashboard_theme() {
 function oa_dashboard_preprocess_oa_toolbar(&$vars) {
   global $user;
 
-  drupal_add_js(array(
-    'oa_toolbar_sticky' => variable_get('oa_toolbar_sticky', 1),
-  ), array('type' => 'setting'));
   drupal_add_js(drupal_get_path('module', 'oa_dashboard') . '/js/oa-dashboard.js');
 
   // Separators
@@ -408,11 +381,8 @@ function oa_dashboard_preprocess_oa_user_badge(&$vars) {
  */
 function oa_dashboard_preprocess_oa_toolbar_menu_button(&$vars) {
   drupal_add_js(drupal_get_path('module', 'oa_dashboard') . '/js/toolbar-menu-toggle.js');
-  drupal_add_js(array(
-    'oa_toolbar_sticky' => variable_get('oa_toolbar_sticky', 1),
-  ), array('type' => 'setting'));
 
-  $vars['oa_toolbar_btn_class'] = variable_get('oa_toolbar_style', 0) ? '' : 'btn-inverse';
+  $vars['oa_toolbar_btn_class'] = 'btn-inverse';
 }
 
 /**

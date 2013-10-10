@@ -17,7 +17,7 @@
         $navbar.removeAttr('data-offset-top');
       }
       if ($oa_navbar.length) {
-        if (settings.oa_toolbar_sticky == 1 && $oa_navbar.css('position') !== 'static') {
+        if ($oa_navbar.css('position') !== 'static') {
           $oa_navbar.attr('data-offset-top', '');
           $height = $oa_navbar.height();
         }
