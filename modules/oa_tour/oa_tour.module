@@ -21,7 +21,6 @@ function oa_tour_theme() {
   return array(
     'oa_tour_dropdown' => array(
       'template'  => 'oa-tour-dropdown',
-      'variables' => array('var_name'=>NULL),
       'path' => drupal_get_path('module', 'oa_tour') . '/templates',
     ),
   );
