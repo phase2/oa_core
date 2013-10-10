@@ -297,6 +297,27 @@ function oa_layouts_default_panels_mini() {
     $pane->locks = array();
     $display->content['new-8'] = $pane;
     $display->panels['contentmain'][5] = 'new-8';
+    $pane = new stdClass();
+    $pane->pid = 'new-9';
+    $pane->panel = 'contentmain';
+    $pane->type = 'oa_tour_custom_pane';
+    $pane->subtype = 'oa_tour_custom_pane';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array();
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => 'pull-right',
+    );
+    $pane->extras = array();
+    $pane->position = 6;
+    $pane->locks = array();
+    $display->content['new-9'] = $pane;
+    $display->panels['contentmain'][6] = 'new-9';
   $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $mini->display = $display;
@@ -334,7 +355,7 @@ function oa_layouts_default_panels_mini() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-9';
+    $pane->pid = 'new-10';
     $pane->panel = 'middle';
     $pane->type = 'oa_widgets_content_visibility';
     $pane->subtype = 'oa_widgets_content_visibility';
@@ -359,8 +380,8 @@ function oa_layouts_default_panels_mini() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-9'] = $pane;
-    $display->panels['middle'][0] = 'new-9';
+    $display->content['new-10'] = $pane;
+    $display->panels['middle'][0] = 'new-10';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $mini->display = $display;
