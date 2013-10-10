@@ -1,0 +1,8 @@
+name = Open Atrium Tour
+description = Open Atrium customizations for the Bootstrap Tour module
+package = Open Atrium
+core = 7.x
+php = 5.2.4
+
+dependencies[] = bootstrap_tour
+dependencies[] = ctools
