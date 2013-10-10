@@ -9,7 +9,7 @@
 ?>
 
 <?php if (!empty($banner)): ?>
-<div class='oa-banner' data-width='<?php print $width?>' data-height='<?php print $height?>'>
+<div class='oa-banner <?php print $banner_class?>' data-width='<?php print $width?>' data-height='<?php print $height?>'>
   <?php print $banner?>
   <?php if (!empty($text)): ?>
   <div class='oa-banner-text' style='height: 100px'>
