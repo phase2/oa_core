@@ -1,9 +1,29 @@
-.oa-banner-text {
+.oa-banner-overlay {
   position: absolute;
   top: 20px;
   left: 20px;
   font-size: 40px;
   font-weight: bold;
+}
+.oa-banner-text {
+  display: inline-block;
+  margin: 20px 5px 10px 30px;
+  font-size: 40px;
+  line-height: 40px;
+  font-weight: bold;
+}
+.oa-banner-slogan {
+  margin: 35px 30px 10px 5px;
+  font-size: 25px;
+  font-style: italic;
+  float: right;
+}
+.oa-banner-slogan-overlay {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 25px;
+  font-style: italic;
 }
 .oa-banner {
   position: relative;
@@ -13,4 +33,12 @@
 }
 .oa-banner-appeared {
   opacity : 1;
+}
+.oa-banner-img {
+  vertical-align: top;
+  margin: 5px 10px;
+}
+.oa-banner-overlay-img {
+  vertical-align: bottom;
+  margin: 0;
 }

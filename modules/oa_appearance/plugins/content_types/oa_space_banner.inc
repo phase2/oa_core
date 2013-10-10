@@ -59,8 +59,11 @@ function oa_space_banner_render($subtype, $conf, $args, $context = NULL) {
 
   $vars['banner'] = '';
   $vars['text'] = '';
+  $vars['slogan'] = '';
   $vars['height'] = '';
   $vars['width'] = '';
+  $vars['banner_text_class'] = 'oa-banner-overlay';
+  $vars['banner_slogan_class'] = 'oa-banner-slogan-overlay';
   $vars['banner_class'] = ($conf['banner_position'] == 1) ? 'oa_banner_before' : 'oa_banner_after';
 
   if ($show_space) {
@@ -72,7 +75,7 @@ function oa_space_banner_render($subtype, $conf, $args, $context = NULL) {
       'height' => $space_picture['height'],
       'alt' => $space_picture['alt'],
       'attributes' => array(
-        'class' => 'oa-banner-img'
+        'class' => 'oa-banner-overlay-img'
       ),
     ));
     $field = field_view_field('node', $space, 'field_oa_banner_text', array('label' => 'hidden'));
@@ -90,13 +93,21 @@ function oa_space_banner_render($subtype, $conf, $args, $context = NULL) {
       'height' => $vars['height'],
       'alt' => t('Site banner'),
       'attributes' => array(
-        'class' => 'oa-banner-img'
+        'class' => ($stretch) ? 'oa-banner-overlay-img' : 'oa-banner-img',
       ),
     ));
     $vars['width'] = ($stretch) ? $vars['width'] : 0;
     $use_sitename = variable_get('oa_banner_sitename', TRUE);
     if ($use_sitename) {
       $vars['text'] = variable_get('site_name', '');
+    }
+    $use_siteslogan = variable_get('oa_banner_siteslogan', FALSE);
+    if ($use_siteslogan) {
+      $vars['slogan'] = variable_get('site_slogan', '');
+    }
+    if (!$stretch) {
+      $vars['banner_text_class'] = 'oa-banner-text';
+      $vars['banner_slogan_class'] = 'oa-banner-slogan';
     }
   }
   $block = new stdClass();
