@@ -302,7 +302,7 @@ projects[bootstrap_tour][download][url] = http://git.drupal.org/project/bootstra
 projects[bootstrap_tour][download][branch] = 7.x-1.x
 projects[bootstrap_tour][download][revision] = cfb50d6
 libraries[bootstrap_tour][download][type] = get
-libraries[bootstrap_tour][download][url] = https://github.com/sorich87/bootstrap-tour/archive/v0.5.0.zip
+libraries[bootstrap_tour][download][url] = https://github.com/sorich87/bootstrap-tour/archive/master.zip
 libraries[bootstrap_tour][destination] = libraries
 libraries[bootstrap_tour][directory_name] = bootstrap_tour
 
