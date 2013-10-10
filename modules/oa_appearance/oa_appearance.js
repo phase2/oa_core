@@ -19,7 +19,7 @@
           if ($img_width > 0) {
             $new_height = $img_height * $width / $img_width;
             $new_width = $new_height * $img_width / $img_height;
-            var $image = $('.oa-banner-img', this);
+            var $image = $('.oa-banner-overlay-img', this);
             $image.css('height', $new_height);
             $image.css('width', '100%');
             $image.addClass('oa-banner-hidden');
@@ -30,7 +30,7 @@
   }
 
   $(window).load(function() {
-    var $image = $('.oa-banner-img');
+    var $image = $('.oa-banner-overlay-img');
     if ($image.length) {
       $image.css( 'height', 'auto'); // let the banner resize from now on
       $image.addClass('oa-banner-appeared');
