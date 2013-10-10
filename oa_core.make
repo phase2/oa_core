@@ -300,9 +300,4 @@ projects[bootstrap_tour][subdir] = contrib
 projects[bootstrap_tour][download][type] = git
 projects[bootstrap_tour][download][url] = http://git.drupal.org/project/bootstrap_tour.git
 projects[bootstrap_tour][download][branch] = 7.x-1.x
-projects[bootstrap_tour][download][revision] = 21fefd8
-libraries[bootstrap_tour][download][type] = get
-libraries[bootstrap_tour][download][url] = https://github.com/sorich87/bootstrap-tour/archive/master.zip
-libraries[bootstrap_tour][destination] = libraries
-libraries[bootstrap_tour][directory_name] = bootstrap_tour
-
+projects[bootstrap_tour][download][revision] = 8b39b59
