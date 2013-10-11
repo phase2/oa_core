@@ -64,7 +64,7 @@ function oa_space_banner_render($subtype, $conf, $args, $context = NULL) {
   $vars['width'] = '';
   $vars['banner_text_class'] = 'oa-banner-overlay';
   $vars['banner_slogan_class'] = 'oa-banner-slogan-overlay';
-  $vars['banner_class'] = ($conf['banner_position'] == 1) ? 'oa_banner_before' : 'oa_banner_after';
+  $vars['banner_class'] = ($conf['banner_position'] == 1) ? 'oa-banner-before' : 'oa-banner-after';
 
   if ($show_space) {
     $vars['height'] = $space_picture['height'];

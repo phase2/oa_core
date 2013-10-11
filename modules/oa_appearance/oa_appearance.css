@@ -29,9 +29,8 @@
   position: relative;
 }
 .oa-banner {
-  height: 0;
   opacity: 0;
-  transition: opacity 0.5s, height 0.25s;
+  transition: opacity 0.1s;
 }
 .oa-banner-appeared {
   opacity : 1; filter: alpha(opacity=100);
