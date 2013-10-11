@@ -21,7 +21,7 @@
             // set the image sizes before image gets loaded
             var $img_width = $(this).attr('data-width');
             var $img_height = $(this).attr('data-height');
-            var $new_height = $img_height;
+            var $new_height = parseInt($img_height);
             if ($img_width > 0) {
               $new_height = $img_height * $width / $img_width;
             }
