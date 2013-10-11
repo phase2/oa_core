@@ -6,6 +6,15 @@
  */
 
 /**
+ * Implements hook_ctools_plugin_directory().
+ */
+function oa_dashboard_ctools_plugin_directory($owner, $plugin_type) {
+  if ($owner == 'ctools') {
+    return "plugins/$plugin_type";
+  }
+}
+
+/**
  * @param $form
  * @param $form_state
  * @param $form_id
@@ -131,7 +140,26 @@ function oa_dashboard_theme() {
     'oa_breadcrumb' => array(
       'template' => 'oa_breadcrumb',
     ),
+    'oa_navigation' => array(
+      'variables' => array('menu_name' => NULL),
+      'template' => 'oa-navigation',
+    ),
   );
+}
+
+/**
+ * Preprocess the OA Navigation.
+ */
+function oa_dashboard_preprocess_oa_navigation(&$vars) {
+  $menu = menu_tree($vars['menu_name']);
+
+  // Format and add menu to template.
+  $menu['#theme_wrappers'] = array('menu_tree__oa_navigation');
+  foreach (element_children($menu) as $mlid) {
+    // Render the links as Radix defaults.
+    $menu[$mlid]['#theme'] = 'menu_link__oa_navigation';
+  }
+  $vars['menu'] = $menu;
 }
 
 /**

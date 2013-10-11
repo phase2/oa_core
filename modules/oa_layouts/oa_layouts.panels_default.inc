@@ -215,22 +215,27 @@ function oa_layouts_default_panels_mini() {
     $pane = new stdClass();
     $pane->pid = 'new-5';
     $pane->panel = 'contentmain';
-    $pane->type = 'block';
-    $pane->subtype = 'oa_dashboard-oa_toolbar_menu_button';
+    $pane->type = 'oa_navigation';
+    $pane->subtype = 'oa_navigation';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
+      'return' => 'Save',
+      'cancel' => 'Cancel',
+      'preview' => 'Update Preview',
       'override_title' => 0,
       'override_title_text' => '',
+      'menu_name' => 'main-menu',
+      'form_build_id' => 'form-EF6I4nvJ3PuMvArFhpFJ5Kp2OcDwMvG8gl4B3NlDRx0',
+      'form_token' => 'BZ3KmS-psxrtVGe71oapeoJx9emdlcwu-NeoYSCB2XA',
+      'form_id' => 'oa_dashboard_oa_navigation_content_type_edit_form',
+      'op' => 'Save',
     );
     $pane->cache = array();
     $pane->style = array(
       'settings' => NULL,
     );
-    $pane->css = array(
-      'css_id' => '',
-      'css_class' => 'pull-left',
-    );
+    $pane->css = array();
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
@@ -240,7 +245,7 @@ function oa_layouts_default_panels_mini() {
     $pane->pid = 'new-6';
     $pane->panel = 'contentmain';
     $pane->type = 'block';
-    $pane->subtype = 'oa_dashboard-oa_breadcrumb';
+    $pane->subtype = 'oa_dashboard-oa_toolbar_menu_button';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -264,7 +269,7 @@ function oa_layouts_default_panels_mini() {
     $pane->pid = 'new-7';
     $pane->panel = 'contentmain';
     $pane->type = 'block';
-    $pane->subtype = 'oa_dashboard-oa_user_badge';
+    $pane->subtype = 'oa_dashboard-oa_breadcrumb';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -277,7 +282,7 @@ function oa_layouts_default_panels_mini() {
     );
     $pane->css = array(
       'css_id' => '',
-      'css_class' => 'pull-right',
+      'css_class' => 'pull-left',
     );
     $pane->extras = array();
     $pane->position = 3;
@@ -287,8 +292,8 @@ function oa_layouts_default_panels_mini() {
     $pane = new stdClass();
     $pane->pid = 'new-8';
     $pane->panel = 'contentmain';
-    $pane->type = 'oa_toolbar_search';
-    $pane->subtype = 'oa_toolbar_search';
+    $pane->type = 'block';
+    $pane->subtype = 'oa_dashboard-oa_user_badge';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -311,8 +316,8 @@ function oa_layouts_default_panels_mini() {
     $pane = new stdClass();
     $pane->pid = 'new-9';
     $pane->panel = 'contentmain';
-    $pane->type = 'oa_favorites_favorites_button';
-    $pane->subtype = 'oa_favorites_favorites_button';
+    $pane->type = 'oa_toolbar_search';
+    $pane->subtype = 'oa_toolbar_search';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -335,8 +340,8 @@ function oa_layouts_default_panels_mini() {
     $pane = new stdClass();
     $pane->pid = 'new-10';
     $pane->panel = 'contentmain';
-    $pane->type = 'add_space_content';
-    $pane->subtype = 'add_space_content';
+    $pane->type = 'oa_favorites_favorites_button';
+    $pane->subtype = 'oa_favorites_favorites_button';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -359,8 +364,8 @@ function oa_layouts_default_panels_mini() {
     $pane = new stdClass();
     $pane->pid = 'new-11';
     $pane->panel = 'contentmain';
-    $pane->type = 'oa_tour_custom_pane';
-    $pane->subtype = 'oa_tour_custom_pane';
+    $pane->type = 'add_space_content';
+    $pane->subtype = 'add_space_content';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -380,6 +385,30 @@ function oa_layouts_default_panels_mini() {
     $pane->locks = array();
     $display->content['new-11'] = $pane;
     $display->panels['contentmain'][7] = 'new-11';
+    $pane = new stdClass();
+    $pane->pid = 'new-12';
+    $pane->panel = 'contentmain';
+    $pane->type = 'oa_tour_custom_pane';
+    $pane->subtype = 'oa_tour_custom_pane';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => 'pull-right',
+    );
+    $pane->extras = array();
+    $pane->position = 8;
+    $pane->locks = array();
+    $display->content['new-12'] = $pane;
+    $display->panels['contentmain'][8] = 'new-12';
   $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $mini->display = $display;
@@ -417,7 +446,7 @@ function oa_layouts_default_panels_mini() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-12';
+    $pane->pid = 'new-13';
     $pane->panel = 'middle';
     $pane->type = 'oa_widgets_content_visibility';
     $pane->subtype = 'oa_widgets_content_visibility';
@@ -442,8 +471,8 @@ function oa_layouts_default_panels_mini() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-12'] = $pane;
-    $display->panels['middle'][0] = 'new-12';
+    $display->content['new-13'] = $pane;
+    $display->panels['middle'][0] = 'new-13';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $mini->display = $display;
