@@ -43,3 +43,8 @@
   vertical-align: bottom;
   margin: 0;
 }
+/* Farbtastic tweaks */
+.colorizer-form .farbtastic {
+  position: fixed;
+  left: 40%;
+}
