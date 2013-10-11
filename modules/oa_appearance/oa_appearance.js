@@ -21,18 +21,15 @@
             // set the image sizes before image gets loaded
             var $img_width = $(this).attr('data-width');
             var $img_height = $(this).attr('data-height');
-            var $new_height = parseInt($img_height);
-            if ($img_width > 0) {
-              $new_height = $img_height * $width / $img_width;
-            }
-            if ($(this).parents('#oa-navbar').length) {
-              // this image is within the navbar
-              $total_height -= $(this).height();
-              $total_height += $new_height;
-            }
             if ($img_width > 0) {
               // stretched banner image
               var $new_width = $new_height * $img_width / $img_height;
+              var $new_height = $img_height * $width / $img_width;
+              if ($(this).parents('#oa-navbar').length) {
+                // this image is within the navbar
+                $total_height -= $(this).height();
+                $total_height += $new_height;
+              }
               $(this).css('height', $new_height);
               $(this).addClass('oa-banner-hidden');
               var $image = $('.oa-banner-overlay-img', this);
@@ -42,7 +39,6 @@
             }
             else {
               // non-stretching banner image
-              $(this).css('height', $new_height);
               $(this).addClass('oa-banner-appeared');
             }
           }
