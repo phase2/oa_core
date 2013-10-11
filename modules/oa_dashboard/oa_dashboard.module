@@ -153,11 +153,13 @@ function oa_dashboard_theme() {
 function oa_dashboard_preprocess_oa_navigation(&$vars) {
   $menu = menu_tree($vars['menu_name']);
 
-  // Format and add menu to template.
-  $menu['#theme_wrappers'] = array('menu_tree__oa_navigation');
-  foreach (element_children($menu) as $mlid) {
-    // Render the links as Radix defaults.
-    $menu[$mlid]['#theme'] = 'menu_link__oa_navigation';
+  if (!empty($menu)) {
+    // Format and add menu to template.
+    $menu['#theme_wrappers'] = array('menu_tree__oa_navigation');
+    foreach (element_children($menu) as $mlid) {
+      // Render the links as Radix defaults.
+      $menu[$mlid]['#theme'] = 'menu_link__oa_navigation';
+    }
   }
   $vars['menu'] = $menu;
 }
