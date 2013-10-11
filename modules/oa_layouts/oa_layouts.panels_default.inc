@@ -109,19 +109,20 @@ function oa_layouts_default_panels_mini() {
     $pane->access = array();
     $pane->configuration = array(
       'menu_name' => 'menu-footer',
-      'parent_mlid' => 'menu-footer:menu-footer:0',
+      'parent_mlid' => 'menu-footer:menu-footer:menu-footer:0',
       'title_link' => 0,
       'admin_title' => '',
       'level' => '1',
       'follow' => 0,
       'depth' => 0,
-      'expanded' => 0,
+      'expanded' => 1,
       'sort' => 0,
       'override_title' => 1,
       'override_title_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(
+      'style' => 'default',
       'settings' => NULL,
     );
     $pane->css = array();
