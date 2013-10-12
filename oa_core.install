@@ -46,3 +46,10 @@ function oa_core_update_7204() {
 function oa_core_update_7205() {
   module_enable(array('oa_tour'));
 }
+
+/**
+ * Enable oa_messages_digest.
+ */
+function oa_core_update_7206() {
+  module_enable(array('oa_messages_digest'));
+}
