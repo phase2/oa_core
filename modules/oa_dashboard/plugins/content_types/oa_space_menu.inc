@@ -35,7 +35,7 @@ function oa_dashboard_oa_space_menu_content_type_render($subtype, $conf, $anel_a
     foreach ($space_menu->content as $key => $value) {
       if (!empty($value['#original_link']['menu_name'])) {
         // rename menu to prevent DHTML menu from hooking into this
-//        $space_menu->content[$key]['#original_link']['menu_name'] = 'oa-space-menu';
+        $space_menu->content[$key]['#original_link']['menu_name'] = 'oa-space-menu';
       }
     }
   }

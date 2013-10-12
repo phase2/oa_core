@@ -4,7 +4,7 @@
  * Template for OA Navigation.
  */
 ?>
-<?php if (FALSE && !empty($menu)): ?>
+<?php if (!empty($menu)): ?>
 <div class="oa-navigation clearfix">
   <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
   <a class="btn btn-navbar btn-navbar-menu">

@@ -95,18 +95,23 @@ function oa_appearance_og_ui_get_group_admin($group_type, $gid) {
  * @param $form_id
  */
 function oa_appearance_form_oa_core_configure_form_alter(&$form, &$form_state, $form_id) {
-  $form['oa_appearance'] = array(
+  $form['oa_appearance_menu'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Open Atrium Appearance'),
+    '#title' => t('Menus'),
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   );
+  $form['oa_appearance_menu']['oa_mainmenu'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Show main menu (if it has items)',
+    '#default_value' => variable_get('oa_mainmenu', TRUE),
+  );
 
-  $form['oa_domains']['oa_domains_base'] = array(
-    '#title' => t('Base domain for site'),
-    '#type' => 'textfield',
-    '#default_value' => variable_get('oa_domains_base', ''),
-    '#description' => t('Base domain for site.  Do not include http://'),
+  $form['oa_appearance'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Banners'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
   );
   $form['oa_appearance']['oa_site_banner_file'] = array(
     '#title' => t('Site banner image'),
@@ -168,8 +173,6 @@ function oa_appearance_banner_validate($element, &$form_state, $form) {
  */
 function oa_appearance_edit_form($form, &$form_state, $entity_type, $entity_id) {
   module_load_include('admin.inc', 'colorizer');
-
-  $space_id = oa_core_get_space_context();
 
   $form = colorizer_admin_form(FALSE, FALSE);
 
