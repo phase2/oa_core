@@ -1,4 +1,10 @@
 <?php
+/**
+ * @file
+ * Code for the Open Atrium Appearance feature.
+ */
+
+include_once 'oa_appearance.features.inc';
 
 /**
  * @file
