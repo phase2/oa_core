@@ -16,6 +16,12 @@ $plugin = array(
  */
 function oa_dashboard_oa_space_menu_content_type_render($subtype, $conf, $anel_args) {
 
+  $node = menu_get_object();
+  $front_panel = drupal_is_front_page() && !(isset($node) && ($node->type == OA_SPACE_TYPE));
+  if ($front_panel) {
+    return;
+  }
+
   // grab the basic group menu from og_menu_single's content-type
   $space_menu = ctools_content_render('og_menu_single_menu', '', array(
     'og_menu_single_depth' => 1,
