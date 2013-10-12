@@ -5,7 +5,7 @@
  */
 ?>
 <?php if (!empty($menu)): ?>
-<div class='navbar oa-space-menu'>
+<div class='navbar navbar-inverse oa-space-menu'>
   <div class='navbar-inner'>
     <nav class="oa-space-menu pull-left" role="navigation">
       <?php print render($menu); ?>
