@@ -5,3 +5,4 @@ core = 7.x
 php = 5.2.4
 
 dependencies[] = oa_messages
+dependencies[] = message_digest

@@ -123,7 +123,11 @@ function oa_messages_create($message_type, $entity = NULL, $entity_type = 'node'
  */
 function oa_messages_build_notify_options() {
   $options = array();
-  $options['oa_email']['from'] = variable_get('mailbox_mail', FALSE);
+  $from_mail = variable_get('mailbox_mail', '');
+  if (empty($from_mail)) {
+    $from_mail = variable_get('site_mail', '');
+  }
+  $options['oa_email']['from'] = $from_mail;
   return $options;
 }
 
