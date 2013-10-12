@@ -144,6 +144,10 @@ function oa_dashboard_theme() {
       'variables' => array('menu_name' => NULL),
       'template' => 'oa-navigation',
     ),
+    'oa_space_menu' => array(
+      'variables' => array('menu' => NULL),
+      'template' => 'oa-space-menu',
+    ),
   );
 }
 
