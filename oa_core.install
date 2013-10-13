@@ -53,3 +53,10 @@ function oa_core_update_7205() {
 function oa_core_update_7206() {
   module_enable(array('oa_messages_digest'));
 }
+
+/**
+ * Enable oa_sandbox
+ */
+function oa_core_update_7207() {
+  module_enable(array('oa_sandbox'));
+}
