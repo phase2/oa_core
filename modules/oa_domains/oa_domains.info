@@ -1,0 +1,12 @@
+name = Open Atrium Domains
+description = Provides domain per space
+core = 7.x
+package = Open Atrium
+version = 7.x-2.0
+project = oa_domains
+dependencies[] = features
+dependencies[] = text
+features[features_api][] = api:2
+features[field_base][] = field_oa_space_domain
+features[field_instance][] = node-oa_space-field_oa_space_domain
+project path = profiles/openatrium/modules

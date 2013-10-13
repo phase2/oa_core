@@ -144,6 +144,10 @@ function oa_dashboard_theme() {
       'variables' => array('menu_name' => NULL),
       'template' => 'oa-navigation',
     ),
+    'oa_space_menu' => array(
+      'variables' => array('menu' => NULL),
+      'template' => 'oa-space-menu',
+    ),
   );
 }
 
@@ -151,17 +155,19 @@ function oa_dashboard_theme() {
  * Preprocess the OA Navigation.
  */
 function oa_dashboard_preprocess_oa_navigation(&$vars) {
-  $menu = menu_tree($vars['menu_name']);
+  if (variable_get('oa_mainmenu', TRUE)) {
+    $menu = menu_tree($vars['menu_name']);
 
-  if (!empty($menu)) {
-    // Format and add menu to template.
-    $menu['#theme_wrappers'] = array('menu_tree__oa_navigation');
-    foreach (element_children($menu) as $mlid) {
-      // Render the links as Radix defaults.
-      $menu[$mlid]['#theme'] = 'menu_link__oa_navigation';
+    if (!empty($menu)) {
+      // Format and add menu to template.
+      $menu['#theme_wrappers'] = array('menu_tree__oa_navigation');
+      foreach (element_children($menu) as $mlid) {
+        // Render the links as Radix defaults.
+        $menu[$mlid]['#theme'] = 'menu_link__oa_navigation';
+      }
     }
+    $vars['menu'] = $menu;
   }
-  $vars['menu'] = $menu;
 }
 
 /**
@@ -413,6 +419,32 @@ function oa_dashboard_preprocess_oa_toolbar_menu_button(&$vars) {
   drupal_add_js(drupal_get_path('module', 'oa_dashboard') . '/js/toolbar-menu-toggle.js');
 
   $vars['oa_toolbar_btn_class'] = 'btn-inverse';
+}
+
+/**
+ * Implements hook_form_alter
+ * Inject option into og_single_menu settings form
+ */
+function oa_dashboard_form_og_menu_single_menu_edit_form_alter(&$form, &$form_state, $form_id) {
+  $space_id = oa_core_get_space_context();
+
+  $form['oa_space_menu'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Show space menu',
+    '#default_value' => variable_get('oa_space_menu_' . $space_id, TRUE),
+  );
+  $form['#space'] = $space_id;
+  $form['#submit'][] = 'oa_dashboard_space_menu_submit';
+}
+
+/**
+ * Submit handler for oa_space_menu
+ */
+function oa_dashboard_space_menu_submit($form, &$form_state) {
+  $space_id = $form['#space'];
+  if ($space_id && isset($form_state['values']['oa_space_menu'])) {
+    variable_set('oa_space_menu_' . $space_id, $form_state['values']['oa_space_menu']);
+  }
 }
 
 /**
