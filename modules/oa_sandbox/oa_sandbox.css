@@ -20,7 +20,7 @@
   font-size: 28px;
   font-weight: normal;
   margin-left: -2px;
-  margin-top: 50px;
+  margin-top: 400px;
 }
 #oa-sandbox-indicator h3 a {
   color: white;
@@ -28,4 +28,14 @@
 #oa-sandbox-indicator h3 a:hover {
   color: #ccc;
   text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  #oa-sandbox-indicator {
+    width: 15px;
+  }
+  #oa-sandbox-indicator h3 {
+    font-size: 14px;
+    margin-left: -1px;
+  }
 }
