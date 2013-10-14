@@ -255,6 +255,13 @@ projects[colorizer][subdir] = contrib
 projects[colorizer][download][url] = http://git.drupal.org/project/colorizer.git
 projects[colorizer][download][branch] = 7.x-1.x
 
+; OA Responsive Regions
+projects[oa_responsive_regions][download][type] = git
+projects[oa_responsive_regions][subdir] = contrib
+projects[oa_responsive_regions][download][url] = http://git.drupal.org/project/oa_responsive_regions.git
+projects[oa_responsive_regions][download][branch] = 7.x-1.x
+
+
 ; ##### Organic Groups related #####
 ; Organic Groups
 projects[og][download][type] = git
