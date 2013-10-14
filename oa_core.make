@@ -301,4 +301,4 @@ projects[bootstrap_tour][subdir] = contrib
 projects[bootstrap_tour][download][type] = git
 projects[bootstrap_tour][download][url] = http://git.drupal.org/project/bootstrap_tour.git
 projects[bootstrap_tour][download][branch] = 7.x-1.x
-projects[bootstrap_tour][download][revision] = fef638d
+projects[bootstrap_tour][download][revision] = db66d21
