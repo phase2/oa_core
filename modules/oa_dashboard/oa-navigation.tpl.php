@@ -16,6 +16,11 @@
   <div class="nav-collapse nav-menu-collapse">
     <?php if ($menu): ?>
       <nav class="main-menu pull-left" role="navigation">
+        <?php if (!empty($banner)): ?>
+        <div class='oa-menu-banner'>
+          <?php print $banner?>
+        </div>
+        <?php endif; ?>
         <?php print render($menu); ?>
       </nav>
     <?php endif; ?>

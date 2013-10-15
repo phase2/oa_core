@@ -18,7 +18,28 @@ function oa_dashboard_oa_navigation_content_type_render($subtype, $conf, $anel_a
   $block = new stdClass();
   $block->module = 'oa_dashboard';
 
-  $block->content = theme('oa_navigation', array('menu_name' => $conf['menu_name']));
+  $vars = array();
+  $vars['menu_name'] = $conf['menu_name'];
+
+  if (variable_get('oa_menu_banner', FALSE)) {
+    $fid = variable_get('oa_site_banner', '');
+    if ($fid && ($site_file = file_load($fid))) {
+      $vars['height'] = (!empty($site_file->metadata['height'])) ? $site_file->metadata['height'] : 0;
+      $vars['width'] = (!empty($site_file->metadata['width'])) ? $site_file->metadata['width'] : 0;
+      $vars['banner'] = theme('image', array(
+        'path' => $site_file->uri,
+        'width' => $vars['width'],
+        'height' => $vars['height'],
+        'alt' => t('Site banner'),
+        'attributes' => array(
+          'class' => 'oa-site-banner-img',
+        ),
+      ));
+      $vars['width'] = 0;
+    }
+  }
+
+  $block->content = theme('oa_navigation', $vars);
 
   return $block;
 }
