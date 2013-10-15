@@ -124,7 +124,7 @@ function oa_space_banner_edit_form($form, &$form_state) {
   $conf = $form_state['conf'];
   $form['banner_position'] = array(
     '#type' => 'select',
-    '#options' => array (
+    '#options' => array(
       0 => 'Hidden',
       1 => 'Above toolbar',
       2 => 'Below toolbar',
