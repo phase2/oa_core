@@ -165,6 +165,48 @@ function oa_core_update_access_records($nodes) {
 }
 
 /**
+ * Implements hook_node_access()
+ * Add proper 'create' access checks that OG doesn't handle
+ */
+function oa_core_node_access($node, $op, $account) {
+  $type = is_string($node) ? $node : (is_array($node) ? $node['type'] : $node->type);
+
+  if ($op == 'create' && og_is_group_content_type('node', $type)) {
+    // In og.module, og_node_access doesn't handle 'create' because
+    // it doesn't have a Group context.
+    // Well, in OA2 we *have* a Group context most of the time.
+    // Can't call oa_core_get_space_context() however since
+    // og_context_determine_context() will cause an infinite loop
+    if (defined('OG_SESSION_CONTEXT_ID') && isset($_SESSION[OG_SESSION_CONTEXT_ID])) {
+      $space_id = $_SESSION[OG_SESSION_CONTEXT_ID];
+      // so let's use that to test 'create' access
+      if ($space_id) {
+        $return = og_user_access_entity('node', $space_id, "$op $type content", $account);
+        if ($return) {
+          return NODE_ACCESS_ALLOW;
+        }
+      }
+      // check parent spaces too
+      if (module_exists('og_subgroups')) {
+        module_load_include('inc', 'og_subgroups', 'og_subgroups.common');
+        // Now get options set from parent spaces.
+        $parent_nids = og_subgroups_parents_load('node', $space_id, FALSE);
+        dsm($parent_nids);
+        foreach ($parent_nids['node'] as $parent) {
+          $return = og_user_access_entity('node', $parent, "$op $type content", $account);
+          if ($return) {
+            return NODE_ACCESS_ALLOW;
+          }
+        }
+      }
+      return NODE_ACCESS_DENY;
+    }
+  }
+
+  return NODE_ACCESS_IGNORE;
+}
+
+/**
  * Implements hook_node_update
  * if saving a section or space node, update access locks on related content
  */

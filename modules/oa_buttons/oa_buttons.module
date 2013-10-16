@@ -234,9 +234,18 @@ function oa_buttons_get_section_layout_options($bundle) {
  * Determines which command buttons should be shown within the current context.
  */
 function oa_buttons_get_command_buttons($node) {
+  $node_types = node_type_get_names();
   $buttons = array();
   _oa_buttons_get_space_command_buttons($node, $buttons);
   _oa_buttons_get_parent_command_buttons($node, $buttons);
+  // look for node_add command buttons and check the 'create X content'
+  // node_access dynamically so we don't show command buttons the user
+  // cannot acccess
+  foreach ($buttons as $key => $button) {
+    if (in_array($key, $node_types) && !node_access('create', $key)) {
+      unset($buttons[$key]);
+    }
+  }
   drupal_alter('oa_buttons_add_content', $buttons, $node);
   return $buttons;
 }
