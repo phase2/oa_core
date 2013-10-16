@@ -22,6 +22,8 @@ $plugin = array(
  * Render callback for the panel.
  */
 function oa_space_banner_render($subtype, $conf, $args, $context = NULL) {
+  global $base_url;
+
   $space_id = oa_core_get_space_context();
   if (!($space = node_load(oa_core_get_group_from_node($space_id))) || !node_access('view', $space)) {
     return;
@@ -44,6 +46,13 @@ function oa_space_banner_render($subtype, $conf, $args, $context = NULL) {
     $fid = variable_get('oa_site_banner', '');
     if ($fid && ($site_file = file_load($fid))) {
       // successful banner loaded
+    }
+    elseif (variable_get('oa_banner_default', TRUE)) {
+      // use default banner image
+      $site_file = new stdClass();
+      $site_file->uri = $base_url . '/profiles/openatrium/modules/contrib/oa_core/modules/oa_widgets/openatrium-powered.png';
+      $site_file->metadata['height'] = 43;
+      $site_file->metadata['width'] = 161;
     }
     else {
       $show_site = FALSE;

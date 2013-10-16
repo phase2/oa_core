@@ -15,15 +15,27 @@ $plugin = array(
  * Render callback.
  */
 function oa_dashboard_oa_navigation_content_type_render($subtype, $conf, $anel_args) {
+  global $base_url;
+
   $block = new stdClass();
   $block->module = 'oa_dashboard';
 
   $vars = array();
   $vars['menu_name'] = $conf['menu_name'];
 
-  if (variable_get('oa_menu_banner', FALSE)) {
+  if (variable_get('oa_menu_banner', FALSE) && !variable_get('oa_banner_stretch', FALSE)) {
     $fid = variable_get('oa_site_banner', '');
     if ($fid && ($site_file = file_load($fid))) {
+      // banner found
+    }
+    elseif (variable_get('oa_banner_default', TRUE)) {
+      // use default banner image
+      $site_file = new stdClass();
+      $site_file->uri = $base_url . '/profiles/openatrium/modules/contrib/oa_core/modules/oa_widgets/openatrium-powered.png';
+      $site_file->metadata['height'] = 43;
+      $site_file->metadata['width'] = 161;
+    }
+    if ($site_file) {
       $vars['height'] = (!empty($site_file->metadata['height'])) ? $site_file->metadata['height'] : 0;
       $vars['width'] = (!empty($site_file->metadata['width'])) ? $site_file->metadata['width'] : 0;
       $vars['banner'] = theme('image', array(
