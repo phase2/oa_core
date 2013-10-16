@@ -384,6 +384,9 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
   }
 
   $vars['oa_toolbar_btn_class'] = variable_get('oa_toolbar_style', 0) ? '' : 'btn-inverse';
+  if (variable_get('oa_breadcrumb_menu', FALSE)) {
+    $vars['mainmenu'] = theme('oa_navigation', array('menu_name' => 'main-menu'));
+  }
 }
 
 /**

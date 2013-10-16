@@ -4,6 +4,9 @@
  * This template handles the layout of oa_breadcrumb.
  */
 ?>
+<?php if (!empty($mainmenu)): ?>
+  <?php print $mainmenu ?>
+<?php else: ?>
 <ul id="oa_breadcrumb" class="oa_toolbar">
   <?php if (!empty($space_label)): ?>
     <li class="btn-group oa-breadcrumb">
@@ -58,3 +61,4 @@
     <?php endif; ?>
   <?php endif; ?>
 </ul>
+<?php endif; ?>

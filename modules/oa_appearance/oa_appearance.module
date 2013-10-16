@@ -118,6 +118,12 @@ function oa_appearance_form_oa_core_configure_form_alter(&$form, &$form_state, $
     '#default_value' => variable_get('oa_menu_banner', TRUE),
   );
 
+  $form['oa_appearance_menu']['oa_breadcrumb_menu'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Replace Breadcrumb toolbar with main menu',
+    '#default_value' => variable_get('oa_breadcrumb_menu', FALSE),
+  );
+
   $form['oa_appearance'] = array(
     '#type' => 'fieldset',
     '#title' => t('Banners'),
