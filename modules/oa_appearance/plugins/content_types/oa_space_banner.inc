@@ -25,13 +25,14 @@ function oa_space_banner_render($subtype, $conf, $args, $context = NULL) {
   global $base_url;
 
   $space_id = oa_core_get_space_context();
-  if (!($space = node_load(oa_core_get_group_from_node($space_id))) || !node_access('view', $space)) {
-    return;
-  }
   $position = isset($conf['banner_position']) ? $conf['banner_position'] : 2;
+
   $site_banner_position = variable_get('oa_site_banner_position', 1);
-  $field = field_get_items('node', $space, 'field_oa_banner_position');
   $show_site = ($site_banner_position == $conf['banner_position']);
+
+  if (($space = node_load(oa_core_get_group_from_node($space_id))) && node_access('view', $space)) {
+    $field = field_get_items('node', $space, 'field_oa_banner_position');
+  }
   $show_space = (!empty($field[0]['value']) && ($field[0]['value'] == $conf['banner_position']));
   if ($show_space) {
     $space_picture = field_get_items('node', $space, 'field_oa_banner');
