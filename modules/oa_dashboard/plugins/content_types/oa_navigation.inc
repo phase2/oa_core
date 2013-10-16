@@ -38,7 +38,7 @@ function oa_dashboard_oa_navigation_content_type_render($subtype, $conf, $anel_a
     if ($site_file) {
       $vars['height'] = (!empty($site_file->metadata['height'])) ? $site_file->metadata['height'] : 0;
       $vars['width'] = (!empty($site_file->metadata['width'])) ? $site_file->metadata['width'] : 0;
-      $vars['banner'] = theme('image', array(
+      $vars['banner'] = l(theme('image', array(
         'path' => $site_file->uri,
         'width' => $vars['width'],
         'height' => $vars['height'],
@@ -46,7 +46,7 @@ function oa_dashboard_oa_navigation_content_type_render($subtype, $conf, $anel_a
         'attributes' => array(
           'class' => 'oa-site-banner-img',
         ),
-      ));
+      )), '<front>', array('html' => TRUE));
       $vars['width'] = 0;
     }
   }
