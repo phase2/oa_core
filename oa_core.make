@@ -88,7 +88,7 @@ projects[entity][version] = 1.2
 projects[entity][subdir] = contrib
 
 ; Features
-projects[features][version] = 2.0-rc5
+projects[features][version] = 2.0
 projects[features][subdir] = contrib
 
 ; Views
@@ -242,10 +242,8 @@ projects[colorizer][subdir] = contrib
 projects[colorizer][version] = 1.0-alpha1
 
 ; OA Responsive Regions
-projects[oa_responsive_regions][download][type] = git
 projects[oa_responsive_regions][subdir] = contrib
-projects[oa_responsive_regions][download][url] = http://git.drupal.org/project/oa_responsive_regions.git
-projects[oa_responsive_regions][download][branch] = 7.x-1.x
+projects[oa_responsive_regions][version] = 1.0-alpha1
 
 
 ; ##### Organic Groups related #####
@@ -287,11 +285,7 @@ projects[og_variables][type] = module
 projects[og_variables][subdir] = contrib
 projects[og_variables][version] = 1.0-beta1
 
-
 ; Bootstrap Tour
 projects[bootstrap_tour][type] = module
 projects[bootstrap_tour][subdir] = contrib
-projects[bootstrap_tour][download][type] = git
-projects[bootstrap_tour][download][url] = http://git.drupal.org/project/bootstrap_tour.git
-projects[bootstrap_tour][download][branch] = 7.x-1.x
-projects[bootstrap_tour][download][revision] = bbcab68
+projects[bootstrap_tour][version] = 1.0-alpha1
