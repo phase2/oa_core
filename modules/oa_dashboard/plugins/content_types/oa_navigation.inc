@@ -23,7 +23,7 @@ function oa_dashboard_oa_navigation_content_type_render($subtype, $conf, $anel_a
   $vars = array();
   $vars['menu_name'] = $conf['menu_name'];
 
-  if (variable_get('oa_menu_banner', FALSE) && !variable_get('oa_banner_stretch', FALSE)) {
+  if (variable_get('oa_menu_banner', TRUE) && !variable_get('oa_banner_stretch', FALSE)) {
     $fid = variable_get('oa_site_banner', '');
     if ($fid && ($site_file = file_load($fid))) {
       // banner found

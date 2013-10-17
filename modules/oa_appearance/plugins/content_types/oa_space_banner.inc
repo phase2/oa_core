@@ -27,7 +27,7 @@ function oa_space_banner_render($subtype, $conf, $args, $context = NULL) {
   $space_id = oa_core_get_space_context();
   $position = isset($conf['banner_position']) ? $conf['banner_position'] : 2;
 
-  $site_banner_position = variable_get('oa_site_banner_position', 1);
+  $site_banner_position = variable_get('oa_site_banner_position', 0);
   $show_site = ($site_banner_position == $conf['banner_position']);
 
   if (($space = node_load(oa_core_get_group_from_node($space_id))) && node_access('view', $space)) {
@@ -97,7 +97,7 @@ function oa_space_banner_render($subtype, $conf, $args, $context = NULL) {
   elseif ($show_site) {
     $vars['height'] = (!empty($site_file->metadata['height'])) ? $site_file->metadata['height'] : 0;
     $vars['width'] = (!empty($site_file->metadata['width'])) ? $site_file->metadata['width'] : 0;
-    $stretch = variable_get('oa_banner_stretch', TRUE);
+    $stretch = variable_get('oa_banner_stretch', FALSE);
     $vars['banner'] = theme('image', array(
       'path' => $site_file->uri,
       'width' => $vars['width'],
