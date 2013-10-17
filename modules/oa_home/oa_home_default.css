@@ -231,3 +231,27 @@ text-align: center;
   clear: both;
   height: 446px;
 }
+
+@media only screen and (max-width: 980px) {
+    /* phones */
+  .hero,
+  .subfooter,
+  .entry {
+    display: none;
+  }
+  .pane-oa-home-default .modules {
+    width: 100%;
+  }
+  body.front #main-wrapper {
+   background: url(images/bg-hero-left.png) no-repeat left bottom;
+   min-height: 0;
+   height: 100%;
+   margin: 0;
+  }
+  .pane-oa-home-default .modules .block {
+    width: 30%;
+    min-width: 300px;
+    margin: 30px auto;
+    float: none;
+  }
+}
