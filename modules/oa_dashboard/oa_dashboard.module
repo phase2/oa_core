@@ -156,7 +156,7 @@ function oa_dashboard_theme() {
  */
 function oa_dashboard_preprocess_oa_navigation(&$vars) {
   if (variable_get('oa_mainmenu', TRUE)) {
-    $menu = menu_tree($vars['menu_name']);
+    $menu = menu_tree_output(menu_tree_all_data($vars['menu_name'], NULL, 2));
 
     if (!empty($menu)) {
       // Format and add menu to template.
