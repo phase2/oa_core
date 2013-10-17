@@ -51,7 +51,8 @@ function oa_space_banner_render($subtype, $conf, $args, $context = NULL) {
     elseif (variable_get('oa_banner_default', TRUE)) {
       // use default banner image
       $site_file = new stdClass();
-      $site_file->uri = $base_url . '/profiles/openatrium/modules/contrib/oa_core/modules/oa_widgets/openatrium-powered.png';
+      $path = drupal_get_path('module', 'oa_widgets');
+      $site_file->uri = $base_url . '/' . $path . '/openatrium-powered.png';
       $site_file->metadata['height'] = 43;
       $site_file->metadata['width'] = 161;
     }
