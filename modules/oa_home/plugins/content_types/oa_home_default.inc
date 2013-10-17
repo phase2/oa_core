@@ -21,6 +21,7 @@ $plugin = array(
  * Render callback for the panel.
  */
 function oa_home_default_render($subtype, $conf, $args, $context = NULL) {
+  global $user;
   drupal_add_css(drupal_get_path('module', 'oa_home') . '/oa_home_default.css');
   drupal_add_css('http://fonts.googleapis.com/css?family=Roboto:300,400,100,700,500', array('type' => 'external'));
   drupal_add_css('http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700', array('type' => 'external'));
@@ -28,6 +29,15 @@ function oa_home_default_render($subtype, $conf, $args, $context = NULL) {
   $block = new stdClass();
   $block->title = '';
   $vars = array();
+  if (!$user->uid) {
+    $login_block = block_load('user','login');
+    $vars['login'] = _block_get_renderable_array(_block_render_blocks(array($login_block)));
+  }
+  else {
+    $user_record = user_load($user->uid);
+    $name = (!empty($user_record->realname)) ? $user_record->realname : $user_record->name;
+    $vars['username'] = $name;
+  }
   $block->content = theme('oa_home_default', $vars);
   return $block;
 }

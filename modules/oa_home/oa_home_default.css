@@ -59,11 +59,9 @@ body.front .content .pane-oa-home-default {
   position: relative;
   }
 
-.pane-user-login {
-  margin: 0;
-  padding: 0;
-  width: 30%;
-  position: absolute;
+.pane-oa-home-default .user-login .content {
+  padding: 20px 30px;
+  color: #FFF;
 }
 
 .pane-oa-home-default .hero-right-graphic {
@@ -109,6 +107,10 @@ body.front .content .pane-oa-home-default {
   line-height: normal;
 }
 
+.pane-oa-home-default .hero h2 span {
+  color: #fd4e88;
+}
+
 .pane-oa-home-default .hero h3 {
   color: #fff;
   text-align: center;
@@ -117,13 +119,15 @@ body.front .content .pane-oa-home-default {
   font-family: 'Roboto Slab',serif;
   font-weight: 100px;
   padding: 30px 0 27px 0;
+  margin: 22px 0;
   font-size: 22px;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.44);
   letter-spacing: 0.03em;
   line-height: normal;
 }
 
-.pane-oa-home-default .modules .entry {
+.pane-oa-home-default .modules .entry,
+.pane-oa-home-default .modules .block {
    background: url(images/bg-module.png);
    width: 30%;
    -webkit-border-radius: 5px;
@@ -131,7 +135,7 @@ body.front .content .pane-oa-home-default {
   border-radius: 5px;
   float: left;
   min-height: 370px;
-  margin-right: 2em;
+  margin-right: 2.5em;
   }
 
 .pane-oa-home-default .modules .entry-last {
@@ -139,7 +143,7 @@ body.front .content .pane-oa-home-default {
 }
 
 .pane-oa-home-default .module-header,
-.pane-user-login .pane-title {
+.pane-oa-home-default .modules .block h2 {
   background: url(images/bg-module.png);
   -webkit-border-top-left-radius: 5px;
 -webkit-border-top-right-radius: 5px;
@@ -151,9 +155,10 @@ text-align: center;
 }
 
 .pane-oa-home-default .module-header h4,
-.pane-user-login .pane-title h3 {
+.pane-oa-home-default .modules .block h2 {
   color: #FFF;
   font-family: 'Roboto Slab',serif;
+  font-weight: bold;
   text-transform: uppercase;
   padding: 20px 0;
   font-size: 15px;
@@ -212,8 +217,13 @@ text-align: center;
 }
 
 .pane-oa-home-default .subfooter {
+  color: #FFF;
   clear: both;
   background: url(images/bg-subfooter.png) repeat-x bottom;
+}
+
+.pane-oa-home-default .form-actions {
+  background-color: transparent;
 }
 
 .pane-oa-home-default .subfooter-graphic {
