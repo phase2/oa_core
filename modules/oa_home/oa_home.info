@@ -14,5 +14,6 @@ features[page_manager_pages][] = oa_homepage
 features[variable][] = colorizer_cssbase
 features[variable][] = colorizer_cssfile
 features[variable][] = colorizer_incfile
+features[variable][] = colorizer_previewfile
 features[variable][] = site_frontpage
 project path = tmp/oa_home
