@@ -60,3 +60,10 @@ function oa_core_update_7206() {
 function oa_core_update_7207() {
   module_enable(array('oa_sandbox'));
 }
+
+/**
+ * Enable oa_responsive_regions
+ */
+function oa_core_update_7208() {
+  module_enable(array('oa_responsive_regions'));
+}
