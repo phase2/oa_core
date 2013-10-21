@@ -15,4 +15,6 @@ features[variable][] = file_default_scheme
 features[variable][] = file_entity_file_upload_wizard_skip_scheme
 features[variable][] = og_context_negotiation_group_context
 features[variable][] = og_context_providers_weight_group_context
+features[variable][] = og_group_manager_default_rids_node_oa_group
+features[variable][] = og_group_manager_default_rids_node_oa_space
 project path = profiles/openatrium/modules/contrib/oa_core/modules
