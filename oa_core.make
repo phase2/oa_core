@@ -88,7 +88,7 @@ projects[entity][version] = 1.2
 projects[entity][subdir] = contrib
 
 ; Features
-projects[features][version] = 2.0-rc5
+projects[features][version] = 2.0
 projects[features][subdir] = contrib
 
 ; Views
@@ -121,12 +121,8 @@ projects[message_subscribe][version] = 1.0-alpha5
 projects[message_subscribe][patch][2094129] = http://drupal.org/files/message_subscribe_empty_array_2094129_1.patch
 
 ; Message Digest
-projects[message_digest][type] = module
 projects[message_digest][subdir] = contrib
-projects[message_digest][download][type] = git
-projects[message_digest][download][url] = http://git.drupal.org/project/message_digest.git
-projects[message_digest][download][branch] = 7.x-1.x
-projects[message_digest][download][revision] = 7af9897
+projects[message_digest][version] = 1.0-alpha1
 
 ; Flag
 projects[flag][subdir] = contrib
@@ -192,20 +188,12 @@ libraries[simplepie][download][filename] = simplepie.compiled.php
 libraries[simplepie][directory_name] = simplepie
 
 ; Command buttons
-projects[command_buttons][type] = module
 projects[command_buttons][subdir] = contrib
-projects[command_buttons][download][type] = git
-projects[command_buttons][download][url] = http://git.drupal.org/project/command_buttons.git
-projects[command_buttons][download][branch] = 7.x-1.x
-projects[command_buttons][download][revision] = 0afa80
+projects[command_buttons][version] = 1.0-alpha1
 
 ; Contextual Tabs
-projects[contextual_tabs][type] = module
 projects[contextual_tabs][subdir] = contrib
-projects[contextual_tabs][download][type] = git
-projects[contextual_tabs][download][url] = http://git.drupal.org/project/contextual_tabs.git
-projects[contextual_tabs][download][branch] = 7.x-1.x
-projects[contextual_tabs][download][revision] = 60a3c8
+projects[contextual_tabs][version] = 1.0-alpha1
 
 projects[panels_customerror][type] = module
 projects[panels_customerror][subdir] = contrib
@@ -250,16 +238,12 @@ projects[jquery_update][download][branch] = 7.x-2.x
 projects[jquery_update][patch][1448490] = http://drupal.org/files/jquery_update-fixes-states-js-1448490.patch
 
 ; Colorizer
-projects[colorizer][download][type] = git
 projects[colorizer][subdir] = contrib
-projects[colorizer][download][url] = http://git.drupal.org/project/colorizer.git
-projects[colorizer][download][branch] = 7.x-1.x
+projects[colorizer][version] = 1.0-alpha1
 
 ; OA Responsive Regions
-projects[oa_responsive_regions][download][type] = git
 projects[oa_responsive_regions][subdir] = contrib
-projects[oa_responsive_regions][download][url] = http://git.drupal.org/project/oa_responsive_regions.git
-projects[oa_responsive_regions][download][branch] = 7.x-1.x
+projects[oa_responsive_regions][version] = 1.0-alpha1
 
 
 ; ##### Organic Groups related #####
@@ -270,7 +254,6 @@ projects[og][download][url] = http://git.drupal.org/project/og.git
 projects[og][download][branch] = 7.x-2.x
 projects[og][download][revision] = 05ee95269e2c31492158dc6eabd2e386aec1c931
 projects[og][patch][1995012] = http://drupal.org/files/og_membership_alter.patch
-projects[og][patch][998094] = http://drupal.org/files/998094-og_membership_administer_member-16.patch
 projects[og][patch][2060655] = http://drupal.org/files/og-field-user-membership-2060655-1.patch
 
 ; Organic Groups Vocabulary
@@ -301,11 +284,7 @@ projects[og_variables][type] = module
 projects[og_variables][subdir] = contrib
 projects[og_variables][version] = 1.0-beta1
 
-
 ; Bootstrap Tour
 projects[bootstrap_tour][type] = module
 projects[bootstrap_tour][subdir] = contrib
-projects[bootstrap_tour][download][type] = git
-projects[bootstrap_tour][download][url] = http://git.drupal.org/project/bootstrap_tour.git
-projects[bootstrap_tour][download][branch] = 7.x-1.x
-projects[bootstrap_tour][download][revision] = bbcab68
+projects[bootstrap_tour][version] = 1.0-alpha1

@@ -22,14 +22,17 @@ $plugin = array(
  * Render callback for the panel.
  */
 function oa_space_banner_render($subtype, $conf, $args, $context = NULL) {
+  global $base_url;
+
   $space_id = oa_core_get_space_context();
-  if (!($space = node_load(oa_core_get_group_from_node($space_id))) || !node_access('view', $space)) {
-    return;
-  }
   $position = isset($conf['banner_position']) ? $conf['banner_position'] : 2;
-  $site_banner_position = variable_get('oa_site_banner_position', 1);
-  $field = field_get_items('node', $space, 'field_oa_banner_position');
+
+  $site_banner_position = variable_get('oa_site_banner_position', 0);
   $show_site = ($site_banner_position == $conf['banner_position']);
+
+  if (($space = node_load(oa_core_get_group_from_node($space_id))) && node_access('view', $space)) {
+    $field = field_get_items('node', $space, 'field_oa_banner_position');
+  }
   $show_space = (!empty($field[0]['value']) && ($field[0]['value'] == $conf['banner_position']));
   if ($show_space) {
     $space_picture = field_get_items('node', $space, 'field_oa_banner');
@@ -44,6 +47,14 @@ function oa_space_banner_render($subtype, $conf, $args, $context = NULL) {
     $fid = variable_get('oa_site_banner', '');
     if ($fid && ($site_file = file_load($fid))) {
       // successful banner loaded
+    }
+    elseif (variable_get('oa_banner_default', TRUE)) {
+      // use default banner image
+      $site_file = new stdClass();
+      $path = drupal_get_path('module', 'oa_widgets');
+      $site_file->uri = $base_url . '/' . $path . '/openatrium-powered.png';
+      $site_file->metadata['height'] = 43;
+      $site_file->metadata['width'] = 161;
     }
     else {
       $show_site = FALSE;
@@ -86,7 +97,7 @@ function oa_space_banner_render($subtype, $conf, $args, $context = NULL) {
   elseif ($show_site) {
     $vars['height'] = (!empty($site_file->metadata['height'])) ? $site_file->metadata['height'] : 0;
     $vars['width'] = (!empty($site_file->metadata['width'])) ? $site_file->metadata['width'] : 0;
-    $stretch = variable_get('oa_banner_stretch', TRUE);
+    $stretch = variable_get('oa_banner_stretch', FALSE);
     $vars['banner'] = theme('image', array(
       'path' => $site_file->uri,
       'width' => $vars['width'],
@@ -124,7 +135,7 @@ function oa_space_banner_edit_form($form, &$form_state) {
   $conf = $form_state['conf'];
   $form['banner_position'] = array(
     '#type' => 'select',
-    '#options' => array (
+    '#options' => array(
       0 => 'Hidden',
       1 => 'Above toolbar',
       2 => 'Below toolbar',

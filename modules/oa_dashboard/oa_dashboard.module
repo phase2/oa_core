@@ -156,7 +156,7 @@ function oa_dashboard_theme() {
  */
 function oa_dashboard_preprocess_oa_navigation(&$vars) {
   if (variable_get('oa_mainmenu', TRUE)) {
-    $menu = menu_tree($vars['menu_name']);
+    $menu = menu_tree_output(menu_tree_all_data($vars['menu_name'], NULL, 2));
 
     if (!empty($menu)) {
       // Format and add menu to template.
@@ -384,6 +384,9 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
   }
 
   $vars['oa_toolbar_btn_class'] = variable_get('oa_toolbar_style', 0) ? '' : 'btn-inverse';
+  if (variable_get('oa_breadcrumb_menu', FALSE)) {
+    $vars['mainmenu'] = theme('oa_navigation', array('menu_name' => 'main-menu'));
+  }
 }
 
 /**

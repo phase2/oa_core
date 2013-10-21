@@ -20,7 +20,13 @@ ul.oa_toolbar {
 .drupal-navbar .navbar-icon-toggle-vertical {
   display: none;
 }
-
+.navbar .oa-navigation .nav {
+  display: inline-block;
+  float: none;
+}
+.oa-menu-banner {
+  display: inline-block;
+}
 #oa-navbar {
   margin-bottom: 0;
 }

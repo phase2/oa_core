@@ -15,10 +15,44 @@ $plugin = array(
  * Render callback.
  */
 function oa_dashboard_oa_navigation_content_type_render($subtype, $conf, $anel_args) {
+  global $base_url;
+
   $block = new stdClass();
   $block->module = 'oa_dashboard';
 
-  $block->content = theme('oa_navigation', array('menu_name' => $conf['menu_name']));
+  $vars = array();
+  $vars['menu_name'] = $conf['menu_name'];
+
+  if (variable_get('oa_menu_banner', TRUE) && !variable_get('oa_banner_stretch', FALSE)) {
+    $fid = variable_get('oa_site_banner', '');
+    if ($fid && ($site_file = file_load($fid))) {
+      // banner found
+    }
+    elseif (variable_get('oa_banner_default', TRUE)) {
+      // use default banner image
+      $site_file = new stdClass();
+      $path = drupal_get_path('module', 'oa_widgets');
+      $site_file->uri = $base_url . '/' . $path . '/openatrium-powered.png';
+      $site_file->metadata['height'] = 43;
+      $site_file->metadata['width'] = 161;
+    }
+    if ($site_file) {
+      $vars['height'] = (!empty($site_file->metadata['height'])) ? $site_file->metadata['height'] : 0;
+      $vars['width'] = (!empty($site_file->metadata['width'])) ? $site_file->metadata['width'] : 0;
+      $vars['banner'] = l(theme('image', array(
+        'path' => $site_file->uri,
+        'width' => $vars['width'],
+        'height' => $vars['height'],
+        'alt' => t('Site banner'),
+        'attributes' => array(
+          'class' => 'oa-site-banner-img',
+        ),
+      )), '<front>', array('html' => TRUE));
+      $vars['width'] = 0;
+    }
+  }
+
+  $block->content = theme('oa_navigation', $vars);
 
   return $block;
 }
