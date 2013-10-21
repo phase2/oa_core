@@ -29,6 +29,15 @@ function oa_tour_pane_render($subtype, $conf, $args, $context = NULL) {
     $vars['oa_toolbar_btn_class'] = variable_get('oa_toolbar_style', 0) ? '' : ' btn-inverse';
     $items = array();
     foreach ($tours as $tour) {
+      if (!empty($tour->roles)) {
+        global $user;
+        $tour_roles = explode(',', $tour->roles);
+        $user_roles = array_keys($user->roles);
+        $compare = array_intersect($tour_roles, $user_roles);
+        if (empty($compare)) {
+          continue;
+        }
+      }
       $tour->steps = unserialize($tour->steps);
       if (!empty($tour->steps[0]['path'])) {
         $first_path = $tour->steps[0]['path'];
