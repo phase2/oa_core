@@ -252,9 +252,7 @@ projects[og][download][type] = git
 projects[og][subdir] = contrib
 projects[og][download][url] = http://git.drupal.org/project/og.git
 projects[og][download][branch] = 7.x-2.x
-projects[og][download][revision] = 05ee95269e2c31492158dc6eabd2e386aec1c931
-projects[og][patch][1995012] = http://drupal.org/files/og_membership_alter.patch
-projects[og][patch][2060655] = http://drupal.org/files/og-field-user-membership-2060655-1.patch
+projects[og][download][revision] = 6c0afff
 
 ; Organic Groups Vocabulary
 projects[og_vocab][subdir] = contrib
