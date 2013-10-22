@@ -25,3 +25,36 @@ function oa_tour_theme() {
     ),
   );
 }
+
+/**
+ * Implements hook_bootstrap_tour_alter().
+ */
+function oa_tour_bootstrap_tour_alter(&$tour) {
+  if (empty($tour) || empty($tour->steps)) {
+    return;
+  }
+  foreach ($tour->steps as $key => $step) {
+    if (empty($step['path'])) {
+      continue;
+    }
+    $path_parts = explode('/', $step['path']);
+    if ($path_parts[0] == 'firstnode' && count($path_parts) > 1) {
+      $node_type = $path_parts[1];
+      $nid = db_select('node', 'n')
+        ->fields('n', array('nid'))
+        ->condition('type', $node_type)
+        ->orderBy('nid', 'ASC')
+        ->range(0,1)
+        ->execute()
+        ->fetchField();
+      if (empty($nid)) {
+        $tour->steps[$key]['path'] = 'node/add/' . str_replace('_', '-', $node_type);
+        if (!empty($path_parts[2])) {
+          $tour->steps[$key]['path'] .= '?tour=' . $path_parts[2];
+        }
+      } else {
+        $tour->steps[$key]['path'] = 'node/' . $nid . '?tour=' . $tour->name;
+      }
+    }
+  }
+}
