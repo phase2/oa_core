@@ -28,7 +28,7 @@ function oa_tour_theme() {
 
 /**
  * Implements hook_bootstrap_tour_alter().
- * Dig into steps with "firstnode/whatever" paths and alter them so that they either point to the first
+ * Dig into steps with "firstnode/<nodetype>/<tourname>" paths and alter them so that they either point to the first
  * node of a specific type if one exists, or the node add form of that type if not.
  */
 function oa_tour_bootstrap_tour_alter(&$tour) {
@@ -45,7 +45,7 @@ function oa_tour_bootstrap_tour_alter(&$tour) {
       $nid = db_select('node', 'n')
         ->fields('n', array('nid'))
         ->condition('type', $node_type)
-        ->orderBy('nid', 'ASC')
+        ->orderBy('nid', 'DESC')
         ->range(0,1)
         ->execute()
         ->fetchField();
@@ -58,7 +58,13 @@ function oa_tour_bootstrap_tour_alter(&$tour) {
         }
       } else {
         // A node does exist, so go ahead and make that the next step.
-        $tour->steps[$key]['path'] = 'node/' . $nid . '?tour=' . $tour->name;
+        $tour->steps[$key]['path'] = drupal_get_path_alias('node/' . $nid);
+        if (!empty($_SESSION['nexttour']) && $_SESSION['nexttour'] == $tour->name) {
+          for ($i = 0; $i < $key; $i++) {
+            unset($tour->steps[$i]);
+          }
+          $tour->steps = array_values($tour->steps);
+        }
       }
     }
   }
@@ -75,17 +81,15 @@ function oa_tour_form_node_form_alter(&$form, &$form_state, $form_id) {
       '#type' => 'hidden',
       '#value' => $_GET['nexttour'],
     );
-    $form['#submit'][] = 'oa_tour_node_form_submit';
   }
 }
 
 /**
- * Submit callback for the node form.
- * Fetch the next tour to run from the form fields and then add it to the URL so that it runs.
+ * Implementation of hook_node_insert().
+ * Fetch the next tour to run from the form fields and then run it.
  */
-function oa_tour_node_form_submit_callback($form, &$form_state) {
-  if (!empty($form_state['values']['nexttour'])) {
-    $_GET['tour'] = $form_state['values']['nexttour'];
-    drupal_set_message('next tour: ' . $_GET['tour']);
+function oa_tour_node_insert($node) {
+  if (!empty($node->nexttour)) {
+    $_SESSION['nexttour'] = $node->nexttour;
   }
 }
