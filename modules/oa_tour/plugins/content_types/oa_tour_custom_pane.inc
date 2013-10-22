@@ -40,6 +40,7 @@ function oa_tour_pane_render($subtype, $conf, $args, $context = NULL) {
         }
       }
       $tour->steps = unserialize($tour->steps);
+      drupal_alter('bootstrap_tour', $tour);
       if (!empty($tour->steps[0]['path'])) {
         $first_path = $tour->steps[0]['path'];
         if (empty($_GET['tour']) || $_GET['tour'] != $tour->name) {
