@@ -122,7 +122,7 @@ projects[message_subscribe][patch][2094129] = http://drupal.org/files/message_su
 
 ; Message Digest
 projects[message_digest][subdir] = contrib
-projects[message_digest][version] = 1.0-alpha1
+projects[message_digest][version] = 1.0-alpha2
 
 ; Flag
 projects[flag][subdir] = contrib

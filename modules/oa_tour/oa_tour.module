@@ -28,6 +28,8 @@ function oa_tour_theme() {
 
 /**
  * Implements hook_bootstrap_tour_alter().
+ * Dig into steps with "firstnode/whatever" paths and alter them so that they either point to the first
+ * node of a specific type if one exists, or the node add form of that type if not.
  */
 function oa_tour_bootstrap_tour_alter(&$tour) {
   if (empty($tour) || empty($tour->steps)) {
@@ -48,13 +50,42 @@ function oa_tour_bootstrap_tour_alter(&$tour) {
         ->execute()
         ->fetchField();
       if (empty($nid)) {
-        $tour->steps[$key]['path'] = 'node/add/' . str_replace('_', '-', $node_type);
+        // No nodes exist yet so let's send them to the node add form.
+        $tour->steps[$key]['path'] = 'node/add/' . str_replace('_', '-', $node_type) . '?nexttour=' . $tour->name;
         if (!empty($path_parts[2])) {
-          $tour->steps[$key]['path'] .= '?tour=' . $path_parts[2];
+          // If the URL has a 3rd part, that's the name of the tour to run on the node add form.
+          $tour->steps[$key]['path'] .= '&tour=' . $path_parts[2];
         }
       } else {
+        // A node does exist, so go ahead and make that the next step.
         $tour->steps[$key]['path'] = 'node/' . $nid . '?tour=' . $tour->name;
       }
     }
+  }
+}
+
+/**
+ * Implementation of hook_form_FORM_BASE_ID_alter().
+ * Add the nexttour parameter as a hidden form field so that we can use it in the submit
+ * callback to resume the previous tour on the newly created node's page.
+ */
+function oa_tour_form_node_form_alter(&$form, &$form_state, $form_id) {
+  if (!empty($_GET['nexttour'])) {
+    $form['nexttour'] = array(
+      '#type' => 'hidden',
+      '#value' => $_GET['nexttour'],
+    );
+    $form['#submit'][] = 'oa_tour_node_form_submit';
+  }
+}
+
+/**
+ * Submit callback for the node form.
+ * Fetch the next tour to run from the form fields and then add it to the URL so that it runs.
+ */
+function oa_tour_node_form_submit_callback($form, &$form_state) {
+  if (!empty($form_state['values']['nexttour'])) {
+    $_GET['tour'] = $form_state['values']['nexttour'];
+    drupal_set_message('next tour: ' . $_GET['tour']);
   }
 }
