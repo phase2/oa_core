@@ -20,12 +20,17 @@
  *   An array with the group IDs or an empty array, or returns NULL if there was an error
  */
 function oa_core_get_groups_by_user($account = NULL, $group_type = NULL) {
-  $user_groups = array($group_type => og_get_groups_by_user($account, $group_type));
+  $user_groups = og_get_groups_by_user($account, $group_type);
+  if (!empty($group_type)) {
+    $user_groups = array($group_type => $user_groups);
+  }
   if (module_exists('og_subgroups')) {
     $user_groups = og_subgroups_children_load_multiple($user_groups);
   }
 
-  $user_groups = (!empty($user_groups[$group_type])) ? $user_groups[$group_type] : array();
+  if (!empty($group_type)) {
+    $user_groups = (!empty($user_groups[$group_type])) ? $user_groups[$group_type] : array();
+  }
   return $user_groups;
 }
 
