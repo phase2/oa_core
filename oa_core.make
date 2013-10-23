@@ -285,4 +285,4 @@ projects[og_variables][version] = 1.0-beta1
 ; Bootstrap Tour
 projects[bootstrap_tour][type] = module
 projects[bootstrap_tour][subdir] = contrib
-projects[bootstrap_tour][version] = 1.0-alpha2
+projects[bootstrap_tour][version] = 1.0-beta2
