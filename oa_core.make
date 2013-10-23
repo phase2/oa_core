@@ -122,7 +122,7 @@ projects[message_subscribe][patch][2094129] = http://drupal.org/files/message_su
 
 ; Message Digest
 projects[message_digest][subdir] = contrib
-projects[message_digest][version] = 1.0-alpha2
+projects[message_digest][version] = 1.0-beta1
 
 ; Flag
 projects[flag][subdir] = contrib
@@ -189,11 +189,11 @@ libraries[simplepie][directory_name] = simplepie
 
 ; Command buttons
 projects[command_buttons][subdir] = contrib
-projects[command_buttons][version] = 1.0-alpha1
+projects[command_buttons][version] = 1.0-beta1
 
 ; Contextual Tabs
 projects[contextual_tabs][subdir] = contrib
-projects[contextual_tabs][version] = 1.0-alpha1
+projects[contextual_tabs][version] = 1.0-beta1
 
 projects[panels_customerror][type] = module
 projects[panels_customerror][subdir] = contrib
@@ -239,11 +239,11 @@ projects[jquery_update][patch][1448490] = http://drupal.org/files/jquery_update-
 
 ; Colorizer
 projects[colorizer][subdir] = contrib
-projects[colorizer][version] = 1.0-alpha1
+projects[colorizer][version] = 1.0-beta1
 
 ; OA Responsive Regions
 projects[oa_responsive_regions][subdir] = contrib
-projects[oa_responsive_regions][version] = 1.0-alpha1
+projects[oa_responsive_regions][version] = 1.0-beta1
 
 
 ; ##### Organic Groups related #####
