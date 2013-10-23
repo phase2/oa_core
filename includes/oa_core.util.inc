@@ -5,6 +5,31 @@
  */
 
 /**
+ * Get the group IDs of all the groups a user is an approved member of.
+ * REPLACES og_get_groups_by_user() in OG and returns a list of groups
+ * including subspaces
+ *
+ * @param $account
+ *   (optional) The user object to fetch group memberships for. Defaults to the
+ *   acting user.
+ * @param $group_type
+ *   (optional) The entity type of the groups to fetch. By default all group
+ *   types will be fetched.
+ *
+ * @return
+ *   An array with the group IDs or an empty array, or returns NULL if there was an error
+ */
+function oa_core_get_groups_by_user($account = NULL, $group_type = NULL) {
+  $user_groups = array($group_type => og_get_groups_by_user($account, $group_type));
+  if (module_exists('og_subgroups')) {
+    $user_groups = og_subgroups_children_load_multiple($user_groups);
+  }
+
+  $user_groups = (!empty($user_groups[$group_type])) ? $user_groups[$group_type] : array();
+  return $user_groups;
+}
+
+/**
  * Returns the current space id context
  * @param  boolean $from_session only use the context stored in $SESSION
  * @return int Space ID
