@@ -69,7 +69,7 @@ function oa_core_update_7208() {
 }
 
 /**
- * Enable oa_responsive_regions
+ * Enable oa_tour_defaults.
  */
 function oa_core_update_7209() {
   module_enable(array('oa_tour_defaults'));
