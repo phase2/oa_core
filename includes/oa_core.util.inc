@@ -21,10 +21,10 @@
  */
 function oa_core_get_groups_by_user($account = NULL, $group_type = NULL) {
   $user_groups = og_get_groups_by_user($account, $group_type);
-  if (!empty($group_type)) {
+  if (!empty($group_type) && !empty($user_groups)) {
     $user_groups = array($group_type => $user_groups);
   }
-  if (module_exists('og_subgroups')) {
+  if (module_exists('og_subgroups') && !empty($user_groups)) {
     $user_groups = og_subgroups_children_load_multiple($user_groups);
   }
 
