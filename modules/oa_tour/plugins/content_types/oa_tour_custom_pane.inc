@@ -39,7 +39,9 @@ function oa_tour_pane_render($subtype, $conf, $args, $context = NULL) {
           continue;
         }
       }
-      $tour->steps = unserialize($tour->steps);
+      if (!empty($tour->steps) && !is_array($tour->steps)) {
+        $tour->steps = unserialize($tour->steps);
+      }
       drupal_alter('bootstrap_tour', $tour);
       if (!empty($tour->steps[0]['path'])) {
         $first_path = $tour->steps[0]['path'];
