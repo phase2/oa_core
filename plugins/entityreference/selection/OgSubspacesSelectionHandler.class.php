@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @file
+ * Code for OG Subspaces selection handler
+ */
 
 /**
  * OG Subspaces selection handler for OA.

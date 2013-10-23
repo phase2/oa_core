@@ -1,4 +1,7 @@
 <?php
+/**
+ * @file oa_tour_custom_pane.inc
+ */
 
 $plugin = array(
   'single' => TRUE,
@@ -47,7 +50,8 @@ function oa_tour_pane_render($subtype, $conf, $args, $context = NULL) {
         $first_path = $tour->steps[0]['path'];
         if (empty($_GET['tour']) || $_GET['tour'] != $tour->name) {
           $items[] = l($tour->title, $first_path, array('query' => array('tour' => $tour->name)));
-        } else {
+        }
+        else {
           $items[] = l($tour->title, $first_path, array('query' => array('tour' => $tour->name), 'attributes' => array('class' => array('active-trail'))));
         }
       }
