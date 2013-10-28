@@ -1,4 +1,4 @@
-name = oa_tour_defaults
+name = Open Atrium Tour Defaults
 core = 7.x
 package = Features
 dependencies[] = bootstrap_tour
