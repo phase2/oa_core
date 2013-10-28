@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @file
+ * Code for OG Subspaces selection handler
+ */
 
 /**
  * OG Subspaces selection handler for OA.
@@ -104,12 +107,7 @@ class OgSubspacesSelectionHandler extends EntityReference_SelectionHandler_Gener
     }
 
     $field_mode = $this->instance['field_mode'];
-    $user_groups = array($group_type => og_get_groups_by_user(NULL, $group_type));
-    if (module_exists('og_subgroups')) {
-      $user_groups = og_subgroups_children_load_multiple($user_groups);
-    }
-
-    $user_groups = (!empty($user_groups[$group_type])) ? $user_groups[$group_type] : array();
+    $user_groups = oa_core_get_groups_by_user(NULL, $group_type);
     $user_groups = array_merge($user_groups, $this->getGidsForCreate());
 
     // Show the user only the groups they belong to.

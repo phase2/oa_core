@@ -11,6 +11,12 @@
  */
 function oa_search_install() {
   oa_search_enable_pages();
+}
+
+/**
+ * Implements hook_enable().
+ */
+function oa_search_enable() {
   oa_search_rebuild_index();
 }
 
