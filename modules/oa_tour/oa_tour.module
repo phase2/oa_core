@@ -38,8 +38,9 @@ function oa_tour_form_bootstrap_tour_form_alter(&$form, &$form_state, $form_id) 
   }
   asort($options); // Sort alphabetically for the heck of it.
 
-  if (!empty(arg(4))) {
-    $tour = bootstrap_tour_load(arg(4));
+  $tour_name = arg(4);
+  if (!empty($tour_name)) {
+    $tour = bootstrap_tour_load($tour_name);
   }
 
   $form['spaces'] = array(
