@@ -213,10 +213,10 @@ projects[reference_option_limit][subdir] = contrib
 projects[reference_option_limit][download][type] = git
 projects[reference_option_limit][download][url] = http://git.drupal.org/project/reference_option_limit.git
 projects[reference_option_limit][download][branch] = 7.x-1.x
-projects[reference_option_limit][download][revision] = 74bee91
+projects[reference_option_limit][download][revision] = 0ea5303
 projects[reference_option_limit][type] = module
-projects[reference_option_limit][patch][1986532] = http://drupal.org/files/1986532_reference_option_limit_og-2.patch
-projects[reference_option_limit][patch][1986526] = http://drupal.org/files/1986526_reference_option_limit_3.patch
+projects[reference_option_limit][patch][1986532] = http://drupal.org/files/1986532_reference_option_limit_og-5.patch
+projects[reference_option_limit][patch][1986526] = http://drupal.org/files/1986526_reference_option_limit_12.patch
 
 ; Views Load More
 projects[views_load_more][subdir] = contrib
