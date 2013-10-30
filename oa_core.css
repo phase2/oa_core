@@ -34,3 +34,11 @@
 #modal-content .general-settings-fieldset label.option {
   float: none;
 }
+
+#modal-content .panels-section-column {
+  overflow: hidden;
+}
+
+#modal-content .panels-section-column fieldset legend {
+  max-width: 100%;
+}
