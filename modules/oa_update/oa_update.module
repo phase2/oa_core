@@ -76,23 +76,64 @@ function oa_update_admin_form() {
     '#type' => 'fieldset',
     '#title' => 'Update Links',
     '#collapsible' => TRUE,
-    '#collapsed' => TRUE,
+    '#collapsed' => !variable_get('oa_update_enable', FALSE),
   );
-  $links[] = array(
-    'title' => 'Available updates',
-    'href' => 'admin/reports/oa_updates',
+  $form['update']['oa_update_enable'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Enable module update status',
+    '#description' => t('Enable this option (and Save) to access the normal update links'),
+    '#default_value' => variable_get('oa_update_enable', FALSE),
   );
-  $links[] = array(
-    'title' => 'Manual update check',
-    'href' => 'admin/reports/oa_updates/check',
-  );
-  $links[] = array(
-    'title' => 'Check for available updates',
-    'href' => 'admin/reports/oa_updates/update',
-  );
-  $form['update']['links'] = array(
-    '#theme' => 'links',
-    '#links' => $links,
-  );
-  return $form;
+
+  if (variable_get('oa_update_enable', FALSE)) {
+    $links[] = array(
+      'title' => 'Available updates',
+      'href' => 'admin/reports/oa_updates',
+    );
+    $links[] = array(
+      'title' => 'Manual update check',
+      'href' => 'admin/reports/oa_updates/check',
+    );
+    $links[] = array(
+      'title' => 'Check for available updates',
+      'href' => 'admin/reports/oa_updates/update',
+    );
+    $form['update']['links'] = array(
+      '#theme' => 'links',
+      '#links' => $links,
+    );
+  }
+  $form['#submit'][] = 'oa_update_admin_form_submit';
+  return system_settings_form($form);
+}
+
+/**
+ * Submit handler for oa_update_admin_form
+ */
+function oa_update_admin_form_submit($form, &$form_state) {
+  if ($form_state['values']['oa_update_enable'] !== $form_state['input']['oa_update_enable']) {
+    variable_set('oa_update_enable', $form_state['values']['oa_update_enable']);
+    module_load_install('update');
+    $status = update_requirements('runtime');
+  }
+}
+
+/**
+ * Implements hook_update_status_alter().
+ */
+function oa_update_update_status_alter(&$projects) {
+  foreach ($projects as $key => $project) {
+    if (!variable_get('oa_update_enable', FALSE)) {
+      if (!isset($projects[$key]['old_status'])) {
+        $projects[$key]['old_status'] = $projects[$key]['status'];
+      }
+      $projects[$key]['status'] = 5;
+    }
+    else {
+      if (isset($projects[$key]['old_status'])) {
+        $projects[$key]['status'] = $projects[$key]['old_status'];
+        unset($projects[$key]['old_status']);
+      }
+    }
+  }
 }
