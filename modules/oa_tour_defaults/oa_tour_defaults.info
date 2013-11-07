@@ -1,6 +1,6 @@
 name = Open Atrium Tour Defaults
 core = 7.x
-package = Features
+package = Open Atrium
 dependencies[] = bootstrap_tour
 dependencies[] = ctools
 features[bootstrap_tour][] = banners
