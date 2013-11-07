@@ -4,7 +4,7 @@
  * Implements hook_install().
  */
 function oa_tour_install() {
-  oa_tour_update_7001();
+  oa_tour_update_7001(array());
 }
 
 /**
