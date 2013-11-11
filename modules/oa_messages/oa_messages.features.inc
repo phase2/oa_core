@@ -48,13 +48,13 @@ function oa_messages_default_message_type() {
         },
         {
           "value" : "[message:field-oa-message-text:value] [message:field-oa-node-ref:title]",
-          "format" : "panopoly_html_text",
-          "safe_value" : "\\u003Cp\\u003E[message:field-oa-message-text:value] [message:field-oa-node-ref:title]\\u003C\\/p\\u003E\\n"
+          "format" : "full_html",
+          "safe_value" : "[message:field-oa-message-text:value] [message:field-oa-node-ref:title]"
         },
         {
           "value" : "[message:field-oa-comment-ref:comment-body:value]",
-          "format" : "panopoly_html_text",
-          "safe_value" : "\\u003Cp\\u003E[message:field-oa-comment-ref:comment-body:value]\\u003C\\/p\\u003E\\n"
+          "format" : "full_html",
+          "safe_value" : "[message:field-oa-comment-ref:comment-body:value]"
         }
       ]
     }
@@ -79,8 +79,8 @@ function oa_messages_default_message_type() {
         },
         {
           "value" : "\\u003Cp\\u003E[message:field-oa-message-text:value]\\u0026nbsp;[message:field-oa-node-ref:body]\\u003C\\/p\\u003E",
-          "format" : "panopoly_wysiwyg_text",
-          "safe_value" : "\\u003Cp\\u003E[message:field-oa-message-text:value]\\u00a0[message:field-oa-node-ref:body]\\u003C\\/p\\u003E\\n"
+          "format" : "full_html",
+          "safe_value" : "\\u003Cp\\u003E[message:field-oa-message-text:value]\\u0026nbsp;[message:field-oa-node-ref:body]\\u003C\\/p\\u003E"
         },
         {
           "value" : "\\u003Ca href=\\u0022[site:url]user\\/@{message:user:uid}\\u0022 class=\\u0022oa-userlink\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E created \\u003Ca href=\\u0022[site:url]node\\/[message:field-oa-node-ref:nid]\\u0022\\u003E\\u003Cstrong\\u003E[message:field-oa-node-ref:title]\\u003C\\/strong\\u003E\\u003C\\/a\\u003E",
@@ -89,13 +89,13 @@ function oa_messages_default_message_type() {
         },
         {
           "value" : "[message:field-oa-message-text:value] [message:field-oa-node-ref:body]",
-          "format" : "panopoly_html_text",
-          "safe_value" : "\\u003Cp\\u003E[message:field-oa-message-text:value] [message:field-oa-node-ref:body]\\u003C\\/p\\u003E\\n"
+          "format" : "full_html",
+          "safe_value" : "[message:field-oa-message-text:value] [message:field-oa-node-ref:body]"
         },
         {
-          "value" : "\\u003Cp\\u003E\\u003Cspan\\u003E[message:field-oa-node-ref:body]\\u003C\\/span\\u003E\\u003C\\/p\\u003E",
-          "format" : "panopoly_wysiwyg_text",
-          "safe_value" : "\\u003Cp\\u003E\\u003Cspan\\u003E[message:field-oa-node-ref:body]\\u003C\\/span\\u003E\\u003C\\/p\\u003E\\n"
+          "value" : "[message:field-oa-node-ref:body]",
+          "format" : "full_html",
+          "safe_value" : "[message:field-oa-node-ref:body]"
         }
       ]
     }
@@ -192,8 +192,8 @@ function oa_messages_default_message_type() {
         },
         {
           "value" : "\\u003Cp\\u003E[message:field-oa-message-text:value]\\u0026nbsp;[message:field-oa-node-ref:oa-log]\\u003C\\/p\\u003E\\u003Cp\\u003E!{message:field-oa-node-ref:oa-diff}\\u003C\\/p\\u003E",
-          "format" : "panopoly_wysiwyg_text",
-          "safe_value" : "\\u003Cp\\u003E[message:field-oa-message-text:value]\\u00a0[message:field-oa-node-ref:oa-log]\\u003C\\/p\\u003E\\n\\u003Cp\\u003E!{message:field-oa-node-ref:oa-diff}\\u003C\\/p\\u003E\\n"
+          "format" : "full_html",
+          "safe_value" : "\\u003Cp\\u003E[message:field-oa-message-text:value]\\u0026nbsp;[message:field-oa-node-ref:oa-log]\\u003C\\/p\\u003E\\u003Cp\\u003E!{message:field-oa-node-ref:oa-diff}\\u003C\\/p\\u003E"
         },
         {
           "value" : "\\u003Ca href=\\u0022[site:url]user\\/@{message:user:uid}\\u0022 class=\\u0022oa-userlink\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E updated \\u003Ca href=\\u0022[message:field-oa-node-ref:url]\\u0022\\u003E\\u003Cstrong\\u003E[message:field-oa-node-ref:title]\\u003C\\/strong\\u003E\\u003C\\/a\\u003E",
@@ -207,8 +207,8 @@ function oa_messages_default_message_type() {
         },
         {
           "value" : "!{message:field-oa-node-ref:oa-diff}",
-          "format" : "panopoly_html_text",
-          "safe_value" : "\\u003Cp\\u003E!{message:field-oa-node-ref:oa-diff}\\u003C\\/p\\u003E\\n"
+          "format" : "full_html",
+          "safe_value" : "!{message:field-oa-node-ref:oa-diff}"
         }
       ]
     }
