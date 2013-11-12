@@ -23,6 +23,16 @@ function oa_messages_digest_oa_message_notifiers_alter(&$notifiers) {
 }
 
 /**
+ * Implements hook_message_digest_aggregate_alter()
+ */
+function oa_messages_digest_message_digest_aggregate_alter(&$context) {
+  if (!empty($context['account']) && !empty($context['account']->data['digest_grouping']) && $context['account']->data['digest_grouping'] == 'global') {
+    // Allow users to group all groups together in the same digest.
+    $context['gid'] = 0;
+  }
+}
+
+/**
  * Implementation of hook_form_alter().
  */
 function oa_messages_digest_form_alter(&$form, &$form_state, $form_id) {
