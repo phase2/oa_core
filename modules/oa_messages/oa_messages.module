@@ -132,14 +132,16 @@ function oa_messages_build_notify_options() {
  */
 function oa_messages_build_subscribe_options($entity, $message) {
   $options = array();
-  $users = oa_notifications_get_notifications($entity);
-  foreach ($users as $uid => $user) {
-    // Disable certain notifiers based on preferences.
-    $notifiers = oa_messages_determine_user_notifiers($user, $entity, $message);
-    $options['uids'][$uid] = array(
-      'entity' => $user,
-      'notifiers' => $notifiers,
-    );
+  if (module_exists('oa_notifications')) {
+    $users = oa_notifications_get_notifications($entity);
+    foreach ($users as $uid => $user) {
+      // Disable certain notifiers based on preferences.
+      $notifiers = oa_messages_determine_user_notifiers($user, $entity, $message);
+      $options['uids'][$uid] = array(
+        'entity' => $user,
+        'notifiers' => $notifiers,
+      );
+    }
   }
 
   return $options;
