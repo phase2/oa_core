@@ -64,6 +64,12 @@ projects[fape][patch][1846156] = http://drupal.org/files/fape-1846156-5.patch
 projects[media_youtube][subdir] = contrib
 projects[media_youtube][version] = 2.0-rc3
 
+; Override panopoly_widgets.make: 2319170
+projects[media][subdir] = contrib
+projects[media][download][type] = git
+projects[media][download][revision] = 4a88319
+projects[media][download][branch] = 7.x-2.x
+
 ; Override panopoly_core.make: 72f3d17
 ; Update token to allow disabling of empty token errors during test runs
 projects[token][type] = module
