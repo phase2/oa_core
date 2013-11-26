@@ -163,14 +163,6 @@ function oa_update_update_projects_alter(&$projects) {
   if (!empty($profile_name)) {
     $profile = oa_update_get_profile($profile_name);
     $projects[$profile_name] = $profile;
-    if (!variable_get('oa_update_enable', FALSE)) {
-      foreach ($projects as $key => $project) {
-        // remove any local OA submodules
-        if (!empty($project['info']['package']) && ($project['info']['package'] == 'Open Atrium')) {
-          unset($projects[$key]);
-        }
-      }
-    }
   }
 }
 
