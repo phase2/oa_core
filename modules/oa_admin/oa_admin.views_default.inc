@@ -284,7 +284,7 @@ function oa_admin_views_default_views() {
   $handler->display->display_options['fields']['timestamp']['field'] = 'timestamp';
   $handler->display->display_options['fields']['timestamp']['label'] = '';
   $handler->display->display_options['fields']['timestamp']['element_label_colon'] = FALSE;
-  /* Field: Content: Open Atrium Section */
+  /* Field: Content: OpenAtrium Section */
   $handler->display->display_options['fields']['oa_section_ref']['id'] = 'oa_section_ref';
   $handler->display->display_options['fields']['oa_section_ref']['table'] = 'field_data_oa_section_ref';
   $handler->display->display_options['fields']['oa_section_ref']['field'] = 'oa_section_ref';
@@ -361,7 +361,7 @@ function oa_admin_views_default_views() {
     3 => 0,
     4 => 0,
   );
-  /* Filter criterion: Content: Open Atrium Section (oa_section_ref) */
+  /* Filter criterion: Content: OpenAtrium Section (oa_section_ref) */
   $handler->display->display_options['filters']['oa_section_ref_target_id']['id'] = 'oa_section_ref_target_id';
   $handler->display->display_options['filters']['oa_section_ref_target_id']['table'] = 'field_data_oa_section_ref';
   $handler->display->display_options['filters']['oa_section_ref_target_id']['field'] = 'oa_section_ref_target_id';
