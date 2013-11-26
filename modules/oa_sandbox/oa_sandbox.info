@@ -1,5 +1,4 @@
 name = "Open Atrium Sandbox"
 package = "Open Atrium"
 core = "7.x"
-project = "oa_sandbox"
 description = "Adds a Sandbox mode to Open Atrium which makes any content additions/edits to not be saved."
