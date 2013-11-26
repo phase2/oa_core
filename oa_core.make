@@ -53,7 +53,7 @@ projects[fape][patch][1846156] = http://drupal.org/files/fape-1846156-5.patch
 
 ; Override panopoly_widgets.make: 5418cbe
 projects[media_youtube][subdir] = contrib
-projects[media_youtube][version] = 2.0-rc3
+projects[media_youtube][version] = 2.0-rc4
 
 ; Override panopoly_widgets.make: 2319170
 projects[media][subdir] = contrib
@@ -124,7 +124,7 @@ projects[message_notify][version] = 2.5
 
 ; Message Subscribe
 projects[message_subscribe][subdir] = contrib
-projects[message_subscribe][version] = 1.0-alpha5
+projects[message_subscribe][version] = 1.0-rc1
 projects[message_subscribe][patch][2094129] = http://drupal.org/files/message_subscribe_empty_array_2094129_1.patch
 
 ; Message Digest
