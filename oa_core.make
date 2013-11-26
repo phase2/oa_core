@@ -41,15 +41,6 @@ projects[panelizer][patch][1992106] = http://drupal.org/files/1992106_panelizer_
 projects[panelizer][patch][1982654] = http://drupal.org/files/1982654-panelizer-dontaskmethatagain-2.patch
 projects[panelizer][patch][2022541] = http://drupal.org/files/2022541-panelizer-node-page-unpublished-1.patch
 
-; Override panopoly_core.make: 1.0
-; Update Entity Reference to work with Devel Generate (#1852112)
-projects[entityreference][type] = module
-projects[entityreference][subdir] = contrib
-projects[entityreference][download][type] = git
-projects[entityreference][download][url] = http://git.drupal.org/project/entityreference.git
-projects[entityreference][download][branch] = 7.x-1.x
-projects[entityreference][download][revision] = 1c176da
-
 ; Override panopoly_core.make: 1143ee2
 ; Patch FAPE to fix warnings (#1846156)
 projects[fape][type] = module
@@ -259,7 +250,7 @@ projects[og][download][type] = git
 projects[og][subdir] = contrib
 projects[og][download][url] = http://git.drupal.org/project/og.git
 projects[og][download][branch] = 7.x-2.x
-projects[og][download][revision] = 6c0afff
+projects[og][download][revision] = 8bdb48
 
 ; Organic Groups Vocabulary
 projects[og_vocab][subdir] = contrib
