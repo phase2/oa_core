@@ -5,6 +5,7 @@ package = Open Atrium
 dependencies[] = ctools
 dependencies[] = features
 dependencies[] = menu
+dependencies[] = oa_core
 dependencies[] = oa_sections
 dependencies[] = page_manager
 dependencies[] = panelizer

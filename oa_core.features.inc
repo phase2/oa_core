@@ -7,16 +7,13 @@
 /**
  * Implements hook_ctools_plugin_api().
  */
-function oa_core_ctools_plugin_api() {
-  list($module, $api) = func_get_args();
+function oa_core_ctools_plugin_api($module = NULL, $api = NULL) {
   if ($module == "page_manager" && $api == "pages_default") {
     return array("version" => "1");
   }
-  list($module, $api) = func_get_args();
   if ($module == "panelizer" && $api == "panelizer") {
     return array("version" => "1");
   }
-  list($module, $api) = func_get_args();
   if ($module == "strongarm" && $api == "strongarm") {
     return array("version" => "1");
   }
@@ -25,7 +22,7 @@ function oa_core_ctools_plugin_api() {
 /**
  * Implements hook_views_api().
  */
-function oa_core_views_api() {
+function oa_core_views_api($module = NULL, $api = NULL) {
   return array("api" => "3.0");
 }
 
@@ -68,6 +65,7 @@ function oa_core_image_default_styles() {
 
   // Exported image style: oa_medium_thumbnail.
   $styles['oa_medium_thumbnail'] = array(
+    'label' => 'oa_medium_thumbnail',
     'name' => 'oa_medium_thumbnail',
     'effects' => array(
       1 => array(
@@ -90,6 +88,7 @@ function oa_core_image_default_styles() {
 
   // Exported image style: oa_small_thumbnail.
   $styles['oa_small_thumbnail'] = array(
+    'label' => 'oa_small_thumbnail',
     'name' => 'oa_small_thumbnail',
     'effects' => array(
       2 => array(

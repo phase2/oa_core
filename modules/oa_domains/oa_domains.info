@@ -4,6 +4,7 @@ core = 7.x
 package = Open Atrium
 dependencies[] = features
 dependencies[] = text
+dependencies[] = oa_core
 features[features_api][] = api:2
 features[field_base][] = field_oa_space_domain
 features[field_instance][] = node-oa_space-field_oa_space_domain
