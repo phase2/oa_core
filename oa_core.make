@@ -149,11 +149,14 @@ projects[realname][version] = 1.1
 
 ; Chosen
 projects[chosen][subdir] = contrib
-projects[chosen][version] = 2.0-alpha2
+projects[chosen][download][type] = git
+projects[chosen][download][branch] = 7.x-2.x
+projects[chosen][download][revision] = c48c8a
 
-libraries[chosen][download][type]    = git
-libraries[chosen][download][url]     = https://github.com/harvesthq/chosen.git
-libraries[chosen][download][tag]     = v0.9.15
+libraries[chosen][download][type] = "get"
+libraries[chosen][download][url] = "https://github.com/harvesthq/chosen/releases/download/1.0.0/chosen_v1.0.0.zip"
+libraries[chosen][directory_name] = "chosen"
+libraries[chosen][destination] = "libraries"
 
 ; Twitter Bootstrap UI
 ;; Currently removed Twitter Bootstrap because of license issue:
