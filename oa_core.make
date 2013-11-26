@@ -100,6 +100,15 @@ projects[views][patch][1735096] = http://drupal.org/files/1735096-views-mltiple-
 ; ************ End Panopoly Overrides ************
 ; ************************************************
 
+; Features Override
+projects[features_override][version] = 2.0-rc1
+projects[features_override][subdir] = contrib
+projects[features_override][type] = module
+
+; Diff
+projects[diff][subdir] = contrib
+projects[diff][version] = 3.2
+
 ; Message
 projects[message][subdir] = contrib
 projects[message][download][type] = git
@@ -183,6 +192,11 @@ projects[feeds][download][url] = http://git.drupal.org/project/feeds.git
 projects[feeds][download][branch] = 7.x-2.x
 projects[feeds][download][revision] = 7e6679d
 
+; Job Scheduler
+projects[job_scheduler][subdir] = contrib
+projects[job_scheduler][version] = 2.0-alpha3
+
+; SimplePie library used by Feeds
 libraries[simplepie][download][type] = file
 libraries[simplepie][download][url] = http://simplepie.org/downloads/simplepie_1.3.1.compiled.php
 libraries[simplepie][download][filename] = simplepie.compiled.php
@@ -196,6 +210,7 @@ projects[command_buttons][version] = 1.0-beta1
 projects[contextual_tabs][subdir] = contrib
 projects[contextual_tabs][version] = 1.0-beta1
 
+; Panels Custom Error
 projects[panels_customerror][type] = module
 projects[panels_customerror][subdir] = contrib
 projects[panels_customerror][version] = 1.0-beta1
@@ -246,6 +261,13 @@ projects[colorizer][version] = 1.0-beta2
 projects[oa_responsive_regions][subdir] = contrib
 projects[oa_responsive_regions][version] = 1.0-beta1
 
+; Mail System
+projects[mailsystem][subdir] = contrib
+projects[mailsystem][version] = 2.34
+
+; HTML Mail
+projects[htmlmail][subdir] = contrib
+projects[htmlmail][version] = 2.65
 
 ; ##### Organic Groups related #####
 ; Organic Groups
