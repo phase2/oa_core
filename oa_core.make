@@ -141,6 +141,11 @@ projects[flag][download][revision] = e37c2475
 projects[flag][patch][471212] = http://drupal.org/files/471212-14-flag-all-bundles.patch
 projects[flag][patch][2027091] = http://drupal.org/files/flag_hook_flag_default_flags_alter.patch
 
+; Trash Flag
+projects[trash_flag][type] = module
+projects[trash_flag][subdir] = contrib
+projects[trash_flag][version] = 1.0-beta1
+
 ; MimeMail
 projects[mimemail][type] = module
 projects[mimemail][subdir] = contrib
