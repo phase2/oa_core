@@ -104,21 +104,11 @@ function oa_permissions_og_features_default_permissions() {
     'roles' => array(),
   );
 
-  // Exported og permission: 'node:oa_group:trash any content'
-  $permissions['node:oa_group:trash any content'] = array(
-    'roles' => array(),
-  );
-
   // Exported og permission: 'node:oa_group:unsubscribe'
   $permissions['node:oa_group:unsubscribe'] = array(
     'roles' => array(
       'member' => 'member',
     ),
-  );
-
-  // Exported og permission: 'node:oa_group:untrash any content'
-  $permissions['node:oa_group:untrash any content'] = array(
-    'roles' => array(),
   );
 
   // Exported og permission: 'node:oa_group:update group'
@@ -133,11 +123,6 @@ function oa_permissions_og_features_default_permissions() {
     'roles' => array(
       'administrator member' => 'administrator member',
     ),
-  );
-
-  // Exported og permission: 'node:oa_group:view trash bin'
-  $permissions['node:oa_group:view trash bin'] = array(
-    'roles' => array(),
   );
 
   // Exported og permission: 'node:oa_space:add user'
@@ -234,22 +219,10 @@ function oa_permissions_og_features_default_permissions() {
     'roles' => array(),
   );
 
-  // Exported og permission: 'node:oa_space:trash any content'
-  $permissions['node:oa_space:trash any content'] = array(
-    'roles' => array(),
-  );
-
   // Exported og permission: 'node:oa_space:unsubscribe'
   $permissions['node:oa_space:unsubscribe'] = array(
     'roles' => array(
       'member' => 'member',
-    ),
-  );
-
-  // Exported og permission: 'node:oa_space:untrash any content'
-  $permissions['node:oa_space:untrash any content'] = array(
-    'roles' => array(
-      'administrator member' => 'administrator member',
     ),
   );
 
@@ -262,13 +235,6 @@ function oa_permissions_og_features_default_permissions() {
 
   // Exported og permission: 'node:oa_space:use any oa button space_type'
   $permissions['node:oa_space:use any oa button space_type'] = array(
-    'roles' => array(
-      'administrator member' => 'administrator member',
-    ),
-  );
-
-  // Exported og permission: 'node:oa_space:view trash bin'
-  $permissions['node:oa_space:view trash bin'] = array(
     'roles' => array(
       'administrator member' => 'administrator member',
     ),

@@ -241,11 +241,6 @@ projects[views_load_more][download][url] = http://git.drupal.org/project/views_l
 projects[views_load_more][download][branch] = 7.x-1.x
 projects[views_load_more][download][revision] = 28de384
 
-; Trash Flag
-projects[trash_flag][type] = module
-projects[trash_flag][subdir] = contrib
-projects[trash_flag][version] = 1.0-beta1
-
 ; Jquery Update
 projects[jquery_update][subdir] = contrib
 projects[jquery_update][download][type] = git

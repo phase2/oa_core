@@ -1,0 +1,6 @@
+name = Open Atrium Admin Role
+description = Automatically assign all node-based permissions to an admin role.
+core = 7.x
+package = Open Atrium
+dependencies[] = oa_core
+project path = sites/all/modules/contrib/oa_core/modules

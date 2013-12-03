@@ -9,6 +9,7 @@ dependencies[] = features
 dependencies[] = list
 dependencies[] = oa_core
 dependencies[] = oa_section_context
+dependencies[] = oa_sections
 dependencies[] = options
 dependencies[] = taxonomy
 features[conditional_fields][] = node:oa_section
