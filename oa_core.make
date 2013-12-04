@@ -255,7 +255,7 @@ projects[jquery_update][patch][1448490] = http://drupal.org/files/jquery_update-
 
 ; Colorizer
 projects[colorizer][subdir] = contrib
-projects[colorizer][version] = 1.0-beta2
+projects[colorizer][version] = 1.0-beta3
 
 ; OA Responsive Regions
 projects[oa_responsive_regions][subdir] = contrib
@@ -304,4 +304,4 @@ projects[og_variables][version] = 1.0-beta1
 ; Bootstrap Tour
 projects[bootstrap_tour][type] = module
 projects[bootstrap_tour][subdir] = contrib
-projects[bootstrap_tour][version] = 1.0-beta5
+projects[bootstrap_tour][version] = 1.0-beta6
