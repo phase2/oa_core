@@ -80,7 +80,10 @@ function oa_adminrole_update_permissions($type = '') {
         $query->values(array($rid, $perm, $module));
       }
       $query->execute();
-      drupal_set_message(t('The <em>@role</em> role has been added to @type content permissions.', array('@role' => $role->name, '@type' => $type)));
+      // don't give messages during install
+      if (!defined('MAINTENANCE_MODE')) {
+        drupal_set_message(t('The <em>@role</em> role has been added to @type content permissions.', array('@role' => $role->name, '@type' => $type)));
+      }
     }
   }
 }
@@ -130,7 +133,10 @@ function oa_adminrole_update_og_permissions($type = '') {
         }
       }
       $query->execute();
-      drupal_set_message(t('The <em>@role</em> role has been added to @type group/space permissions.', array('@role' => OG_ADMINISTRATOR_ROLE, '@type' => $type)));
+      // don't give messages during install
+      if (!defined('MAINTENANCE_MODE')) {
+        drupal_set_message(t('The <em>@role</em> role has been added to @type group/space permissions.', array('@role' => OG_ADMINISTRATOR_ROLE, '@type' => $type)));
+      }
     }
   }
 }
