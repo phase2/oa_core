@@ -15,14 +15,10 @@ define('OA_SESSION_SECTION', 'oa_section_id');
  */
 function oa_section_get_section_context() {
   $menu = menu_get_object();
-  if (!isset($menu->nid) || !session_id()) {
-    return 0;
-  }
-
-  $nid = $menu->nid;
-  $node = node_load($nid);
-  if (empty($node)) {
-    return 0;
+  if (!isset($menu->nid) || !($node = node_load($menu->nid))) {
+    // not a node page
+    // so only return SESSION if it's already set
+    return isset($_SESSION[OA_SESSION_SECTION]) ? $_SESSION[OA_SESSION_SECTION] : 0;
   }
 
   $set_session = 0;
@@ -76,7 +72,6 @@ function oa_section_context_form_node_form_alter(&$form, &$form_state, $form_id)
   elseif (!empty($_SESSION[OA_SESSION_SECTION])) {
     $section = $_SESSION[OA_SESSION_SECTION];
   }
-
   if (!empty($form[OA_SECTION_FIELD][LANGUAGE_NONE]['#options']) && empty($form[OA_SECTION_FIELD][LANGUAGE_NONE]['#default_value']) && !empty($section) && array_key_exists($section, $form[OA_SECTION_FIELD][LANGUAGE_NONE]['#options'])) {
     $form[OA_SECTION_FIELD][LANGUAGE_NONE]['#default_value'] = $section;
   }
