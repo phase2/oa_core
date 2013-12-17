@@ -269,6 +269,13 @@ projects[mailsystem][version] = 2.34
 projects[htmlmail][subdir] = contrib
 projects[htmlmail][version] = 2.65
 
+; Date Facets
+projects[date_facets][subdir] = contrib
+projects[date_facets][download][type] = git
+projects[date_facets][download][url] = http://git.drupal.org/project/date_facets.git
+projects[date_facets][download][branch] = 7.x-1.x
+projects[date_facets][download][revision] = a7a35f8
+
 ; ##### Organic Groups related #####
 ; Organic Groups
 projects[og][download][type] = git
