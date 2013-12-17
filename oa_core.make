@@ -60,6 +60,7 @@ projects[media][subdir] = contrib
 projects[media][download][type] = git
 projects[media][download][revision] = 4a88319
 projects[media][download][branch] = 7.x-2.x
+projects[media][patch][2104193] = http://drupal.org/files/issues/media_remove_file_display_alter-2104193-17.patch
 
 ; Override panopoly_core.make: 72f3d17
 ; Update token to allow disabling of empty token errors during test runs
