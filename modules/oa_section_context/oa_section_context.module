@@ -76,3 +76,39 @@ function oa_section_context_form_node_form_alter(&$form, &$form_state, $form_id)
     $form[OA_SECTION_FIELD][LANGUAGE_NONE]['#default_value'] = $section;
   }
 }
+
+/**
+ * Implements hook_entity_property_info().
+ *
+ * Add the current-section to the system token (i.e. like current-user).
+ */
+function oa_section_context_entity_property_info() {
+  $info = array();
+
+  $info['site']['properties']['oa_section_context'] = array(
+    'label' => t('Current OA section'),
+    'description' => t('The current Open Atrium Section from context, if exists.'),
+    'getter_callback' => 'oa_section_context_get_properties',
+    'type' => 'node',
+  );
+
+  return $info;
+}
+
+/**
+ * Property getter callback.
+ *
+ * Get the current section from context.
+ *
+ * @code
+ *   $wrapper = entity_metadata_site_wrapper();
+ *   $group = $wrapper->oa_section_context->value();
+ * @endcode
+ */
+function oa_section_context_get_properties($data = array(), array $options, $name, $type) {
+  if ($section_id = oa_section_get_section_context()) {
+    return entity_load_single('node', $section_id);
+  }
+}
+
+
