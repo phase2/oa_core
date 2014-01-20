@@ -84,11 +84,13 @@ function oa_section_context_form_node_form_alter(&$form, &$form_state, $form_id)
  */
 function oa_section_context_entity_property_info() {
   $info = array();
+  // Add meta-data about the basic node properties.
+  $properties = &$info['site']['properties'];
 
-  $info['site']['properties']['oa_section_context'] = array(
+  $properties['oa_section_context'] = array(
     'label' => t('Current OA section'),
     'description' => t('The current Open Atrium Section from context, if exists.'),
-    'getter_callback' => 'oa_section_context_get_properties',
+    'getter callback' => 'oa_section_context_get_properties',
     'type' => 'node',
   );
 
@@ -105,7 +107,7 @@ function oa_section_context_entity_property_info() {
  *   $group = $wrapper->oa_section_context->value();
  * @endcode
  */
-function oa_section_context_get_properties($data = array(), array $options, $name, $type) {
+function oa_section_context_get_properties($data = FALSE, array $options, $name) {
   if ($section_id = oa_section_get_section_context()) {
     return entity_load_single('node', $section_id);
   }
