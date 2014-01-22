@@ -82,8 +82,12 @@ projects[defaultconfig][patch][2043307] = http://drupal.org/files/defaultconfig_
 projects[defaultconfig][patch][2008178] = http://drupal.org/files/defaultconfig-rebuild-filters-2008178-4_0.patch
 
 ; Entity API
-projects[entity][version] = 1.2
+; projects[entity][version] = 1.3
 projects[entity][subdir] = contrib
+projects[entity][download][type] = git
+projects[entity][download][branch] = 7.x-1.x
+projects[entity][download][revision] = dec9952
+projects[entity][patch][1782134] = http://drupal.org/files/entity-translatable_fields_not_overriding_und_with_empty_values-1782134-5.patch
 
 ; Features
 projects[features][version] = 2.0
