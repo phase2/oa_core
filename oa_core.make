@@ -149,7 +149,7 @@ projects[flag][patch][2027091] = http://drupal.org/files/flag_hook_flag_default_
 ; Trash Flag
 projects[trash_flag][type] = module
 projects[trash_flag][subdir] = contrib
-projects[trash_flag][version] = 1.0-beta1
+projects[trash_flag][version] = 1.0-beta2
 
 ; MimeMail
 projects[mimemail][type] = module
