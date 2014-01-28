@@ -434,7 +434,7 @@ function oa_core_get_group_users_for_space($space_id, $group_id) {
  * Return a list of space ids that a user belongs to.
  */
 function oa_core_get_user_spaces($uid) {
-  if ($groups = og_get_entity_groups('user')) {
+  if ($groups = og_get_entity_groups('user', $uid)) {
     return !empty($groups['node']) ? $groups['node'] : array();
   }
   return array();
