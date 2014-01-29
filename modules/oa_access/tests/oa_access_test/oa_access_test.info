@@ -1,0 +1,6 @@
+name = Open Atrium Access Test
+description = A test module to help with the unit tests for Open Atrium Access.
+package = Open Atrium
+core = 7.x
+hidden = TRUE
+dependencies[] = oa_access
