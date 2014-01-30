@@ -36,7 +36,7 @@ function oa_access_group_permissions_form($form, &$form_state) {
 function oa_access_team_permissions_form($form, &$form_state, $group_type, $gid) {
   $message = '<p>' . t('Please select which Teams have which permissions.') . '</p>';
   if (user_permission('administer oa_access permissions')) {
-    $message .= '<p>' . t('You can also <a href="!url">use Groups</a> to control who has which permission.', array('!url' => url('admin/openatrium/oa_access'))) . '</p>';
+    $message .= '<p>' . t('You can also <a href="!url">use Groups</a> to control who has which permission.', array('!url' => url('groups/oa_access'))) . '</p>';
   }
 
   $form['message'] = array(
