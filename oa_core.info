@@ -2,6 +2,7 @@ name = Open Atrium Core
 description = Core required module for Open Atrium.
 core = 7.x
 package = Open Atrium
+version = 2.13
 project = oa_core
 dependencies[] = entityreference
 dependencies[] = features
