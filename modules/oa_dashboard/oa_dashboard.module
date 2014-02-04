@@ -298,15 +298,12 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
     ));
   }
 
-  if (!empty($space)) {
+  $subspace_list = NULL;
+  if (!empty($space) && module_exists('oa_subspaces')) {
     $subspaces = oa_core_get_groups_by_parent($space_id, $space_type);
     if (!empty($subspaces)) {
       $items = oa_core_get_titles($subspaces, $space_type);
-      $vars['subspaces'] = theme('item_list', array(
-        'items' => $items['links'],
-        'title' => $subspace_type_names,
-        'type' => 'ul',
-      ));
+      $subspace_list = $items['links'];
     }
   }
 
@@ -343,7 +340,19 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
             $section_url = url('node/' . $sid);
           }
         }
-        // add the Space home page link and create the ul list
+      }
+      if (module_exists('oa_subspaces') && og_user_access('node', $space_id, 'create ' . OA_SPACE_TYPE . ' content', $user)) {
+        $add_subspace = l(t('Create new subspace'), 'node/add/' . str_replace('_', '-', OA_SPACE_TYPE),
+          array(
+            'attributes' => array('class' => array('more-link')),
+            'query' => array(OA_PARENT_SPACE => $space_id),
+          ));
+        if (!empty($subspace_list)) {
+          $subspace_list[] = $add_subspace;
+        }
+        else {
+          $items[] = $add_subspace;
+        }
       }
       if (og_user_access('node', $space_id, "create " . OA_SECTION_TYPE . " content", $user)) {
         $items[] = l(t('Create new section'), 'node/add/' . str_replace('_', '-', OA_SECTION_TYPE),
@@ -357,6 +366,14 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
         ));
       }
     }
+    if (!empty($subspace_list)) {
+      $vars['subspaces'] = theme('item_list', array(
+        'items' => $subspace_list,
+        'title' => $subspace_type_names,
+        'type' => 'ul',
+      ));
+    }
+
     // Current Section Name from current page name
     if (isset($node->type)) {
       switch ($node->type) {

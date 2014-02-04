@@ -874,3 +874,32 @@ function oa_core_form_oa_space_node_form_alter(&$form, &$form_state, &$form_id) 
 function oa_core_form_oa_group_node_form_alter(&$form, &$form_state, &$form_id) {
   _oa_core_hide_comment_settings($form);
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function oa_core_form_node_delete_confirm_alter(&$form, $form_state, $form_id) {
+  $form['#submit'][] = 'oa_core_node_delete_redirect';
+}
+
+/**
+ * Helper to redirect to proper landing page after content deletion
+ */
+function oa_core_node_delete_redirect($form, &$form_state) {
+  $id = oa_core_get_section_context();
+  if (empty($id)) {
+    $id = oa_core_get_space_context();
+  }
+  if (!empty($form['#node'])) {
+    if (in_array($form['#node']->type, array(OA_SPACE_TYPE, OA_GROUP_TYPE)) && module_exists('oa_subspaces') && !empty($form['#node']->{OA_PARENT_SPACE}[LANGUAGE_NONE][0]['target_id'])) {
+      // redirect to parent space when deleting subspace
+      $id = $form['#node']->{OA_PARENT_SPACE}[LANGUAGE_NONE][0]['target_id'];
+    }
+    if ($id == $form['#node']->nid) {
+      $id = NULL;  // don't redirect back to deleted node ever
+    }
+  }
+  if (!empty($id)) {
+    $form_state['redirect'] = 'node/' . $id;
+  }
+}
