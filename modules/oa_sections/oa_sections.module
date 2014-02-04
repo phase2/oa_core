@@ -133,6 +133,17 @@ function _oa_sections_get_current_selected_space($entity, $set_value = NULL) {
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function oa_core_form_oa_section_node_form_alter(&$form, &$form_state, &$form_id) {
+function oa_sections_form_oa_section_node_form_alter(&$form, &$form_state, $form_id) {
   _oa_core_hide_comment_settings($form);
+  _oa_core_setup_node_space_type($form, 'section_type', 'select:[name="field_oa_section[und]"]');
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function oa_sections_form_taxonomy_form_term_alter(&$form, &$form_state, $form_id) {
+  $vocab_name = $form['#vocabulary']->machine_name;
+  if ($vocab_name == 'section_type') {
+    _oa_core_setup_taxonomy_space_type($form, 'oa_section');
+  }
 }

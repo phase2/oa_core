@@ -853,6 +853,75 @@ function oa_core_preprocess_views_exposed_form(&$vars) {
 }
 
 /**
+ * Allowed values callback for using particular space types.
+ *
+ * @param array $field
+ *   Field instance array for the given field.
+ *
+ * @return array
+ *   Associative array keyed by Taxonomy term id containing the term names.
+ */
+function oa_core_get_allowed_space_types($field) {
+  $options = array();
+  $gid = oa_core_get_space_context();
+  // If no gid, may be using this as a filter or such.
+  // @see oa_subspaces_form_node_form_alter().
+  if (!$gid || !module_exists('oa_subspaces') || user_access('administer group') || user_access('create oa_space content') || og_user_access('node', $gid, 'use any oa button space_type') || og_user_access('node', $gid, 'administer group')) {
+    return taxonomy_allowed_values($field);
+  }
+  if ($gid) {
+    foreach ($field['settings']['allowed_values'] as $tree) {
+      if ($vocabulary = taxonomy_vocabulary_machine_name_load($tree['vocabulary'])) {
+        if ($terms = taxonomy_get_tree($vocabulary->vid, $tree['parent'])) {
+          foreach ($terms as $term) {
+            if (og_user_access('node', $gid, _oa_buttons_perm_name($tree['vocabulary'], $term->tid))) {
+              $options[$term->tid] = str_repeat('-', $term->depth) . $term->name;
+            }
+          }
+        }
+      }
+    }
+  }
+  return $options;
+}
+
+/**
+ * Gets all the options for 'Space type'.
+ *
+ * @param string $vocab_name
+ *   (Optional) The name of the vocabulary for the 'Space type'.
+ */
+function oa_core_get_space_type_options($vocab_name = 'space_type') {
+  // Load all the terms for this vocabulary.
+  $query = db_select('taxonomy_term_data', 'td');
+  $query->join('taxonomy_vocabulary', 'v', 'v.vid = td.vid');
+  $query
+    ->fields('td', array('tid'))
+    ->condition('v.machine_name', $vocab_name);
+  $terms = taxonomy_term_load_multiple($query->execute()->fetchCol());
+
+  $options = array();
+  foreach ($terms as $term) {
+    $options[$term->tid] = module_invoke_all('oa_core_space_type_options', $term, $vocab_name);
+  }
+
+  drupal_alter('oa_core_space_type_options', $options, $vocab_name);
+
+  return $options;
+}
+
+/**
+ * Implements hook_oa_core_space_type_options().
+ */
+function oa_core_oa_core_space_type_options($term, $vocab_name) {
+  $layout = field_get_items('taxonomy_term', $term, 'field_oa_section_layout', LANGUAGE_NONE);
+
+  return array(
+    'layout' => $layout[0]['value'],
+  );
+}
+
+/**
  * Alters a node edit form to hide comment settings.
  */
 function _oa_core_hide_comment_settings(&$form) {
@@ -862,10 +931,46 @@ function _oa_core_hide_comment_settings(&$form) {
 }
 
 /**
+ * Alters a node edit form to setup the 'Space type' functionality.
+ *
+ * @param array &$form
+ *   The Form API array that we are altering.
+ * @param string $space_type
+ *   (Optional) The name of the taxonomy which contains the types.
+ * @param string $selector
+ *   (Optional) The CSS selector to identify the type select on the page.
+ */
+function _oa_core_setup_node_space_type(&$form, $type = 'space_type', $selector = 'select:[name="field_oa_space_type[und]"]') {
+  $form['panelizer']['#states'] = array(
+    'visible' => array(
+      ':input[name="field_oa_section_override[und]"]' => array('checked' => TRUE),
+    ),
+    'invisible' => array(
+      ':input[name="field_oa_section_override[und]"]' => array('checked' => FALSE),
+    ),
+  );
+
+  $options = oa_core_get_space_type_options($type);
+
+  $form['#attached']['js'][] = array(
+    'data' => array(
+      'oaCoreSpaceTypeOptions' => $options,
+      'oaCoreSpaceTypeSelector' => $selector
+    ),
+    'type' => 'setting',
+  );
+  $form['#attached']['js'][] = array(
+    'data' => drupal_get_path('module', 'oa_core') . '/js/oa_core_space_type.js',
+    'type' => 'file',
+  );
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  */
 function oa_core_form_oa_space_node_form_alter(&$form, &$form_state, &$form_id) {
   _oa_core_hide_comment_settings($form);
+  _oa_core_setup_node_space_type($form);
 }
 
 /**
@@ -873,6 +978,93 @@ function oa_core_form_oa_space_node_form_alter(&$form, &$form_state, &$form_id) 
  */
 function oa_core_form_oa_group_node_form_alter(&$form, &$form_state, &$form_id) {
   _oa_core_hide_comment_settings($form);
+}
+
+/**
+ * Build a list of section layouts based on oa_section panelizer displays.
+ *
+ * @param string $bundle
+ *   The name of the bundle of layouts to scan.
+ *
+ * @return array
+ *   An associative array keyed by the display name and containing a human
+ *   readable display name.
+ */
+function oa_core_get_space_type_layout_options($bundle) {
+  $plugins = panelizer_get_entity_plugins();
+  $node_plugin = panelizer_entity_plugin_get_handler($plugins['node']);
+  foreach ($node_plugin->plugin['view modes'] as $view_mode => $view_mode_info) {
+    $view_bundle = $bundle . '.' . $view_mode;
+
+    // Ignore view modes that don't have a choice or already have their
+    // own custom panel set up.
+    if (!$node_plugin->has_panel_choice($view_bundle) || !empty($entity->panelizer[$view_mode]->did)) {
+      continue;
+    }
+
+    $panelizers = $node_plugin->get_default_panelizer_objects($view_bundle);
+
+    $options = array();
+    foreach ($panelizers as $name => $panelizer) {
+      if (empty($panelizer->disabled)) {
+        $options[$name] = $panelizer->title ? $panelizer->title : t('Default');
+      }
+    }
+
+    if (!empty($entity->panelizer[$view_mode]->name)) {
+      $name = $entity->panelizer[$view_mode]->name;
+    }
+    else {
+      if ($node_plugin->has_default_panel($view_bundle)) {
+        $name = implode(':', array($node_plugin->entity_type, $bundle, 'default'));
+        if ($view_mode != 'page_manager') {
+          $name .= ':' . $view_mode;
+        }
+      }
+      else {
+        $name = '';
+      }
+    }
+
+    if (!$node_plugin->has_default_panel($view_bundle)) {
+      $options = array('' => t('-- No panel --')) + $options;
+    }
+  }
+
+  return $options;
+}
+
+/**
+ * Alters a taxonomy edit form to setup the 'Space type' functionality.
+ *
+ * @param string $layout_bundle
+ *   The name of the bundle to get the layout options for.
+ */
+function _oa_core_setup_taxonomy_space_type(&$form, $layout_bundle = 'oa_space') {
+  $term = (object)$form['#term'];
+  $layout = field_get_items('taxonomy_term', $term, 'field_oa_section_layout', LANGUAGE_NONE);
+
+  $layout_defaults = array();
+  if (!empty($layout[0]['value'])) {
+    $layout_defaults[] = $layout[0]['value'];
+  }
+
+  // Provide section layout options.
+  $section_layouts = oa_core_get_space_type_layout_options($layout_bundle);
+  if (isset($form['field_oa_section_layout'])) {
+    $form['field_oa_section_layout'][$form['field_oa_section_layout']['#language']]['#options'] = $section_layouts;
+    $form['field_oa_section_layout'][$form['field_oa_section_layout']['#language']]['#default_value'] = $layout_defaults;
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function oa_core_form_taxonomy_form_term_alter(&$form, &$form_state, $form_id) {
+  $vocab_name = $form['#vocabulary']->machine_name;
+  if ($vocab_name == 'space_type') {
+    _oa_core_setup_taxonomy_space_type($form);
+  }
 }
 
 /**
