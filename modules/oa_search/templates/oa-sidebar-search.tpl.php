@@ -33,5 +33,8 @@
       <?php endforeach; ?>
       </ul>
     <?php endif; ?>
+    <?php if (!empty($spaces)): ?>
+      <?php print $spaces; ?>
+    <?php endif; ?>
   </form>
 </div>
