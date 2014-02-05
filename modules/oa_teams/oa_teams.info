@@ -10,6 +10,7 @@ dependencies[] = og
 dependencies[] = options
 dependencies[] = page_manager
 dependencies[] = panelizer
+dependencies[] = panopoly_pages
 dependencies[] = strongarm
 dependencies[] = text
 dependencies[] = views
