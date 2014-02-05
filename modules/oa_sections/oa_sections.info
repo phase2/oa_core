@@ -11,6 +11,7 @@ dependencies[] = oa_core
 dependencies[] = oa_teams
 dependencies[] = og
 dependencies[] = options
+dependencies[] = panopoly_pages
 dependencies[] = reference_option_limit
 dependencies[] = strongarm
 dependencies[] = text
