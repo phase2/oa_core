@@ -346,7 +346,11 @@ function oa_buttons_create_term($taxonomy, $name, $node_options, $layout, $updat
   if (!($term = current(taxonomy_get_term_by_name($name, $taxonomy))) || $update) {
     if (!$vocab) {
       // Revert features to known proper state, also clear the static for taxonomy_get_term_by_name().;
-      features_revert(array('oa_buttons' => array('taxonomy','field_base', 'field_instance')));
+      features_revert(array(
+        'oa_core' => array('taxonomy'),
+        'oa_sections' => array('taxonomy'),
+        'oa_buttons' => array('field_base', 'field_instance'),
+      ));
       drupal_static('taxonomy_vocabulary_get_names');
       $vocab = taxonomy_vocabulary_machine_name_load($taxonomy);
     }
