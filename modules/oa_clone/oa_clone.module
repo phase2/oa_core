@@ -1,0 +1,155 @@
+<?php
+/**
+ * @file
+ * Code for the Open Atrium Clone module.
+ */
+
+include_once 'oa_clone.features.inc';
+
+/**
+ * The path to the clone action.
+ */
+define('OA_CLONE_ACTION_PATH', 'node/%node/clone/%clone_token');
+
+/**
+ * The path to the 'Create Space' page.
+ */
+define('OA_CLONE_CREATE_SPACE_PATH', 'node/add/oa-space/%');
+
+/**
+ * Implements hook_menu_alter().
+ */
+function oa_clone_menu_alter(&$items) {
+  if (isset($items[OA_CLONE_ACTION_PATH])) {
+    // MENU_LOCAL_ACTION doesn't really fit in with Open Atrium's UI design,
+    // it isn't used anywhere else. Instead we use tabs and contextual_tabs,
+    // so let's switch this!
+    $items[OA_CLONE_ACTION_PATH]['type'] = MENU_LOCAL_TASK;
+
+    // We rebuild the node edit form using Panels, but by default the Clone
+    // module won't use this. We replace it's page callback to fix that!
+    $items[OA_CLONE_ACTION_PATH]['page callback'] = 'oa_clone_node_check';
+  }
+
+  if (isset($items[OA_CLONE_CREATE_SPACE_PATH])) {
+    // We have to conditionally replace the normal 'Create Space' page
+    // with one that can clone.
+    $items[OA_CLONE_CREATE_SPACE_PATH]['page callback'] = 'oa_clone_create_space_page_callback';
+  }
+}
+
+/**
+ * Page callback that prompts the user to confirm the operation.
+ *
+ * This code was copied from clone_node_check() and simple changed to call
+ * our oa_clone_node_prepopulate() rather than clone_node_prepopulate().
+ *
+ * @param object $node
+ *   A node object representing the node we are cloning.
+ *
+ * @see clone_node_check()
+ */
+function oa_clone_node_check($node) {
+  $method = variable_get('clone_method', 'prepopulate');
+
+  switch ($method) {
+    case 'save-edit':
+      if (variable_get('clone_nodes_without_confirm', FALSE)) {
+        $new_nid = clone_node_save($node->nid);
+        $options = array();
+        if (!empty($_GET['node-clone-destination'])) {
+          $options['query']['destination'] = $_GET['node-clone-destination'];
+        }
+        drupal_goto('node/' . $new_nid . '/edit', $options);
+      }
+      else {
+        return drupal_get_form('clone_node_confirm', $node);
+      }
+      break;
+    case 'prepopulate':
+    default:
+      // Open Atrium: Here is our one change.
+      return oa_clone_node_prepopulate($node);
+      break;
+  }
+}
+
+/**
+ * Page callback that builds the Clone page with Panels.
+ *
+ * Essentially this is combining page_manager_node_add() with
+ * clone_node_prepopulate() such that our customizations to the node edit form
+ * via Panels are also on the node clone form.
+ *
+ * @param object $original_node
+ *   A node object representing the node we are cloning.
+ * @param boolean $set_title
+ *   (Optional) Whether we should set the title or not; TRUE by default.
+ *
+ * @see page_manager_node_add()
+ * @see clone_node_prepopulate()
+ */
+function oa_clone_node_prepopulate($original_node, $set_title = TRUE) {
+  if (isset($original_node->nid)) {
+    if (clone_is_permitted($original_node->type)) {
+      // Include the file which defines _clone_node_prepare().
+      module_load_include('inc', 'clone', 'clone.pages');
+
+      $node = _clone_node_prepare($original_node, TRUE);
+      if ($set_title) {
+        drupal_set_title($node->title);
+      }
+      else {
+        $node->title = '';
+      }
+
+      // Let other modules do special fixing up.
+      $context = array('method' => 'prepopulate', 'original_node' => $original_node);
+      drupal_alter('clone_node', $node, $context);
+      // Make sure the file defining the node form is loaded.
+      $form_state = array();
+      $form_state['build_info']['args'] = array($node);
+
+      form_load_include($form_state, 'inc', 'page_manager', 'plugins/tasks/node_edit');
+      return page_manager_node_edit($node);
+    }
+  }
+}
+
+/**
+ * Page callback that either returns the normal create page or a clone page.
+ *
+ * Checks the 'Space type' taxonomy to see if this is a clone type or a normal
+ * type and returns either the normal page from 'oa_clone' or the clone page
+ * from 'clone'.
+ *
+ * @param string $type
+ *   The node content type name (ie. oa_space, oa_section).
+ * @param integer $space_tid
+ *   The taxonomy term ID of the 'Space type'.
+ *
+ * @see oa_core_create_space_page_callback()
+ * @see oa_clone_node_prepopulate()
+ */
+function oa_clone_create_space_page_callback($type, $space_tid) {
+  if ($space_type = taxonomy_term_load($space_tid)) {
+    // If this is a clone type, then return oa_clone_node_prepopulate().
+    $wrapper = entity_metadata_wrapper('taxonomy_term', $space_type);
+    if ($wrapper->field_oa_clone_enabled->value() && ($node = $wrapper->field_oa_clone_space->value())) {
+      drupal_set_title(t('Create @name Space', array('@name' => $space_type->name)));
+      return oa_clone_node_prepopulate($node, FALSE);
+    }
+
+    // Otherwise, we fallback on oa_core_create_space_page_callback().
+    return oa_core_create_space_page_callback($type, $space_tid);
+  }
+
+  return MENU_NOT_FOUND;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function oa_clone_form_oa_space_node_form_alter(&$form, &$form_state, &$form_id) {
+  $form['field_oa_space_type'][LANGUAGE_NONE]['#description'] = t('Changing the <em>Space type</em> after the Space has already been created, will only affect the default dashboard layout and available types - not content or configuration.');
+}

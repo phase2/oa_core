@@ -93,6 +93,7 @@ features[variable][] = node_submitted_oa_space
 features[variable][] = pathauto_node_oa_group_pattern
 features[variable][] = pathauto_node_oa_space_pattern
 features[variable][] = pathauto_node_pattern
+features[views_view][] = oa_core_space_types
 features[views_view][] = open_atrium_content
 features[views_view][] = open_atrium_groups
 features[views_view][] = open_atrium_user_filters
