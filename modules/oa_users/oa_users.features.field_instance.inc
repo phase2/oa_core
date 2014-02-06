@@ -207,10 +207,8 @@ function oa_users_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('About');
   t('Display Name');
   t('Group membership');
-  t('Picture');
 
   return $field_instances;
 }
