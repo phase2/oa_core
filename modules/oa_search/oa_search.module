@@ -31,6 +31,7 @@ function oa_search_theme() {
       'variables' => array(
         'options' => array(),
         'spaces' => array(),
+        'extra_classes' => '',
       ),
       'path' => drupal_get_path('module', 'oa_search') . '/templates',
     ),

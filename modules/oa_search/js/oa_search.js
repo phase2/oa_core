@@ -37,7 +37,12 @@
               arg = $spaces.find('select').val();
               argtext = $spaces.find('select option:selected').text();
               if (term.length === 0) {
-                term = '*';
+                if ($options.hasClass('solr-search')) {
+                  term = ' ';
+                }
+                else {
+                  term = '*';
+                }
               }
             }
             $form.attr('action', determineSearchPath(term, type, settings.oa_search.space, arg, argtext));
@@ -48,6 +53,7 @@
   };
 
   function determineSearchPath(term, type, space, arg, argtext) {
+    console.log(type);
     var path =  Drupal.settings.basePath +  'search' + '/' + (type === 'users' ? 'user' : 'node') + '/' + term;
     if (type === 'this_space') {
       // %3A instead of : because of some weird double encoding on the backend.

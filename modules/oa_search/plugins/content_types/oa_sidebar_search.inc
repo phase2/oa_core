@@ -13,6 +13,7 @@ $plugin = array(
   'defaults' => array(
     'allowed_options' => array(),
     'taxonomy_terms' => array(),
+    'select_title' => '',
   ),
 );
 
@@ -21,15 +22,20 @@ $plugin = array(
  */
 function oa_sidebar_search_pane_render($subtype, $conf, $args, $context) {
 
-  if (isset($conf['allowed_options']) && count(array_filter($conf['allowed_options'])) > 0) {
-    $options = $conf['allowed_options'];
-  }
-  else {
-    $options = array(
+  $all_options = array(
       'all_spaces' => t('All spaces'),
       'this_space' => t('This space'),
       'users' => t('Users'),
     );
+  if (isset($conf['allowed_options']) && count(array_filter($conf['allowed_options'])) > 0) {
+    $keys = array_keys(array_filter($conf['allowed_options']));
+  }
+  else {
+    $keys = array_keys($all_options);
+  }
+  $options = array();
+  foreach ($keys as $key) {
+    $options[$key] = $all_options[$key];
   }
 
   $spaces = array();
@@ -50,7 +56,7 @@ function oa_sidebar_search_pane_render($subtype, $conf, $args, $context) {
     }
     $element = array(
       '#name' => 'space_select',
-      '#title' => t('Select Space to narrow search'),
+      '#title' => (!empty($conf['select_title'])) ? $conf['select_title'] : '',
       '#type' => 'select',
       '#options' => $spaces,
       '#default_value' => array(),
@@ -60,12 +66,19 @@ function oa_sidebar_search_pane_render($subtype, $conf, $args, $context) {
     $element = form_process_select($element);
     $spaces = drupal_render($element);
   }
+  $extra_classes = '';
+  $solr_server = search_api_server_load('solr_server');
+  if (isset($solr_server) && $solr_server->enabled) {
+    $extra_classes .= ' solr-search';
+  }
+
   $block = new stdClass();
   $block->title = t('Search');
   $block->content = array(
     '#theme' => 'oa_sidebar_search',
     '#options' => $options,
     '#spaces' => $spaces,
+    '#extra_classes' => $extra_classes,
   );
 
   return $block;
@@ -88,6 +101,12 @@ function oa_sidebar_search_settings_form($form, &$form_state) {
     '#options' => $options,
     '#default_value' => (!empty($conf['allowed_options'])) ? $conf['allowed_options'] : $options,
     '#description' => t('Select which search options you would like to enable.'),
+  );
+
+  $form['select_title'] = array(
+    '#title' => t('Label for Space Selection'),
+    '#type' => 'textfield',
+    '#default_value' => (!empty($conf['select_title'])) ? $conf['select_title'] : '',
   );
 
   $vocabs = oa_core_get_entity_vocabs('node', OA_SPACE_TYPE);
