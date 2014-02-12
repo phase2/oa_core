@@ -21,7 +21,12 @@ function oa_access_group_permissions_form($form, &$form_state) {
   );
 
   $groups = oa_core_get_all_groups();
-  return _oa_access_permissions_form($form, $form_state, OA_ACCESS_GROUP_PERMISSION, t('Groups'), $groups);
+  // Add a magic group to represent the 'All' option.
+  $groups[] = (object)array(
+    'nid' => 0,
+    'title' => t('All site users'),
+  );
+  return _oa_access_permissions_form($form, $form_state, OA_ACCESS_GROUP_PERMISSION, t('Groups'), $groups, 0);
 }
 
 /**
@@ -44,7 +49,12 @@ function oa_access_team_permissions_form($form, &$form_state, $group_type, $gid)
   );
 
   $groups = oa_teams_get_teams_for_space($gid);
-  return _oa_access_permissions_form($form, $form_state, OA_ACCESS_TEAM_PERMISSION, t('Teams'), $groups);
+  // Add a magic team to represent the 'All' option.
+  $groups[] = (object)array(
+    'nid' => $gid,
+    'title' => t('All Space members'),
+  );
+  return _oa_access_permissions_form($form, $form_state, OA_ACCESS_TEAM_PERMISSION, t('Teams'), $groups, $gid);
 }
 
 /**
@@ -56,6 +66,8 @@ function oa_access_team_permissions_form($form, &$form_state, $group_type, $gid)
  *   The label to use for the groups field.
  * @param array $groups
  *   An array of nodes representing each of the available groups.
+ * @param int $all_nid
+ *   The NID used to represent the magic 'All' option.
  *
  * @see _oa_access_permissions_form_submit()
  * @see oa_access_group_permissions_form()
@@ -63,7 +75,7 @@ function oa_access_team_permissions_form($form, &$form_state, $group_type, $gid)
  *
  * @ingroup forms
  */
-function _oa_access_permissions_form($form, &$form_state, $type, $group_label, $groups) {
+function _oa_access_permissions_form($form, &$form_state, $type, $group_label, $groups, $all_nid = 0) {
   $permissions = array();
   foreach (oa_access_get_permissions() as $name => $perm) {
     if ($perm['type'] & $type) {
@@ -135,15 +147,35 @@ function _oa_access_permissions_form($form, &$form_state, $type, $group_label, $
           'class' => array('chosen-widget'),
         ),
       );
+      
+      // If the 'All' option is not allowed, we remove it from this permission.
+      if (!($perm['type'] & OA_ACCESS_ALLOW_OPTION_ALL)) {
+        unset($form['permissions'][$module][$name]['groups']['#options'][$all_nid]);
+      }
     }
   }
 
+  // Setup submit button and handler.
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Save permissions'),
   );
-
   $form['#submit'][] = '_oa_access_permissions_form_submit';
+
+  // Setup Javascript to deal with the 'All' option.
+  $form['#attached']['js'][] = array(
+    'type' => 'setting',
+    'data' => array(
+      'oa_access' => array(
+        'all_nid' => $all_nid,
+      ),
+    ),
+  );
+  $form['#attached']['js'][] = array(
+    'type' => 'file',
+    'data' => drupal_get_path('module', 'oa_access') .  '/oa_access.js',
+  );
+
   return $form;
 }
 

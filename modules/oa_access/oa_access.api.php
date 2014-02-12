@@ -29,6 +29,8 @@
  *       Groups on Teams.
  *     - OA_ACCESS_GROUP_PERMISSION: Only allowed on Groups.
  *     - OA_ACCESS_TEAM_PERMISSION: Only allowed on Teams.
+ *     - OA_ACCESS_ALLOW_OPTION_ALL: Allows an 'All site users' or
+ *       'All Space members' option on this permission.
  *     The flags can be combined if you'd like to be explicit, for exampl:
  *     @code
  *       'type' => OA_ACCESS_GROUP_PERMISSION | OA_ACCESS_TEAM_PERMISSION,
