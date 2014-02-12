@@ -141,7 +141,7 @@ abstract class OpenAtriumAccessBase extends DrupalWebTestCase {
   }
 
   /**
-   * Post to a Group/Team access page with a set of values.
+   * Post to a Group/Team permisisons page with a set of values.
    *
    * You're expected to use $this->drupalGet() to load the admin page before
    * calling this function to submit.
