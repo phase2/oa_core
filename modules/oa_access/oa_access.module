@@ -35,7 +35,7 @@ define('OA_ACCESS_DEFAULT_PERMISSION', OA_ACCESS_TEAM_PERMISSION | OA_ACCESS_GRO
 function oa_access_menu() {
   $items = array();
   $items[OA_ACCESS_GROUP_ADMIN_PATH] = array(
-    'title' => 'Access',
+    'title' => 'Group permissions',
     'description' => 'Configure which Groups have which permissions.',
     'access arguments' => array('administer oa_access permissions'),
     'page callback' => 'drupal_get_form',
@@ -45,7 +45,7 @@ function oa_access_menu() {
   );
   if (module_exists('oa_teams')) {
     $items[OA_ACCESS_TEAM_ADMIN_PATH] = array(
-      'title' => 'Team access',
+      'title' => 'Team permissions',
       'description' => 'Configure which Teams have which permissions.',
       'access callback' => 'og_ui_user_access_group',
       'access arguments' => array('administer oa_access permissions', 1, 2),
@@ -78,7 +78,7 @@ function oa_access_og_ui_get_group_admin($group_type, $gid) {
 
   if (module_exists('oa_teams') && og_user_access($group_type, $gid, 'administer oa_access permissions')) {
     $items['oa_access'] = array(
-      'title' => t('Team access'),
+      'title' => t('Team permissions'),
       'description' => t('Configure which Teams have which permissions.'),
       'href' => 'admin/oa_access',
     );
@@ -93,7 +93,7 @@ function oa_access_og_ui_get_group_admin($group_type, $gid) {
 function oa_access_strongarm_alter(&$items) {
   if (isset($items['contextual_tabs_extract'])) {
     $items['contextual_tabs_extract']->value .= "\n" . implode("\n", array(
-      "groups:Access,icon-user",
+      "groups:Group permissions,icon-user",
       "List,icon-th-list",
     ));
   }
