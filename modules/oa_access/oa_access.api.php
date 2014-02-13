@@ -35,8 +35,7 @@
  *       option. This will be setup for all permissions declared by your module
  *       when installed, but if you add any new permissions later, you'll need
  *       to manually call oa_access_initialize_permissions().
- *       'All Space members' option on this permission.
- *     The flags can be combined if you'd like to be explicit, for exampl:
+ *     The flags can be combined if you'd like to be explicit, for example:
  *     @code
  *       'type' => OA_ACCESS_GROUP_PERMISSION | OA_ACCESS_TEAM_PERMISSION,
  *     @endcode
