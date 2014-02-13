@@ -198,7 +198,7 @@ function oa_access_modules_installed($modules) {
     // Gather all the permissions we intend to initialize.
     $permissions = array();
     foreach (oa_access_get_permissions(TRUE) as $name => $perm) {
-      if (in_array($perm['module'], $modules)) {
+      if (in_array($perm['module'], $permission_modules)) {
         $permissions[$name] = $perm;
       }
     }
@@ -246,6 +246,9 @@ function oa_access_get_permissions($reset = FALSE) {
           ));
           if (empty($perms[$key]['type'])) {
             $perms[$key]['type'] = OA_ACCESS_DEFAULT_PERMISSION;
+          }
+          elseif (!($perms[$key]['type'] & OA_ACCESS_GROUP_PERMISSION) && !($perms[$key]['type'] & OA_ACCESS_TEAM_PERMISSION)) {
+            $perms[$key]['type'] |= OA_ACCESS_DEFAULT_PERMISSION;
           }
         }
       }
