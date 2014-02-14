@@ -281,6 +281,10 @@ projects[date_facets][download][url] = http://git.drupal.org/project/date_facets
 projects[date_facets][download][branch] = 7.x-1.x
 projects[date_facets][download][revision] = a7a35f8
 
+; Node clone
+projects[node_clone][subdir] = contrib
+projects[node_clone][version] = 1.0-rc2
+
 ; ##### Organic Groups related #####
 ; Organic Groups
 projects[og][download][type] = git
@@ -302,6 +306,13 @@ projects[og_session_context][version] = 1.0-beta1
 projects[og_menu_single][type] = module
 projects[og_menu_single][subdir] = contrib
 projects[og_menu_single][version] = 1.0-beta1
+
+; Og clone
+projects[og_clone][version] = 1.x-dev
+projects[og_clone][subdir] = contrib
+projects[og_clone][download][type] = git
+projects[og_clone][download][branch] = 7.x-1.x
+projects[og_clone][download][revision] = 66ad62b
 
 ; ##### oa_variables #####
 ; Variable

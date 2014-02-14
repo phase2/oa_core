@@ -250,7 +250,7 @@ function oa_buttons_modules_enabled($modules) {
 function oa_buttons_create_default_terms() {
   $terms = oa_buttons_get_default_terms();
   foreach ($terms as $term) {
-    oa_buttons_create_term($term['taxonomy'], $term['name'], $term['node_options'], $term['layout']);
+    oa_buttons_create_term($term['taxonomy'], $term['name'], $term['description'], $term['node_options'], $term['layout']);
   }
 }
 
@@ -262,24 +262,21 @@ function oa_buttons_get_default_terms() {
     array(
       'taxonomy' => 'space_type',
       'name' => 'Default',
+      'description' => 'Start with a blank slate.',
       'node_options' => array(),
       'layout' => 'node:oa_space:default'
     ),
     array(
-      'taxonomy' => 'space_type',
-      'name' => 'Space Members',
-      'node_options' => array(),
-      'layout' => 'node:oa_space:space_description'
-    ),
-    array(
       'taxonomy' => 'section_type',
       'name' => 'Default',
+      'description' => 'Start with a blank slate.',
       'node_options' => array(),
       'layout' => 'node:oa_section:default'
     ),
     array(
       'taxonomy' => 'section_type',
       'name' => 'Calendar Section',
+      'description' => 'Allows users to create <em>Events</em> and view them on a calendar widget.',
       'node_options' => array(
         'oa_event',
       ),
@@ -288,6 +285,7 @@ function oa_buttons_get_default_terms() {
     array(
       'taxonomy' => 'section_type',
       'name' => 'Discussion Section',
+      'description' => 'Allows users to create <em>Discussion posts</em>.',
       'node_options' => array(
         'oa_discussion_post',
       ),
@@ -296,6 +294,7 @@ function oa_buttons_get_default_terms() {
     array(
       'taxonomy' => 'section_type',
       'name' => 'News Section',
+      'description' => 'Allows users to create <em>Document pages</em>.',
       'node_options' => array(
         'oa_wiki_page',
       ),
@@ -336,12 +335,14 @@ function oa_buttons_og_permission() {
  *   The vocabulary machine name.
  * @param $name
  *   The human readable label of the term.
+ * @param $description
+ *   The human readable description of the term.
  * @param $node_options
  *   An array of node types which should be allowed within the section.
  * @param $layout
  *   The panelizer layout key to use for this section.
  */
-function oa_buttons_create_term($taxonomy, $name, $node_options, $layout, $update = FALSE) {
+function oa_buttons_create_term($taxonomy, $name, $description, $node_options, $layout, $update = FALSE) {
   if (!($term = current(taxonomy_get_term_by_name($name, $taxonomy))) || $update) {
     $vocab = taxonomy_vocabulary_machine_name_load($taxonomy);
 
@@ -372,6 +373,8 @@ function oa_buttons_create_term($taxonomy, $name, $node_options, $layout, $updat
       $term = (object) array(
         'vid' => $vocab->vid,
         'name' => $name,
+        'description' => $description,
+        'format' => 'panopoly_wysiwyg_text',
         'field_oa_section_layout' => array(
           LANGUAGE_NONE => array(
             array('value' => $layout),

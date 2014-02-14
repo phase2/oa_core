@@ -62,6 +62,7 @@ features[variable][] = node_options_oa_section
 features[variable][] = node_preview_oa_section
 features[variable][] = node_submitted_oa_section
 features[variable][] = og_menu_enable_oa_section
+features[views_view][] = oa_sections_section_types
 features[views_view][] = open_atrium_section_pages
 files[] = tests/oa_sectionsAccess.test
 files[] = tests/oa_sectionsAccessBase.test

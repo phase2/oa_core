@@ -7,18 +7,6 @@
     attach: function (context, settings) {
       var self = this;
 
-      $(settings.oaCoreSpaceTypeSelector, context).change(function() {
-        self.updateSection(context, settings);
-      });
-
-      $('input:[name="field_oa_section_override[und]"]', context).change(function() {
-        self.updateSection(context, settings);
-        self.setLayoutVisibility(this);
-      });
-
-      self.updateSection(context, settings);
-      self.setLayoutVisibility($('input:[name="field_oa_section_override[und]"]', context));
-
       // The default response to oaCoreSpaceTypeChange: select the Panelizer
       // default for this Space type.
       $(document).on('oaCoreSpaceTypeChange', function (e) {
@@ -29,6 +17,19 @@
           $layout_selector.val(e.options.layout);
         }
       });
+
+      // Setup controls to trigger the oaCoreSpaceTypeChange event.
+      $(settings.oaCoreSpaceTypeSelector, context).change(function() {
+        self.updateSection(context, settings);
+      });
+      $('input:[name="field_oa_section_override[und]"]', context).change(function() {
+        self.updateSection(context, settings);
+        self.setLayoutVisibility(this);
+      });
+
+      // Trigger it immediately on page load.
+      self.updateSection(context, settings);
+      self.setLayoutVisibility($('input:[name="field_oa_section_override[und]"]', context));
     },
 
     setLayoutVisibility: function(element) {
@@ -36,7 +37,9 @@
     },
 
     updateSection: function(context, settings) {
-      var spaceType = $(settings.oaCoreSpaceTypeSelector, context).val();
+      var spaceTypeSelector = $(settings.oaCoreSpaceTypeSelector, context),
+          spaceType = spaceTypeSelector.length ? spaceTypeSelector.val() : settings.oaCoreSpaceType;
+
       if (spaceType && settings.oaCoreSpaceTypeOptions[spaceType]) {
         // Trigger the 'oaCoreSpaceTypeChange' event which other modules can
         // respond to.
