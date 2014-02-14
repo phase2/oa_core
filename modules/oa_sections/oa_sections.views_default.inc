@@ -77,7 +77,8 @@ function oa_sections_views_default_views() {
   );
 
   /* Display: Page */
-  $handler = $view->new_display('page', 'Page', 'page');
+  $handler = $view->new_display('system', 'Page', 'page');
+  $handler->display->display_options['defaults']['access'] = FALSE;
   $handler->display->display_options['path'] = 'node/add/oa-section';
   $export['oa_sections_section_types'] = $view;
 

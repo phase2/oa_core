@@ -73,7 +73,8 @@ function oa_core_views_default_views() {
   );
 
   /* Display: Page */
-  $handler = $view->new_display('page', 'Page', 'page');
+  $handler = $view->new_display('system', 'Page', 'page');
+  $handler->display->display_options['defaults']['access'] = FALSE;
   $handler->display->display_options['path'] = 'node/add/oa-space';
   $export['oa_core_space_types'] = $view;
 
