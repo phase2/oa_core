@@ -3,6 +3,7 @@ description = Core required module for Open Atrium.
 core = 7.x
 package = Open Atrium
 project = oa_core
+dependencies[] = admin_views
 dependencies[] = entityreference
 dependencies[] = features
 dependencies[] = file_entity
