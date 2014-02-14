@@ -27,6 +27,11 @@ function oa_access_test_oa_access_permission() {
       'description' => t('Used to test Team-only permissions'),
       'type' => OA_ACCESS_TEAM_PERMISSION,
     ),
+    'permission with all option for oa_access_test' => array(
+      'title' => t('A permission with an "All" option'),
+      'description' => t('Used to test the "All" option'),
+      'type' => OA_ACCESS_DEFAULT_PERMISSION | OA_ACCESS_ALLOW_OPTION_ALL,
+    ),
   );
   if (!variable_get('oa_access_test_remove_permission', FALSE)) {
     $permissions['a permission for oa_access_test that is only conditionally available'] = array(

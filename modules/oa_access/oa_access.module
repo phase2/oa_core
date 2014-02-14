@@ -25,7 +25,25 @@ define('OA_ACCESS_TEAM_PERMISSION', 1);
 define('OA_ACCESS_GROUP_PERMISSION', 2);
 
 /**
- * Permission type -- Allows permission to be assigned to either Team or Group.
+ * Permission type -- Allows permission have an 'All' option.
+ */
+define('OA_ACCESS_ALLOW_OPTION_ALL', 4);
+
+/**
+ * Permission type -- This permission will be set to 'All' by default.
+ *
+ * This implies OA_ACCESS_ALLOW_OPTION_ALL as well.
+ */
+define('OA_ACCESS_DEFAULT_OPTION_ALL', 8 | OA_ACCESS_ALLOW_OPTION_ALL);
+
+/**
+ * Permission type -- The default permission type.
+ *
+ * Allows permission to be assigned to a Team or Group and doesn't allow an
+ * 'All' option. This is most useful for permissions where we are only removing
+ * permission, not adding it, for example, oa_workbench_access.
+ *
+ * @see oa_workbench_access
  */
 define('OA_ACCESS_DEFAULT_PERMISSION', OA_ACCESS_TEAM_PERMISSION | OA_ACCESS_GROUP_PERMISSION);
 
@@ -137,12 +155,57 @@ function oa_access_theme() {
 }
 
 /**
+ * Implements hook_node_insert().
+ */
+function oa_access_node_insert($node) {
+  if ($node->type == 'oa_space') {
+    // Find all permissions which are type OA_ACCESS_DEFAULT_OPTION_ALL and
+    // OA_ACCESS_TEAM_PERMISSION and add the default 'All' option for those
+    // new spaces.
+    foreach (oa_access_get_permissions() as $name => $perm) {
+      if ($perm['type'] & OA_ACCESS_DEFAULT_OPTION_ALL && $perm['type'] & OA_ACCESS_TEAM_PERMISSION) {
+        oa_access_initialize_permissions(array($name => $perm), array($node->nid));
+      }
+    }
+  }
+}
+
+/**
  * Implements hook_node_delete().
  */
 function oa_access_node_delete($node) {
   db_delete('oa_access')
     ->condition('nid', $node->nid)
     ->execute();
+}
+
+/**
+ * Implements hook_modules_installed().
+ *
+ * Check each new module enabled to see if it defines some oa_access_permisions
+ * and if they are type OA_ACCESS_DEFAULT_OPTION_ALL, then we set the 'All'
+ * permission for all existing Groups and Teams.
+ */
+function oa_access_modules_installed($modules) {
+  $permission_modules = array();
+  foreach ($modules as $module) {
+    $func = $module . '_oa_access_permission';
+    if (function_exists($module . '_oa_access_permission')) {
+      $permission_modules[] = $module;
+    }
+  }
+  if (!empty($permission_modules)) {
+    // Gather all the permissions we intend to initialize.
+    $permissions = array();
+    foreach (oa_access_get_permissions(TRUE) as $name => $perm) {
+      if (in_array($perm['module'], $permission_modules)) {
+        $permissions[$name] = $perm;
+      }
+    }
+
+    // Initialize them all at once (to avoid pulling groups multiple times).
+    oa_access_initialize_permissions($permissions);
+  }
 }
 
 /**
@@ -183,6 +246,9 @@ function oa_access_get_permissions($reset = FALSE) {
           ));
           if (empty($perms[$key]['type'])) {
             $perms[$key]['type'] = OA_ACCESS_DEFAULT_PERMISSION;
+          }
+          elseif (!($perms[$key]['type'] & OA_ACCESS_GROUP_PERMISSION) && !($perms[$key]['type'] & OA_ACCESS_TEAM_PERMISSION)) {
+            $perms[$key]['type'] |= OA_ACCESS_DEFAULT_PERMISSION;
           }
         }
       }
@@ -239,24 +305,30 @@ function oa_access_user_groups($account = NULL, $space_nid = 0) {
         );
       }
 
+      // All users are members of the magic 'All' group with an NID of 0.
+      $groups[0] = array(
+        'nid' => 0,
+        'type' => 'oa_group',
+      );
+
       $cache[0][$account->uid] = $groups;
     }
 
     if (module_exists('oa_teams') && $space_nid) {
-      $valid_teams = oa_teams_get_teams_for_space($space_nid);
-
-      // Then, we get all the user's oa_teams, optionally filtering by valid
-      // teams for this particular Space.
-      $query = db_select('field_data_' . OA_TEAM_USERS_FIELD, 'f')
-        ->fields('f', array('entity_id'))
-        ->condition('entity_type', 'node')
-        ->condition('deleted', 0)
-        ->condition(OA_TEAM_USERS_FIELD . '_target_id', $account->uid);
-
       $teams = array();
-      foreach ($query->execute() as $row) {
-        // TODO: we could move this into the $query itself?
-        if (isset($valid_teams[$row->entity_id])) {
+
+      $valid_teams = oa_teams_get_teams_for_space($space_nid);
+      if (count($valid_teams) > 0) {
+        // Then, we get all the user's oa_teams, optionally filtering by valid
+        // teams for this particular Space.
+        $query = db_select('field_data_' . OA_TEAM_USERS_FIELD, 'f')
+          ->fields('f', array('entity_id'))
+          ->condition('entity_type', 'node')
+          ->condition('entity_id', array_keys($valid_teams), 'IN')
+          ->condition('deleted', 0)
+          ->condition(OA_TEAM_USERS_FIELD . '_target_id', $account->uid);
+
+        foreach ($query->execute() as $row) {
           $teams[$row->entity_id] = array(
             'nid' => $row->entity_id,
             'type' => 'oa_team',
@@ -264,8 +336,16 @@ function oa_access_user_groups($account = NULL, $space_nid = 0) {
         }
       }
 
+      // All Space members are members of the magic 'All' team with an NID
+      // that is equal to the Space's NID.
+      if (og_is_member('node', $space_nid, 'user', $account)) {
+        $teams[$space_nid] = array(
+          'nid' => $space_nid,
+          'type' => 'oa_team',
+        );
+      }
+
       // Combine the cached Groups with the Teams to get the full result.
-      //$cache[$space_nid][$account->uid] = array_merge($cache[0][$account->uid], $teams);
       $cache[$space_nid][$account->uid] = $cache[0][$account->uid] + $teams;
     }
   }
@@ -351,13 +431,13 @@ function oa_access_set_group_permissions($group_permissions) {
       foreach ($permissions as $name) {
         db_insert('oa_access')
           ->fields(array(
-            'nid' => $nid,
-            'permission' => $name,
-            'module' => $module,
-          ))
+                'nid' => $nid,
+                'permission' => $name,
+                'module' => $module,
+                ))
           ->execute();
       }
-      
+
       // Replace these entries in the cache, so that we don't have to pull them
       // from the database at all!
       $cache[$nid] = $modules;
@@ -445,6 +525,80 @@ function oa_access($space, $permission, $account = NULL) {
   }
 
   return isset($cache[$space_nid][$account->uid][$permission]);
+}
+
+/**
+ * Initializes new permissions that were added after module install.
+ *
+ * You should call this function when a new permission is added AFTER the
+ * initial install of your module. (Open Atrium Access will take care of
+ * initializing any permissions on install of your module for you.)
+ *
+ * When possible avoid calling this multiple times without the $groups argument.
+ * It's better to call it once for multiple permissions, because it will reduce
+ * the number of repeated database queries.
+ *
+ * At the moment, all this does is set the default permissions for permissions
+ * with a type of OA_ACCESS_DEFAULT_OPTION_ALL. If you don't have any with that
+ * type you don't have to ever call this function.
+ *
+ * @param string|object $perms
+ *   The machine name of the new permission or an associative array containing
+ *   the full permission array's keyed by permission machine name.
+ * @param array $groups
+ *   (Optional) The nids of groups that were just added. If omitted, it will
+ *   find all the appropriate groups in the system. This is primary for
+ *   internal use.
+ */
+function oa_access_initialize_permissions($perms, array $groups = array()) {
+  if (is_string($perms)) {
+    $all_perms = oa_access_get_permissions(TRUE);
+    if (!isset($all_perms[$perms])) {
+      throw new Exception("Unknown permission: $perms");
+    }
+    $perms = array($perms => $all_perms[$perms]);
+  }
+
+  if (empty($groups)) {
+    $groups = db_select('node', 'n')
+      ->fields('n', array('nid'))
+      ->condition('type', 'oa_space')
+      ->execute()
+      ->fetchCol();
+  }
+
+  $updated = FALSE;
+
+  foreach ($perms as $name => $perm) {
+    if ($perm['type'] & OA_ACCESS_DEFAULT_OPTION_ALL) {
+      $nids = array();
+      if ($perm['type'] & OA_ACCESS_TEAM_PERMISSION) {
+        $nids = $groups;
+      }
+      if ($perm['type'] & OA_ACCESS_GROUP_PERMISSION) {
+        // Add the '0' nid for the 'All' group.
+        $nids[] = 0;
+      }
+
+      foreach ($nids as $nid) {
+        db_merge('oa_access')
+          ->key(array(
+            'nid' => $nid,
+            'permission' => $name,
+          ))
+          ->fields(array(
+            'module' => $perm['module'],
+          ))
+          ->execute();
+      }
+
+      $updated = TRUE;
+    }
+  }
+
+  if ($updated) {
+    drupal_static_reset('oa_access_get_group_permissions');
+  }
 }
 
 /**

@@ -29,12 +29,19 @@
  *       Groups on Teams.
  *     - OA_ACCESS_GROUP_PERMISSION: Only allowed on Groups.
  *     - OA_ACCESS_TEAM_PERMISSION: Only allowed on Teams.
- *     The flags can be combined if you'd like to be explicit, for exampl:
+ *     - OA_ACCESS_ALLOW_OPTION_ALL: Allows an 'All site users' or
+ *       'All Space members' option on this permission.
+ *     - OA_ACCESS_DEFAULT_OPTION_ALL: Defaults this permission to the 'All'
+ *       option. This will be setup for all permissions declared by your module
+ *       when installed, but if you add any new permissions later, you'll need
+ *       to manually call oa_access_initialize_permissions().
+ *     The flags can be combined if you'd like to be explicit, for example:
  *     @code
  *       'type' => OA_ACCESS_GROUP_PERMISSION | OA_ACCESS_TEAM_PERMISSION,
  *     @endcode
  *
  * @see hook_oa_access_permission_alter()
+ * @see oa_access_initialize_permissions()
  */
 function hook_oa_access_permission() {
   return array(
