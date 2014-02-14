@@ -141,9 +141,9 @@ function oa_core_menu() {
   $items['node/add/oa-space/%'] = array(
     'title' => 'Create Space',
     'page callback' => 'oa_core_create_space_page_callback',
-    'page arguments' => array('oa_space', 3),
+    'page arguments' => array(OA_SPACE_TYPE, 3),
     'access callback' => 'node_access',
-    'access arguments' => array('create', 'oa_space'),
+    'access arguments' => array('create', OA_SPACE_TYPE),
     'type' => MENU_CALLBACK,
   );
   return $items;
@@ -152,7 +152,7 @@ function oa_core_menu() {
 /**
  * Page callback for the 'Create space' page.
  *
- * This a copy of 'page_manager_node_add' but with the title using the 
+ * This a copy of 'page_manager_node_add' but with the title using the
  * 'Space type' name rather than just the content type name.
  *
  * @param string $type
@@ -663,7 +663,7 @@ function oa_core_views_copy_get_arguments_to_link(&$view, $display_name = 'defau
     $query = http_build_query($args);
 
     if (!empty($view->display[$display_name]->handler->options['fields'][$field_name]['alter']['path'])) {
-      $view->display[$display_name]->handler->options['fields'][$field_name]['alter']['path'] .= '?' . $query; 
+      $view->display[$display_name]->handler->options['fields'][$field_name]['alter']['path'] .= '?' . $query;
     }
   }
 }
@@ -1046,6 +1046,7 @@ function _oa_core_setup_node_space_type(&$form, $type = 'space_type', $field_nam
       ':input[name="field_oa_section_override[und]"]' => array('checked' => FALSE),
     ),
   );
+  $form['panelizer']['#access'] = TRUE;
 
   $options = oa_core_get_space_type_options($type);
 

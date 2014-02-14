@@ -193,7 +193,7 @@ function oa_core_update_access_records($nodes) {
 function oa_core_node_access($node, $op, $account) {
   $type = is_string($node) ? $node : (is_array($node) ? $node['type'] : $node->type);
 
-  if ($op == 'create' && og_is_group_content_type('node', $type)) {
+  if ($op == 'create' && (($type == OA_SPACE_TYPE) || og_is_group_content_type('node', $type))) {
     // In og.module, og_node_access doesn't handle 'create' because
     // it doesn't have a Group context.
     // Well, in OA2 we *have* a Group context most of the time.
@@ -208,7 +208,9 @@ function oa_core_node_access($node, $op, $account) {
           return NODE_ACCESS_ALLOW;
         }
       }
-      return NODE_ACCESS_DENY;
+      if ($type != OA_SPACE_TYPE) {
+        return NODE_ACCESS_DENY;
+      }
     }
   }
 
