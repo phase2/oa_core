@@ -75,6 +75,7 @@ features[og_features_permission][] = node:oa_space:untrash any content
 features[og_features_permission][] = node:oa_space:update group
 features[og_features_permission][] = node:oa_space:use any oa button space_type
 features[og_features_permission][] = node:oa_space:view trash bin
+features[user_permission][] = access user profiles
 features[user_permission][] = add media from remote sources
 features[user_permission][] = administer panelizer node oa_group content
 features[user_permission][] = administer panelizer node oa_group context
