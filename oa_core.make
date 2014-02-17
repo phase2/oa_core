@@ -9,7 +9,7 @@ core = 7.x
 ; Override panopoly_core.make: 1.4
 projects[ctools][version] = 1.4
 projects[ctools][subdir] = contrib
-projects[ctools][patch][1910608] = http://drupal.org/files/1910608-views_content-ajax-13.patch
+projects[ctools][patch][1910608] = http://drupal.org/files/issues/1910608-views_content-ajax-13.patch
 projects[ctools][patch][1901106] = http://drupal.org/files/issues/ctools-views_content-exposed_form_override-1901106-24.patch
 projects[ctools][patch][2023705] = http://drupal.org/files/2023705-ctools-autosubmit-2_0.patch
 
