@@ -35,10 +35,10 @@ projects[media][download][revision] = 4a88319
 projects[media][patch][2104193] = http://drupal.org/files/issues/media_remove_file_display_alter-2104193-23.patch
 
 ; Override panopoly_widgets.make: 2.0-alpha3
-projects[file_entity][version] = 1.x-dev
+projects[file_entity][version] = 2.x-dev
 projects[file_entity][subdir] = contrib
 projects[file_entity][download][type] = git
-projects[file_entity][download][branch] = 7.x-1.x
+projects[file_entity][download][branch] = 7.x-2.x
 projects[file_entity][download][revision] = 3661d8
 projects[file_entity][patch][2192391] = http://drupal.org/files/issues/file_entity_remove_file_display-2192391-01.patch
 
