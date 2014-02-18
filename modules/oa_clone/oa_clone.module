@@ -148,6 +148,68 @@ function oa_clone_create_space_page_callback($type, $space_tid) {
 }
 
 /**
+ * Implements hook_permision().
+ */
+function oa_clone_permission() {
+  return array(
+    'clone node in any group' => array(
+      'title' => t('Clone any node in any group'),
+      'description' => t('The <em>Clone any node</em> permission only affects nodes that are not in an Organic Group - this permission affects nodes in Organic Groups.'),
+    ),
+    'clone own nodes in any group' => array(
+      'title' => t('Clone own content in any group'),
+      'description' => t('The <em>Clone own nodes</em> permission only affects nodes that are not in an Organic Group - this permission affects nodes in Organic Groups.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_og_permission().
+ */
+function oa_clone_og_permission() {
+  return array(
+    'clone node' => array(
+      'title' => t('Clone any content in this Space'),
+      'default role' => array(OG_ADMINISTRATOR_ROLE),
+    ),
+    'clone own nodes' => array(
+      'title' => t('Clone own content in this Space'),
+      'default role' => array(OG_ADMINISTRATOR_ROLE),
+    ),
+  );
+}
+
+/**
+ * Implements hook_clone_access().
+ */
+function oa_clone_clone_access_alter(&$access, $node) {
+  global $user;
+
+  // We only affect the access of group content types, but we completely take
+  // over the access for those nodes.
+  if (og_is_group_content_type('node', $node->type) && clone_is_permitted($node->type)) {
+    // Make sure that this user has permission to view this node and create
+    // content of the same type.
+    if (!node_access('view', $node) || !node_access('create', $node->type)) {
+      $access = FALSE;
+      return;
+    }
+
+    $own_node = $user->uid && ($node->uid == $user->uid);
+
+    // Next, we check the global Drupal permissions.
+    if (user_access('clone node in any group') || ($own_node && user_access('clone own nodes in any group'))) {
+      $access = TRUE;
+      return;
+    }
+
+    // Finally, we check the group permissions.
+    $gid = oa_core_get_group_from_node($node->nid);
+    $access = og_user_access('node', $gid, 'clone node') || ($own_node && og_user_access('node', $gid, 'clone own nodes'));
+  }
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  */
 function oa_clone_form_oa_space_node_form_alter(&$form, &$form_state, &$form_id) {
