@@ -21,6 +21,11 @@ projects[panelizer][download][branch] = 7.x-3.x
 projects[panelizer][download][revision] = 66d184
 projects[panelizer][patch][1982654] = http://drupal.org/files/1982654-panelizer-dontaskmethatagain-2.patch
 
+; Override panopoly_core.make: 1.5
+projects[token][version] = 1.5
+projects[token][subdir] = contrib
+projects[token][patch][1999298] = http://drupal.org/files/1999298-disable-test-warnings.patch
+
 ; Override panopoly_widgets.make: 4a88319
 projects[media][version] = 2.x-dev
 projects[media][subdir] = contrib
