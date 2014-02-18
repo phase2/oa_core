@@ -434,10 +434,12 @@ function template_preprocess_oa_user_badge(&$vars) {
           'dashboard' => array(
             'title'  => t('Dashboard'),
             'href'   => $paths['dashboard'],
+            'weight' => -10,
           ),
           'edit_profile' => array(
             'title'  => t('Edit profile'),
             'href'   => $paths['edit_profile'],
+            'weight' => -9,
           ),
           'logout' => array(
             'title'  => t('Log out'),
