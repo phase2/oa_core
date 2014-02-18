@@ -154,7 +154,7 @@ function oa_dashboard_theme() {
 /**
  * Preprocess the OA Navigation.
  */
-function oa_dashboard_preprocess_oa_navigation(&$vars) {
+function template_preprocess_oa_navigation(&$vars) {
   if (variable_get('oa_mainmenu', TRUE)) {
     $menu = menu_tree_output(menu_tree_all_data($vars['menu_name'], NULL, 2));
 
@@ -173,7 +173,7 @@ function oa_dashboard_preprocess_oa_navigation(&$vars) {
 /**
  * Preprocess function for the oa_toolbar block.
  */
-function oa_dashboard_preprocess_oa_toolbar(&$vars) {
+function template_preprocess_oa_toolbar(&$vars) {
   global $user;
 
   drupal_add_js(drupal_get_path('module', 'oa_dashboard') . '/js/oa-dashboard.js');
@@ -409,21 +409,45 @@ function oa_dashboard_preprocess_oa_toolbar(&$vars) {
 /**
  * Preprocess function for the oa_breadcrumb.
  */
-function oa_dashboard_preprocess_oa_breadcrumb(&$vars) {
+function template_preprocess_oa_breadcrumb(&$vars) {
   $vars['show_parents'] = TRUE;
-  oa_dashboard_preprocess_oa_toolbar($vars);
+  template_preprocess_oa_toolbar($vars);
 }
 
 /**
  * Preprocess function for the oa_user_badge block.
  */
-function oa_dashboard_preprocess_oa_user_badge(&$vars) {
+function template_preprocess_oa_user_badge(&$vars) {
   global $user;
 
   if ($user->uid) {
     $user = user_load($user->uid);
     if (module_exists('oa_users')) {
       $vars = array_merge($vars, oa_users_build_user_details($user));
+
+      // Turn the links from oa_users_build_user_details() into a proper render
+      // array so that it can be modified.
+      $paths = $vars['links'];
+      $vars['links'] = array(
+        '#theme' => 'links',
+        '#links' => array(
+          'dashboard' => array(
+            'title'  => t('Dashboard'),
+            'href'   => $paths['dashboard'],
+            'weight' => -10,
+          ),
+          'edit_profile' => array(
+            'title'  => t('Edit profile'),
+            'href'   => $paths['edit_profile'],
+            'weight' => -9,
+          ),
+          'logout' => array(
+            'title'  => t('Log out'),
+            'href'   => $paths['logout'],
+            'weight' => 50,
+          ),
+        ),
+      );
     }
   }
   else {
@@ -435,7 +459,7 @@ function oa_dashboard_preprocess_oa_user_badge(&$vars) {
 /**
  * Preprocess function for the oa_toolbar_menu_button block.
  */
-function oa_dashboard_preprocess_oa_toolbar_menu_button(&$vars) {
+function template_preprocess_oa_toolbar_menu_button(&$vars) {
   drupal_add_js(drupal_get_path('module', 'oa_dashboard') . '/js/toolbar-menu-toggle.js');
 
   $vars['oa_toolbar_btn_class'] = 'btn-inverse';
