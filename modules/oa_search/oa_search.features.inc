@@ -104,7 +104,7 @@ function oa_search_default_search_api_index() {
         }
       }
     },
-    "enabled" : "1",
+    "enabled" : "0",
     "read_only" : "0"
   }');
   $items['user_index'] = entity_import('search_api_index', '{
