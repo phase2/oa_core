@@ -54,7 +54,7 @@ function oa_panopoly_users_features_override_default_overrides() {
       ),
       'css' => array(),
       'extras' => array(),
-      'position' => 0,
+      'position' => 1,
       'locks' => array(),
       'uuid' => '80a6a21b-20e6-4acf-9772-eb089cc6082b',
     );
@@ -91,7 +91,7 @@ function oa_panopoly_users_features_override_default_overrides() {
       'cache' => array(),
       'css' => array(),
       'extras' => array(),
-      'position' => 1,
+      'position' => 0,
       'locks' => array(),
       'uuid' => '9def882d-91aa-4313-87b2-0ace29b4329c',
     );
@@ -102,6 +102,7 @@ function oa_panopoly_users_features_override_default_overrides() {
       'subtype' => 'open_atrium_discussions-discussion_user_reply',
       'shown' => TRUE,
       'access' => array(),
+      'configuration' => array(),
       'cache' => array(),
       'css' => array(),
       'extras' => array(),
@@ -109,28 +110,35 @@ function oa_panopoly_users_features_override_default_overrides() {
       'locks' => array(),
       'uuid' => 'a617e554-6ad7-4d25-9d89-627d130d8be3',
     );
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|configuration|delta_limit"] = 0;
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|configuration|delta_offset"] = 0;
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|configuration|delta_reversed"] = FALSE;
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|configuration|exposed"] = array(
-    'sort_by' => NULL,
-    'sort_order' => NULL,
-  );
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|configuration|formatter"] = 'text_default';
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|configuration|formatter_settings"] = array();
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|configuration|items_per_page"] = NULL;
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|configuration|label"] = 'hidden';
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|configuration|link_to_view"] = NULL;
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|configuration|more_link"] = NULL;
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|configuration|offset"] = NULL;
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|configuration|override_title"] = 0;
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|configuration|pager_id"] = NULL;
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|configuration|path"] = NULL;
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|configuration|use_pager"] = NULL;
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|configuration|widget_title"] = NULL;
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|panel"] = 'contentheader';
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|subtype"] = 'user:field_user_about';
-  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247|type"] = 'entity_field';
+  $overrides["panelizer_defaults.user:user:default.display|content|new-d3a2a9fb-f88a-4730-bfab-c36f4e0af395"] = (object) array(
+      'pid' => 'new-d3a2a9fb-f88a-4730-bfab-c36f4e0af395',
+      'panel' => 'contentheader',
+      'type' => 'entity_field',
+      'subtype' => 'user:field_user_about',
+      'shown' => TRUE,
+      'access' => array(),
+      'configuration' => array(
+        'label' => 'hidden',
+        'formatter' => 'text_default',
+        'delta_limit' => 0,
+        'delta_offset' => 0,
+        'delta_reversed' => FALSE,
+        'formatter_settings' => array(),
+        'context' => array(),
+        'override_title' => 0,
+        'override_title_text' => '',
+      ),
+      'cache' => array(),
+      'style' => array(
+        'settings' => NULL,
+      ),
+      'css' => array(),
+      'extras' => array(),
+      'position' => 0,
+      'locks' => array(),
+      'uuid' => 'd3a2a9fb-f88a-4730-bfab-c36f4e0af395',
+    );
+  $overrides["panelizer_defaults.user:user:default.display|content|new-d76e85cd-4625-4a52-a17b-e5c65e1a0247"]["DELETED"] = TRUE;
   $overrides["panelizer_defaults.user:user:default.display|content|new-faf0ad46-b575-4f96-874d-9a4548cc8da3"] = (object) array(
       'pid' => 'new-faf0ad46-b575-4f96-874d-9a4548cc8da3',
       'panel' => 'contentheader',
@@ -171,14 +179,13 @@ function oa_panopoly_users_features_override_default_overrides() {
   $overrides["panelizer_defaults.user:user:default.display|panels|column1"]["DELETED"] = TRUE;
   $overrides["panelizer_defaults.user:user:default.display|panels|column2"]["DELETED"] = TRUE;
   $overrides["panelizer_defaults.user:user:default.display|panels|contentheader"] = array(
-    0 => 'new-d76e85cd-4625-4a52-a17b-e5c65e1a0247',
+    0 => 'new-d3a2a9fb-f88a-4730-bfab-c36f4e0af395',
     1 => 'new-faf0ad46-b575-4f96-874d-9a4548cc8da3',
     2 => 'new-a617e554-6ad7-4d25-9d89-627d130d8be3',
-    3 => 'new-7e2787f8-3f6c-4b3b-a1bb-e11225e395d5',
   );
   $overrides["panelizer_defaults.user:user:default.display|panels|sidebar"] = array(
-    0 => 'new-80a6a21b-20e6-4acf-9772-eb089cc6082b',
-    1 => 'new-9def882d-91aa-4313-87b2-0ace29b4329c',
+    0 => 'new-9def882d-91aa-4313-87b2-0ace29b4329c',
+    1 => 'new-80a6a21b-20e6-4acf-9772-eb089cc6082b',
   );
 
  return $overrides;
