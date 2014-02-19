@@ -182,7 +182,7 @@ projects[contextual_tabs][version] = 1.0-beta1
 projects[contextual_tabs][subdir] = contrib
 
 ; Panels Custom Error
-projects[panels_customerror][version] = 1.0-beta1
+projects[panels_customerror][version] = 1.0
 projects[panels_customerror][subdir] = contrib
 
 ; Conditional Fields
