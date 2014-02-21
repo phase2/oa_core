@@ -266,13 +266,6 @@ projects[og_session_context][subdir] = contrib
 projects[og_menu_single][version] = 1.0-beta1
 projects[og_menu_single][subdir] = contrib
 
-; Og clone
-projects[og_clone][version] = 1.x-dev
-projects[og_clone][subdir] = contrib
-projects[og_clone][download][type] = git
-projects[og_clone][download][branch] = 7.x-1.x
-projects[og_clone][download][revision] = 66ad62b
-
 ; ##### oa_variables #####
 ; Variable
 projects[variable][version] = 2.3
