@@ -516,3 +516,48 @@ function oa_core_entity_build_display($entity, $id, $space) {
 
   return $display;
 }
+
+/**
+ * Return vocabularies assigned to a specific content type
+ */
+function oa_core_get_entity_vocabs($entity_type, $bundle) {
+  $vocabs = array();
+  $fields = field_info_instances($entity_type, $bundle);
+  foreach ($fields as $field_name => $field) {
+    $info = field_info_field($field_name);
+    // handle normal taxonomy_term_reference fields
+    if ($info['type'] == 'taxonomy_term_reference') {
+      foreach ($info['settings']['allowed_values'] as $value) {
+        if (!empty($value['vocabulary'])) {
+          $vocabs[$value['vocabulary']] = $value['vocabulary'];
+        }
+      }
+    }
+    // also handle entityreference fields pointing to taxonomy
+    elseif (($info['type'] == 'entityreference') && ($info['settings']['target_type'] == 'taxonomy_term')) {
+      if (!empty($info['settings']['handler_settings']['target_bundles'])) {
+        foreach ($info['settings']['handler_settings']['target_bundles'] as $value) {
+          $vocabs[$value] = $value;
+        }
+      }
+    }
+  }
+  return $vocabs;
+}
+
+/**
+ * Return terms for a list of vocabularies
+ */
+function oa_core_get_vocab_terms($vocabs) {
+  $options = array();
+  foreach ($vocabs as $vocab) {
+    if ($vocabulary = taxonomy_vocabulary_machine_name_load($vocab)) {
+      if ($terms = taxonomy_get_tree($vocabulary->vid)) {
+        foreach ($terms as $term) {
+          $options[$term->tid] = str_repeat('-', $term->depth) . $term->name;
+        }
+      }
+    }
+  }
+  return $options;
+}

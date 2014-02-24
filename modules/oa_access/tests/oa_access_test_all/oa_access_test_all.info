@@ -1,0 +1,6 @@
+name = Open Atrium Access Test (default 'All' permissions)
+description = A test module to help tests permissions that default to 'All' for Open Atrium Access.
+package = Open Atrium
+core = 7.x
+hidden = TRUE
+dependencies[] = oa_access
