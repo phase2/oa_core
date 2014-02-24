@@ -565,7 +565,7 @@ class OpenAtriumAccessTestCase extends OpenAtriumAccessBaseTestCase {
     $this->assertFalse(oa_access(NULL, 'administer oa_access_test', $team_a['user']));
     $this->assertFalse(oa_access(NULL, 'access oa_access_test', $team_b['user']));
     $this->assertFalse(oa_access(NULL, 'administer oa_access_test', $team_b['user']));
-    
+
     // Assert that setting the 'All' team permission will give it to everyone
     // including even the user who is not in any team (but not the user who
     // isn't in the group).
@@ -733,7 +733,7 @@ class OpenAtriumAccessAllTestCase extends OpenAtriumAccessBaseTestCase {
   }
 
   public function testModuleEnableAndInitialize() {
-  	// First, make sure we don't have access.
+    // First, make sure we don't have access.
     $this->assertEqual(oa_access_get_group_permissions(array(0)), array(0 => array()));
 
     // Then we enable the oa_access_test_all module and check again.

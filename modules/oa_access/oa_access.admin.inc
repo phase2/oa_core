@@ -147,7 +147,7 @@ function _oa_access_permissions_form($form, &$form_state, $type, $group_label, $
           'class' => array('chosen-widget'),
         ),
       );
-      
+
       // If the 'All' option is not allowed, we remove it from this permission.
       if (!($perm['type'] & OA_ACCESS_ALLOW_OPTION_ALL)) {
         unset($form['permissions'][$module][$name]['groups']['#options'][$all_nid]);
@@ -173,7 +173,7 @@ function _oa_access_permissions_form($form, &$form_state, $type, $group_label, $
   );
   $form['#attached']['js'][] = array(
     'type' => 'file',
-    'data' => drupal_get_path('module', 'oa_access') .  '/oa_access.js',
+    'data' => drupal_get_path('module', 'oa_access') . '/oa_access.js',
   );
 
   return $form;

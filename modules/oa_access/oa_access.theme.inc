@@ -29,7 +29,7 @@ function theme_oa_access_permissions_form($variables) {
 
       // Render them into the table row.
       $child_rows[] = array(
-        array (
+        array(
           'data' => drupal_render($permissions[$module][$name]['name']),
           'class' => array('permission'),
         ),

@@ -65,7 +65,7 @@ function oa_core_field_default_field_instances() {
   $field_instances['node-oa_group-field_featured_image'] = array(
     'bundle' => 'oa_group',
     'deleted' => 0,
-    'description' => 'Attach an Image that corresponds / identifies this group. ',
+    'description' => 'Attach an Image that corresponds / identifies this group.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -304,7 +304,7 @@ function oa_core_field_default_field_instances() {
     'bundle' => 'oa_space',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'This description of the Space will appear on the Space Page. ',
+    'description' => 'This description of the Space will appear on the Space Page.',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -732,7 +732,7 @@ function oa_core_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('Attach an Image that corresponds / identifies this group. ');
+  t('Attach an Image that corresponds / identifies this group.');
   t('Description');
   t('Determine if this is an OG group.');
   t('Group');
@@ -745,7 +745,7 @@ function oa_core_field_default_field_instances() {
   t('Space Layout');
   t('Space Type');
   t('The Image associated with the Space');
-  t('This description of the Space will appear on the Space Page. ');
+  t('This description of the Space will appear on the Space Page.');
 
   return $field_instances;
 }
