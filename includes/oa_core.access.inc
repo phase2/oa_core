@@ -315,7 +315,8 @@ function oa_core_query_media_browser_alter(QueryAlterableInterface $query) {
     // first, remove the existing condition from media.media.inc that prevents private files
     $where =& $query->conditions();
     foreach ($where as $delta => $condition) {
-      if (($condition['value'] == 'private://%') && ($condition['operator'] == 'NOT LIKE')) {
+      if (isset($condition['value']) && isset($condition['operator']) &&
+        ($condition['value'] == 'private://%') && ($condition['operator'] == 'NOT LIKE')) {
         unset($where[$delta]);
         break;
       }
