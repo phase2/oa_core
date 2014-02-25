@@ -96,7 +96,7 @@ projects[message_subscribe][subdir] = contrib
 projects[message_subscribe][patch][2094129] = http://drupal.org/files/message_subscribe_empty_array_2094129_1.patch
 
 ; Message Digest
-projects[message_digest][version] = 1.0-beta4
+projects[message_digest][version] = 1.0
 projects[message_digest][subdir] = contrib
 
 ; Flag
@@ -174,7 +174,7 @@ projects[job_scheduler][version] = 2.0-alpha3
 projects[job_scheduler][subdir] = contrib
 
 ; Command buttons
-projects[command_buttons][version] = 1.0-beta1
+projects[command_buttons][version] = 1.0
 projects[command_buttons][subdir] = contrib
 
 ; Contextual Tabs
@@ -220,7 +220,7 @@ projects[jquery_update][download][revision] = 65eecb0
 projects[jquery_update][patch][1448490] = http://drupal.org/files/jquery_update-fixes-states-js-1448490.patch
 
 ; Colorizer
-projects[colorizer][version] = 1.0-beta3
+projects[colorizer][version] = 1.0
 projects[colorizer][subdir] = contrib
 
 ; OA Responsive Regions
@@ -276,5 +276,5 @@ projects[og_variables][version] = 1.0-beta1
 projects[og_variables][subdir] = contrib
 
 ; Bootstrap Tour
-projects[bootstrap_tour][version] = 1.0-beta6
+projects[bootstrap_tour][version] = 1.0-beta7
 projects[bootstrap_tour][subdir] = contrib
