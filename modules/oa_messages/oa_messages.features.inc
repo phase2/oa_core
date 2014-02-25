@@ -19,9 +19,9 @@ function oa_messages_ctools_plugin_api($module = NULL, $api = NULL) {
 function oa_messages_field_default_field_instances_alter(&$data) {
   if (!module_exists('message_digest')) {
     $messages = entity_get_info('message');
-    foreach($messages['bundles'] as $bundle_name => $bundle) {
+    foreach ($messages['bundles'] as $bundle_name => $bundle) {
       $instances = field_info_instances('message', $bundle_name);
-      foreach($instances as $instance_name => $instance) {
+      foreach ($instances as $instance_name => $instance) {
         if (isset($data['message-' . $bundle_name . '-' . $instance_name])) {
           unset($data['message-' . $bundle_name . '-' . $instance_name]['display']['message_notify_daily_digest']);
           unset($data['message-' . $bundle_name . '-' . $instance_name]['display']['message_notify_weekly_digest']);
