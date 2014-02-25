@@ -262,21 +262,21 @@ function oa_buttons_get_default_terms() {
     array(
       'taxonomy' => 'space_type',
       'name' => 'Default',
-      'description' => 'Start with a blank slate.',
+      'description' => 'This is the default space layout with the Recent Activity stream in the main region.',
       'node_options' => array(),
       'layout' => 'node:oa_space:default'
     ),
     array(
       'taxonomy' => 'section_type',
       'name' => 'Default',
-      'description' => 'Start with a blank slate.',
+      'description' => 'This is the default section layout with the Recent Activity stream in the main region.',
       'node_options' => array(),
       'layout' => 'node:oa_section:default'
     ),
     array(
       'taxonomy' => 'section_type',
       'name' => 'Calendar Section',
-      'description' => 'Allows users to create <em>Events</em> and view them on a calendar widget.',
+      'description' => 'Allows users to create <em>Events</em> and view them on a calendar.',
       'node_options' => array(
         'oa_event',
       ),
@@ -285,7 +285,7 @@ function oa_buttons_get_default_terms() {
     array(
       'taxonomy' => 'section_type',
       'name' => 'Discussion Section',
-      'description' => 'Allows users to create <em>Discussion posts</em>.',
+      'description' => 'Allows users to create <em>Discussion posts</em> and displays a list of topics.',
       'node_options' => array(
         'oa_discussion_post',
       ),
@@ -294,7 +294,7 @@ function oa_buttons_get_default_terms() {
     array(
       'taxonomy' => 'section_type',
       'name' => 'News Section',
-      'description' => 'Allows users to create <em>Document pages</em>.',
+      'description' => 'Allows users to create <em>Document pages</em> and displays a News article listing.',
       'node_options' => array(
         'oa_wiki_page',
       ),
