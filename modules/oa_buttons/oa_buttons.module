@@ -343,18 +343,19 @@ function oa_buttons_og_permission() {
  *   The panelizer layout key to use for this section.
  */
 function oa_buttons_create_term($taxonomy, $name, $description, $node_options, $layout, $update = FALSE) {
-  if (!($term = current(taxonomy_get_term_by_name($name, $taxonomy))) || $update) {
-    $vocab = taxonomy_vocabulary_machine_name_load($taxonomy);
 
-    // Make sure the Taxonomy is available.
-    if (!$vocab) {
-      features_revert(array(
-        'oa_core' => array('taxonomy'),
-        'oa_sections' => array('taxonomy'),
-      ));
-      drupal_static('taxonomy_vocabulary_get_names');
-      $vocab = taxonomy_vocabulary_machine_name_load($taxonomy);
-    }
+  $vocab = taxonomy_vocabulary_machine_name_load($taxonomy);
+  // Make sure the Taxonomy is available.
+  if (!$vocab) {
+    features_revert(array(
+      'oa_core' => array('taxonomy'),
+      'oa_sections' => array('taxonomy'),
+    ));
+    drupal_static('taxonomy_vocabulary_get_names');
+    $vocab = taxonomy_vocabulary_machine_name_load($taxonomy);
+  }
+
+  if (!empty($vocab) && !($term = current(taxonomy_get_term_by_name($name, $taxonomy))) || $update) {
 
     // Make sure the fields from oa_buttons are available.
     $field_info = field_info_instances('taxonomy_term', $taxonomy);
