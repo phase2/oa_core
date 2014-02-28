@@ -22,7 +22,7 @@ define('OA_CLONE_CREATE_SPACE_PATH', 'node/add/oa-space/%');
 function oa_clone_menu() {
   $items = array();
   $items['node/%node/oa_clone_create_space_type'] = array(
-    'title' => 'Create Space Type from this Space',
+    'title' => 'Create Blueprint from this Space',
     'page callback' => 'oa_clone_create_space_type_page_callback',
     'page arguments' => array(1),
     'access callback' => 'oa_clone_create_space_type_access_callback',
@@ -33,7 +33,7 @@ function oa_clone_menu() {
 }
 
 /**
- * Access callback: Check if the user can create a Space type from this node.
+ * Access callback: Check if the user can create a Space Blueprint from this node.
  */
 function oa_clone_create_space_type_access_callback($node) {
   $vid = taxonomy_vocabulary_machine_name_load('space_type')->vid;
@@ -41,7 +41,7 @@ function oa_clone_create_space_type_access_callback($node) {
 }
 
 /**
- * Page callback: Redirect user to create a new Space type using a node.
+ * Page callback: Redirect user to create a new Space Blueprint using a node.
  */
 function oa_clone_create_space_type_page_callback($node) {
   drupal_goto('admin/structure/taxonomy/space_type/add', array(
@@ -155,14 +155,14 @@ function oa_clone_node_prepopulate($original_node, $set_title = TRUE) {
 /**
  * Page callback that either returns the normal create page or a clone page.
  *
- * Checks the 'Space type' taxonomy to see if this is a clone type or a normal
- * type and returns either the normal page from 'oa_clone' or the clone page
- * from 'clone'.
+ * Checks the 'Space Blueprint' taxonomy to see if this is a clone type or a
+ * normal type and returns either the normal page from 'oa_clone' or the clone
+ * page from 'clone'.
  *
  * @param string $type
  *   The node content type name (ie. oa_space, oa_section).
  * @param integer $space_tid
- *   The taxonomy term ID of the 'Space type'.
+ *   The taxonomy term ID of the 'Space Blueprint'.
  *
  * @see oa_core_create_space_page_callback()
  * @see oa_clone_node_prepopulate()
@@ -263,7 +263,7 @@ function oa_clone_form_taxonomy_form_term_alter(&$form, &$form_state, $form_id) 
  * Implements hook_form_FORM_ID_alter().
  */
 function oa_clone_form_oa_space_node_form_alter(&$form, &$form_state) {
-  $form['field_oa_space_type'][LANGUAGE_NONE]['#description'] = t('Changing the <em>Space type</em> after the Space has already been created, will only affect the default dashboard layout and available types - not content or configuration.');
+  $form['field_oa_space_type'][LANGUAGE_NONE]['#description'] = t('Changing the <em>Space Blueprint</em> after the Space has already been created, will only affect the default dashboard layout and available types - not content or configuration.');
 }
 
 /**

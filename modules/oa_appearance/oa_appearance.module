@@ -11,9 +11,6 @@ include_once 'oa_appearance.features.inc';
  * Provides integration between Open Atrium and Colorizer module
  */
 
-/**
- * Name of default OpenAtrium Space type.
- */
 define('OA_SPACE_BANNER_POSITION', 'field_oa_banner_position');
 define('OA_SPACE_BANNER_ABOVE', 1);
 define('OA_SPACE_BANNER_BELOW', 2);
