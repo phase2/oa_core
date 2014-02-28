@@ -276,5 +276,5 @@ projects[og_variables][version] = 1.0-beta1
 projects[og_variables][subdir] = contrib
 
 ; Bootstrap Tour
-projects[bootstrap_tour][version] = 1.0-beta7
+projects[bootstrap_tour][version] = 1.0-beta8
 projects[bootstrap_tour][subdir] = contrib
