@@ -302,7 +302,7 @@ function oa_messages_oa_messages_create_alter(&$wrapper, $context) {
       if (isset($wrapper->field_deleted_title)) {
         $wrapper->field_deleted_title = $entity_wrapper->title->value();
       }
-      if (isset($wrapper->field_deleted_summary) && field_info_instance($context['entity_type'], $context['entity'], 'body')) {
+      if (isset($wrapper->field_deleted_summary) && field_info_instance($context['entity_type'], 'body', $context['entity']->type)) {
         $body_value = field_view_field($context['entity_type'], $context['entity'], 'body', array(
             'label' => 'hidden',
             'type' => 'text_summary_or_trimmed',
