@@ -890,7 +890,7 @@ function oa_core_get_alias($nid) {
     module_load_include('inc', 'pathauto');
     // return what the proper alias for this node will eventually be
     // don't use 'update' yet since the drupal_get_path_alias() will still be cached
-    $path = pathauto_create_alias('node', 'return', $uri['path'], array('node' => $node), $node->type, $langcode);
+    $path = pathauto_create_alias('node', 'return', $uri['path'], array('node' => $node), $node->type, $node->language);
   }
   $cache[$nid] = $path;
   return $path;
