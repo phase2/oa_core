@@ -257,6 +257,8 @@ projects[og][download][revision] = 8bdb48
 ; Organic Groups Vocabulary
 projects[og_vocab][version] = 1.2
 projects[og_vocab][subdir] = contrib
+; patch to support subgroups
+projects[og_vocab][patch][2039009] = http://drupal.org/files/issues/2039009-allow-shared-vocabularies-12.patch
 
 ; OG Session Context
 projects[og_session_context][version] = 1.0-beta1
