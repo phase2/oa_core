@@ -102,3 +102,10 @@ function oa_core_update_7213() {
 function oa_core_update_7214() {
   module_enable(array('trash_flag', 'oa_archive'));
 }
+
+/**
+ * Enable clone, oa_clone.
+ */
+function oa_core_update_7215() {
+  module_enable(array('clone', 'oa_clone'));
+}
