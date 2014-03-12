@@ -175,6 +175,8 @@ function oa_appearance_form_oa_core_configure_form_alter(&$form, &$form_state, $
     '#title' => 'Show site slogan',
     '#default_value' => variable_get('oa_banner_siteslogan', FALSE),
   );
+
+  $form['#submit'][] = 'oa_appearance_banner_submit';
 }
 
 function oa_appearance_banner_validate($element, &$form_state, $form) {
@@ -194,6 +196,11 @@ function oa_appearance_banner_validate($element, &$form_state, $form) {
       variable_set('oa_site_banner', $fid);
     }
   }
+}
+
+function oa_appearance_banner_submit($form, &$form_state) {
+  // Clear the banner settings cache for all Spaces.
+  cache_clear_all("oa_appearance:banner:", "cache", TRUE);
 }
 
 /**
@@ -243,4 +250,154 @@ function oa_appearance_oa_clone_group_metadata($node, $original_nid) {
       colorizer_update_stylesheet($theme_name, $theme_name . '_' . $node->nid, $palette);
     }
   }
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function oa_appearance_node_update($node) {
+  if ($node->type == 'oa_space') {
+    // Clear our banner settings cache.
+    cache_clear_all("oa_appearance:banner:{$node->nid}:", "cache", TRUE);
+
+    // Clear the banner settings cache for all child spaces as well.
+    if (module_exists("oa_subspaces")) {
+      foreach (oa_subspaces_get_children_groups("node", $node->nid) as $child_nid) {
+        cache_clear_all("oa_appearance:banner:{$child_nid}:", "cache", TRUE);
+      }
+    }
+  }
+}
+
+/**
+ * Get the banner settings for a particular Space.
+ *
+ * Takes the parent Spaces and inheritence into account. Resulting values will
+ * be cached until the Space or any of it's parents are updated.
+ *
+ * @param integer $space_id
+ *   The NID of the Space.
+ * @param integer $banner_position
+ *   The banner position to get settings for. Can be either:
+ *   - OA_SPACE_BANNER_ABOVE
+ *   - OA_SPACE_BANNER_BELOW
+ *
+ * @return array
+ *   An associative array of the banner settings:
+ *   - position (string): Constant representing the banner position.
+ *   - image (array): Image field item representing the banner image.
+ *   - text (string): The banner text.
+ */
+function oa_appearance_get_space_banner($space_id, $banner_position) {
+  global $base_url;
+
+  $static_cache =& drupal_static(__FUNCTION__, array());
+  $static_cache_key = $space_id . ':' . $banner_position;
+
+  if (!isset($static_cache[$static_cache_key])) {
+    $cid = 'oa_appearance:banner:' . $static_cache_key;
+    if ($cached_value = cache_get($cid)) {
+      $static_cache[$static_cache_key] = $cached_value->data;
+    }
+    
+    if (!isset($static_cache[$static_cache_key])) {
+      $space = node_load($space_id);
+
+      // Default banner settings.
+      $banner = array(
+        'position' => 0,
+        'image' => array(),
+        'text' => '',
+        'slogan' => '',
+        'stretch' => FALSE,
+      );
+
+      // The site-wide banner position.
+      $site_position = variable_get('oa_site_banner_position', 0);
+
+      // Get the Space's 'Banner position'. If it's set to '- None -', then we
+      // take the site's 'Banner position' - which is different than 'Hidden',
+      // ie. a position of 0.
+      $space_position = field_get_items('node', $space, OA_SPACE_BANNER_POSITION);
+      $space_position = isset($space_position[0]['value']) ? $space_position[0]['value'] : $site_position;
+
+      // Only attempt to figure out the banner settings if the Space's
+      // 'Banner position' isn't set to 'Hidden'.
+      if ($space_position != 0) {
+        // First, check if the Space is overriding the banner image. If so, we
+        // use its banner settings.
+        $space_image = field_get_items('node', $space, 'field_oa_banner');
+        $space_image = !empty($space_image) ? $space_image[0] : NULL;
+        if ($space_image && $space_position == $banner_position) {
+          $banner['position'] = $space_position;
+
+          $banner['image'] = array(
+            'path' => $space_image['uri'],
+            'width' => $space_image['width'],
+            'height' => $space_image['height'],
+            'alt' => $space_image['alt'],
+            'attributes' => array(
+              'class' => 'oa-banner-overlay-img',
+            ),
+          );
+
+          $space_text = field_view_field('node', $space, 'field_oa_banner_text', array('label' => 'hidden'));
+          if (!empty($space_text)) {
+            $banner['text'] = drupal_render($space_text);
+          }
+        }
+        // If the Space doesn't override, then pull the parent's settings. If
+        // there is no parent, then these are the site-wide settings.
+        else {
+          $parent = module_exists('oa_subspaces') ? field_get_items('node', $space, OA_PARENT_SPACE) : NULL;
+          $parent = !empty($parent[0]['target_id']) ? node_load($parent[0]['target_id']) : NULL;
+          if ($parent && $parent->type == 'oa_space') {
+            $banner = oa_appearance_get_space_banner($parent->nid, $banner_position);
+          }
+          // The site-wide settings only apply if we are doing the same position
+          // as the position of the site-wide banner.
+          elseif ($banner_position == variable_get('oa_site_banner_position', 0)) {
+            $banner['position'] = $site_position;
+
+            // Get the site-wide image.
+            $site_stretch = variable_get('oa_banner_stretch', FALSE);
+            $site_file = NULL;
+            $site_fid = variable_get('oa_site_banner', '');
+            if ($site_fid && ($site_file = file_load($site_fid))) {
+              // Banner successfully loaded.
+            }
+            elseif (variable_get('oa_banner_default', TRUE)) {
+              // Use the default banner image.
+              $site_file = new stdClass();
+              $site_file->uri = $base_url . '/' . drupal_get_path('module', 'oa_widgets') . '/openatrium-powered.png';
+              $site_file->metadata['height'] = 43;
+              $site_file->metadata['width'] = 161;
+            }
+            if ($site_file) {
+              $banner['image'] = array(
+                'path' => $site_file->uri,
+                'width' => !empty($site_file->metadata['width']) ? $site_file->metadata['width'] : 0,
+                'height' => !empty($site_file->metadata['height']) ? $site_file->metadata['height'] : 0,
+                'alt' => t('Site banner'),
+                'attributes' => array(
+                  'class' => $site_stretch ? 'oa-banner-overlay-img' : 'oa-banner-img',
+                ),
+              );
+              $banner['stretch'] = $site_stretch;
+            }
+
+            // Get the site-wide text.
+            $banner['text'] = variable_get('oa_banner_sitename', TRUE) ? variable_get('site_name', '') : '';
+            $banner['slogan'] = variable_get('oa_banner_siteslogan', FALSE) ? variable_get('site_slogan', '') : '';
+          }
+        }
+      }
+
+      // Store in the cache for later.
+      $static_cache[$static_cache_key] = $banner;
+      cache_set($cid, $banner);
+    }
+  }
+
+  return $static_cache[$static_cache_key];
 }
