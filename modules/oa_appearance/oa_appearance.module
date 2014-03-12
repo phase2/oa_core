@@ -23,7 +23,7 @@ define('OA_SPACE_BANNER_SPACE_MENU', 4);
  */
 function oa_appearance_colorizer_instance_alter(&$instance) {
   $space_id = oa_core_get_space_home_context();
-  $instance = $instance . '_' . $space_id;
+  $instance = oa_appearance_get_space_colorizer_instance($instance, $space_id);
 }
 
 /**
@@ -210,6 +210,13 @@ function oa_appearance_edit_form($form, &$form_state, $entity_type, $entity_id) 
   module_load_include('admin.inc', 'colorizer');
 
   $form = colorizer_admin_form(FALSE, FALSE);
+  $form['#entity_type'] = $entity_type;
+  $form['#entity_id'] = $entity_id;
+
+  // We always write to the current Spaces instance, even if we are inheriting
+  // the current colors from the parent. This allows us to switch to our local
+  // settings by saving this form.
+  $form['instance']['#value'] = $GLOBALS['theme'] . '_' . $entity_id;
 
   $form['submit'] = array(
     '#type' => 'submit',
@@ -237,6 +244,20 @@ function oa_appearance_edit_form_validate($form, &$form_state) {
 function oa_appearance_edit_form_submit($form, &$form_state) {
   module_load_include('admin.inc', 'colorizer');
   colorizer_admin_form_submit($form, $form_state);
+
+  // Clear the colorizer instance static cache.
+  drupal_static_reset('oa_appearance_get_space_colorizer_instance');
+
+  // Clear our colorizer instance cache.
+  $nid = $form['#entity_id'];
+  cache_clear_all("oa_appearance:colorizer:{$nid}", "cache");
+
+  // Clear the colorizer instance cache for all child spaces as well.
+  if (module_exists("oa_subspaces")) {
+    foreach (oa_subspaces_get_children_groups("node", $nid) as $child_nid) {
+      cache_clear_all("oa_appearance:colorizer:{$child_nid}", "cache");
+    }
+  }
 }
 
 /**
@@ -400,4 +421,54 @@ function oa_appearance_get_space_banner($space_id, $banner_position) {
   }
 
   return $static_cache[$static_cache_key];
+}
+
+/**
+ * Get the colorizer instance name.
+ *
+ * Takes the parent Spaces and inheritence into account. Resulting values will
+ * be cached until the Space or any of it's parents are updated.
+ *
+ * @param string $instance_base
+ *   The base name of the colorizer instance.
+ * @param integer $space_id
+ *   The NID of the Space.
+ *
+ * @return string
+ *   The full instance name.
+ */
+function oa_appearance_get_space_colorizer_instance($base_instance, $space_id) {
+  $static_cache =& drupal_static(__FUNCTION__, array());
+
+  if (!isset($static_cache[$space_id])) {
+    $cid = 'oa_appearance:colorizer:' . $space_id;
+    if ($cached_value = cache_get($cid)) {
+      $static_cache[$space_id] = $cached_value->data;
+    }
+    
+    if (!isset($static_cache[$space_id])) {
+      $space = node_load($space_id);
+
+      $instance = $base_instance . '_' . $space_id;
+
+      // If there is no instance for the current Space, then try it's parent.
+      if (variable_get("colorizer_{$instance}_palette", FALSE) === FALSE && module_exists('oa_subspaces')) {
+        $parent = field_get_items('node', $space, OA_PARENT_SPACE);
+        $parent = !empty($parent[0]['target_id']) ? node_load($parent[0]['target_id']) : NULL;
+        if ($parent && $parent->type == 'oa_space') {
+          $instance = oa_appearance_get_space_colorizer_instance($base_instance, $parent->nid);
+        }
+        else {
+          // If we are at the top-level (ie. there is no parent), then we
+          // fallback on the site-wide default.
+          $instance = $base_instance;
+        }
+      }
+
+      $static_cache[$space_id] = $instance;
+      cache_set($cid, $instance);
+    }
+  }
+
+  return $static_cache[$space_id];
 }
