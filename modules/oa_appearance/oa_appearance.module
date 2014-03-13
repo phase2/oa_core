@@ -452,7 +452,7 @@ function oa_appearance_get_space_colorizer_instance($base_instance, $space_id) {
       $instance = $base_instance . '_' . $space_id;
 
       // If there is no instance for the current Space, then try it's parent.
-      if (variable_get("colorizer_{$instance}_palette", FALSE) === FALSE && module_exists('oa_subspaces')) {
+      if ($space && variable_get("colorizer_{$instance}_palette", FALSE) === FALSE && module_exists('oa_subspaces')) {
         $parent = field_get_items('node', $space, OA_PARENT_SPACE);
         $parent = !empty($parent[0]['target_id']) ? node_load($parent[0]['target_id']) : NULL;
         if ($parent && $parent->type == 'oa_space') {
