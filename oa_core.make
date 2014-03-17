@@ -127,6 +127,10 @@ projects[mailsystem][subdir] = contrib
 projects[realname][version] = 1.1
 projects[realname][subdir] = contrib
 
+; Advagg
+projects[advagg][version] = 2.5
+projects[advagg][subdir] = contrib
+
 ; Chosen
 projects[chosen][version] = 2.x-dev
 projects[chosen][subdir] = contrib
