@@ -109,3 +109,10 @@ function oa_core_update_7214() {
 function oa_core_update_7215() {
   module_enable(array('clone', 'oa_clone'));
 }
+
+/**
+ * Enable advagg.
+ */
+function oa_core_update_7216() {
+  module_enable(array('advagg'));
+}
