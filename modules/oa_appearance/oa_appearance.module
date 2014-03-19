@@ -337,10 +337,10 @@ function oa_appearance_get_space_banner($space_id, $banner_position) {
       $site_position = variable_get('oa_site_banner_position', 0);
 
       // Get the Space's 'Banner position'. If it's set to '- None -', then we
-      // take the site's 'Banner position' - which is different than 'Hidden',
-      // ie. a position of 0.
+      // set the position to -1 to indicate that we don't want to override the
+      // site default - which is different than 'Hidden', ie. a position of 0.
       $space_position = !empty($space) ? field_get_items('node', $space, OA_SPACE_BANNER_POSITION) : array();
-      $space_position = isset($space_position[0]['value']) ? $space_position[0]['value'] : $site_position;
+      $space_position = isset($space_position[0]['value']) ? $space_position[0]['value'] : -1;
 
       // Only attempt to figure out the banner settings if the Space's
       // 'Banner position' isn't set to 'Hidden'.
