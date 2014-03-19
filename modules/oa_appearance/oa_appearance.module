@@ -362,6 +362,9 @@ function oa_appearance_get_space_banner($space_id, $banner_position) {
             ),
           );
 
+          // Space image is always stretched.
+          $banner['stretch'] = TRUE;
+
           $space_text = field_view_field('node', $space, 'field_oa_banner_text', array('label' => 'hidden'));
           if (!empty($space_text)) {
             $banner['text'] = drupal_render($space_text);
@@ -377,7 +380,7 @@ function oa_appearance_get_space_banner($space_id, $banner_position) {
           }
           // The site-wide settings only apply if we are doing the same position
           // as the position of the site-wide banner.
-          elseif ($banner_position == variable_get('oa_site_banner_position', 0)) {
+          elseif ($banner_position == $site_position) {
             $banner['position'] = $site_position;
 
             // Get the site-wide image.

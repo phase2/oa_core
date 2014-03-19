@@ -27,7 +27,7 @@ function oa_space_banner_render($subtype, $conf, $args, $context = NULL) {
   $space_id = oa_core_get_space_home_context();
   $position = isset($conf['banner_position']) ? $conf['banner_position'] : OA_SPACE_BANNER_BELOW;
 
-  $banner = oa_appearance_get_space_banner(oa_core_get_group_from_node($space_id), $position);
+  $banner = oa_appearance_get_space_banner($space_id, $position);
   if ($banner['position'] == 0) {
     return;
   }
@@ -44,7 +44,7 @@ function oa_space_banner_render($subtype, $conf, $args, $context = NULL) {
   $vars['slogan'] = $banner['slogan'];
   $vars['banner_text_class'] = 'oa-banner-overlay';
   $vars['banner_slogan_class'] = 'oa-banner-slogan-overlay';
-  if (!empty($banner['image']) && !$banner['stretch']) {
+  if (empty($banner['image']) || !$banner['stretch']) {
     $vars['banner_text_class'] = 'oa-banner-text';
     $vars['banner_slogan_class'] = 'oa-banner-slogan';
   }
