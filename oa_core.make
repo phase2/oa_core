@@ -130,6 +130,7 @@ projects[realname][subdir] = contrib
 ; Advagg
 projects[advagg][version] = 2.5
 projects[advagg][subdir] = contrib
+projects[advagg][patch][2216825] = http://drupal.org/files/issues/advagg-cron-cache-2216825-5.patch
 
 ; Chosen
 projects[chosen][version] = 2.x-dev
