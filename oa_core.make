@@ -123,6 +123,10 @@ projects[mimemail][download][revision] = e742766
 projects[mailsystem][version] = 2.34
 projects[mailsystem][subdir] = contrib
 
+; HTML Mail
+projects[htmlmail][version] = 2.65
+projects[htmlmail][subdir] = contrib
+
 ; RealName
 projects[realname][version] = 1.1
 projects[realname][subdir] = contrib
@@ -231,14 +235,6 @@ projects[colorizer][subdir] = contrib
 ; OA Responsive Regions
 projects[oa_responsive_regions][version] = 1.0-beta1
 projects[oa_responsive_regions][subdir] = contrib
-
-; Mail System
-projects[mailsystem][version] = 2.34
-projects[mailsystem][subdir] = contrib
-
-; HTML Mail
-projects[htmlmail][version] = 2.65
-projects[htmlmail][subdir] = contrib
 
 ; Date Facets
 projects[date_facets][version] = 1.x-dev
