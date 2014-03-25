@@ -1115,9 +1115,9 @@ function oa_core_get_space_type_layout_options($bundle) {
       if (empty($panelizer->disabled)) {
         $options[$name] = $panelizer->title ? $panelizer->title : t('Default');
         if (!empty($panelizer->title)) {
-          $thisarray = explode(':',$name);
+          $thisarray = explode(':', $name);
           if (!empty($thisarray[3])) {
-            $options[$name] = ucfirst($thisarray[3]) .':' . $options[$name];
+            $options[$name] = ucfirst($thisarray[3]) . ':' . $options[$name];
           }
         }
       }
