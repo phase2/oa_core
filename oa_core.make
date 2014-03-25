@@ -282,3 +282,9 @@ projects[og_variables][subdir] = contrib
 ; Bootstrap Tour
 projects[bootstrap_tour][version] = 1.0-beta8
 projects[bootstrap_tour][subdir] = contrib
+
+; Conditional Style Sheets
+projects[conditional_styles][version] = 2.2
+projects[conditional_styles][subdir] = contrib
+
+

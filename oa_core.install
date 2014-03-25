@@ -116,3 +116,10 @@ function oa_core_update_7215() {
 function oa_core_update_7216() {
   module_enable(array('advagg'));
 }
+
+/**
+ * Enable conditional_styles.
+ */
+function oa_core_update_7217() {
+  module_enable(array('conditional_styles'));
+}
