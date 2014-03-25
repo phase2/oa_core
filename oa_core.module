@@ -1099,6 +1099,7 @@ function oa_core_form_oa_group_node_form_alter(&$form, &$form_state, &$form_id) 
 function oa_core_get_space_type_layout_options($bundle) {
   $plugins = panelizer_get_entity_plugins();
   $node_plugin = panelizer_entity_plugin_get_handler($plugins['node']);
+  $options = array();
   foreach ($node_plugin->plugin['view modes'] as $view_mode => $view_mode_info) {
     $view_bundle = $bundle . '.' . $view_mode;
 
@@ -1110,10 +1111,15 @@ function oa_core_get_space_type_layout_options($bundle) {
 
     $panelizers = $node_plugin->get_default_panelizer_objects($view_bundle);
 
-    $options = array();
     foreach ($panelizers as $name => $panelizer) {
       if (empty($panelizer->disabled)) {
         $options[$name] = $panelizer->title ? $panelizer->title : t('Default');
+        if (!empty($panelizer->title)) {
+          $thisarray = explode(':',$name);
+          if (!empty($thisarray[3])) {
+            $options[$name] = ucfirst($thisarray[3]) .':' . $options[$name];
+          }
+        }
       }
     }
 
