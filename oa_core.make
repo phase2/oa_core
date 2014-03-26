@@ -226,8 +226,7 @@ projects[jquery_update][version] = 2.x-dev
 projects[jquery_update][subdir] = contrib
 projects[jquery_update][download][type] = git
 projects[jquery_update][download][branch] = 7.x-2.x
-projects[jquery_update][download][revision] = 65eecb0
-projects[jquery_update][patch][1448490] = http://drupal.org/files/jquery_update-fixes-states-js-1448490.patch
+projects[jquery_update][download][revision] = e5ab70
 
 ; Colorizer
 projects[colorizer][version] = 1.0
