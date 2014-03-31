@@ -376,7 +376,7 @@ function oa_core_get_public_spaces($group_types = array(OA_SPACE_TYPE => OA_SPAC
  * @param  int $gid space ID
  * @return keyed array of section data: $array[$nid] = $title
  */
-function oa_core_space_sections($gid, $status = NULL) {
+function oa_core_space_sections($gid, $status = NULL, $bypass_access_check = FALSE) {
   $query = db_select('node', 'n');
   $query->rightJoin('og_membership', 'og', 'n.nid = og.etid');
   $query->leftJoin('field_data_field_oa_section_weight', 'w',
@@ -390,8 +390,10 @@ function oa_core_space_sections($gid, $status = NULL) {
     ->condition('og.entity_type', 'node')
     ->condition('og.field_name', OA_SPACE_FIELD)
     ->condition('og.gid', $gid)
-    ->orderBy('w.field_oa_section_weight_value')
-    ->addTag('node_access');
+    ->orderBy('w.field_oa_section_weight_value');
+  if (!$bypass_access_check) {
+    $query->addTag('node_access');
+  }
   $result = $query->execute();
   return $result->fetchAllKeyed(0, 1);
 }
