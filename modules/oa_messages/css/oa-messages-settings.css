@@ -11,10 +11,6 @@
   margin-right: 10px;
 }
 
-#oa-users-settings-form div.filter-actions {
-  clear: left;
-}
-
 #oa-users-settings-form #edit-oa-messages-email-type div:first-child {
   float: left;
   margin-top: 0;

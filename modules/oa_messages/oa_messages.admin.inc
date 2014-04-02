@@ -51,7 +51,7 @@ function oa_messages_oa_user_settings_form_alter(&$form, &$form_state, $user) {
 
   $form['oa_messages']['subscribed_content'] = array(
     '#prefix' => '<div class="subscribed-content">',
-    '#markup' => l(t('Subscribed Content') . html_entity_decode('  &#x25b6;'), 'user/' . $user->uid . '/view'),
+    '#markup' => l(t('Subscribed Content ▶'), 'user/' . $user->uid . '/view'),
     '#suffix' => '</div>',
   );
 
@@ -117,8 +117,10 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
   $method_options[] = t('None');
 
   // Get messages options.
-  foreach ($message_types as $message_type) {
-    $message_options[$message_type->name] = $message_type->description;
+  $message_order = array('oa_create', 'oa_update', 'oa_delete', 'oa_reply',
+    'oa_member', 'oa_event_notification');
+  foreach ($message_order as $key) {
+    $message_options[$key] = $message_types[$key]->description;
   }
 
   $form = array();
@@ -135,13 +137,13 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
     '#attributes' => array(
       'placeholder' => t('Space'),
     ),
-    '#prefix' => '<br /><h4>' . t('Space Preferences') . '</h4><label>' . t('Search Spaces:') . '</label>',
+    '#prefix' => '<br /><h4>' . t('Space Preferences') . '</h4><label>' . t('Filter Spaces:') . '</label>',
     '#autocomplete_path' => 'spaces/' . $user->uid . '/autocomplete',
   );
 
   $form['filter']['actions']['submit'] = array(
     '#type' => 'button',
-    '#value' => t('Search'),
+    '#value' => t('Apply'),
     '#prefix' => '<div class="filter-actions">',
     '#ajax' => array(
       'wrapper' => 'edit-oa-messages-all-spaces',

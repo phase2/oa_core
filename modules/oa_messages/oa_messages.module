@@ -459,7 +459,7 @@ function oa_messages_spaces_autocomplete($account, $string) {
   $query->fields('n', array('title'))
   ->condition('ogm.entity_type', 'user')
   ->condition('ogm.etid', $account->uid)
-  ->condition('n.title', db_like($string) . '%', 'LIKE')
+  ->condition('n.title', '%' . db_like($string) . '%', 'LIKE')
   ->orderBy('n.title', 'ASC')
   ->range(0, 10);
   $result = $query->execute();
