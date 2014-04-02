@@ -154,7 +154,6 @@ function oa_messages_determine_user_notifiers($user, $entity, $message, $notifie
   if (empty($notifiers)) {
     $notifiers = oa_message_notifiers();
   }
-
   $allowed_notifiers = array();
   $settings = !empty($user->data['oa_messages']['message_notifications']) ? $user->data['oa_messages']['message_notifications'] : array();
 
@@ -170,15 +169,12 @@ function oa_messages_determine_user_notifiers($user, $entity, $message, $notifie
       }
     }
     else {
-      foreach ($notifiers as $notifier) {
-        // If unset, use default.
-        if ((!isset($settings[$space_id][$message->type][$notifier['id']]) || $settings[$space_id][$message->type][$notifier['id']]) &&
-          !empty($notifier['id'])) {
-          $allowed_notifiers[] = $notifier['id'];
-        }
+      if (isset($settings['messages'][$message->type])) {
+        $allowed_notifiers = $settings[$space_id]['methods'];
       }
     }
   }
+
   return $allowed_notifiers;
 }
 
@@ -302,7 +298,7 @@ function oa_messages_oa_messages_create_alter(&$wrapper, $context) {
       if (isset($wrapper->field_deleted_title)) {
         $wrapper->field_deleted_title = $entity_wrapper->title->value();
       }
-      if (isset($wrapper->field_deleted_summary) && field_info_instance($context['entity_type'], 'body', $context['entity']->type)) {
+      if (isset($wrapper->field_deleted_summary) && field_info_instance($context['entity_type'], $context['entity'], 'body')) {
         $body_value = field_view_field($context['entity_type'], $context['entity'], 'body', array(
             'label' => 'hidden',
             'type' => 'text_summary_or_trimmed',
@@ -430,19 +426,47 @@ function oa_messages_preprocess_htmlmail(&$vars) {
 }
 
 /**
- * Implements hook_field_default_field_instances_alter().
+ * Implements hook_menu().
  */
-function oa_messages_field_default_field_instances_alter(&$data) {
-  if (!module_exists('message_digest')) {
-    $messages = entity_get_info('message');
-    foreach ($messages['bundles'] as $bundle_name => $bundle) {
-      $instances = field_info_instances('message', $bundle_name);
-      foreach ($instances as $instance_name => $instance) {
-        if (isset($data['message-' . $bundle_name . '-' . $instance_name])) {
-          unset($data['message-' . $bundle_name . '-' . $instance_name]['display']['message_notify_daily_digest']);
-          unset($data['message-' . $bundle_name . '-' . $instance_name]['display']['message_notify_weekly_digest']);
-        }
-      }
-    }
+function oa_messages_menu() {
+  $items = array();
+
+  $items['oa-messages-subsribe/%node'] = array(
+    'title' => 'Subscribe/Unsubscribe from Section/Space',
+    'page callback' => 'oa_messages_ajax_subscribe',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+  );
+
+  $items['spaces/%user/autocomplete'] = array(
+    'title' => 'Autocomplete for Spaces',
+    'page callback' => 'oa_messages_spaces_autocomplete',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Autocomplete function for user spaces search field.
+ */
+function oa_messages_spaces_autocomplete($account, $string) {
+  $matches = array();
+  $query = db_select('og_membership', 'ogm');
+  $query->join('node', 'n', 'n.nid = ogm.gid');
+  $query->fields('n', array('title'))
+  ->condition('ogm.entity_type', 'user')
+  ->condition('ogm.etid', $account->uid)
+  ->condition('n.title', db_like($string) . '%', 'LIKE')
+  ->orderBy('n.title', 'ASC')
+  ->range(0, 10);
+  $result = $query->execute();
+
+  foreach ($result as $row) {
+    $matches[$row->title] = check_plain($row->title);
   }
+
+  drupal_json_output($matches);
 }
