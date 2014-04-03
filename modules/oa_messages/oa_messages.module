@@ -170,12 +170,8 @@ function oa_messages_determine_user_notifiers($user, $entity, $message, $notifie
       }
     }
     else {
-      foreach ($notifiers as $notifier) {
-        // If unset, use default.
-        if ((!isset($settings[$space_id][$message->type][$notifier['id']]) || $settings[$space_id][$message->type][$notifier['id']]) &&
-          !empty($notifier['id'])) {
-          $allowed_notifiers[] = $notifier['id'];
-        }
+      if (isset($settings['messages'][$message->type])) {
+        $allowed_notifiers = $settings[$space_id]['methods'];
       }
     }
   }
