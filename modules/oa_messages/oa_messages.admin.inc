@@ -9,6 +9,7 @@
  * Implements hook_oa_user_settings_form_alter().
  */
 function oa_messages_oa_user_settings_form_alter(&$form, &$form_state, $user) {
+  drupal_set_title('Notification Settings');
   $defaults = isset($user->data['oa_messages']) ? $user->data['oa_messages'] : array();
 
   $form['submit_top'] = array(
@@ -51,7 +52,7 @@ function oa_messages_oa_user_settings_form_alter(&$form, &$form_state, $user) {
 
   $form['oa_messages']['subscribed_content'] = array(
     '#prefix' => '<div class="subscribed-content">',
-    '#markup' => l(t('Subscribed Content ▶'), 'user/' . $user->uid . '/view'),
+    '#markup' => l(t('Subscribed Content') . html_entity_decode(' &#x25b6;'), 'user/' . $user->uid . '/view', array('html' => TRUE)),
     '#suffix' => '</div>',
   );
 
@@ -103,7 +104,7 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
     }
   }
 
-  $spaces = oa_messages_get_entity_groups('user', $user->uid, $options, $page);
+  $spaces = oa_messages_get_entity_groups($user->uid, 'user', $options, $page);
   $message_types = message_type_load();
   $notifiers = oa_message_notifiers();
 
@@ -117,10 +118,8 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
   $method_options[] = t('None');
 
   // Get messages options.
-  $message_order = array('oa_create', 'oa_update', 'oa_delete', 'oa_reply',
-    'oa_member', 'oa_event_notification');
-  foreach ($message_order as $key) {
-    $message_options[$key] = $message_types[$key]->description;
+  foreach ($message_types as $type) {
+    $message_options[$type->name] = $type->description;
   }
 
   $form = array();
@@ -138,12 +137,11 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
       'placeholder' => t('Space'),
     ),
     '#prefix' => '<br /><h4>' . t('Space Preferences') . '</h4><label>' . t('Filter Spaces:') . '</label>',
-    '#autocomplete_path' => 'spaces/' . $user->uid . '/autocomplete',
   );
 
   $form['filter']['actions']['submit'] = array(
     '#type' => 'button',
-    '#value' => t('Apply'),
+    '#value' => t('Search'),
     '#prefix' => '<div class="filter-actions">',
     '#ajax' => array(
       'wrapper' => 'edit-oa-messages-all-spaces',
@@ -207,11 +205,14 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
     '#id' => 'edit-oa-messages-all-spaces',
   );
 
+  // Remove "None" option for method notifications.
+  array_pop($method_options);
+
   // Build space options.
   foreach ($spaces as $key => $space) {
 
     // Set defaults.
-    if (!empty($defaults['message_notifications'][$space->nid])) {
+    if (!empty($defaults['message_notifications'][$space->nid]['methods'])) {
       $default_methods = $defaults['message_notifications'][$space->nid]['methods'];
       if (!empty($defaults['message_notifications'][$space->nid]['messages'])) {
         $default_messages = $defaults['message_notifications'][$space->nid]['messages'];
@@ -219,7 +220,6 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
       else {
         $default_messages = array();
       }
-
     }
     else {
       $default_methods = $default_notifiers;
@@ -254,6 +254,7 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
       '#default_value' => $default_methods,
       '#prefix' => '<div class="column2 span3">',
       '#suffix' => '</div>',
+      '#id' => $space->nid,
     );
 
     $form['all_spaces'][$space->nid]['message_container'] = array(
@@ -263,6 +264,7 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
       '#collapsed' => TRUE,
       '#prefix' => '<div class="column3 span6">',
       '#suffix' => '</div>',
+      '#id' => 'message-container-' . $space->nid,
     );
 
     $form['all_spaces'][$space->nid]['message_container']['messages'] = array(
@@ -281,7 +283,7 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
 /**
  * AJAX callback to return search space values.
  */
-function oa_messages_ajax_load_notification_methods(&$form, &$form_state) {
+function oa_messages_ajax_load_notification_methods($form, &$form_state) {
   return $form['oa_messages']['message_notifications']['all_spaces'];
 }
 
@@ -306,7 +308,7 @@ function oa_messages_form_oa_core_configure_form_alter(&$form, &$form_state, $fo
 /**
  * Helper function to get user's spaces.
  */
-function oa_messages_get_entity_groups($entity_type = 'user', $entity, $options = array(), $page = NULL) {
+function oa_messages_get_entity_groups($entity, $entity_type = 'user', $options = array(), $page = NULL) {
   $matches = array();
 
   if (isset($page) && !isset($_GET['page'])) {
@@ -317,12 +319,13 @@ function oa_messages_get_entity_groups($entity_type = 'user', $entity, $options 
   $query->join('node', 'n', 'n.nid = ogm.gid');
   $query->condition('ogm.entity_type', $entity_type)
   ->condition('ogm.etid', $entity)
+  ->condition('n.type', 'oa_space')
   ->fields('n', array('nid', 'title'))
   ->orderBy('n.title', 'ASC')
   ->limit(20);
 
   if (!empty($options['space'])) {
-    $query->condition('n.title', $options['space']);
+    $query->condition('n.title', '%' . db_like($options['space']) . '%', 'LIKE');
   }
 
   $result = $query->execute();

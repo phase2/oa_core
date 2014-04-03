@@ -39,7 +39,7 @@
 
 #oa-users-settings-form fieldset legend {
   border: none;
-  margin-bottom: 0;
+  margin-bottom: .35em;
 }
 
 #oa-users-settings-form div.form-type-select {
@@ -61,6 +61,7 @@
 
 #oa-users-settings-form div.column3 div.form-type-checkboxes {
   margin-left: -52%;
+  margin-bottom: .15em;
 }
 
 #oa-users-settings-form div.column3 div.form-checkboxes {
