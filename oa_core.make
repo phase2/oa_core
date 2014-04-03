@@ -12,6 +12,7 @@ projects[ctools][subdir] = contrib
 projects[ctools][patch][1910608] = http://drupal.org/files/issues/1910608-views_content-ajax-13.patch
 projects[ctools][patch][1901106] = http://drupal.org/files/issues/ctools-views_content-exposed_form_override-1901106-24.patch
 projects[ctools][patch][2023705] = http://drupal.org/files/2023705-ctools-autosubmit-2_0.patch
+projects[ctools][patch][2195471] = http://drupal.org/files/issues/ctools-n2195471-1.patch
 
 ; Override panopoly_core.make: 3.1
 projects[panelizer][version] = 3.x-dev
