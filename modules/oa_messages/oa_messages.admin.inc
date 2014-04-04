@@ -52,7 +52,7 @@ function oa_messages_oa_user_settings_form_alter(&$form, &$form_state, $user) {
 
   $form['oa_messages']['subscribed_content'] = array(
     '#prefix' => '<div class="subscribed-content">',
-    '#markup' => l(t('Subscribed Content') . html_entity_decode(' &#x25b6;'), 'user/' . $user->uid . '/view', array('html' => TRUE)),
+    '#markup' => l(t('Subscribed Content') . html_entity_decode(' &#x25b6;'), 'user/' . $user->uid . '/subscribed', array('html' => TRUE)),
     '#suffix' => '</div>',
   );
 
