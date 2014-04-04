@@ -73,8 +73,8 @@ function oa_messages_oa_user_settings_form_submit($form_state, $user) {
       $return['oa_messages']['message_notifications'][$nid]['messages'] = ($values['all_notifications']) ? array_keys($message_types) : '';
     }
     else {
-      $return['oa_messages']['message_notifications'][$nid]['methods'] = (!empty($vals['methods'])) ? $vals['methods'] : '';
-      $return['oa_messages']['message_notifications'][$nid]['messages'] = (!empty($vals['methods'])) ? $vals['message_container']['messages'] : '';
+      $return['oa_messages']['message_notifications'][$nid]['methods'] = (!empty($vals['methods'])) ? $vals['methods'] : array();
+      $return['oa_messages']['message_notifications'][$nid]['messages'] = (!empty($vals['message_container']['messages'])) ? $vals['message_container']['messages'] : array();
     }
   }
 
@@ -212,7 +212,7 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
   foreach ($spaces as $key => $space) {
 
     // Set defaults.
-    if (!empty($defaults['message_notifications'][$space->nid]['methods'])) {
+    if (isset($defaults['message_notifications'][$space->nid]['methods'])) {
       $default_methods = $defaults['message_notifications'][$space->nid]['methods'];
       if (!empty($defaults['message_notifications'][$space->nid]['messages'])) {
         $default_messages = $defaults['message_notifications'][$space->nid]['messages'];

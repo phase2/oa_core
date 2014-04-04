@@ -170,7 +170,7 @@ function oa_messages_determine_user_notifiers($user, $entity, $message, $notifie
       }
     }
     else {
-      if (isset($settings['messages'][$message->type])) {
+      if (isset($settings[$space_id]['messages'][$message->type])) {
         $allowed_notifiers = $settings[$space_id]['methods'];
       }
     }
