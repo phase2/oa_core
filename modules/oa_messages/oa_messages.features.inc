@@ -61,7 +61,7 @@ function oa_messages_default_message_type() {
   }');
   $items['oa_create'] = entity_import('message_type', '{
     "name" : "oa_create",
-    "description" : "Create Content",
+    "description" : "New Content",
     "argument_keys" : [],
     "argument" : [],
     "category" : "message_type",
@@ -102,7 +102,7 @@ function oa_messages_default_message_type() {
   }');
   $items['oa_delete'] = entity_import('message_type', '{
     "name" : "oa_delete",
-    "description" : "Delete Content",
+    "description" : "Deleted",
     "argument_keys" : [],
     "argument" : [],
     "category" : "message_type",
@@ -143,7 +143,7 @@ function oa_messages_default_message_type() {
   }');
   $items['oa_member'] = entity_import('message_type', '{
     "name" : "oa_member",
-    "description" : "Open Atrium Member",
+    "description" : "Membership",
     "argument_keys" : [],
     "argument" : [],
     "category" : "message_type",
@@ -174,7 +174,7 @@ function oa_messages_default_message_type() {
   }');
   $items['oa_update'] = entity_import('message_type', '{
     "name" : "oa_update",
-    "description" : "Update Content",
+    "description" : "Updated",
     "argument_keys" : [],
     "argument" : [],
     "category" : "message_type",
