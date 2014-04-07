@@ -10,6 +10,18 @@
       $('.select-all').click(function() {
         $('.apply-to').prop('checked', this.checked);
       });
+
+      // Set message types upon selecting a method.
+      $('.column2 .form-select').change(function() {
+        var id = $(this).attr('id');
+        var children = $('#message-container-' + id + ' .form-checkbox');
+        if ($(this).val() == null) {
+          children.prop('checked', false);
+        }
+        else {
+          children.prop('checked', true);
+        }
+      });
     }
   };
 

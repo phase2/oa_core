@@ -11,10 +11,6 @@
   margin-right: 10px;
 }
 
-#oa-users-settings-form div.filter-actions {
-  clear: left;
-}
-
 #oa-users-settings-form #edit-oa-messages-email-type div:first-child {
   float: left;
   margin-top: 0;
@@ -43,7 +39,7 @@
 
 #oa-users-settings-form fieldset legend {
   border: none;
-  margin-bottom: 0;
+  margin-bottom: .35em;
 }
 
 #oa-users-settings-form div.form-type-select {
@@ -65,6 +61,7 @@
 
 #oa-users-settings-form div.column3 div.form-type-checkboxes {
   margin-left: -52%;
+  margin-bottom: .15em;
 }
 
 #oa-users-settings-form div.column3 div.form-checkboxes {
