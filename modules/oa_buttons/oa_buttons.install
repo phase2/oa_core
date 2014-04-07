@@ -6,14 +6,6 @@
  */
 
 /**
- * Implements hook_install().
- */
-function oa_buttons_install() {
-  // set module weight to 2 to run after path and pathauto
-  db_query("UPDATE {system} SET weight = 2 WHERE type = 'module' AND name = 'oa_buttons'");
-}
-
-/**
  * Implements hook_schema().
  */
 function oa_buttons_schema() {

@@ -403,15 +403,6 @@ function oa_buttons_create_term($taxonomy, $name, $description, $node_options, $
 }
 
 /**
- * Implements hook_entity_presave().
- */
-function oa_buttons_entity_presave($entity, $type) {
-  if (($type == 'taxonomy_term') && (isset($entity->oa_button))) {
-    // remove path and pathauto from space/section types by default
-  }
-}
-
-/**
  * Implements hook_node_insert().
  */
 function oa_buttons_node_insert($node) {
