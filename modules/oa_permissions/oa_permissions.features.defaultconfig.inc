@@ -1,13 +1,24 @@
 <?php
 /**
  * @file
- * oa_permissions.features.user_permission.inc
+ * oa_permissions.features.defaultconfig.inc
  */
 
 /**
- * Implements hook_user_default_permissions().
+ * Implements hook_defaultconfig_features().
  */
-function oa_permissions_user_default_permissions() {
+function oa_permissions_defaultconfig_features() {
+  return array(
+    'oa_permissions' => array(
+      'user_default_permissions' => 'user_default_permissions',
+    ),
+  );
+}
+
+/**
+ * Implements hook_defaultconfig_user_default_permissions().
+ */
+function oa_permissions_defaultconfig_user_default_permissions() {
   $permissions = array();
 
   // Exported permission: 'access user profiles'.
@@ -25,6 +36,7 @@ function oa_permissions_user_default_permissions() {
     'name' => 'add media from remote sources',
     'roles' => array(
       'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
       'editor' => 'editor',
     ),
     'module' => 'media_internet',
