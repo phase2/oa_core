@@ -170,7 +170,7 @@ function oa_messages_determine_user_notifiers($user, $entity, $message, $notifie
       }
     }
     else {
-      if (isset($settings['messages'][$message->type])) {
+      if (isset($settings[$space_id]['messages'][$message->type])) {
         $allowed_notifiers = $settings[$space_id]['methods'];
       }
     }
@@ -207,9 +207,33 @@ function oa_messages_entity_insert($entity, $type) {
  * Implements hook_entity_update().
  */
 function oa_messages_entity_update($entity, $type) {
-  $types = oa_core_list_content_types(TRUE);
-  if ($type == 'node' && array_key_exists($entity->type, $types)) {
-    $message = oa_messages_create('oa_update', $entity, $type);
+  $update = TRUE;
+  $update = (isset($entity->title) && $entity->title !== $entity->original->title) ? TRUE : FALSE;
+
+  if (!$update) {
+    module_load_include('inc', 'diff', 'diff.diff');
+
+    $context = array(
+      'entity_type' => $type,
+      'old_entity' => $entity->original,
+      'new_entity' => $entity,
+      'view_mode' => FALSE,
+    );
+
+    $fields = diff_entity_diff($entity->original, $entity, $context);
+    foreach ($fields as $field => $data) {
+      if ($data['#old'] !== $data['#new']) {
+        $update = TRUE;
+        break;
+      }
+    }
+  }
+
+  if ($update) {
+    $types = oa_core_list_content_types(TRUE);
+    if ($type == 'node' && array_key_exists($entity->type, $types)) {
+      $message = oa_messages_create('oa_update', $entity, $type);
+    }
   }
 }
 
