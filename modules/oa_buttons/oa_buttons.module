@@ -384,6 +384,7 @@ function oa_buttons_create_term($taxonomy, $name, $description, $node_options, $
         'field_oa_node_types' => array(
           LANGUAGE_NONE => array(),
         ),
+        'oa_button' => TRUE,
       );
     }
 
@@ -395,6 +396,16 @@ function oa_buttons_create_term($taxonomy, $name, $description, $node_options, $
     taxonomy_term_save($term);
   }
   return $term;
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function oa_buttons_entity_presave($entity, $type) {
+  if (($type == 'taxonomy_term') && (isset($entity->oa_button))) {
+    // remove path and pathauto from space/section types by default
+    unset($entity->path);
+  }
 }
 
 /**
