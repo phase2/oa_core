@@ -1,13 +1,24 @@
 <?php
 /**
  * @file
- * oa_permissions.features.user_permission.inc
+ * oa_permissions.features.defaultconfig.inc
  */
 
 /**
- * Implements hook_user_default_permissions().
+ * Implements hook_defaultconfig_features().
  */
-function oa_permissions_user_default_permissions() {
+function oa_permissions_defaultconfig_features() {
+  return array(
+    'oa_permissions' => array(
+      'user_default_permissions' => 'user_default_permissions',
+    ),
+  );
+}
+
+/**
+ * Implements hook_defaultconfig_user_default_permissions().
+ */
+function oa_permissions_defaultconfig_user_default_permissions() {
   $permissions = array();
 
   // Exported permission: 'access user profiles'.
@@ -15,7 +26,6 @@ function oa_permissions_user_default_permissions() {
     'name' => 'access user profiles',
     'roles' => array(
       'administrator' => 'administrator',
-      'authenticated user' => 'authenticated user',
     ),
     'module' => 'user',
   );
@@ -25,9 +35,88 @@ function oa_permissions_user_default_permissions() {
     'name' => 'add media from remote sources',
     'roles' => array(
       'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
       'editor' => 'editor',
     ),
     'module' => 'media_internet',
+  );
+
+  // Exported permission:
+  // 'administer panelizer node oa_discussion_post breadcrumbs'.
+  $permissions['administer panelizer node oa_discussion_post breadcrumbs'] = array(
+    'name' => 'administer panelizer node oa_discussion_post breadcrumbs',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'panelizer',
+  );
+
+  // Exported permission:
+  // 'administer panelizer node oa_discussion_post content'.
+  $permissions['administer panelizer node oa_discussion_post content'] = array(
+    'name' => 'administer panelizer node oa_discussion_post content',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'panelizer',
+  );
+
+  // Exported permission:
+  // 'administer panelizer node oa_discussion_post context'.
+  $permissions['administer panelizer node oa_discussion_post context'] = array(
+    'name' => 'administer panelizer node oa_discussion_post context',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'panelizer',
+  );
+
+  // Exported permission:
+  // 'administer panelizer node oa_discussion_post defaults'.
+  $permissions['administer panelizer node oa_discussion_post defaults'] = array(
+    'name' => 'administer panelizer node oa_discussion_post defaults',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'panelizer',
+  );
+
+  // Exported permission: 'administer panelizer node oa_discussion_post layout'.
+  $permissions['administer panelizer node oa_discussion_post layout'] = array(
+    'name' => 'administer panelizer node oa_discussion_post layout',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'panelizer',
+  );
+
+  // Exported permission:
+  // 'administer panelizer node oa_discussion_post overview'.
+  $permissions['administer panelizer node oa_discussion_post overview'] = array(
+    'name' => 'administer panelizer node oa_discussion_post overview',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'panelizer',
+  );
+
+  // Exported permission:
+  // 'administer panelizer node oa_discussion_post settings'.
+  $permissions['administer panelizer node oa_discussion_post settings'] = array(
+    'name' => 'administer panelizer node oa_discussion_post settings',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'panelizer',
+  );
+
+  // Exported permission: 'administer panelizer node oa_group breadcrumbs'.
+  $permissions['administer panelizer node oa_group breadcrumbs'] = array(
+    'name' => 'administer panelizer node oa_group breadcrumbs',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'panelizer',
   );
 
   // Exported permission: 'administer panelizer node oa_group content'.
@@ -97,6 +186,13 @@ function oa_permissions_user_default_permissions() {
     'module' => 'panelizer',
   );
 
+  // Exported permission: 'administer panelizer node oa_section choice'.
+  $permissions['administer panelizer node oa_section choice'] = array(
+    'name' => 'administer panelizer node oa_section choice',
+    'roles' => array(),
+    'module' => 'panelizer',
+  );
+
   // Exported permission: 'administer panelizer node oa_section content'.
   $permissions['administer panelizer node oa_section content'] = array(
     'name' => 'administer panelizer node oa_section content',
@@ -161,6 +257,13 @@ function oa_permissions_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
     ),
+    'module' => 'panelizer',
+  );
+
+  // Exported permission: 'administer panelizer node oa_space choice'.
+  $permissions['administer panelizer node oa_space choice'] = array(
+    'name' => 'administer panelizer node oa_space choice',
+    'roles' => array(),
     'module' => 'panelizer',
   );
 
@@ -373,6 +476,27 @@ function oa_permissions_user_default_permissions() {
     'module' => 'panels',
   );
 
+  // Exported permission: 'clear discussion_body feeds'.
+  $permissions['clear discussion_body feeds'] = array(
+    'name' => 'clear discussion_body feeds',
+    'roles' => array(),
+    'module' => 'feeds',
+  );
+
+  // Exported permission: 'clear discussion_importer feeds'.
+  $permissions['clear discussion_importer feeds'] = array(
+    'name' => 'clear discussion_importer feeds',
+    'roles' => array(),
+    'module' => 'feeds',
+  );
+
+  // Exported permission: 'clear discussion_reply_email_importer feeds'.
+  $permissions['clear discussion_reply_email_importer feeds'] = array(
+    'name' => 'clear discussion_reply_email_importer feeds',
+    'roles' => array(),
+    'module' => 'feeds',
+  );
+
   // Exported permission: 'create fieldable basic_file'.
   $permissions['create fieldable basic_file'] = array(
     'name' => 'create fieldable basic_file',
@@ -469,10 +593,17 @@ function oa_permissions_user_default_permissions() {
     'name' => 'create messages',
     'roles' => array(
       'administrator' => 'administrator',
-      'anonymous user' => 'anonymous user',
-      'authenticated user' => 'authenticated user',
     ),
     'module' => 'message',
+  );
+
+  // Exported permission: 'create oa_discussion_post content'.
+  $permissions['create oa_discussion_post content'] = array(
+    'name' => 'create oa_discussion_post content',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'node',
   );
 
   // Exported permission: 'delete any document files'.
@@ -493,6 +624,15 @@ function oa_permissions_user_default_permissions() {
       'editor' => 'editor',
     ),
     'module' => 'file_entity',
+  );
+
+  // Exported permission: 'delete any oa_discussion_post content'.
+  $permissions['delete any oa_discussion_post content'] = array(
+    'name' => 'delete any oa_discussion_post content',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'node',
   );
 
   // Exported permission: 'delete any video files'.
@@ -605,6 +745,15 @@ function oa_permissions_user_default_permissions() {
     'module' => 'file_entity',
   );
 
+  // Exported permission: 'delete own oa_discussion_post content'.
+  $permissions['delete own oa_discussion_post content'] = array(
+    'name' => 'delete own oa_discussion_post content',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'node',
+  );
+
   // Exported permission: 'delete own video files'.
   $permissions['delete own video files'] = array(
     'name' => 'delete own video files',
@@ -648,7 +797,6 @@ function oa_permissions_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'authenticated user' => 'authenticated user',
-      'editor' => 'editor',
     ),
     'module' => 'file_entity',
   );
@@ -659,7 +807,6 @@ function oa_permissions_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'authenticated user' => 'authenticated user',
-      'editor' => 'editor',
     ),
     'module' => 'file_entity',
   );
@@ -670,7 +817,6 @@ function oa_permissions_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'authenticated user' => 'authenticated user',
-      'editor' => 'editor',
     ),
     'module' => 'file_entity',
   );
@@ -693,6 +839,15 @@ function oa_permissions_user_default_permissions() {
       'editor' => 'editor',
     ),
     'module' => 'file_entity',
+  );
+
+  // Exported permission: 'edit any oa_discussion_post content'.
+  $permissions['edit any oa_discussion_post content'] = array(
+    'name' => 'edit any oa_discussion_post content',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'node',
   );
 
   // Exported permission: 'edit any video files'.
@@ -807,6 +962,15 @@ function oa_permissions_user_default_permissions() {
     'module' => 'file_entity',
   );
 
+  // Exported permission: 'edit own oa_discussion_post content'.
+  $permissions['edit own oa_discussion_post content'] = array(
+    'name' => 'edit own oa_discussion_post content',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'node',
+  );
+
   // Exported permission: 'edit own video files'.
   $permissions['edit own video files'] = array(
     'name' => 'edit own video files',
@@ -818,15 +982,119 @@ function oa_permissions_user_default_permissions() {
     'module' => 'file_entity',
   );
 
+  // Exported permission: 'import discussion_body feeds'.
+  $permissions['import discussion_body feeds'] = array(
+    'name' => 'import discussion_body feeds',
+    'roles' => array(),
+    'module' => 'feeds',
+  );
+
+  // Exported permission: 'import discussion_importer feeds'.
+  $permissions['import discussion_importer feeds'] = array(
+    'name' => 'import discussion_importer feeds',
+    'roles' => array(),
+    'module' => 'feeds',
+  );
+
+  // Exported permission: 'import discussion_reply_email_importer feeds'.
+  $permissions['import discussion_reply_email_importer feeds'] = array(
+    'name' => 'import discussion_reply_email_importer feeds',
+    'roles' => array(),
+    'module' => 'feeds',
+  );
+
   // Exported permission: 'save draft'.
   $permissions['save draft'] = array(
     'name' => 'save draft',
     'roles' => array(
       'administrator' => 'administrator',
-      'authenticated user' => 'authenticated user',
       'editor' => 'editor',
     ),
     'module' => 'save_draft',
+  );
+
+  // Exported permission: 'tamper discussion_body'.
+  $permissions['tamper discussion_body'] = array(
+    'name' => 'tamper discussion_body',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'feeds_tamper',
+  );
+
+  // Exported permission: 'tamper discussion_importer'.
+  $permissions['tamper discussion_importer'] = array(
+    'name' => 'tamper discussion_importer',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'feeds_tamper',
+  );
+
+  // Exported permission: 'tamper discussion_reply_email_importer'.
+  $permissions['tamper discussion_reply_email_importer'] = array(
+    'name' => 'tamper discussion_reply_email_importer',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'feeds_tamper',
+  );
+
+  // Exported permission: 'trash any oa_discussion_post content'.
+  $permissions['trash any oa_discussion_post content'] = array(
+    'name' => 'trash any oa_discussion_post content',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'trash_flag',
+  );
+
+  // Exported permission: 'trash own oa_discussion_post content'.
+  $permissions['trash own oa_discussion_post content'] = array(
+    'name' => 'trash own oa_discussion_post content',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'trash_flag',
+  );
+
+  // Exported permission: 'unlock discussion_body feeds'.
+  $permissions['unlock discussion_body feeds'] = array(
+    'name' => 'unlock discussion_body feeds',
+    'roles' => array(),
+    'module' => 'feeds',
+  );
+
+  // Exported permission: 'unlock discussion_importer feeds'.
+  $permissions['unlock discussion_importer feeds'] = array(
+    'name' => 'unlock discussion_importer feeds',
+    'roles' => array(),
+    'module' => 'feeds',
+  );
+
+  // Exported permission: 'unlock discussion_reply_email_importer feeds'.
+  $permissions['unlock discussion_reply_email_importer feeds'] = array(
+    'name' => 'unlock discussion_reply_email_importer feeds',
+    'roles' => array(),
+    'module' => 'feeds',
+  );
+
+  // Exported permission: 'untrash any oa_discussion_post content'.
+  $permissions['untrash any oa_discussion_post content'] = array(
+    'name' => 'untrash any oa_discussion_post content',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'trash_flag',
+  );
+
+  // Exported permission: 'untrash own oa_discussion_post content'.
+  $permissions['untrash own oa_discussion_post content'] = array(
+    'name' => 'untrash own oa_discussion_post content',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'trash_flag',
   );
 
   // Exported permission: 'use panels in place editing'.
@@ -899,7 +1167,6 @@ function oa_permissions_user_default_permissions() {
     'name' => 'view own unpublished content',
     'roles' => array(
       'administrator' => 'administrator',
-      'authenticated user' => 'authenticated user',
       'editor' => 'editor',
     ),
     'module' => 'node',
@@ -910,6 +1177,8 @@ function oa_permissions_user_default_permissions() {
     'name' => 'view private files',
     'roles' => array(
       'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'file_entity',
   );
