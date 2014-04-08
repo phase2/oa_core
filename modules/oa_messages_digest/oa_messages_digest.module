@@ -6,7 +6,7 @@
  */
 
 /**
- * Implementation of hook_oa_message_notifiers_alter().
+ * Implements hook_oa_message_notifiers_alter().
  *
  * Add in the Daily and Weekly Digest notifier types.
  */
@@ -27,9 +27,10 @@ function oa_messages_digest_oa_message_notifiers_alter(&$notifiers) {
  * Implements hook_message_digest_view_mode_alter().
  */
 function oa_messages_digest_message_digest_view_mode_alter(&$context) {
+
   $context['view_modes'] = array('message_notify_email_body');
   // Check global disable flag.
-  if (!variable_get('oa_messages_notifications', TRUE)) {
+  if (!variable_get('oa_messages_notifications', TRUE) || empty($context['messages'])) {
     $context['deliver'] = FALSE;
   }
   else {
