@@ -504,6 +504,13 @@ function oa_core_get_last_word($string) {
 }
 
 /**
+ * Return the name of a user
+ */
+function oa_core_realname($user) {
+  return !empty($user->realname) ? $user->realname : $user->name;
+}
+
+/**
  * Convert known entities in to a simple array of title and picture.
  */
 function oa_core_entity_build_display($entity, $id, $space) {
