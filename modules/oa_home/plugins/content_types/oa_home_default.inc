@@ -40,7 +40,7 @@ function oa_home_default_render($subtype, $conf, $args, $context = NULL) {
   }
   else {
     $user_record = user_load($user->uid);
-    $name = (!empty($user_record->realname)) ? $user_record->realname : $user_record->name;
+    $name = oa_core_realname($user_record);
     $vars['username'] = $name;
   }
   $block->content = theme('oa_home_default', $vars);

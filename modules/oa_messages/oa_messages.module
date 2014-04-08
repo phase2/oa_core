@@ -268,7 +268,7 @@ function oa_messages_comment_insert($comment) {
 function oa_messages_og_membership_prepare($og_membership, $action, $add_type = TRUE) {
   $group = node_load($og_membership->gid);
   $user = user_load($og_membership->etid);
-  $realname = !empty($user->realname) ? $user->realname :$user->name;
+  $realname = oa_core_realname($user);
   $text = l($realname, '/user/' . $user->uid) . ' ' . $action;
   if ($add_type && isset($group->type)) {
     $info = entity_get_info('node');
