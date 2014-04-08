@@ -210,7 +210,7 @@ function oa_messages_entity_update($entity, $type) {
   $update = TRUE;
   $update = (isset($entity->title) && $entity->title !== $entity->original->title) ? TRUE : FALSE;
 
-  if (!$update) {
+  if (!$update && module_exists('diff')) {
     module_load_include('inc', 'diff', 'diff.diff');
 
     $context = array(
