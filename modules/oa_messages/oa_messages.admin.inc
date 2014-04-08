@@ -64,15 +64,17 @@ function oa_messages_oa_user_settings_form_alter(&$form, &$form_state, $user) {
  * Implements hook_oa_user_settings_form_submit().
  */
 function oa_messages_oa_user_settings_form_submit($form_state, $user) {
-  $values = $form_state['values']['oa_messages']['message_notifications'];
-
-  foreach ($values['all_spaces'] as $nid => $vals) {
-    $return['oa_messages']['message_notifications'][$nid]['methods'] = (!empty($vals['methods'])) ? $vals['methods'] : array();
-    $return['oa_messages']['message_notifications'][$nid]['messages'] = (!empty($vals['methods'])) ? $vals['message_container']['messages'] : array();
-  }
-
   // Set email type.
   $return['oa_messages']['email_type'] = $form_state['values']['oa_messages']['delivery']['email_type'];
+
+  if (isset($form_state['values']['oa_messages']['message_notifications'])) {
+    $values = $form_state['values']['oa_messages']['message_notifications'];
+
+    foreach ($values['all_spaces'] as $nid => $vals) {
+      $return['oa_messages']['message_notifications'][$nid]['methods'] = (!empty($vals['methods'])) ? $vals['methods'] : array();
+      $return['oa_messages']['message_notifications'][$nid]['messages'] = (!empty($vals['methods'])) ? $vals['message_container']['messages'] : array();
+    }
+  }
 
   return $return;
 }
@@ -99,195 +101,198 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
   }
 
   $spaces = oa_messages_get_entity_groups($user->uid, 'user', $options, $page);
-  $message_types = message_type_load();
-  $notifiers = oa_message_notifiers();
-
-  // Get notification method options.
-  foreach ($notifiers as $notifier) {
-    $method_options[$notifier['id']] = $notifier['title'];
-    if ($notifier['default']) {
-      $default_notifiers[] = $notifier['id'];
-    }
-  }
-  $method_options['none'] = t('None');
-
-  // Get messages options.
-  foreach ($message_types as $type) {
-    $message_options[$type->name] = $type->description;
-    $message_defaults[$type->name] = $type->name;
-  }
 
   $form = array();
 
-  $form['filter'] = array(
-    '#type' => 'container',
-    '#attributes' => array(
-      'class' => array('filters'),
-    ),
-  );
+  if (!empty($spaces)) {
+    $message_types = message_type_load();
+    $notifiers = oa_message_notifiers();
 
-  $form['filter']['space_filter'] = array(
-    '#type' => 'textfield',
-    '#attributes' => array(
-      'placeholder' => t('Space'),
-    ),
-    '#prefix' => '<br /><h4>' . t('Space Preferences') . '</h4><label>' . t('Filter Spaces:') . '</label>',
-  );
-
-  $form['filter']['actions']['submit'] = array(
-    '#type' => 'button',
-    '#value' => t('Search'),
-    '#prefix' => '<div class="filter-actions">',
-    '#ajax' => array(
-      'wrapper' => 'edit-oa-messages-all-spaces',
-      'callback' => 'oa_messages_ajax_load_notification_methods',
-    ),
-  );
-
-  $form['filter']['actions']['reset'] = array(
-    '#type' => 'button',
-    '#value' => t('Reset'),
-    '#suffix' => '</div><br />',
-    '#ajax' => array(
-      'wrapper' => 'edit-oa-messages-all-spaces',
-      'callback' => 'oa_messages_ajax_load_notification_methods',
-    ),
-  );
-
-  $form['all_notifications'] = array(
-    '#type' => 'select',
-    '#prefix' => '<label>' . t('Set Spaces Preferences:') . '</label>',
-    '#options' => $method_options,
-    '#required' => FALSE,
-    '#empty_option' => t('Choose a notification method'),
-  );
-
-  $form['all_notifications_submit'] = array(
-    '#type' => 'button',
-    '#value' => t('Apply'),
-    '#ajax' => array(
-      'wrapper' => 'edit-oa-messages-all-spaces',
-      'callback' => 'oa_messages_ajax_load_notification_methods',
-    ),
-  );
-
-  $form['header'] = array(
-    '#type' => 'container',
-    '#prefix' => '<div class="row-fluid header">',
-    '#suffix' => '</div>',
-  );
-
-  $form['header']['select_all'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Spaces'),
-    '#prefix' => '<div class="column1 span3">',
-    '#suffix' => '</div>',
-    '#attributes' => array(
-      'class' => array('select-all'),
-    ),
-  );
-
-  $form['header']['methods'] = array(
-    '#markup' => t('Notification Method'),
-    '#prefix' => '<div class="column2 span3">',
-    '#suffix' => '</div>',
-  );
-
-  $form['header']['message'] = array(
-    '#markup' => t('Messages'),
-    '#prefix' => '<div class="column3 span6">',
-    '#suffix' => '</div>',
-  );
-
-  $form['all_spaces'] = array(
-    '#type' => 'container',
-    '#id' => 'edit-oa-messages-all-spaces',
-  );
-
-  // Remove "None" option for method notifications.
-  array_pop($method_options);
-
-  // Build space options.
-  foreach ($spaces as $key => $space) {
-
-    // Set defaults.
-    $method_values = NULL;
-    $messages_values = NULL;
-    if (isset($values) && $values['all_spaces'][$space->nid]['checkbox']) {
-      if ($values['all_notifications'] === 'none') {
-        $method_values = '';
-        $messages_values = '';
-      }
-      else {
-        $method_values = $values['all_notifications'];
-        $messages_values = $message_defaults;
+    // Get notification method options.
+    foreach ($notifiers as $notifier) {
+      $method_options[$notifier['id']] = $notifier['title'];
+      if ($notifier['default']) {
+        $default_notifiers[] = $notifier['id'];
       }
     }
-    elseif (isset($defaults['message_notifications'][$space->nid]['methods'])) {
-      $default_methods = $defaults['message_notifications'][$space->nid]['methods'];
-      if (isset($defaults['message_notifications'][$space->nid]['messages'])) {
-        $default_messages = $defaults['message_notifications'][$space->nid]['messages'];
-      }
-    }
-    else {
-      $default_methods = $default_notifiers;
-      $default_messages = $message_defaults;
+    $method_options['none'] = t('None');
+
+    // Get messages options.
+    foreach ($message_types as $type) {
+      $message_options[$type->name] = $type->description;
+      $message_defaults[$type->name] = $type->name;
     }
 
-    $form['all_spaces'][$space->nid] = array(
-      '#type' => 'fieldgroup',
-      '#title' => $space->title,
-      '#title_display' => 'invisible',
-      '#collapsible' => FALSE,
-      '#prefix' => '<div class="row-fluid">',
-      '#suffix' => '</div>',
-    );
-
-    $form['all_spaces'][$space->nid]['checkbox'] = array(
-      '#type' => 'checkbox',
-      '#title' => $space->title,
-      '#prefix' => '<div class="column1 span3">',
-      '#suffix' => '</div>',
+    $form['filter'] = array(
+      '#type' => 'container',
       '#attributes' => array(
-        'class' => array('apply-to'),
+        'class' => array('filters'),
       ),
     );
 
-    $form['all_spaces'][$space->nid]['methods'] = array(
+    $form['filter']['space_filter'] = array(
+      '#type' => 'textfield',
+      '#attributes' => array(
+        'placeholder' => t('Space'),
+      ),
+      '#prefix' => '<br /><h4>' . t('Space Preferences') . '</h4><label>' . t('Filter Spaces:') . '</label>',
+    );
+
+    $form['filter']['actions']['submit'] = array(
+      '#type' => 'button',
+      '#value' => t('Search'),
+      '#prefix' => '<div class="filter-actions">',
+      '#ajax' => array(
+        'wrapper' => 'edit-oa-messages-all-spaces',
+        'callback' => 'oa_messages_ajax_load_notification_methods',
+      ),
+    );
+
+    $form['filter']['actions']['reset'] = array(
+      '#type' => 'button',
+      '#value' => t('Reset'),
+      '#suffix' => '</div><br />',
+      '#ajax' => array(
+        'wrapper' => 'edit-oa-messages-all-spaces',
+        'callback' => 'oa_messages_ajax_load_notification_methods',
+      ),
+    );
+
+    $form['all_notifications'] = array(
       '#type' => 'select',
-      '#title' => t('Notification Method'),
-      '#title_display' => 'invisible',
-      '#multiple' => TRUE,
+      '#prefix' => '<label>' . t('Set Spaces Preferences:') . '</label>',
       '#options' => $method_options,
-      '#default_value' => $default_methods,
+      '#required' => FALSE,
+      '#empty_option' => t('Choose a notification method'),
+    );
+
+    $form['all_notifications_submit'] = array(
+      '#type' => 'button',
+      '#value' => t('Apply'),
+      '#ajax' => array(
+        'wrapper' => 'edit-oa-messages-all-spaces',
+        'callback' => 'oa_messages_ajax_load_notification_methods',
+      ),
+    );
+
+    $form['header'] = array(
+      '#type' => 'container',
+      '#prefix' => '<div class="row-fluid header">',
+      '#suffix' => '</div>',
+    );
+
+    $form['header']['select_all'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Spaces'),
+      '#prefix' => '<div class="column1 span3">',
+      '#suffix' => '</div>',
+      '#attributes' => array(
+        'class' => array('select-all'),
+      ),
+    );
+
+    $form['header']['methods'] = array(
+      '#markup' => t('Notification Method'),
       '#prefix' => '<div class="column2 span3">',
       '#suffix' => '</div>',
-      '#id' => $space->nid,
     );
 
-    $form['all_spaces'][$space->nid]['message_container'] = array(
-      '#type' => 'fieldset',
-      '#title' => t('Messages'),
-      '#collapsible' => TRUE,
-      '#collapsed' => TRUE,
+    $form['header']['message'] = array(
+      '#markup' => t('Messages'),
       '#prefix' => '<div class="column3 span6">',
       '#suffix' => '</div>',
-      '#id' => 'message-container-' . $space->nid,
     );
 
-    $form['all_spaces'][$space->nid]['message_container']['messages'] = array(
-      '#type' => 'checkboxes',
-      '#title' => t('Messages'),
-      '#title_display' => 'invisible',
-      '#multiple' => TRUE,
-      '#options' => $message_options,
-      '#default_value' => $default_messages,
+    $form['all_spaces'] = array(
+      '#type' => 'container',
+      '#id' => 'edit-oa-messages-all-spaces',
     );
 
-    // Set values if given.
-    if (isset($method_values) && isset($messages_values)) {
-      $form['all_spaces'][$space->nid]['methods']['#value'] = $method_values;
-      $form_state['input']['oa_messages']['message_notifications']['all_spaces'][$space->nid]['message_container']['messages'] = $messages_values;
+    // Remove "None" option for method notifications.
+    array_pop($method_options);
+
+    // Build space options.
+    foreach ($spaces as $key => $space) {
+
+      // Set defaults.
+      $method_values = NULL;
+      $messages_values = NULL;
+      if (isset($values) && $values['all_spaces'][$space->nid]['checkbox']) {
+        if ($values['all_notifications'] === 'none') {
+          $method_values = '';
+          $messages_values = '';
+        }
+        else {
+          $method_values = $values['all_notifications'];
+          $messages_values = $message_defaults;
+        }
+      }
+      elseif (isset($defaults['message_notifications'][$space->nid]['methods'])) {
+        $default_methods = $defaults['message_notifications'][$space->nid]['methods'];
+        if (isset($defaults['message_notifications'][$space->nid]['messages'])) {
+          $default_messages = $defaults['message_notifications'][$space->nid]['messages'];
+        }
+      }
+      else {
+        $default_methods = $default_notifiers;
+        $default_messages = $message_defaults;
+      }
+
+      $form['all_spaces'][$space->nid] = array(
+        '#type' => 'fieldgroup',
+        '#title' => $space->title,
+        '#title_display' => 'invisible',
+        '#collapsible' => FALSE,
+        '#prefix' => '<div class="row-fluid">',
+        '#suffix' => '</div>',
+      );
+
+      $form['all_spaces'][$space->nid]['checkbox'] = array(
+        '#type' => 'checkbox',
+        '#title' => $space->title,
+        '#prefix' => '<div class="column1 span3">',
+        '#suffix' => '</div>',
+        '#attributes' => array(
+          'class' => array('apply-to'),
+        ),
+      );
+
+      $form['all_spaces'][$space->nid]['methods'] = array(
+        '#type' => 'select',
+        '#title' => t('Notification Method'),
+        '#title_display' => 'invisible',
+        '#multiple' => TRUE,
+        '#options' => $method_options,
+        '#default_value' => $default_methods,
+        '#prefix' => '<div class="column2 span3">',
+        '#suffix' => '</div>',
+        '#id' => $space->nid,
+      );
+
+      $form['all_spaces'][$space->nid]['message_container'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Messages'),
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
+        '#prefix' => '<div class="column3 span6">',
+        '#suffix' => '</div>',
+        '#id' => 'message-container-' . $space->nid,
+      );
+
+      $form['all_spaces'][$space->nid]['message_container']['messages'] = array(
+        '#type' => 'checkboxes',
+        '#title' => t('Messages'),
+        '#title_display' => 'invisible',
+        '#multiple' => TRUE,
+        '#options' => $message_options,
+        '#default_value' => $default_messages,
+      );
+
+      // Set values if given.
+      if (isset($method_values) && isset($messages_values)) {
+        $form['all_spaces'][$space->nid]['methods']['#value'] = $method_values;
+        $form_state['input']['oa_messages']['message_notifications']['all_spaces'][$space->nid]['message_container']['messages'] = $messages_values;
+      }
     }
   }
 
