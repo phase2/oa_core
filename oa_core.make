@@ -6,6 +6,15 @@ core = 7.x
 ; ************************************************
 ; ************** PANOPOLY OVERRIDES **************
 
+; Views
+; Override panopoly_core.make: 3.7
+projects[views][version] = 3.7
+projects[views][subdir] = contrib
+projects[views][patch][2037469] = http://drupal.org/files/views-exposed-sorts-2037469-1.patch
+projects[views][patch][1979926] = http://drupal.org/files/1979926-views-reset_fetch_data-2.patch
+projects[views][patch][1735096] = http://drupal.org/files/1735096-views-mltiple-instance-exposed-form-8.patch
+
+; CTools
 ; Override panopoly_core.make: 1.4
 projects[ctools][version] = 1.4
 projects[ctools][subdir] = contrib
@@ -13,42 +22,6 @@ projects[ctools][patch][1910608] = http://drupal.org/files/issues/1910608-views_
 projects[ctools][patch][1901106] = http://drupal.org/files/issues/ctools-views_content-exposed_form_override-1901106-24.patch
 projects[ctools][patch][2023705] = http://drupal.org/files/2023705-ctools-autosubmit-2_0.patch
 projects[ctools][patch][2195471] = http://drupal.org/files/issues/ctools-n2195471-1.patch
-
-; Override panopoly_core.make: 3.1
-projects[panelizer][version] = 3.x-dev
-projects[panelizer][subdir] = contrib
-projects[panelizer][download][type] = git
-projects[panelizer][download][branch] = 7.x-3.x
-projects[panelizer][download][revision] = 66d184
-projects[panelizer][patch][1982654] = http://drupal.org/files/1982654-panelizer-dontaskmethatagain-2.patch
-
-; Override panopoly_core.make: 1.5
-projects[token][version] = 1.5
-projects[token][subdir] = contrib
-projects[token][patch][1999298] = http://drupal.org/files/1999298-disable-test-warnings.patch
-
-; Override panopoly_widgets.make: 4a88319
-projects[media][version] = 2.x-dev
-projects[media][subdir] = contrib
-projects[media][download][type] = git
-projects[media][download][branch] = 7.x-2.x
-projects[media][download][revision] = 4a88319
-projects[media][patch][2104193] = http://drupal.org/files/issues/media_remove_file_display_alter-2104193-23.patch
-
-; Override panopoly_widgets.make: 2.0-alpha3
-projects[file_entity][version] = 2.x-dev
-projects[file_entity][subdir] = contrib
-projects[file_entity][download][type] = git
-projects[file_entity][download][branch] = 7.x-2.x
-projects[file_entity][download][revision] = 3661d8
-projects[file_entity][patch][2192391] = http://drupal.org/files/issues/file_entity_remove_file_display-2192391-01.patch
-
-; Override panopoly_widgets.make: 2.0-rc4
-projects[media_youtube][version] = 2.x-dev
-projects[media_youtube][subdir] = contrib
-projects[media_youtube][download][type] = git
-projects[media_youtube][download][branch] = 7.x-2.x
-projects[media_youtube][download][revision] = fb6f65
 
 ; Entity API
 ; Override panopoly_core.make: 1.3
@@ -59,13 +32,39 @@ projects[entity][download][branch] = 7.x-1.x
 projects[entity][download][revision] = d9baed
 projects[entity][patch][1782134] = http://drupal.org/files/entity-translatable_fields_not_overriding_und_with_empty_values-1782134-5.patch
 
-; Views
-; Override panopoly_core.make: 3.7
-projects[views][version] = 3.7
-projects[views][subdir] = contrib
-projects[views][patch][2037469] = http://drupal.org/files/views-exposed-sorts-2037469-1.patch
-projects[views][patch][1979926] = http://drupal.org/files/1979926-views-reset_fetch_data-2.patch
-projects[views][patch][1735096] = http://drupal.org/files/1735096-views-mltiple-instance-exposed-form-8.patch
+; Panelizer
+; Override panopoly_core.make: 3.1
+projects[panelizer][version] = 3.x-dev
+projects[panelizer][subdir] = contrib
+projects[panelizer][download][type] = git
+projects[panelizer][download][branch] = 7.x-3.x
+projects[panelizer][download][revision] = 66d184
+projects[panelizer][patch][1982654] = http://drupal.org/files/1982654-panelizer-dontaskmethatagain-2.patch
+
+; Token
+; Override panopoly_core.make: 1.5
+projects[token][version] = 1.5
+projects[token][subdir] = contrib
+projects[token][patch][1999298] = http://drupal.org/files/1999298-disable-test-warnings.patch
+
+; Media
+; Override panopoly_widgets.make: 1f46a9a
+projects[media][version] = 2.x-dev
+projects[media][subdir] = contrib
+projects[media][download][type] = git
+projects[media][download][branch] = 7.x-2.x
+projects[media][download][revision] = 1f46a9a
+projects[media][patch][2104193] = http://drupal.org/files/issues/media_remove_file_display_alter-2104193-23.patch
+projects[media][patch][2126755] = http://drupal.org/files/issues/media-improved-macro-handling-2126755-19.patch
+
+; File Entity
+; Override panopoly_widgets.make: 07411c4
+projects[file_entity][version] = 2.x-dev
+projects[file_entity][subdir] = contrib
+projects[file_entity][download][type] = git
+projects[file_entity][download][branch] = 7.x-2.x
+projects[file_entity][download][revision] = 3661d8
+projects[file_entity][patch][2192391] = http://drupal.org/files/issues/file_entity_remove_file_display-2192391-01.patch
 
 ; ************ End Panopoly Overrides ************
 ; ************************************************
