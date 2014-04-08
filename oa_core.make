@@ -227,7 +227,7 @@ projects[jquery_update][version] = 2.x-dev
 projects[jquery_update][subdir] = contrib
 projects[jquery_update][download][type] = git
 projects[jquery_update][download][branch] = 7.x-2.x
-projects[jquery_update][download][revision] = e5ab70
+projects[jquery_update][download][revision] = d84d48
 
 ; Colorizer
 projects[colorizer][version] = 1.0
