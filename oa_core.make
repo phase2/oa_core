@@ -47,6 +47,12 @@ projects[token][version] = 1.5
 projects[token][subdir] = contrib
 projects[token][patch][1999298] = http://drupal.org/files/1999298-disable-test-warnings.patch
 
+; Token
+; Override panopoly_core.make: 1.3
+projects[field_group][version] = 1.3
+projects[field_group][subdir] = contrib
+projects[field_group][patch][1278618] = http://drupal.org/files/issues/field_group-panels-integration-1278618-58.patch
+
 ; Media
 ; Override panopoly_widgets.make: 1f46a9a
 projects[media][version] = 2.x-dev
