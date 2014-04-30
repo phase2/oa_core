@@ -24,12 +24,9 @@ projects[ctools][patch][2023705] = http://drupal.org/files/2023705-ctools-autosu
 projects[ctools][patch][2195471] = http://drupal.org/files/issues/ctools-n2195471-1.patch
 
 ; Entity API
-; Override panopoly_core.make: 1.3
-projects[entity][version] = 1.x-dev
+; Override panopoly_core.make: 1.5
+projects[entity][version] = 1.5
 projects[entity][subdir] = contrib
-projects[entity][download][type] = git
-projects[entity][download][branch] = 7.x-1.x
-projects[entity][download][revision] = d9baed
 projects[entity][patch][1782134] = http://drupal.org/files/entity-translatable_fields_not_overriding_und_with_empty_values-1782134-5.patch
 
 ; Panelizer
