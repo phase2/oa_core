@@ -142,14 +142,18 @@ function oa_users_form_alter(&$form, &$form_state, $form_id) {
       $form['field_user_picture']['#weight'] = 0;
       $form['field_user_about']['#weight'] = 1;
 
-      drupal_set_title('User Info');
+      drupal_set_title(t('User Info'));
     }
     elseif ($form['#user_category'] === 'account') {
-      $form['field_user_display_name']['#access'] = FALSE;
+      // move required display name after username
+      $form['field_user_display_name']['#weight'] = -9;
+      $form['account']['field_user_display_name'] = $form['field_user_display_name'];
+      unset($form['field_user_display_name']);
+      // disable fields from user-info category
       $form['field_user_picture']['#access'] = FALSE;
       $form['field_user_about']['#access'] = FALSE;
 
-      drupal_set_title('Account Info');
+      drupal_set_title(t('Account Info'));
     }
   }
 }
