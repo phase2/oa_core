@@ -841,6 +841,20 @@ function oa_core_form_views_exposed_form_alter(&$form, $form_state) {
   if (!empty($form['og_group_ref_target_id'])) {
     $form['#after_build'][] = 'oa_core_views_exposed_form_rearrange';
   }
+  // If a Space was chosen, and we have a Section selector - then we need to
+  // change the available options to be the Sections in that Space (rather
+  // than the current Space). This is necessary to make the customizations
+  // work that were done in:
+  //   oa_core_form_views_content_views_panes_content_type_edit_form_alter()
+  // Otherwise you'll get the 'An illegal choice has been detected.' message
+  // when selecting a Section in another Space.
+  if (!empty($form_state['input']['og_group_ref_target_id']) && !empty($form['oa_section_ref_target_id'])) {
+    $sections = array(
+      ''    => t('- Active Section -'),
+      'All' => t('- Any -')
+    ) + oa_core_space_sections($form_state['input']['og_group_ref_target_id']);
+    $form['oa_section_ref_target_id']['#options'] = $sections;
+  }
 }
 
 function oa_core_views_exposed_form_rearrange($form) {
