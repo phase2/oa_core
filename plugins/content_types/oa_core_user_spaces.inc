@@ -215,7 +215,7 @@ function oa_core_user_spaces_og_links($entity, $account) {
   if (og_is_member($entity_type, $id, 'user', $account, array(OG_STATE_ACTIVE, OG_STATE_PENDING))) {
     if (og_user_access($entity_type, $id, 'unsubscribe', $account)) {
       $links['title'] = t('Unsubscribe from group');
-      $links['href'] = "group/$entity_type/$id/remove/$uid";
+      $links['href'] = "group/$entity_type/$id/unsubscribe/$uid";
       $links['options'] = array('query' => array('destination' => current_path()));
     }
   }
