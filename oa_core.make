@@ -233,7 +233,7 @@ projects[jquery_update][download][branch] = 7.x-2.x
 projects[jquery_update][download][revision] = d84d48
 
 ; Colorizer
-projects[colorizer][version] = 1.0
+projects[colorizer][version] = 1.1
 projects[colorizer][subdir] = contrib
 
 ; OA Responsive Regions
