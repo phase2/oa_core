@@ -311,17 +311,19 @@ function _oa_buttons_perm_name($machine_name, $tid) {
 
 function oa_buttons_og_permission() {
   $perms = array();
-  if (module_exists('oa_subspaces') && ($vocabulary = taxonomy_vocabulary_machine_name_load('space_type')) && ($terms = taxonomy_get_tree($vocabulary->vid, 0))) {
+  if (module_exists('oa_subspaces') && ($vocabulary = oa_core_taxonomy_vocabulary('space_type')) && ($terms = taxonomy_get_tree($vocabulary->vid, 0))) {
     $perms['use any oa button space_type'] = array(
       'title' => t('Use any space type'),
       'description' => t('Users may use any of the available space types..'),
       'restrict access' => TRUE,
+      'default role' => array(OG_ADMINISTRATOR_ROLE),
     );
     foreach ($terms as $term) {
       $perms[_oa_buttons_perm_name('space_type', $term->tid)] = array(
         'title' => t('Use @name space type', array('@name' => $term->name)),
         'description' => t('Users may select @name space type on create space form. This permission will be ignored if user can create space globally or if they can administer current group.', array('@name' => $term->name)),
         'restrict access' => TRUE,
+        'default role' => array(OG_ADMINISTRATOR_ROLE),
       );
     }
   }
@@ -344,7 +346,7 @@ function oa_buttons_og_permission() {
  */
 function oa_buttons_create_term($taxonomy, $name, $description, $node_options, $layout, $update = FALSE) {
 
-  $vocab = taxonomy_vocabulary_machine_name_load($taxonomy);
+  $vocab = oa_core_taxonomy_vocabulary($taxonomy);
   // Make sure the Taxonomy is available.
   if (!$vocab) {
     features_revert(array(
@@ -352,7 +354,7 @@ function oa_buttons_create_term($taxonomy, $name, $description, $node_options, $
       'oa_sections' => array('taxonomy'),
     ));
     drupal_static('taxonomy_vocabulary_get_names');
-    $vocab = taxonomy_vocabulary_machine_name_load($taxonomy);
+    $vocab = oa_core_taxonomy_vocabulary($taxonomy);
   }
 
   if (!empty($vocab) && !($term = current(taxonomy_get_term_by_name($name, $taxonomy))) || $update) {

@@ -979,7 +979,7 @@ function oa_core_get_allowed_space_types($field) {
   }
   if ($gid) {
     foreach ($field['settings']['allowed_values'] as $tree) {
-      if ($vocabulary = taxonomy_vocabulary_machine_name_load($tree['vocabulary'])) {
+      if ($vocabulary = oa_core_taxonomy_vocabulary($tree['vocabulary'])) {
         if ($terms = taxonomy_get_tree($vocabulary->vid, $tree['parent'])) {
           foreach ($terms as $term) {
             if (og_user_access('node', $gid, _oa_buttons_perm_name($tree['vocabulary'], $term->tid))) {

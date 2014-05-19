@@ -36,7 +36,7 @@ function oa_clone_menu() {
  * Access callback: Check if the user can create a Space Blueprint from this node.
  */
 function oa_clone_create_space_type_access_callback($node) {
-  $vid = taxonomy_vocabulary_machine_name_load('space_type')->vid;
+  $vid = oa_core_taxonomy_vocabulary('space_type')->vid;
   return $node->type == 'oa_space' && user_access("edit terms in $vid") && node_access('view', $node);
 }
 
