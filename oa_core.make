@@ -7,8 +7,8 @@ core = 7.x
 ; ************** PANOPOLY OVERRIDES **************
 
 ; Views
-; Override panopoly_core.make: 3.7
-projects[views][version] = 3.7
+; Override panopoly_core.make: 3.8
+projects[views][version] = 3.8
 projects[views][subdir] = contrib
 projects[views][patch][2037469] = http://drupal.org/files/views-exposed-sorts-2037469-1.patch
 projects[views][patch][1979926] = http://drupal.org/files/1979926-views-reset_fetch_data-2.patch
