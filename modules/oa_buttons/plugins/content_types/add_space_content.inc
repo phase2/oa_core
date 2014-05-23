@@ -42,17 +42,33 @@ function oa_buttons_add_space_content_render($subtype, $conf, $args, $context) {
     $content = $cache->data;
   }
   else {
-    $node_types = oa_buttons_get_command_buttons($node);
-    if (count($node_types)) {
-      drupal_alter('oa_space_buttons', $node_types);
-      $buttons = command_buttons_machine_name_load(array_keys($node_types));
+    $buttons = oa_buttons_get_command_buttons($node);
+    if (count($buttons)) {
+      drupal_alter('oa_space_buttons', $buttons);
+      $command_button_types = array();
+      $command_buttons = array_keys($buttons);
+      $node_types = array_flip(node_type_get_names());
+      // Iterate over each of the buttons.
+      foreach ($command_buttons as $value) {
+        // The nid has been added to each command button type so they are unique.
+        // We could have more than one of each type of section'.
+        $parts = explode(':', $value);
+        // We only need one of each of the node types to get the entities.
+        if (in_array($parts[0], $node_types)) {
+          if (!isset($command_button_types[$parts[0]])) {
+            // The entities we need to load for the command buttons.
+            $command_button_types[$parts[0]] = $parts[0];
+          }
+        }
+      }
+      $entities = command_buttons_machine_name_load(array_keys($command_button_types));
       $item_list = array();
       $classes = array(
         'use_dropdowns' => TRUE,
         'dropdown_label' => t('Create Content'),
         'item_class' => array(
           'oa-button',
-         ),
+        ),
         'wrapper_class' => array(
           'oa-buttons',
           'btn',
@@ -60,7 +76,7 @@ function oa_buttons_add_space_content_render($subtype, $conf, $args, $context) {
         ),
       );
 
-      $content = command_buttons_render_buttons($buttons, $classes, $node_types);
+      $content = command_buttons_render_buttons($entities, $classes, $buttons);
 
       // Cache for 1 hour.
       cache_set($cache_key, $content, 'cache_oa_section_buttons', time() + 6000);

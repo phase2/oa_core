@@ -117,7 +117,6 @@ function oa_buttons_get_node_type_options() {
  * Determines which command buttons should be shown within the current context.
  */
 function oa_buttons_get_command_buttons($node) {
-  $node_types = node_type_get_names();
   $buttons = array();
   _oa_buttons_get_space_command_buttons($node, $buttons);
   _oa_buttons_get_parent_command_buttons($node, $buttons);
@@ -125,8 +124,19 @@ function oa_buttons_get_command_buttons($node) {
   // node_access dynamically so we don't show command buttons the user
   // cannot acccess
   foreach ($buttons as $key => $button) {
-    if (in_array($key, $node_types) && !node_access('create', $key)) {
-      unset($buttons[$key]);
+    // Iterate over the node types.
+    foreach (node_type_get_names() as $name) {
+      // We are appending the nid to each command button name so we need to
+      // extract the actual node type for the access check.
+      if (strpos($name, $key) !== FALSE) {
+        $parts = explode(':', $key);
+        if (isset($parts[1]) && is_numeric($parts[1])) {
+          if (!node_access('create', $parts[0])) {
+            unset($buttons[$key]);
+          }
+        }
+
+      }
     }
   }
   drupal_alter('oa_buttons_add_content', $buttons, $node);
@@ -158,8 +168,11 @@ function _oa_buttons_get_node_command_buttons($node, &$buttons) {
 
   if (!empty($node_options)) {
     foreach ($node_options as $opt) {
-      if (!isset($buttons[$opt['value']])) {
-        $buttons[$opt['value']] = array(
+      // There may be more than one node created using the same content type. If
+      // we want to add each possibility to the command button list we need to
+      // add the nid to the array key so they are unique.
+      if (!isset($buttons[$opt['value'] . ':' . $node->nid])) {
+        $buttons[$opt['value'] . ':' . $node->nid] = array(
           'value' => $opt['value'],
           'provider_type' => $node->type,
           'id' => $node->nid,
