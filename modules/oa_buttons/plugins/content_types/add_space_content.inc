@@ -51,7 +51,7 @@ function oa_buttons_add_space_content_render($subtype, $conf, $args, $context) {
       // Iterate over each of the buttons.
       foreach ($command_buttons as $value) {
         // The nid has been added to each command button type so they are unique.
-        // We could have more than one of each type of section'.
+        // We may need multiple command buttons for the same type.
         $parts = explode(':', $value);
         // We only need one of each of the node types to get the entities.
         if (in_array($parts[0], $node_types)) {
