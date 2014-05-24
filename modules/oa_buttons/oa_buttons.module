@@ -125,17 +125,14 @@ function oa_buttons_get_command_buttons($node) {
   // cannot acccess
   foreach ($buttons as $key => $button) {
     // Iterate over the node types.
-    foreach (node_type_get_names() as $name) {
+    foreach (array_flip(node_type_get_names()) as $name) {
       // We are appending the nid to each command button name so we need to
       // extract the actual node type for the access check.
-      if (strpos($name, $key) !== FALSE) {
+      if (strpos($key, $name) !== FALSE) {
         $parts = explode(':', $key);
-        if (isset($parts[1]) && is_numeric($parts[1])) {
-          if (!node_access('create', $parts[0])) {
-            unset($buttons[$key]);
-          }
+        if (!node_access('create', $parts[0])) {
+          unset($buttons[$key]);
         }
-
       }
     }
   }
