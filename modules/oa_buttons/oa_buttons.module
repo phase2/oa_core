@@ -118,22 +118,16 @@ function oa_buttons_get_node_type_options() {
  */
 function oa_buttons_get_command_buttons($node) {
   $buttons = array();
+  $node_types = array_flip(node_type_get_names());
   _oa_buttons_get_space_command_buttons($node, $buttons);
   _oa_buttons_get_parent_command_buttons($node, $buttons);
   // look for node_add command buttons and check the 'create X content'
   // node_access dynamically so we don't show command buttons the user
   // cannot acccess
-  foreach ($buttons as $key => $button) {
-    // Iterate over the node types.
-    foreach (array_flip(node_type_get_names()) as $name) {
-      // We are appending the nid to each command button name so we need to
-      // extract the actual node type for the access check.
-      if (strpos($key, $name) !== FALSE) {
-        $parts = explode(':', $key);
-        if (!node_access('create', $parts[0])) {
-          unset($buttons[$key]);
-        }
-      }
+  foreach ($buttons as $button) {
+    $entity_type = $button['value'];
+    if (in_array($entity_type, $node_types) && !node_access('create', $entity_type)) {
+      unset($buttons[$entity_type]);
     }
   }
   drupal_alter('oa_buttons_add_content', $buttons, $node);

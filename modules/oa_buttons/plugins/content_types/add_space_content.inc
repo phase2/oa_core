@@ -45,23 +45,18 @@ function oa_buttons_add_space_content_render($subtype, $conf, $args, $context) {
     $buttons = oa_buttons_get_command_buttons($node);
     if (count($buttons)) {
       drupal_alter('oa_space_buttons', $buttons);
-      $command_button_types = array();
-      $command_buttons = array_keys($buttons);
+      $command_buttons = array();
       $node_types = array_flip(node_type_get_names());
       // Iterate over each of the buttons.
-      foreach ($command_buttons as $value) {
-        // The nid has been added to each command button type so they are unique.
-        // We may need multiple command buttons for the same type.
-        $parts = explode(':', $value);
-        // We only need one of each of the node types to get the entities.
-        if (in_array($parts[0], $node_types)) {
-          if (!isset($command_button_types[$parts[0]])) {
-            // The entities we need to load for the command buttons.
-            $command_button_types[$parts[0]] = $parts[0];
+      foreach ($buttons as $button) {
+        $entity_type = $button['value'];
+        if (in_array($entity_type, $node_types)) {
+          if (!isset($command_buttons[$entity_type])) {
+            $command_buttons[$entity_type] = $entity_type;
           }
         }
       }
-      $entities = command_buttons_machine_name_load(array_keys($command_button_types));
+      $entities = command_buttons_machine_name_load(array_keys($command_buttons));
       $item_list = array();
       $classes = array(
         'use_dropdowns' => TRUE,
