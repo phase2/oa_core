@@ -117,16 +117,17 @@ function oa_buttons_get_node_type_options() {
  * Determines which command buttons should be shown within the current context.
  */
 function oa_buttons_get_command_buttons($node) {
-  $node_types = node_type_get_names();
   $buttons = array();
+  $node_types = array_flip(node_type_get_names());
   _oa_buttons_get_space_command_buttons($node, $buttons);
   _oa_buttons_get_parent_command_buttons($node, $buttons);
   // look for node_add command buttons and check the 'create X content'
   // node_access dynamically so we don't show command buttons the user
   // cannot acccess
-  foreach ($buttons as $key => $button) {
-    if (in_array($key, $node_types) && !node_access('create', $key)) {
-      unset($buttons[$key]);
+  foreach ($buttons as $button) {
+    $entity_type = $button['value'];
+    if (in_array($entity_type, $node_types) && !node_access('create', $entity_type)) {
+      unset($buttons[$entity_type]);
     }
   }
   drupal_alter('oa_buttons_add_content', $buttons, $node);
@@ -158,8 +159,11 @@ function _oa_buttons_get_node_command_buttons($node, &$buttons) {
 
   if (!empty($node_options)) {
     foreach ($node_options as $opt) {
-      if (!isset($buttons[$opt['value']])) {
-        $buttons[$opt['value']] = array(
+      // There may be more than one node created using the same content type. If
+      // we want to add each possibility to the command button list we need to
+      // add the nid to the array key so they are unique.
+      if (!isset($buttons[$opt['value'] . ':' . $node->nid])) {
+        $buttons[$opt['value'] . ':' . $node->nid] = array(
           'value' => $opt['value'],
           'provider_type' => $node->type,
           'id' => $node->nid,
