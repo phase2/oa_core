@@ -28,6 +28,7 @@ features[field_base][] = field_oa_section_override
 features[field_base][] = field_oa_space_type
 features[field_base][] = group_access
 features[field_base][] = group_group
+features[field_base][] = oa_other_spaces_ref
 features[field_base][] = oa_section_ref
 features[field_base][] = og_group_ref
 features[field_base][] = og_roles_permissions
