@@ -1239,26 +1239,29 @@ function oa_core_views_query_alter(&$view, &$query) {
       array('field' => 'deleted', 'value' => 0, 'numeric' => TRUE),
     ));
     $alias = $query->ensure_table('field_data_oa_other_spaces_ref', 'node', $join);
-
-    // Add a new 'where group' which is an OR and move 'og_group_ref_target_id'
-    // to it (and grab it's value).
-    $value = array();
-    $group = $query->set_where_group('OR');
-    foreach ($query->where[1]['conditions'] as $key => $condition) {
-      // If the field is 'og_membership.gid' or an alias for the same column.
-      if ($condition['field'] === 'og_membership.gid' || substr($condition['field'], -19) === '__og_membership.gid') {
-        // Move the condition to our new where group.
-        $query->add_where($group, $condition['field'], $condition['value'], $condition['operator']);
-        $value = $condition['value'];
-        unset($query->where[1]['conditions'][$key]);
-        break;
+    if ($alias) {
+      // Only change the query if the join to node table worked
+      //
+      // Add a new 'where group' which is an OR and move 'og_group_ref_target_id'
+      // to it (and grab it's value).
+      $value = array();
+      $group = $query->set_where_group('OR');
+      foreach ($query->where[1]['conditions'] as $key => $condition) {
+        // If the field is 'og_membership.gid' or an alias for the same column.
+        if ($condition['field'] === 'og_membership.gid' || substr($condition['field'], -19) === '__og_membership.gid') {
+          // Move the condition to our new where group.
+          $query->add_where($group, $condition['field'], $condition['value'], $condition['operator']);
+          $value = $condition['value'];
+          unset($query->where[1]['conditions'][$key]);
+          break;
+        }
       }
-    }
 
-    // Finally, we filter against 'field_data_oa_other_spaces_ref' with the
-    // same value as was given to 'oa_group_ref_target_id'.
-    if (!empty($value)) {
-      $query->add_where($group, "{$alias}.oa_other_spaces_ref_target_id", $value, 'IN');
+      // Finally, we filter against 'field_data_oa_other_spaces_ref' with the
+      // same value as was given to 'oa_group_ref_target_id'.
+      if (!empty($value)) {
+        $query->add_where($group, "{$alias}.oa_other_spaces_ref_target_id", $value, 'IN');
+      }
     }
   }
 }
