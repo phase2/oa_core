@@ -50,11 +50,7 @@ function oa_buttons_add_space_content_render($subtype, $conf, $args, $context) {
       // Iterate over each of the buttons.
       foreach ($buttons as $button) {
         $entity_type = $button['value'];
-        if (in_array($entity_type, $node_types)) {
-          if (!isset($command_buttons[$entity_type])) {
-            $command_buttons[$entity_type] = $entity_type;
-          }
-        }
+        $command_buttons[$entity_type] = $entity_type;
       }
       $entities = command_buttons_machine_name_load(array_keys($command_buttons));
       $item_list = array();
