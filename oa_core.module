@@ -481,7 +481,7 @@ function oa_core_add_member($group_type, $gid, $uid, $field_name = NULL, $type =
   if (module_exists('og_ui') && ($type != 'ajax') && $is_user) {
     module_load_include('inc', 'og_ui', 'og_ui.pages');
     // user is requesting their own membership, so show the confirmation form
-    if (og_user_access('node', $gid, 'subscribe', $account) || og_user_access($entity_type, $gid, 'subscribe without approval', $account)) {
+    if (og_user_access('node', $gid, 'subscribe', $account) || og_user_access('node', $gid, 'subscribe without approval', $account)) {
       // Show the user a subscription confirmation.
       return drupal_get_form('og_ui_confirm_subscribe', 'node', $gid, $account, $field_name);
     }
