@@ -1119,7 +1119,7 @@ function oa_core_get_space_type_layout_options($bundle) {
 
     // Ignore view modes that don't have a choice or already have their
     // own custom panel set up.
-    if (!$node_plugin->has_panel_choice($view_bundle) || !empty($entity->panelizer[$view_mode]->did)) {
+    if (!$node_plugin->has_panel_choice($view_bundle)) {
       continue;
     }
 
@@ -1134,21 +1134,6 @@ function oa_core_get_space_type_layout_options($bundle) {
             $options[$name] = ucfirst($thisarray[3]) . ':' . $options[$name];
           }
         }
-      }
-    }
-
-    if (!empty($entity->panelizer[$view_mode]->name)) {
-      $name = $entity->panelizer[$view_mode]->name;
-    }
-    else {
-      if ($node_plugin->has_default_panel($view_bundle)) {
-        $name = implode(':', array($node_plugin->entity_type, $bundle, 'default'));
-        if ($view_mode != 'page_manager') {
-          $name .= ':' . $view_mode;
-        }
-      }
-      else {
-        $name = '';
       }
     }
 
