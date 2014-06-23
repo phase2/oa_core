@@ -97,7 +97,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
   $bootstrap_tour->steps = array(
     0 => array(
       'selector' => '#contextual-dropdown',
-      'path' => '<front>',
+      'path' => 'mynode/oa_space:spaces',
       'placement' => 'left',
       'title' => 'Customizing Colors',
       'content' => '<p><span>To change the Colors of a Space, select the Config option from the contextual drop-down menu.</span></p>',
@@ -337,7 +337,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
     ),
     3 => array(
       'selector' => '#contextual-dropdown',
-      'path' => '<front>',
+      'path' => 'mynode/oa_space:spaces',
       'placement' => 'left',
       'title' => 'Space Menus',
       'content' => '<p><span>To display the space-specific menu, select Config from the contextual drop-down.</span></p>',
