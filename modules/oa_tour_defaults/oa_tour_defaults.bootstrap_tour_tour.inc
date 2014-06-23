@@ -21,7 +21,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
   $bootstrap_tour->steps = array(
     0 => array(
       'selector' => '#edit-field-oa-banner-position-und',
-      'path' => 'node/add/oa-space',
+      'path' => 'node/add/oa-space/1',
       'placement' => 'right',
       'title' => 'Space Banner',
       'content' => '<p><span>Select a banner image to be uploaded. &nbsp;</span></p><p><span>Banner images should have an aspect ratio appropriate for streching across the full width of the site.</span></p>',
@@ -105,7 +105,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
     ),
     1 => array(
       'selector' => '',
-      'path' => 'node/4/group',
+      'path' => 'mynode/oa_space:spaces/group',
       'placement' => 'right',
       'title' => 'Change Appearance',
       'content' => '<p><span>Click the Appearance link to change the Colors for the Space.</span></p>',
@@ -113,7 +113,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
     ),
     2 => array(
       'selector' => '#edit-scheme',
-      'path' => 'group/node/4/admin/appearance',
+      'path' => 'mynode/oa_space:spaces/group/node/%/admin/appearance',
       'placement' => 'right',
       'title' => 'Colorizer Settings',
       'content' => '<p>Select a pre-defined color scheme for your Space.</p><p>Or, click on a spacific color to change it.</p>',
@@ -121,7 +121,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
     ),
     3 => array(
       'selector' => '.farbtastic',
-      'path' => 'group/node/4/admin/appearance',
+      'path' => '',
       'placement' => 'right',
       'title' => 'Changing Colors',
       'content' => '<p><span>As you change the color using the color picker, the colors on the page will change automatically.</span></p>',
@@ -129,7 +129,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
     ),
     4 => array(
       'selector' => '#edit-colorizer-clearcache',
-      'path' => 'group/node/4/admin/appearance',
+      'path' => '',
       'placement' => 'right',
       'title' => 'Save your Changes',
       'content' => '<p>When you are finished customizing the colors, click Save.</p><p>The Clear Colorizer Cache is used to refresh the colors if the underlying theme files are updated.</p>',
@@ -137,7 +137,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
     ),
     5 => array(
       'selector' => '.form-item-colorizer-reset label',
-      'path' => 'group/node/4/admin/appearance',
+      'path' => '',
       'placement' => 'right',
       'title' => 'Resetting Colors',
       'content' => '<p><span>To reset colors back to the default theme, click this box and then Save.</span></p><p></p>',
@@ -157,7 +157,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
   $bootstrap_tour->steps = array(
     0 => array(
       'selector' => '#ajax-link',
-      'path' => 'firstnode/oa_space/spaces',
+      'path' => 'mynode/oa_space:spaces',
       'placement' => 'bottom',
       'title' => 'Configure Layout',
       'content' => '<p>When you create a space, you have the option of configuring the layout according to a number of built in templates.&nbsp;</p><p>Click "Change this Layout" to choose from 31 built in content layouts.</p>',
@@ -185,7 +185,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
   $bootstrap_tour->steps = array(
     0 => array(
       'selector' => '.pane-node-group-access',
-      'path' => 'node/add/oa-space',
+      'path' => 'node/add/oa-space/1',
       'placement' => 'left',
       'title' => 'Content Visibility',
       'content' => '<p>You have the ability to determine whether or not your content is public or private.</p><p>This can be done all the way from your highest level space to your most heavily nested section.</p>',
@@ -329,7 +329,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
     ),
     2 => array(
       'selector' => '.pane-node-form-menu',
-      'path' => 'node/add/oa-space',
+      'path' => 'node/add/oa-space/1',
       'placement' => 'left',
       'title' => 'Adding Items to Menu',
       'content' => '<p><span>To add something to the menu, edit the item and enable the menu link option, then select Main Menu in the Parent dropdown.</span></p><p><span>You can add items to menus at the space as well as the section level. Merely give menu link the title you\'d like and nest it appropriately.&nbsp;</span></p>',
@@ -345,7 +345,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
     ),
     4 => array(
       'selector' => 'dt:nth-child(7) a',
-      'path' => 'node/4/group',
+      'path' => 'mynode/oa_space:spaces/group',
       'placement' => 'right',
       'title' => 'Space Menu',
       'content' => '<p><span>Select the Menu option.</span></p>',
@@ -353,7 +353,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
     ),
     5 => array(
       'selector' => '.form-item-oa-space-menu label',
-      'path' => 'group/node/4/admin/menu',
+      'path' => 'mynode/oa_space:spaces/group/node/%/admin/menu',
       'placement' => 'right',
       'title' => 'Space Menu',
       'content' => '<p><span>Check this box and Save to display the Space-specific menu below the toolbar.</span></p>',
