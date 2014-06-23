@@ -21,7 +21,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
   $bootstrap_tour->steps = array(
     0 => array(
       'selector' => '#edit-field-oa-banner-position-und',
-      'path' => 'node/add/oa-space/1',
+      'path' => 'node/add/oa-space',
       'placement' => 'right',
       'title' => 'Space Banner',
       'content' => '<p><span>Select a banner image to be uploaded. &nbsp;</span></p><p><span>Banner images should have an aspect ratio appropriate for streching across the full width of the site.</span></p>',
@@ -185,7 +185,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
   $bootstrap_tour->steps = array(
     0 => array(
       'selector' => '.pane-node-group-access',
-      'path' => 'node/add/oa-space/1',
+      'path' => 'node/add/oa-space',
       'placement' => 'left',
       'title' => 'Content Visibility',
       'content' => '<p>You have the ability to determine whether or not your content is public or private.</p><p>This can be done all the way from your highest level space to your most heavily nested section.</p>',
@@ -329,7 +329,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
     ),
     2 => array(
       'selector' => '.pane-node-form-menu',
-      'path' => 'node/add/oa-space/1',
+      'path' => 'node/add/oa-space',
       'placement' => 'left',
       'title' => 'Adding Items to Menu',
       'content' => '<p><span>To add something to the menu, edit the item and enable the menu link option, then select Main Menu in the Parent dropdown.</span></p><p><span>You can add items to menus at the space as well as the section level. Merely give menu link the title you\'d like and nest it appropriately.&nbsp;</span></p>',
@@ -857,7 +857,7 @@ function oa_tour_defaults_default_bootstrap_tour() {
   $bootstrap_tour->steps = array(
     0 => array(
       'selector' => '#parent-dropdown',
-      'path' => 'firstnode/oa_space/spaces',
+      'path' => 'mynode/oa_space:spaces',
       'placement' => 'bottom',
       'title' => 'Creating a Subspace',
       'content' => '<p>Welcome to your new space!&nbsp;</p><p>Some organizations will require an additional large collection of content nested within their space.&nbsp;We call these subspaces.&nbsp;</p><p>We create a subspace by going to "Create new Space."&nbsp;</p><p>For now, click "next" to get started with your first subspace.</p><p></p>',

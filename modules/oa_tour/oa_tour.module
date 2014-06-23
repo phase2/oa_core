@@ -70,9 +70,15 @@ function oa_tour_bootstrap_tour_presave_alter(&$tour, &$vals) {
  * Dig into steps with special paths and alter them so that they either point
  * to the first node of a specific type if one exists, or the node add form of
  * that type if not.
+ * 
+ * Also, modify steps that need to add an oa_space to go directly to the the
+ * first Space Blueprint, so that it doesn't break the tour.
  */
 function oa_tour_bootstrap_tour_alter(&$tour) {
   global $user;
+
+  $space_blueprints = taxonomy_get_tree(taxonomy_vocabulary_machine_name_load('space_type')->vid, 0, 1);
+  $section_types = taxonomy_get_tree(taxonomy_vocabulary_machine_name_load('section_type')->vid, 0, 1);
 
   if (empty($tour) || empty($tour->steps)) {
     return;
@@ -131,8 +137,7 @@ function oa_tour_bootstrap_tour_alter(&$tour) {
       if (empty($nid)) {
         $node_add_path = 'node/add/' . str_replace('_', '-', $node_type);
         if ($node_type == 'oa_space') {
-          // TODO: We should look up the first Space type.
-          $node_add_path .= '/1';
+          $node_add_path .= '/' . $space_blueprints[0]->tid;
         }
         $node_add_path .= '?nexttour=' . $tour->name;
 
@@ -163,6 +168,14 @@ function oa_tour_bootstrap_tour_alter(&$tour) {
           $tour->steps = array_values($tour->steps);
         }
       }
+    }
+    elseif ($step['path'] == 'node/add/oa-space') {
+      // Redirect straight to the first Space Blueprint.
+      $tour->steps[$key]['path'] .= '/' . $space_blueprints[0]->tid;
+    }
+    elseif ($step['path'] == 'node/add/oa-section') {
+      // Redirect straight to the first Section Type.
+      $tour->steps[$key]['path'] .= '/' . $section_types[0]->tid;
     }
   }
 }
