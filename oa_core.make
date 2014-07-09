@@ -113,7 +113,7 @@ projects[flag][patch][471212] = http://drupal.org/files/471212-14-flag-all-bundl
 projects[flag][patch][2027091] = http://drupal.org/files/flag-default-flags-alter-hook-2027091-03.patch
 
 ; Trash Flag
-projects[trash_flag][version] = 1.0-beta2
+projects[trash_flag][version] = 1.0-beta3
 projects[trash_flag][subdir] = contrib
 
 ; MimeMail
