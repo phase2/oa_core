@@ -653,8 +653,7 @@ function oa_layouts_panelizer_defaults() {
       'view_mode' => 'teaser',
       'widget_title' => '',
       'exposed' => array(
-        'sort_by' => NULL,
-        'sort_order' => NULL,
+        'flagged' => '0',
       ),
       'offset' => NULL,
       'link_to_view' => NULL,
