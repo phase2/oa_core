@@ -102,7 +102,18 @@ function oa_panopoly_users_features_override_default_overrides() {
       'subtype' => 'open_atrium_discussions-discussion_user_reply',
       'shown' => TRUE,
       'access' => array(),
-      'configuration' => array(),
+      'configuration' => array(
+        'use_pager' => 1,
+        'pager_id' => 0,
+        'items_per_page' => 20,
+        'exposed' => array(
+          'type' => 'All',
+          'flagged' => 0,
+        ),
+        'view_settings' => 'fields',
+        'header_type' => 'none',
+        'view_mode' => 'teaser',
+      ),
       'cache' => array(),
       'css' => array(),
       'extras' => array(),
@@ -152,6 +163,7 @@ function oa_panopoly_users_features_override_default_overrides() {
         'items_per_page' => 20,
         'exposed' => array(
           'type' => 'oa_discussion_post',
+          'flagged' => 0,
         ),
         'context' => array(
           0 => 'empty',
