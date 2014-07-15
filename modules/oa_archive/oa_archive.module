@@ -16,3 +16,43 @@ function oa_archive_node_access($node, $op, $account) {
     return NODE_ACCESS_DENY;
   }
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function oa_archive_form_views_content_views_panes_content_type_edit_form_alter(&$form, &$form_state, $form_id) {
+  $view = $form_state['view'];
+  $conf = $form_state['conf'];
+
+  // We need to locate an exposed filter on the View which is the 'Archive'
+  // flag. This is a little harder than it could be because the filter needs a
+  // relationship to the right flag.
+  foreach($view->filter as $filter_name => $filter) {
+    if (is_a($filter, 'flag_handler_filter_flagged') && !empty($filter->options['exposed'])) {
+      if ($relationship = $view->relationship[$filter->options['relationship']]) {
+        if ($relationship->options['flag'] == 'trash') {
+          _oa_archive_alter_archive_exposed_filter($form, $filter_name, $conf);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Helper function to alter the 'Archive' exposed filter to be user friendly.
+ */
+function _oa_archive_alter_archive_exposed_filter(&$form, $name, $conf) {
+  if (isset($form['exposed']['filter-' . $name])) {
+    // Replace the options with easier to understand ones.
+    $form['exposed']['filter-' . $name]['flagged']['#options'] = array(
+      '0'   => t('No'),
+      'All' => t('Yes'),
+      '1'   => t('Only archived content'),
+    );
+
+    // Default to 'No' when there is no previous configuration.
+    if (!isset($conf['exposed']['flagged'])) {
+      $form['exposed']['filter-' . $name]['flagged']['#default_value'] = '0';
+    }
+  }
+}
