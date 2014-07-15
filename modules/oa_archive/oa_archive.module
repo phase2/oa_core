@@ -44,15 +44,15 @@ function oa_archive_form_views_content_views_panes_content_type_edit_form_alter(
 function _oa_archive_alter_archive_exposed_filter(&$form, $name, $conf) {
   if (isset($form['exposed']['filter-' . $name])) {
     // Replace the options with easier to understand ones.
-    $form['exposed']['filter-' . $name]['flagged']['#options'] = array(
+    $form['exposed']['filter-' . $name][$name]['#options'] = array(
       '0'   => t('No'),
       'All' => t('Yes'),
       '1'   => t('Only archived content'),
     );
 
     // Default to 'No' when there is no previous configuration.
-    if (!isset($conf['exposed']['flagged'])) {
-      $form['exposed']['filter-' . $name]['flagged']['#default_value'] = '0';
+    if (!isset($conf['exposed'][$name])) {
+      $form['exposed']['filter-' . $name][$name]['#default_value'] = '0';
     }
   }
 }
