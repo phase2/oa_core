@@ -32,19 +32,19 @@ function oa_core_get_groups_by_user($account = NULL, $group_type = NULL, $includ
     $user_groups = og_subgroups_children_load_multiple($user_groups);
   }
 
-  if (!empty($group_type)) {
-    $user_groups = (!empty($user_groups[$group_type])) ? $user_groups[$group_type] : array();
-  }
-
   if (!empty($user_groups) && !$include_archived) {
     if ($flag = flag_get_flag('trash')) {
       // Filter out groups that are archived.
-      foreach ($user_groups as $nid) {
+      foreach ($user_groups['node'] as $nid) {
         if ($flag->is_flagged($nid)) {
-          unset($user_groups[$nid]);
+          unset($user_groups['node'][$nid]);
         }
       }
     }
+  }
+
+  if (!empty($group_type)) {
+    $user_groups = (!empty($user_groups[$group_type])) ? $user_groups[$group_type] : array();
   }
 
   return $user_groups;
@@ -527,12 +527,14 @@ function oa_core_get_group_users_for_space($space_id, $group_id) {
 
 /**
  * Return a list of space ids that a user belongs to.
+ *
+ * @deprecated This function is redundant - use oa_core_get_groups_by_user().
+ *
+ * @see oa_core_get_groups_by_user()
  */
 function oa_core_get_user_spaces($uid) {
-  if ($groups = og_get_entity_groups('user', $uid)) {
-    return !empty($groups['node']) ? $groups['node'] : array();
-  }
-  return array();
+  $groups = oa_core_get_groups_by_user(user_load($uid), 'node');
+  return !empty($groups) ? $groups : array();
 }
 
 /**
