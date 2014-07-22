@@ -117,7 +117,7 @@ Submodules (alphabetical)
 
 - [**Open Atrium Variables** (oa_variables)](modules/oa_variables) : OPTIONAL.
   Adds the default site variables for site-specific values.
-  
+
 - [**Open Atrium Widgets** (oa_widgets)](modules/oa_widgets) : REQUIRED.
   Provides various core Panels Pane widgets.
 
