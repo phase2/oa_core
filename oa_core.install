@@ -149,3 +149,18 @@ function oa_core_update_7218() {
   }
 }
 
+/**
+ * Enable a module
+ */
+function MODULENAME_update_7001() {
+  module_enable(array('MODULE1', 'MODULE2', 'etc'), TRUE);
+}
+
+/**
+ * Revert a feature
+ */
+function MODULENAME_update_7002() {
+  features_revert(array('MODULENAME' => array('COMPONENTS')));
+  // e.g.:
+  features_revert(array('my_module' => array('taxonomy', 'field_base', 'field_instance')));
+}
