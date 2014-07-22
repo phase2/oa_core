@@ -6,6 +6,7 @@
  */
 
 define('SPACE_TAB_FAVORITE', 'Favorite');
+define('SPACE_TAB_ARCHIVED', 'Archived');
 define('SPACE_TAB_ACTIVE', 'Subscribed');
 define('SPACE_TAB_ALL', 'All');
 
@@ -47,7 +48,7 @@ function oa_core_user_spaces_render($subtype, $conf, $args, $context = NULL) {
     $group_types = array(OA_SPACE_TYPE => OA_SPACE_TYPE);
   }
   $all_spaces_ids = oa_core_get_public_spaces($group_types);
-  $active_spaces_ids = oa_core_get_user_spaces($account->uid);
+  $active_spaces_ids = oa_core_get_groups_by_user($account, 'node');
   $all_spaces_ids = array_merge($all_spaces_ids, $active_spaces_ids);
 
   $all_spaces_nodes = node_load_multiple($all_spaces_ids);
@@ -61,6 +62,19 @@ function oa_core_user_spaces_render($subtype, $conf, $args, $context = NULL) {
     $spaces = oa_favorites_get_spaces($account);
     $featured_spaces_nodes = node_load_multiple($spaces['ids']);
     $featured_spaces = oa_core_build_space_display($featured_spaces_nodes, $conf, $account, $group_types);
+  }
+
+  $archived_spaces = array();
+  if (module_exists('oa_archive') && ($flag = flag_get_flag('trash'))) {
+    $query = db_select('node', 'n');
+    $query->join('flag_content', 'a', 'a.fid = :fid AND n.nid = a.content_id', array(':fid' => $flag->fid));
+    $query
+      ->fields('n', array('nid'))
+      ->condition('n.type', $group_types, 'IN')
+      ->addTag('node_access');
+    $archived_spaces_ids = $query->execute()->fetchCol();
+    $archived_spaces_nodes = node_load_multiple($archived_spaces_ids);
+    $archived_spaces = oa_core_build_space_display($archived_spaces_nodes, $conf, $account, $group_types);
   }
 
   $page = 0;
@@ -80,6 +94,9 @@ function oa_core_user_spaces_render($subtype, $conf, $args, $context = NULL) {
             'class' => $conf['link_class'],
         )));
     }
+  }
+  if ($conf['tabs'][SPACE_TAB_ARCHIVED] && !empty($archived_spaces)) {
+    $vars['space_groups'][t(SPACE_TAB_ARCHIVED)]['spaces'] = $archived_spaces;
   }
   if ($conf['tabs'][SPACE_TAB_ALL]) {
     // pager_find_page() will return the current page number
@@ -343,6 +360,7 @@ function oa_core_user_spaces_edit_form($form, &$form_state) {
     '#title' => t('Tabs'),
     '#options' => array(
       SPACE_TAB_FAVORITE => t(SPACE_TAB_FAVORITE),
+      SPACE_TAB_ARCHIVED => t(SPACE_TAB_ARCHIVED),
       SPACE_TAB_ACTIVE => t(SPACE_TAB_ACTIVE),
       SPACE_TAB_ALL => t(SPACE_TAB_ALL),
     ),
