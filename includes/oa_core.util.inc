@@ -109,9 +109,10 @@ function oa_core_get_section_context() {
  *
  * @param int $nid
  *   The NID of the Space or Group to check.
- * @param string $bundle
- *   (optional) The node type. (default: OA_SPACE_TYPE)
- * @param int $status 
+ * @param string|NULL $bundle
+ *   (optional) The node type (default: OA_SPACE_TYPE). If NULL is passed, it
+ *   will include all node types.
+ * @param int|NULL $status 
  *   (optional) If specified, the node status (ex. NODE_PUBLISHED or
  *   NODE_NOT_PUBLISHED) to look for. If not specified, it return 
  *   nodes of either status.
@@ -128,6 +129,9 @@ function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $inc
   if (!isset($cache[$nid][$bundle][$status][$include_archived])) {
     $query = db_select('node', 'n');
     $query->leftJoin('og_membership', 'f', "n.nid = f.gid");
+    if (isset($bundle)) {
+      $query->condition('n.type', $bundle);
+    }
     if (isset($status)) {
       $query->condition('n.status', $status);
     }
@@ -135,7 +139,6 @@ function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $inc
       ->fields('n', array('nid'))
       ->condition('f.etid', $nid)
       ->condition('f.entity_type', 'node')
-      ->condition('n.type', $bundle)
       ->orderBy('n.title')
       ->addTag('node_access');
 
