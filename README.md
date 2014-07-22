@@ -5,40 +5,40 @@ Submodules (alphabetical)
 =========================
 
 - [**Bootstrap Pane Styles** (bootstrap_pane_styles)](modules/bootstrap_pane_styles) — OPTIONAL. Provides panels pane styles for menus. Good example module for building custom Panels Pane Styles.
-- [**Open Atrium Access** (oa_access)](https://github.com/phase2/oa_core/tree/7.x-2.x/modules/oa_access) — OPTIONAL: Provides framework for group-specific and team-specific access permissions, similar to Roles.
-- [**Open Atrium Admin** (oa_admin)](https://github.com/phase2/oa_core/tree/7.x-2.x/modules/oa_admin) — OPTIONAL but Recommended. Provides the replacement for the Drupal Content page.
-- [**Open Atrium Admin Role** (oa_adminrole)](https://github.com/phase2/oa_core/tree/7.x-2.x/modules/oa_adminrole) — OPTIONAL but Recommended. Provides default Permissions for Admins and Members.
-- [**Open Atrium Appearance** (oa_appearance)](https://github.com/phase2/oa_core/tree/7.x-2.x/modules/oa_appearance) — OPTIONAL. Enables site and space-specific banners and colors.
-- [**Open Atrium Archive** (oa_archive)](https://github.com/phase2/oa_core/tree/7.x-2.x/modules/oa_archive) — OPTIONAL. Renames the Trash Flag module options to Archive.
-- [**Open Atrium Buttons** (oa_buttons)](https://github.com/phase2/oa_core/tree/7.x-2.x/modules/oa_buttons) — REQUIRED. Manages the Command Buttons for Open Atrium. Also defines the default Space and Section type taxonomy terms.
-- [**Open Atrium Clone** (oa_clone)](https://github.com/phase2/oa_core/tree/7.x-2.x/modules/oa_clone) — OPTIONAL. Adds ability to create Blueprints from Spaces, or Clone any space or content node.
-- [**Open Atrium Config** (oa_config)](https://github.com/phase2/oa_core/tree/7.x-2.x/modules/oa_config) — OPTIONAL but Recommended. Stores default settings for various contrib modules.
-- **Open Atrium Dashboard** (oa_dashboard) — OPTIONAL but Recommended. Provides the widgets for the Breadcrumb navigation toolbar, Main menu toolbar, Space menu toolbar, and the Drupal Admin menu button.
-- **Open Atrium Date** (oa_date) — REQUIRED. Adds the relative date formatter used in the Recent Activity views.
-- **Open Atrium Diff** (oa_diff) — REQUIRED. Integrates the Diff module to show differences in the Update messages in the Recent Activity.
-- **Open Atrium Domains** (oa_domains) — OPTIONAL. Allows per-space domain name support.
-- **Open Atrium Favorites** (oa_favorites) — OPTIONAL. Adds the Favorites widget in the toolbar for marking favorite spaces.
-- **Open Atrium Home** (oa_home) — OPTIONAL. Featurizes the default Home page markup
-- **Open Atrium HTML Email** (oa_htmlmail) — OPTIONAL. Adds the markup for better HTML email notifications.
-- **Open Atrium Layouts** (oa_layouts) — REQUIRED. Defines the default panelizer layouts for spaces, groups. Provides the default Mini Panels for the Header, Footer, Sidebars.
-- **Open Atrium Messages** (oa_messages) — REQUIRED. Provides the default message types used for Recent Activity and notifications.
-- **Open Atrium Messages Digest** (oa_messages_digest) — OPTIONAL. Integrates the messages_digest module to add Weekly and Daily digests.
-- **Open Atrium News** (oa_news) — OPTIONAL. Provides the News Section type view and panels layout.
-- **Open Atrium Panopoly Users** (oa_panopoly_users) — REQUIRED. Overrides the Panopoly User pages to provide default dashboard layout.
-- **Open Atrium Permissions** (oa_permissions) — OPTIONAL. Provides the default permissions (Drupal and OG).
-- **Open Atrium Recent Activity** (oa_river) — REQUIRED. Provides the Recent Activity view.
-- **Open Atrium Sandbox** (oa_sandbox) — OPTIONAL. Adds the Sandbox functionality.
-- **Open Atrium Search** (oa_search) — OPTIONAL. Integrates Panopoly Search and search_api. Provides default indexes and Facets and Views along with a sidebar search widget.
-- **Open Atrium Sections** (oa_sections) — REQUIRED. Provides Section functionality.
-- **Open Atrium Section Session Context** (oa_section_context) — REQUIRED. Stores the current section context into user session.
-- **Open Atrium Styles** (oa_styles) — OPTIONAL. Provides general Panels Pane Styles.
-- **Open Atrium Teams** (oa_teams) — REQUIRED. Adds Team functionality.
-- **Open Atrium Tour** (oa_tour) — OPTIONAL. Integrates the Bootstrap Tour module to provide popup help. Adds the Help button widget.
-- **Open Atrium Tour Defaults** (oa_tour_defaults) — OPTIONAL. Adds the default tours for teaching about Open Atrium.
-- **Open Atrium Updater** (oa_update) — OPTIONAL but Recommended. Replaces the Drupal Module update page with a distribution profile update page.
-- **Open Atrium Users** (oa_users) — REQUIRED. Adds fields to the User entity and provides Views and pages for User's activity and basic profile.
-- **Open Atrium Variables** (oa_variables) — OPTIONAL. Adds the default site variables for site-specific values.
-- **Open Atrium Widgets** (oa_widgets) — REQUIRED. Provides various core Panels Pane widgets.
+- [**Open Atrium Access** (oa_access)](modules/oa_access) — OPTIONAL: Provides framework for group-specific and team-specific access permissions, similar to Roles.
+- [**Open Atrium Admin** (oa_admin)](modules/oa_admin) — OPTIONAL but Recommended. Provides the replacement for the Drupal Content page.
+- [**Open Atrium Admin Role** (oa_adminrole)](modules/oa_adminrole) — OPTIONAL but Recommended. Provides default Permissions for Admins and Members.
+- [**Open Atrium Appearance** (oa_appearance)](modules/oa_appearance) — OPTIONAL. Enables site and space-specific banners and colors.
+- [**Open Atrium Archive** (oa_archive)](modules/oa_archive) — OPTIONAL. Renames the Trash Flag module options to Archive.
+- [**Open Atrium Buttons** (oa_buttons)](modules/oa_buttons) — REQUIRED. Manages the Command Buttons for Open Atrium. Also defines the default Space and Section type taxonomy terms.
+- [**Open Atrium Clone** (oa_clone)](modules/oa_clone) — OPTIONAL. Adds ability to create Blueprints from Spaces, or Clone any space or content node.
+- [**Open Atrium Config** (oa_config)](modules/oa_config) — OPTIONAL but Recommended. Stores default settings for various contrib modules.
+- [**Open Atrium Dashboard** (oa_dashboard)](modules/oa_dashboard) — OPTIONAL but Recommended. Provides the widgets for the Breadcrumb navigation toolbar, Main menu toolbar, Space menu toolbar, and the Drupal Admin menu button.
+- [**Open Atrium Date** (oa_date)](modules/oa_date) — REQUIRED. Adds the relative date formatter used in the Recent Activity views.
+- [**Open Atrium Diff** (oa_diff)](modules/oa_diff) — REQUIRED. Integrates the Diff module to show differences in the Update messages in the Recent Activity.
+- [**Open Atrium Domains** (oa_domains)](modules/oa_domains) — OPTIONAL. Allows per-space domain name support.
+- [**Open Atrium Favorites** (oa_favorites)](modules/oa_favorites) — OPTIONAL. Adds the Favorites widget in the toolbar for marking favorite spaces.
+- [**Open Atrium Home** (oa_home)](modules/oa_home) — OPTIONAL. Featurizes the default Home page markup
+- [**Open Atrium HTML Email** (oa_htmlmail)](modules/oa_htmlmail) — OPTIONAL. Adds the markup for better HTML email notifications.
+- [**Open Atrium Layouts** (oa_layouts)](modules/oa_layouts) — REQUIRED. Defines the default panelizer layouts for spaces, groups. Provides the default Mini Panels for the Header, Footer, Sidebars.
+- [**Open Atrium Messages** (oa_messages)](modules/oa_messages) — REQUIRED. Provides the default message types used for Recent Activity and notifications.
+- [**Open Atrium Messages Digest** (oa_messages_digest)](modules/oa_messages_digest) — OPTIONAL. Integrates the messages_digest module to add Weekly and Daily digests.
+- [**Open Atrium News** (oa_news)](modules/oa_news) — OPTIONAL. Provides the News Section type view and panels layout.
+- [**Open Atrium Panopoly Users** (oa_panopoly_users)](modules/oa_panopoly_users) — REQUIRED. Overrides the Panopoly User pages to provide default dashboard layout.
+- [**Open Atrium Permissions** (oa_permissions)](modules/oa_permissions) — OPTIONAL. Provides the default permissions (Drupal and OG).
+- [**Open Atrium Recent Activity** (oa_river)](modules/oa_river) — REQUIRED. Provides the Recent Activity view.
+- [**Open Atrium Sandbox** (oa_sandbox)](modules/oa_sandbox) — OPTIONAL. Adds the Sandbox functionality.
+- [**Open Atrium Search** (oa_search)](modules/oa_search) — OPTIONAL. Integrates Panopoly Search and search_api. Provides default indexes and Facets and Views along with a sidebar search widget.
+- [**Open Atrium Sections** (oa_sections)](modules/oa_sections) — REQUIRED. Provides Section functionality.
+- [**Open Atrium Section Session Context** (oa_section_context)](modules/oa_section_context) — REQUIRED. Stores the current section context into user session.
+- [**Open Atrium Styles** (oa_styles)](modules/oa_styles) — OPTIONAL. Provides general Panels Pane Styles.
+- [**Open Atrium Teams** (oa_teams)](modules/oa_teams) — REQUIRED. Adds Team functionality.
+- [**Open Atrium Tour** (oa_tour)](modules/oa_tour) — OPTIONAL. Integrates the Bootstrap Tour module to provide popup help. Adds the Help button widget.
+- [**Open Atrium Tour Defaults** (oa_tour_defaults)](modules/oa_tour_defaults) — OPTIONAL. Adds the default tours for teaching about Open Atrium.
+- [**Open Atrium Updater** (oa_update)](modules/oa_update) — OPTIONAL but Recommended. Replaces the Drupal Module update page with a distribution profile update page.
+- [**Open Atrium Users** (oa_users)](modules/oa_users) — REQUIRED. Adds fields to the User entity and provides Views and pages for User's activity and basic profile.
+- [**Open Atrium Variables** (oa_variables)](modules/oa_variables) — OPTIONAL. Adds the default site variables for site-specific values.
+- [**Open Atrium Widgets** (oa_widgets)](modules/oa_widgets) — REQUIRED. Provides various core Panels Pane widgets.
 
 Common Utility Functions
 ========================
