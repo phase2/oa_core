@@ -10,7 +10,9 @@ core = 7.x
 ; Override panopoly_core.make: 3.8
 projects[views][version] = 3.8
 projects[views][subdir] = contrib
+; patches from Panopoly
 projects[views][patch][2037469] = http://drupal.org/files/views-exposed-sorts-2037469-1.patch
+; additional patches for OA
 projects[views][patch][1979926] = http://drupal.org/files/1979926-views-reset_fetch_data-2.patch
 projects[views][patch][1735096] = http://drupal.org/files/1735096-views-mltiple-instance-exposed-form-8.patch
 
@@ -18,6 +20,10 @@ projects[views][patch][1735096] = http://drupal.org/files/1735096-views-mltiple-
 ; Override panopoly_core.make: 1.4
 projects[ctools][version] = 1.4
 projects[ctools][subdir] = contrib
+; patches from Panopoly
+projects[ctools][patch][2280875] = http://drupal.org/files/issues/ctools-icon-text-renderer-2280875-5.patch
+projects[ctools][patch][581670] = http://drupal.org/files/fix-autocomplete-581670.patch
+; additional patches for OA
 projects[ctools][patch][1910608] = http://drupal.org/files/issues/1910608-views_content-ajax-13.patch
 projects[ctools][patch][1901106] = http://drupal.org/files/issues/ctools-views_content-exposed_form_override-1901106-24.patch
 projects[ctools][patch][2023705] = http://drupal.org/files/2023705-ctools-autosubmit-2_0.patch
@@ -27,26 +33,29 @@ projects[ctools][patch][2195471] = http://drupal.org/files/issues/ctools-n219547
 ; Override panopoly_core.make: 1.5
 projects[entity][version] = 1.5
 projects[entity][subdir] = contrib
+; additional patches for OA
 projects[entity][patch][1782134] = http://drupal.org/files/entity-translatable_fields_not_overriding_und_with_empty_values-1782134-5.patch
 
 ; Panelizer
-; Override panopoly_core.make: 3.1
+; Override panopoly_core.make: 3.1 -> 3.x-dev
 projects[panelizer][version] = 3.x-dev
 projects[panelizer][subdir] = contrib
 projects[panelizer][download][type] = git
 projects[panelizer][download][branch] = 7.x-3.x
 projects[panelizer][download][revision] = 66d184
+; additional patches for OA
 projects[panelizer][patch][1982654] = http://drupal.org/files/1982654-panelizer-dontaskmethatagain-2.patch
 
 ; Token
 ; Override panopoly_core.make: 1.5
 projects[token][version] = 1.5
 projects[token][subdir] = contrib
+; additional patches for OA
 projects[token][patch][1999298] = http://drupal.org/files/1999298-disable-test-warnings.patch
 
-; Token
-; Override panopoly_core.make: 1.3
-projects[field_group][version] = 1.3
+; Field Group
+; Override panopoly_core.make: 1.4
+projects[field_group][version] = 1.4
 projects[field_group][subdir] = contrib
 ;following patch not ready yet
 ;projects[field_group][patch][1278618] = http://drupal.org/files/issues/field_group-panels-integration-1278618-58.patch
@@ -57,9 +66,16 @@ projects[media][version] = 2.x-dev
 projects[media][subdir] = contrib
 projects[media][download][type] = git
 projects[media][download][branch] = 7.x-2.x
-projects[media][download][revision] = 1f46a9a
-projects[media][patch][2104193] = http://drupal.org/files/issues/media_remove_file_display_alter-2104193-23.patch
-projects[media][patch][2126755] = http://drupal.org/files/issues/media-improved-macro-handling-2126755-19.patch
+projects[media][download][revision] = 6382429
+projects[media][download][branch] = 7.x-2.x
+; patches from Panopoly
+projects[media][patch][2192981] = http://drupal.org/files/issues/media-restore-edit-button-2192981-13.patch
+projects[media][patch][2126697] = http://drupal.org/files/issues/media-wysiwyg-alt-title-handling-2126697-27.patch
+projects[media][patch][2308487] = http://drupal.org/files/issues/media-alt-title-double-encoded-2308487-1.patch
+; additional patches for OA
+;projects[media][download][revision] = 1f46a9a
+;projects[media][patch][2104193] = http://drupal.org/files/issues/media_remove_file_display_alter-2104193-23.patch
+;projects[media][patch][2126755] = http://drupal.org/files/issues/media-improved-macro-handling-2126755-19.patch
 
 ; File Entity
 ; Override panopoly_widgets.make: 07411c4
@@ -67,7 +83,8 @@ projects[file_entity][version] = 2.x-dev
 projects[file_entity][subdir] = contrib
 projects[file_entity][download][type] = git
 projects[file_entity][download][branch] = 7.x-2.x
-projects[file_entity][download][revision] = 3661d8
+projects[file_entity][download][revision] = 20f3070
+;projects[file_entity][download][revision] = 3661d8
 projects[file_entity][patch][2192391] = http://drupal.org/files/issues/file_entity_remove_file_display-2192391-01.patch
 
 ; ************ End Panopoly Overrides ************
@@ -225,11 +242,11 @@ projects[views_load_more][download][branch] = 7.x-1.x
 projects[views_load_more][download][revision] = 28de384
 
 ; Jquery Update
-projects[jquery_update][version] = 2.x-dev
+projects[jquery_update][version] = 2.4
 projects[jquery_update][subdir] = contrib
-projects[jquery_update][download][type] = git
-projects[jquery_update][download][branch] = 7.x-2.x
-projects[jquery_update][download][revision] = d84d48
+;projects[jquery_update][download][type] = git
+;projects[jquery_update][download][branch] = 7.x-2.x
+;projects[jquery_update][download][revision] = d84d48
 
 ; Colorizer
 projects[colorizer][version] = 1.2
