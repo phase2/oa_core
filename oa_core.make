@@ -85,7 +85,7 @@ projects[file_entity][download][type] = git
 projects[file_entity][download][branch] = 7.x-2.x
 projects[file_entity][download][revision] = 20f3070
 ;projects[file_entity][download][revision] = 3661d8
-projects[file_entity][patch][2192391] = http://drupal.org/files/issues/file_entity_remove_file_display-2192391-01.patch
+projects[file_entity][patch][2192391] = http://drupal.org/files/issues/file_entity_remove_file_display-2192391-16.patch
 
 ; ************ End Panopoly Overrides ************
 ; ************************************************
