@@ -69,7 +69,7 @@ projects[media][download][branch] = 7.x-2.x
 projects[media][download][revision] = 6382429
 projects[media][download][branch] = 7.x-2.x
 ; patches from Panopoly
-projects[media][patch][2192981] = http://drupal.org/files/issues/media-restore-edit-button-2192981-13.patch
+projects[media][patch][2192981] = http://drupal.org/files/issues/media-restore-edit-button-2192981-33.patch
 projects[media][patch][2126697] = http://drupal.org/files/issues/media-wysiwyg-alt-title-handling-2126697-27.patch
 projects[media][patch][2308487] = http://drupal.org/files/issues/media-alt-title-double-encoded-2308487-1.patch
 ; additional patches for OA
