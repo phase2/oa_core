@@ -212,11 +212,11 @@ projects[job_scheduler][version] = 2.0-alpha3
 projects[job_scheduler][subdir] = contrib
 
 ; Command buttons
-projects[command_buttons][version] = 1.1
+projects[command_buttons][version] = 1.2
 projects[command_buttons][subdir] = contrib
 
 ; Contextual Tabs
-projects[contextual_tabs][version] = 1.0-beta1
+projects[contextual_tabs][version] = 1.0-beta2
 projects[contextual_tabs][subdir] = contrib
 
 ; Panels Custom Error
@@ -257,7 +257,7 @@ projects[jquery_update][subdir] = contrib
 ;projects[jquery_update][download][revision] = d84d48
 
 ; Colorizer
-projects[colorizer][version] = 1.2
+projects[colorizer][version] = 1.3
 projects[colorizer][subdir] = contrib
 
 ; OA Responsive Regions
