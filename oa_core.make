@@ -94,8 +94,13 @@ projects[field_group][subdir] = contrib
 ; ************************************************
 
 ; Features Override
-projects[features_override][version] = 2.0-rc1
+; projects[features_override][version] = 2.0-rc1
 projects[features_override][subdir] = contrib
+projects[features_override][version] = 2.x-dev
+projects[features_override][subdir] = contrib
+projects[features_override][download][type] = git
+projects[features_override][download][branch] = 7.x-2.x
+projects[features_override][download][revision] = 4382581
 
 ; Diff
 projects[diff][version] = 3.2
