@@ -216,7 +216,7 @@ projects[command_buttons][version] = 1.2
 projects[command_buttons][subdir] = contrib
 
 ; Contextual Tabs
-projects[contextual_tabs][version] = 1.0-beta1
+projects[contextual_tabs][version] = 1.0-beta2
 projects[contextual_tabs][subdir] = contrib
 
 ; Panels Custom Error
