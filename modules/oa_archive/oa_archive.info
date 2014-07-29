@@ -22,6 +22,7 @@ features[features_overrides][] = flag.trash.unflag_message
 features[features_overrides][] = flag.trash.unflag_short
 features[features_overrides][] = views_view.trash_flag_bin.display|default|display_options|empty|area_text_custom|content
 features[features_overrides][] = views_view.trash_flag_bin.display|default|display_options|title
+features[features_overrides][] = views_view.trash_flag_bin.display|page_1|display_options|defaults|empty
 features[features_overrides][] = views_view.trash_flag_bin.display|page_1|display_options|empty|area_text_custom|content
 features[features_overrides][] = views_view.trash_flag_bin.display|page_1|display_options|menu|title
 features[features_overrides][] = views_view.trash_flag_bin.display|page_1|display_options|path
