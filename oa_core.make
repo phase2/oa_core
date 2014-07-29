@@ -6,6 +6,11 @@ core = 7.x
 ; ************************************************
 ; ************** PANOPOLY OVERRIDES **************
 
+; Features
+; Override panopoly_core.make: 2.0
+projects[features][version] = 2.1
+projects[features][subdir] = contrib
+
 ; Views
 ; Override panopoly_core.make: 3.8
 projects[views][version] = 3.8
