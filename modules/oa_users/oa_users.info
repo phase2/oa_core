@@ -6,7 +6,6 @@ dependencies[] = ctools
 dependencies[] = entityreference
 dependencies[] = features
 dependencies[] = image
-dependencies[] = oa_panopoly_users
 dependencies[] = og
 dependencies[] = og_ui
 dependencies[] = page_manager
