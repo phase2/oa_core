@@ -30,72 +30,35 @@ function oa_panopoly_users_default_page_manager_handlers_alter(&$data) {
  */
 function oa_panopoly_users_panelizer_defaults_override_alter(&$data) {
   if (isset($data['user:user:default'])) {
-    $data['user:user:default']->display->content['new-a617e554-6ad7-4d25-9d89-627d130d8be3'] = (object) array(
-          'pid' => 'new-a617e554-6ad7-4d25-9d89-627d130d8be3',
+    $data['user:user:default']->display->content['new-1f213df1-81a7-40b1-8432-6da8d232526a'] = (object) array(
+          'pid' => 'new-1f213df1-81a7-40b1-8432-6da8d232526a',
           'panel' => 'contentheader',
-          'type' => 'views_panes',
-          'subtype' => 'open_atrium_discussions-discussion_user_reply',
+          'type' => 'entity_field',
+          'subtype' => 'user:field_user_about',
           'shown' => TRUE,
           'access' => array(),
           'configuration' => array(
-            'use_pager' => 1,
-            'pager_id' => 0,
-            'items_per_page' => 20,
-            'exposed' => array(
-              'type' => 'All',
-            ),
-            'context' => array(
-              0 => 'empty',
-            ),
-            'view_settings' => 'fields',
-            'header_type' => 'none',
-            'view_mode' => 'teaser',
+            'label' => 'title',
+            'formatter' => 'text_default',
+            'delta_limit' => 0,
+            'delta_offset' => 0,
+            'delta_reversed' => FALSE,
+            'formatter_settings' => array(),
+            'context' => array(),
+            'override_title' => 0,
+            'override_title_text' => '',
           ),
           'cache' => array(),
           'style' => array(
             'settings' => NULL,
-            'style' => 'oa_styles_oa_pane',
           ),
           'css' => array(),
           'extras' => array(),
-          'position' => 1,
+          'position' => 0,
           'locks' => array(),
-          'uuid' => 'a617e554-6ad7-4d25-9d89-627d130d8be3',
+          'uuid' => '1f213df1-81a7-40b1-8432-6da8d232526a',
         ); /* WAS: '' */
     $data['user:user:default']->display->content['new-23b1f4f1-cda8-42ca-880a-afc2ae92f3e9']->panel = 'sidebar'; /* WAS: 'column2' */
-    $data['user:user:default']->display->content['new-faf0ad46-b575-4f96-874d-9a4548cc8da3'] = (object) array(
-          'pid' => 'new-faf0ad46-b575-4f96-874d-9a4548cc8da3',
-          'panel' => 'contentheader',
-          'type' => 'views_panes',
-          'subtype' => 'open_atrium_discussions-discussion_user',
-          'shown' => TRUE,
-          'access' => array(),
-          'configuration' => array(
-            'use_pager' => 1,
-            'pager_id' => 0,
-            'items_per_page' => 20,
-            'exposed' => array(
-              'type' => 'oa_discussion_post',
-            ),
-            'context' => array(
-              0 => 'empty',
-            ),
-            'view_settings' => 'fields',
-            'header_type' => 'none',
-            'view_mode' => 'teaser',
-          ),
-          'cache' => array(),
-          'style' => array(
-            'settings' => NULL,
-            'style' => 'oa_styles_oa_pane',
-          ),
-          'css' => array(),
-          'extras' => array(),
-          'position' => 2,
-          'locks' => array(),
-          'uuid' => 'faf0ad46-b575-4f96-874d-9a4548cc8da3',
-        ); /* WAS: '' */
-    $data['user:user:default']->display->content['new-d76e85cd-4625-4a52-a17b-e5c65e1a0247']->panel = 'contentheader'; /* WAS: 'column1' */
     $data['user:user:default']->display->content['new-80a6a21b-20e6-4acf-9772-eb089cc6082b'] = (object) array(
           'pid' => 'new-80a6a21b-20e6-4acf-9772-eb089cc6082b',
           'panel' => 'sidebar',
@@ -134,20 +97,86 @@ function oa_panopoly_users_panelizer_defaults_override_alter(&$data) {
           'locks' => array(),
           'uuid' => '80a6a21b-20e6-4acf-9772-eb089cc6082b',
         ); /* WAS: '' */
+    $data['user:user:default']->display->content['new-a617e554-6ad7-4d25-9d89-627d130d8be3'] = (object) array(
+          'pid' => 'new-a617e554-6ad7-4d25-9d89-627d130d8be3',
+          'panel' => 'contentheader',
+          'type' => 'views_panes',
+          'subtype' => 'open_atrium_discussions-discussion_user_reply',
+          'shown' => TRUE,
+          'access' => array(),
+          'configuration' => array(
+            'use_pager' => 1,
+            'pager_id' => 0,
+            'items_per_page' => 20,
+            'exposed' => array(
+              'type' => 'All',
+            ),
+            'context' => array(
+              0 => 'empty',
+            ),
+            'view_settings' => 'fields',
+            'header_type' => 'none',
+            'view_mode' => 'teaser',
+          ),
+          'cache' => array(),
+          'style' => array(
+            'settings' => NULL,
+            'style' => 'oa_styles_oa_pane',
+          ),
+          'css' => array(),
+          'extras' => array(),
+          'position' => 1,
+          'locks' => array(),
+          'uuid' => 'a617e554-6ad7-4d25-9d89-627d130d8be3',
+        ); /* WAS: '' */
+    $data['user:user:default']->display->content['new-faf0ad46-b575-4f96-874d-9a4548cc8da3'] = (object) array(
+          'pid' => 'new-faf0ad46-b575-4f96-874d-9a4548cc8da3',
+          'panel' => 'contentheader',
+          'type' => 'views_panes',
+          'subtype' => 'open_atrium_discussions-discussion_user',
+          'shown' => TRUE,
+          'access' => array(),
+          'configuration' => array(
+            'use_pager' => 1,
+            'pager_id' => 0,
+            'items_per_page' => 20,
+            'exposed' => array(
+              'type' => 'oa_discussion_post',
+            ),
+            'context' => array(
+              0 => 'empty',
+            ),
+            'view_settings' => 'fields',
+            'header_type' => 'none',
+            'view_mode' => 'teaser',
+          ),
+          'cache' => array(),
+          'style' => array(
+            'settings' => NULL,
+            'style' => 'oa_styles_oa_pane',
+          ),
+          'css' => array(),
+          'extras' => array(),
+          'position' => 2,
+          'locks' => array(),
+          'uuid' => 'faf0ad46-b575-4f96-874d-9a4548cc8da3',
+        ); /* WAS: '' */
     $data['user:user:default']->display->layout = 'selby_flipped'; /* WAS: 'phelan' */
     $data['user:user:default']->display->panel_settings['style_settings']['contentcolumn1'] = NULL; /* WAS: '' */
     $data['user:user:default']->display->panel_settings['style_settings']['contentcolumn2'] = NULL; /* WAS: '' */
     $data['user:user:default']->display->panel_settings['style_settings']['contentfooter'] = NULL; /* WAS: '' */
     $data['user:user:default']->display->panel_settings['style_settings']['contentheader'] = NULL; /* WAS: '' */
     $data['user:user:default']->display->panels['contentheader'] = array(
-      0 => 'new-d76e85cd-4625-4a52-a17b-e5c65e1a0247',
+      0 => 'new-1f213df1-81a7-40b1-8432-6da8d232526a',
       1 => 'new-a617e554-6ad7-4d25-9d89-627d130d8be3',
       2 => 'new-faf0ad46-b575-4f96-874d-9a4548cc8da3',
+      3 => 'new-7e2787f8-3f6c-4b3b-a1bb-e11225e395d5',
     ); /* WAS: '' */
     $data['user:user:default']->display->panels['sidebar'] = array(
       0 => 'new-23b1f4f1-cda8-42ca-880a-afc2ae92f3e9',
       1 => 'new-80a6a21b-20e6-4acf-9772-eb089cc6082b',
     ); /* WAS: '' */
+    unset($data['user:user:default']->display->content['new-d76e85cd-4625-4a52-a17b-e5c65e1a0247']);
     unset($data['user:user:default']->display->panels['column1']);
     unset($data['user:user:default']->display->panels['column2']);
   }
