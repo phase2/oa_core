@@ -77,8 +77,13 @@ function oa_tour_bootstrap_tour_presave_alter(&$tour, &$vals) {
 function oa_tour_bootstrap_tour_alter(&$tour) {
   global $user;
 
-  $space_blueprints = taxonomy_get_tree(taxonomy_vocabulary_machine_name_load('space_type')->vid, 0, 1);
-  $section_types = taxonomy_get_tree(taxonomy_vocabulary_machine_name_load('section_type')->vid, 0, 1);
+  $space_vocab = taxonomy_vocabulary_machine_name_load('space_type');
+  $section_vocab = taxonomy_vocabulary_machine_name_load('section_type');
+  if (empty($space_vocab) || empty($section_vocab)) {
+    return;
+  }
+  $space_blueprints = taxonomy_get_tree($space_vocab->vid, 0, 1);
+  $section_types = taxonomy_get_tree($section_vocab->vid, 0, 1);
 
   if (empty($tour) || empty($tour->steps)) {
     return;
