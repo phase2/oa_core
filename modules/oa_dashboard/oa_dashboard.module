@@ -288,8 +288,16 @@ function template_preprocess_oa_toolbar(&$vars) {
 
   $show_all = TRUE;
   $spaces = NULL;
+  // Cache ID
+  $cid = "oa_groups_by_user_${uid}";
   if ($user->uid) {
-    $spaces = oa_core_get_groups_by_user($user, 'node');
+    if ($cache = cache_get($cid)) {
+      $spaces = $cache->data;
+    }
+    else {
+      $spaces = oa_core_get_groups_by_user($user, 'node');
+      cache_set($cid, $spaces);
+    }
     $menu_title = ($space_type == OA_SPACE_TYPE) ? t('Subscribed Spaces') : t('Groups');
   }
   if (empty($spaces)) {
@@ -566,4 +574,33 @@ function oa_dashboard_oa_responsive_regions_alter(&$regions) {
     ),
     'icon' => 'icon-list',
   );
+}
+
+/**
+ * Implements hook_node_save().
+ */
+function oa_dashboard_node_insert($node) {
+  global $user;
+  if ($node->type == 'oa_space') {
+    oa_dashboard_clear_user_cache($user->uid);
+  }
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function oa_dashboard_node_update($node) {
+  global $user;
+  if ($node->type == 'oa_space') {
+    oa_dashboard_clear_user_cache($user->uid);
+  }
+}
+
+/**
+ * oa_dashboard_clear_user_cache
+ * @param $uid - the user id of the user's cache that needs to clear
+ */
+function oa_dashboard_clear_user_cache($uid) {
+  $cid = "oa_groups_by_user_${uid}";
+  cache_clear_all($cid, 'cache');
 }
