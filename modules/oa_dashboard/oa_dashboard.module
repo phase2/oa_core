@@ -597,6 +597,16 @@ function oa_dashboard_node_update($node) {
 }
 
 /**
+ * Implements hook_node_delete().
+ */
+function oa_dashboard_node_delete($node) {
+  global $user;
+  if ($node->type == 'oa_space') {
+    oa_dashboard_clear_user_cache($user->uid);
+  }
+}
+
+/**
  * Implements hook_user_update()
  */
 function oa_dashboard_user_update(&$edit, $account, $category) {
