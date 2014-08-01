@@ -597,6 +597,13 @@ function oa_dashboard_node_update($node) {
 }
 
 /**
+ * Implements hook_user_update()
+ */
+function oa_dashboard_user_update(&$edit, $account, $category) {
+  oa_dashboard_clear_user_cache($account->uid);
+}
+
+/**
  * oa_dashboard_clear_user_cache
  * @param $uid - the user id of the user's cache that needs to clear
  */
