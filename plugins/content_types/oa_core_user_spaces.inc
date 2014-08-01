@@ -81,10 +81,10 @@ function oa_core_user_spaces_render($subtype, $conf, $args, $context = NULL) {
   // set our maximum item per page
   $num_per_page = $conf['num_per_page'];
   $vars['space_groups'] = array();
-  if ($conf['tabs'][SPACE_TAB_FAVORITE] && !empty($featured_spaces)) {
+  if (!empty($conf['tabs'][SPACE_TAB_FAVORITE]) && !empty($featured_spaces)) {
     $vars['space_groups'][t(SPACE_TAB_FAVORITE)]['spaces'] = $featured_spaces;
   }
-  if ($conf['tabs'][SPACE_TAB_ACTIVE] && !empty($active_spaces)) {
+  if (!empty($conf['tabs'][SPACE_TAB_ACTIVE]) && !empty($active_spaces)) {
     $vars['space_groups'][t(SPACE_TAB_ACTIVE)]['spaces'] = $active_spaces;
     if (!$conf['tabs'][SPACE_TAB_ALL] && ($num_per_page > 0)) {
       $active_spaces = array_slice($active_spaces, 0, $num_per_page);
@@ -95,10 +95,10 @@ function oa_core_user_spaces_render($subtype, $conf, $args, $context = NULL) {
         )));
     }
   }
-  if ($conf['tabs'][SPACE_TAB_ARCHIVED] && !empty($archived_spaces)) {
+  if (!empty($conf['tabs'][SPACE_TAB_ARCHIVED]) && !empty($archived_spaces)) {
     $vars['space_groups'][t(SPACE_TAB_ARCHIVED)]['spaces'] = $archived_spaces;
   }
-  if ($conf['tabs'][SPACE_TAB_ALL]) {
+  if (!empty($conf['tabs'][SPACE_TAB_ALL])) {
     // pager_find_page() will return the current page number
     $page = pager_find_page();
     // build the offset variable
