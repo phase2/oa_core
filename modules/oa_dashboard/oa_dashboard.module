@@ -607,14 +607,20 @@ function oa_dashboard_node_delete($node) {
  * Implements hook_user_update()
  */
 function oa_dashboard_user_update(&$edit, $account, $category) {
-  oa_dashboard_clear_user_cache();
+  oa_dashboard_clear_user_cache($account->uid);
 }
 
 /**
  * oa_dashboard_clear_user_cache
  * @param $uid - the user id of the user's cache that needs to clear
  */
-function oa_dashboard_clear_user_cache() {
-  $cid = "oa_groups_by_user_";
-  cache_clear_all($cid, 'cache', TRUE);
+function oa_dashboard_clear_user_cache($uid = FALSE) {
+  if ($uid) {
+    $cid = "oa_groups_by_user_${uid}";
+    cache_clear_all($cid, 'cache');
+  }
+  else {
+    $cid = "oa_groups_by_user_";
+    cache_clear_all($cid, 'cache', TRUE);
+  }
 }
