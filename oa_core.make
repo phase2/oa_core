@@ -65,31 +65,6 @@ projects[field_group][subdir] = contrib
 ;following patch not ready yet
 ;projects[field_group][patch][1278618] = http://drupal.org/files/issues/field_group-panels-integration-1278618-58.patch
 
-; Media
-; Override panopoly_widgets.make: 1f46a9a
-;;projects[media][version] = 2.x-dev
-;;projects[media][subdir] = contrib
-;;projects[media][download][type] = git
-;;projects[media][download][branch] = 7.x-2.x
-;;projects[media][download][revision] = 6382429
-;;projects[media][download][branch] = 7.x-2.x
-;;; patches from Panopoly
-;;;projects[media][patch][2192981] = http://drupal.org/files/issues/media-restore-edit-button-2192981-33.patch
-;;projects[media][patch][2126697] = http://drupal.org/files/issues/media-wysiwyg-alt-title-handling-2126697-27.patch
-;;projects[media][patch][2308487] = http://drupal.org/files/issues/media-alt-title-double-encoded-2308487-1.patch
-;;; additional patches for OA
-;;;projects[media][patch][2104193] = http://drupal.org/files/issues/media_remove_file_display_alter-2104193-23.patch
-
-; File Entity
-; Override panopoly_widgets.make: 07411c4
-;;projects[file_entity][version] = 2.x-dev
-;;projects[file_entity][subdir] = contrib
-;;projects[file_entity][download][type] = git
-;;projects[file_entity][download][branch] = 7.x-2.x
-;;projects[file_entity][download][revision] = 20f3070
-;;;projects[file_entity][download][revision] = 3661d8
-;;projects[file_entity][patch][2192391] = http://drupal.org/files/issues/file_entity_remove_file_display-2192391-16.patch
-
 ; ************ End Panopoly Overrides ************
 ; ************************************************
 
@@ -106,7 +81,7 @@ projects[message][version] = 1.x-dev
 projects[message][subdir] = contrib
 projects[message][download][type] = git
 projects[message][download][branch] = 7.x-1.x
-projects[message][download][revision] = 27d43e2b
+projects[message][download][revision] = 3bbdd5e
 projects[message][patch][2046591] = http://drupal.org/files/message-token_replace-2046591-1.patch
 projects[message][patch][2040735] = http://drupal.org/files/message.target_bundles.2040735-3.patch
 
