@@ -289,7 +289,7 @@ function template_preprocess_oa_toolbar(&$vars) {
   $show_all = TRUE;
   $spaces = NULL;
   // Cache ID
-  $cid = "oa_groups_by_user_${uid}";
+  $cid = "oa_groups_by_user_" . $user->uid;
   if ($user->uid) {
     if ($cache = cache_get($cid)) {
       $spaces = $cache->data;
