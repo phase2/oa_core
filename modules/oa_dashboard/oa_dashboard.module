@@ -311,23 +311,31 @@ function template_preprocess_oa_toolbar(&$vars) {
   }
   else {
     if (isset($vars['show_parents']) && variable_get('oa_toolbar_toplevel', 1) == 1) {
-      // restrict spaces to just top-level (no parents)
-      $remove = array();
-      foreach ($spaces as $key => $value) {
-        // parents are cached, so this should be fast
-        $parents = oa_core_get_parents($value, $space_type, NODE_PUBLISHED, TRUE);
-        foreach ($parents as $parent_id) {
-          if (isset($spaces[$parent_id])) {
-            // parent is also in spaces list, so remove child from list
-            $remove[] = $key;
+      // Cache based on a hash of available spaces to get better hit rates than by uid.
+      $cid = 'oa_top_level_spaces_' . md5(serialize($spaces));
+      if ($cache = cache_get($cid)) {
+        $spaces = $cache->data;
+      }
+      else {
+        // restrict spaces to just top-level (no parents)
+        $remove = array();
+        foreach ($spaces as $key => $value) {
+          // parents are cached, so this should be fast
+          $parents = oa_core_get_parents($value, $space_type, NODE_PUBLISHED, TRUE);
+          foreach ($parents as $parent_id) {
+            if (isset($spaces[$parent_id])) {
+              // parent is also in spaces list, so remove child from list
+              $remove[] = $key;
+            }
           }
         }
-      }
-      foreach ($remove as $id) {
-        unset($spaces[$id]);
-      }
+        foreach ($remove as $id) {
+          unset($spaces[$id]);
+        }
 //      $top_spaces = oa_core_get_groups_by_parent(0, $space_type);
 //      $spaces = array_intersect($spaces, $top_spaces);
+        cache_set($cid, $spaces);
+      }
     }
     $items = oa_core_get_titles($spaces, $space_type);
     $list = oa_core_truncate_list($items['links'], 25,
@@ -623,4 +631,6 @@ function oa_dashboard_clear_user_cache($uid = FALSE) {
     $cid = "oa_groups_by_user_";
     cache_clear_all($cid, 'cache', TRUE);
   }
+  // No matter what, clear the top-level spaces cache.
+  cache_clear_all('oa_top_level_spaces_', 'cache', TRUE);
 }
