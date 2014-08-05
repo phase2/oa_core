@@ -146,3 +146,23 @@ function oa_core_user_update(&$edit, $account, $category) {
   }
   oa_core_clear_group_cache(NULL, $account->uid);
 }
+
+/** NOTE: oa_core_og_membership_insert is in oa_core.access.inc **/
+
+/**
+ * Implements hook_og_membership_update().
+ */
+function oa_core_og_membership_update($og_membership) {
+  if ($og_membership->entity_type == 'user') {
+    oa_core_clear_group_cache(NULL, $og_membership->etid);
+  }
+}
+
+/**
+ * Implements hook_og_membership_delete().
+ */
+function oa_core_og_membership_delete($og_membership) {
+  if ($og_membership->entity_type == 'user') {
+    oa_core_clear_group_cache(NULL, $og_membership->etid);
+  }
+}

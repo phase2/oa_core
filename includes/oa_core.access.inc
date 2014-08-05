@@ -365,6 +365,9 @@ function oa_core_query_media_browser_alter(QueryAlterableInterface $query) {
  */
 function oa_core_og_membership_insert($og_membership) {
   drupal_static_reset('oa_core_node_grants');
+  if ($og_membership->entity_type == 'user') {
+    oa_core_clear_group_cache(NULL, $og_membership->etid);
+  }
 }
 
 function oa_core_visibility_data($node) {
