@@ -7,6 +7,14 @@
  */
 
 /**
+ * Name of various caches.
+ */
+define('OA_CACHE_GROUPS_BY_USER', 'oa_groups_by_user');
+define('OA_CACHE_GET_PARENTS', 'oa_get_parents');
+define('OA_CACHE_GROUPS_BY_PARENT', 'oa_groups_by_parent');
+
+
+/**
  * Get the group IDs of all the groups a user is an approved member of.
  *
  * REPLACES og_get_groups_by_user() in OG and returns a list of groups
@@ -30,8 +38,16 @@ function oa_core_get_groups_by_user($account = NULL, $group_type = NULL, $includ
     global $user;
     $account = $user;
   }
-  $cid = _oa_core_get_cache_id('oa_groups_by_user', $account->uid, $include_archived, array($group_type));
+
+  $cid = _oa_core_get_cache_id(OA_CACHE_GROUPS_BY_USER, $account->uid, $include_archived, array($group_type));
+
+  $static_cache = &drupal_static(OA_CACHE_GROUPS_BY_USER);
+  if (isset($static_cache[$cid])) {
+    return $static_cache[$cid];
+  }
+
   if ($cache = cache_get($cid)) {
+    $static_cache[$cid] = $cache->data;
     return $cache->data;
   }
 
@@ -59,6 +75,7 @@ function oa_core_get_groups_by_user($account = NULL, $group_type = NULL, $includ
   }
 
   // Cache the list of groups by user.
+  $static_cache[$cid] = $user_groups;
   cache_set($cid, $user_groups);
 
   return $user_groups;
@@ -138,8 +155,15 @@ function oa_core_get_section_context() {
  *   Array of parent NIDs.
  */
 function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $include_archived = FALSE) {
-  $cid = _oa_core_get_cache_id('oa_get_parents', $nid, $include_archived, array($bundle, $status));
+  $cid = _oa_core_get_cache_id(OA_CACHE_GET_PARENTS, $nid, $include_archived, array($bundle, $status));
+
+  $static_cache = &drupal_static(OA_CACHE_GET_PARENTS);
+  if (isset($static_cache[$cid])) {
+    return $static_cache[$cid];
+  }
+
   if ($cache = cache_get($cid)) {
+    $static_cache[$cid] = $cache->data;
     return $cache->data;
   }
 
@@ -170,6 +194,7 @@ function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $inc
   $result = $query->execute()->fetchCol(0);
 
   // Cache the list of parents.
+  $static_cache[$cid] = $result;
   cache_set($cid, $result);
 
   return $result;
@@ -195,8 +220,15 @@ function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $inc
  *   Array of children NIDs.
  */
 function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $include_archived = FALSE) {
-  $cid = _oa_core_get_cache_id('oa_get_groups_by_parent', $nid, $include_archived, array($bundle, $status));
+  $cid = _oa_core_get_cache_id(OA_CACHE_GROUPS_BY_PARENT, $nid, $include_archived, array($bundle, $status));
+
+  $static_cache = &drupal_static(OA_CACHE_GROUPS_BY_PARENT);
+  if (isset($static_cache[$cid])) {
+    return $static_cache[$cid];
+  }
+
   if ($cache = cache_get($cid)) {
+    $static_cache[$cid] = $cache->data;
     return $cache->data;
   }
 
@@ -236,6 +268,7 @@ function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE, $status = N
   $result = $query->execute()->fetchCol(0);
 
   // Cache the list of parents.
+  $static_cache[$cid] = $result;
   cache_set($cid, $result);
 
   return $result;
@@ -743,12 +776,18 @@ function _oa_core_get_cache_id($cache_name, $id = NULL, $include_archived = FALS
 /**
  * Helper function to clear the user group cache.
  */
-function oa_core_clear_group_cache($uid = NULL, $include_archived = FALSE) {
-  $cid = _oa_core_get_cache_id('oa_groups_by_user', $uid, $include_archived);
+function oa_core_clear_group_cache($nid = NULL, $uid = NULL, $include_archived = FALSE) {
+  $cid = _oa_core_get_cache_id(OA_CACHE_GROUPS_BY_USER, $uid, $include_archived);
   cache_clear_all($cid, 'cache', TRUE);
+  drupal_static_reset(OA_CACHE_GROUPS_BY_USER);
 
-  $cid = _oa_core_get_cache_id('oa_get_parents_', NULL, $include_archived);
+  $cid = _oa_core_get_cache_id(OA_CACHE_GET_PARENTS, NULL, $include_archived);
   cache_clear_all($cid, 'cache', TRUE);
+  drupal_static_reset(OA_CACHE_GET_PARENTS);
+
+  $cid = _oa_core_get_cache_id(OA_CACHE_GROUPS_BY_PARENT, $nid, $include_archived);
+  cache_clear_all($cid, 'cache', TRUE);
+  drupal_static_reset(OA_CACHE_GROUPS_BY_PARENT);
 }
 
 /**
@@ -760,7 +799,7 @@ function oa_core_flag($op, $flag, $content_id, $account, $fcid) {
       global $user;
       $account = $user;
     }
-    oa_core_clear_group_cache($account->uid, TRUE);
+    oa_core_clear_group_cache(NULL, $account->uid, TRUE);
   }
 }
 
@@ -780,7 +819,7 @@ function oa_core_flag_reset($flag, $entity_id, $rows) {
  */
 function oa_core_node_insert($node) {
   if (($node->type == OA_SPACE_TYPE) || ($node->type == OA_GROUP_TYPE)) {
-    oa_core_clear_group_cache();
+    oa_core_clear_group_cache($node->nid);
   }
 }
 
@@ -789,7 +828,7 @@ function oa_core_node_insert($node) {
  */
 function oa_core_node_delete($node) {
   if (($node->type == OA_SPACE_TYPE) || ($node->type == OA_GROUP_TYPE)) {
-    oa_core_clear_group_cache();
+    oa_core_clear_group_cache($node->nid);
   }
 }
 
@@ -801,5 +840,5 @@ function oa_core_user_update(&$edit, $account, $category) {
     global $user;
     $account = $user;
   }
-  oa_core_clear_group_cache($account->uid);
+  oa_core_clear_group_cache(NULL, $account->uid);
 }

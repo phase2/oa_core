@@ -239,8 +239,8 @@ function oa_core_node_update($node) {
       // values are tested in hook_node_access_records
       entity_get_controller('node')->resetCache(array($node->nid));
       oa_core_update_access_records($nodes);
-      oa_core_clear_group_cache();
     }
+    oa_core_clear_group_cache($node->nid);
   }
   elseif ($node->type == OA_SECTION_TYPE) {
     // if section node changed from public to private, update content grants
