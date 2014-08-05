@@ -2,6 +2,8 @@
 /**
  * @file
  * Code for Utility functions for OpenAtrium spaces
+ *
+ * Also contains various node hooks (update,delete,insert) for cache handling
  */
 
 /**
@@ -15,7 +17,7 @@
  *   acting user.
  * @param $group_type
  *   (optional) The entity type of the groups to fetch. By default all group
- *   types will be fetched.
+ *   types will be fetched. (e.g. 'node', 'user')
  * @param bool $include_archived
  *   (optional) Whether to include archived nodes or not. By default, archived
  *   items aren't included.
@@ -24,6 +26,15 @@
  *   An array with the group IDs or an empty array, or returns NULL if there was an error
  */
 function oa_core_get_groups_by_user($account = NULL, $group_type = NULL, $include_archived = FALSE) {
+  if (empty($account)) {
+    global $user;
+    $account = $user;
+  }
+  $cid = _oa_core_get_cache_id('oa_groups_by_user', $account->uid, $include_archived, array($group_type));
+  if ($cache = cache_get($cid)) {
+    return $cache->data;
+  }
+
   $user_groups = og_get_groups_by_user($account, $group_type);
   if (!empty($group_type) && !empty($user_groups)) {
     $user_groups = array($group_type => $user_groups);
@@ -32,7 +43,7 @@ function oa_core_get_groups_by_user($account = NULL, $group_type = NULL, $includ
     $user_groups = og_subgroups_children_load_multiple($user_groups);
   }
 
-  if (!empty($user_groups) && !$include_archived) {
+  if (module_exists('flag') && !empty($user_groups) && !$include_archived) {
     if ($flag = flag_get_flag('trash')) {
       // Filter out groups that are archived.
       foreach ($user_groups['node'] as $nid) {
@@ -46,6 +57,9 @@ function oa_core_get_groups_by_user($account = NULL, $group_type = NULL, $includ
   if (!empty($group_type)) {
     $user_groups = (!empty($user_groups[$group_type])) ? $user_groups[$group_type] : array();
   }
+
+  // Cache the list of groups by user.
+  cache_set($cid, $user_groups);
 
   return $user_groups;
 }
@@ -124,37 +138,41 @@ function oa_core_get_section_context() {
  *   Array of parent NIDs.
  */
 function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $include_archived = FALSE) {
-  $cache = &drupal_static(__FUNCTION__);
-
-  if (!isset($cache[$nid][$bundle][$status][$include_archived])) {
-    $query = db_select('node', 'n');
-    $query->leftJoin('og_membership', 'f', "n.nid = f.gid");
-    if (isset($bundle)) {
-      $query->condition('n.type', $bundle);
-    }
-    if (isset($status)) {
-      $query->condition('n.status', $status);
-    }
-    $query
-      ->fields('n', array('nid'))
-      ->condition('f.etid', $nid)
-      ->condition('f.entity_type', 'node')
-      ->orderBy('n.title')
-      ->addTag('node_access');
-
-    if (!$include_archived) {
-      if ($flag = flag_get_flag('trash')) {
-        $query->leftJoin('flag_content', 'a', "a.fid = :fid AND a.content_id = n.nid", array(':fid' => $flag->fid));
-        // This makes sure that archived content isn't included, because 'uid'
-        // will be NULL if the join didn't connect anything.
-        $query->isNull('a.uid');
-      }
-    }
-
-    $result = $query->execute()->fetchCol(0);
-    $cache[$nid][$bundle][$status][$include_archived] = $result;
+  $cid = _oa_core_get_cache_id('oa_get_parents', $nid, $include_archived, array($bundle, $status));
+  if ($cache = cache_get($cid)) {
+    return $cache->data;
   }
-  return $cache[$nid][$bundle][$status][$include_archived];
+
+  $query = db_select('node', 'n');
+  $query->leftJoin('og_membership', 'f', "n.nid = f.gid");
+  if (isset($bundle)) {
+    $query->condition('n.type', $bundle);
+  }
+  if (isset($status)) {
+    $query->condition('n.status', $status);
+  }
+  $query
+    ->fields('n', array('nid'))
+    ->condition('f.etid', $nid)
+    ->condition('f.entity_type', 'node')
+    ->orderBy('n.title')
+    ->addTag('node_access');
+
+  if (module_exists('flag') && !$include_archived) {
+    if ($flag = flag_get_flag('trash')) {
+      $query->leftJoin('flag_content', 'a', "a.fid = :fid AND a.content_id = n.nid", array(':fid' => $flag->fid));
+      // This makes sure that archived content isn't included, because 'uid'
+      // will be NULL if the join didn't connect anything.
+      $query->isNull('a.uid');
+    }
+  }
+
+  $result = $query->execute()->fetchCol(0);
+
+  // Cache the list of parents.
+  cache_set($cid, $result);
+
+  return $result;
 }
 
 /**
@@ -177,47 +195,50 @@ function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $inc
  *   Array of children NIDs.
  */
 function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $include_archived = FALSE) {
-  $cache = &drupal_static(__FUNCTION__);
-
-  if (!isset($cache[$nid][$bundle][$status][$include_archived])) {
-    $query = db_select('node', 'n');
-    $query->leftJoin('og_membership', 'f', "n.nid = f.etid");
-    $query
-      ->fields('n', array('nid'))
-      ->condition('n.type', $bundle)
-      ->orderBy('n.title')
-      ->addTag('node_access');
-
-    if ($nid == 0) {
-      $query->isNull('f.gid');
-    }
-    else {
-      $query
-        ->condition('f.gid', $nid)
-        ->condition('f.entity_type', 'node');
-    }
-
-    if (isset($bundle)) {
-      $query->condition('n.type', $bundle);
-    }
-    if (isset($status)) {
-      $query->condition('n.status', $status);
-    }
-
-    if (!$include_archived) {
-      if ($flag = flag_get_flag('trash')) {
-        $query->leftJoin('flag_content', 'a', "a.fid = :fid AND a.content_id = n.nid", array(':fid' => $flag->fid));
-        // This makes sure that archived content isn't included, because 'uid'
-        // will be NULL if the join didn't connect anything.
-        $query->isNull('a.uid');
-      }
-    }
-
-    $result = $query->execute()->fetchCol(0);
-    $cache[$nid][$bundle][$status][$include_archived] = $result;
+  $cid = _oa_core_get_cache_id('oa_get_groups_by_parent', $nid, $include_archived, array($bundle, $status));
+  if ($cache = cache_get($cid)) {
+    return $cache->data;
   }
 
-  return $cache[$nid][$bundle][$status][$include_archived];
+  $query = db_select('node', 'n');
+  $query->leftJoin('og_membership', 'f', "n.nid = f.etid");
+  $query
+    ->fields('n', array('nid'))
+    ->condition('n.type', $bundle)
+    ->orderBy('n.title')
+    ->addTag('node_access');
+
+  if ($nid == 0) {
+    $query->isNull('f.gid');
+  }
+  else {
+    $query
+      ->condition('f.gid', $nid)
+      ->condition('f.entity_type', 'node');
+  }
+
+  if (isset($bundle)) {
+    $query->condition('n.type', $bundle);
+  }
+  if (isset($status)) {
+    $query->condition('n.status', $status);
+  }
+
+  if (module_exists('flag') && !$include_archived) {
+    if ($flag = flag_get_flag('trash')) {
+      $query->leftJoin('flag_content', 'a', "a.fid = :fid AND a.content_id = n.nid", array(':fid' => $flag->fid));
+      // This makes sure that archived content isn't included, because 'uid'
+      // will be NULL if the join didn't connect anything.
+      $query->isNull('a.uid');
+    }
+  }
+
+  $result = $query->execute()->fetchCol(0);
+
+  // Cache the list of parents.
+  cache_set($cid, $result);
+
+  return $result;
 }
 
 /**
@@ -361,7 +382,7 @@ function oa_core_create_node($bundle, $title = '', $context = NULL) {
  *   'ids' is a list of the node ids
  */
 function oa_core_get_titles($ids = array(), $type = '', $sort_field = 'title') {
-  $items = array('titles' => array(), 'links' => array(), 'ids' => array());
+  $items = array('titles' => array(), 'links' => array(), 'ids' => array(), 'type' => array());
   if (!empty($ids)) {
     $query = db_select('node', 'n');
     if (!empty($sort_field) && ($sort_field != 'title')) {
@@ -369,7 +390,7 @@ function oa_core_get_titles($ids = array(), $type = '', $sort_field = 'title') {
         "n.nid = s.entity_id AND s.entity_type = 'node'");
     }
     $query
-      ->fields('n', array('nid', 'title'))
+      ->fields('n', array('nid', 'title', 'type'))
       ->condition('n.nid', $ids, 'IN');
     if ($sort_field == 'title') {
       $query->orderBy('title');
@@ -385,6 +406,7 @@ function oa_core_get_titles($ids = array(), $type = '', $sort_field = 'title') {
       $items['ids'][]    = $row['nid'];
       $items['titles'][] = check_plain($row['title']);
       $items['links'][]  = l($row['title'], 'node/' . $row['nid']);
+      $items['type'][]   = $row['type'];
     }
   }
   return $items;
@@ -439,7 +461,7 @@ function oa_core_get_public_spaces($group_types = array(OA_SPACE_TYPE => OA_SPAC
     if (isset($status)) {
       $query->condition('n.status', $status);
     }
-    if (!$include_archived) {
+    if (module_exists('flag') && !$include_archived) {
       if ($flag = flag_get_flag('trash')) {
         $query->leftJoin('flag_content', 'a', "a.fid = :fid AND a.content_id = n.nid", array(':fid' => $flag->fid));
         // This makes sure that archived content isn't included, because 'uid'
@@ -687,4 +709,97 @@ function oa_core_get_vocab_terms($vocabs) {
     }
   }
   return $options;
+}
+
+/** Functions below implement hooks and helpers for caching **/
+
+/**
+ * Helper function to return a caching ids.
+ * @param $cache_name : The name of the cache table.
+ * @param null $id : if not-null, adds the id to the cache id.  Typically passes the $user->uid
+ * @param bool $include_archived : if TRUE, adds _archived to the cache id
+ * @param array $args : appends each argument to the cache id
+ * @return string : the cache_id for cache_get/set
+ */
+function _oa_core_get_cache_id($cache_name, $id = NULL, $include_archived = FALSE, $args = array()) {
+
+  $cid = $cache_name . '_';
+
+  if (!empty($id)) {
+    $cid .= $id;
+
+    if ($include_archived) {
+      $cid .= '_archived';
+    }
+
+    foreach ($args as $arg) {
+      $cid .= '_' . (!empty($arg) ? $arg : '');
+    }
+  }
+
+  return $cid;
+}
+
+/**
+ * Helper function to clear the user group cache.
+ */
+function oa_core_clear_group_cache($uid = NULL, $include_archived = FALSE) {
+  $cid = _oa_core_get_cache_id('oa_groups_by_user', $uid, $include_archived);
+  cache_clear_all($cid, 'cache', TRUE);
+
+  $cid = _oa_core_get_cache_id('oa_get_parents_', NULL, $include_archived);
+  cache_clear_all($cid, 'cache', TRUE);
+}
+
+/**
+ * Implements hook_flag().
+ */
+function oa_core_flag($op, $flag, $content_id, $account, $fcid) {
+  if ($flag->name == 'trash') {
+    if (empty($account)) {
+      global $user;
+      $account = $user;
+    }
+    oa_core_clear_group_cache($account->uid, TRUE);
+  }
+}
+
+/**
+ * Implements hook_flag_reset().
+ */
+function oa_core_flag_reset($flag, $entity_id, $rows) {
+  if ($flag->name == 'trash') {
+    oa_core_clear_group_cache();
+  }
+}
+
+/** hook_node_update is in oa_core.access.inc **/
+
+/**
+ * Implements hook_node_insert().
+ */
+function oa_core_node_insert($node) {
+  if (($node->type == OA_SPACE_TYPE) || ($node->type == OA_GROUP_TYPE)) {
+    oa_core_clear_group_cache();
+  }
+}
+
+/**
+ * Implements hook_node_delete().
+ */
+function oa_core_node_delete($node) {
+  if (($node->type == OA_SPACE_TYPE) || ($node->type == OA_GROUP_TYPE)) {
+    oa_core_clear_group_cache();
+  }
+}
+
+/**
+ * Implements hook_user_update()
+ */
+function oa_core_user_update(&$edit, $account, $category) {
+  if (empty($account)) {
+    global $user;
+    $account = $user;
+  }
+  oa_core_clear_group_cache($account->uid);
 }

@@ -222,7 +222,7 @@ function oa_core_node_access($node, $op, $account) {
  * if saving a section or space node, update access locks on related content
  */
 function oa_core_node_update($node) {
-  if ($node->type == OA_SPACE_TYPE) {
+  if (($node->type == OA_SPACE_TYPE) || ($node->type == OA_GROUP_TYPE)) {
     // check if group access changed and update space content grants
     if (isset($node->group_access[LANGUAGE_NONE][0]['value']) &&
       isset($node->original->group_access[LANGUAGE_NONE][0]['value']) &&
@@ -239,6 +239,7 @@ function oa_core_node_update($node) {
       // values are tested in hook_node_access_records
       entity_get_controller('node')->resetCache(array($node->nid));
       oa_core_update_access_records($nodes);
+      oa_core_clear_group_cache();
     }
   }
   elseif ($node->type == OA_SECTION_TYPE) {
