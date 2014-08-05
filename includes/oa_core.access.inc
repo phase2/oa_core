@@ -240,7 +240,7 @@ function oa_core_node_update($node) {
       entity_get_controller('node')->resetCache(array($node->nid));
       oa_core_update_access_records($nodes);
     }
-    oa_core_clear_group_cache($node->nid);
+    oa_core_clear_group_cache($node);
   }
   elseif ($node->type == OA_SECTION_TYPE) {
     // if section node changed from public to private, update content grants

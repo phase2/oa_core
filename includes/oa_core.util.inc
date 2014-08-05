@@ -39,17 +39,11 @@ function oa_core_get_groups_by_user($account = NULL, $group_type = NULL, $includ
     $account = $user;
   }
 
-  $cid = _oa_core_get_cache_id(OA_CACHE_GROUPS_BY_USER, $account->uid, $include_archived, array($group_type));
-
-  $static_cache = &drupal_static(OA_CACHE_GROUPS_BY_USER);
-  if (isset($static_cache[$cid])) {
-    return $static_cache[$cid];
+  $cid = oa_core_get_cache_id(OA_CACHE_GROUPS_BY_USER, $account->uid, $include_archived, array($group_type));
+  if (oa_core_get_cache(OA_CACHE_GROUPS_BY_USER, $cid, $result)) {
+    return $result;
   }
-
-  if ($cache = cache_get($cid)) {
-    $static_cache[$cid] = $cache->data;
-    return $cache->data;
-  }
+dsm('MISS');
 
   $user_groups = og_get_groups_by_user($account, $group_type);
   if (!empty($group_type) && !empty($user_groups)) {
@@ -74,9 +68,7 @@ function oa_core_get_groups_by_user($account = NULL, $group_type = NULL, $includ
     $user_groups = (!empty($user_groups[$group_type])) ? $user_groups[$group_type] : array();
   }
 
-  // Cache the list of groups by user.
-  $static_cache[$cid] = $user_groups;
-  cache_set($cid, $user_groups);
+  oa_core_set_cache(OA_CACHE_GROUPS_BY_USER, $cid, $user_groups);
 
   return $user_groups;
 }
@@ -155,16 +147,10 @@ function oa_core_get_section_context() {
  *   Array of parent NIDs.
  */
 function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $include_archived = FALSE) {
-  $cid = _oa_core_get_cache_id(OA_CACHE_GET_PARENTS, $nid, $include_archived, array($bundle, $status));
 
-  $static_cache = &drupal_static(OA_CACHE_GET_PARENTS);
-  if (isset($static_cache[$cid])) {
-    return $static_cache[$cid];
-  }
-
-  if ($cache = cache_get($cid)) {
-    $static_cache[$cid] = $cache->data;
-    return $cache->data;
+  $cid = oa_core_get_cache_id(OA_CACHE_GET_PARENTS, $nid, $include_archived, array($bundle, $status));
+  if (oa_core_get_cache(OA_CACHE_GET_PARENTS, $cid, $result)) {
+    return $result;
   }
 
   $query = db_select('node', 'n');
@@ -193,9 +179,7 @@ function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $inc
 
   $result = $query->execute()->fetchCol(0);
 
-  // Cache the list of parents.
-  $static_cache[$cid] = $result;
-  cache_set($cid, $result);
+  oa_core_set_cache(OA_CACHE_GET_PARENTS, $cid, $result);
 
   return $result;
 }
@@ -220,16 +204,10 @@ function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $inc
  *   Array of children NIDs.
  */
 function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $include_archived = FALSE) {
-  $cid = _oa_core_get_cache_id(OA_CACHE_GROUPS_BY_PARENT, $nid, $include_archived, array($bundle, $status));
 
-  $static_cache = &drupal_static(OA_CACHE_GROUPS_BY_PARENT);
-  if (isset($static_cache[$cid])) {
-    return $static_cache[$cid];
-  }
-
-  if ($cache = cache_get($cid)) {
-    $static_cache[$cid] = $cache->data;
-    return $cache->data;
+  $cid = oa_core_get_cache_id(OA_CACHE_GROUPS_BY_PARENT, $nid, $include_archived, array($bundle, $status));
+  if (oa_core_get_cache(OA_CACHE_GROUPS_BY_PARENT, $cid, $result)) {
+    return $result;
   }
 
   $query = db_select('node', 'n');
@@ -267,9 +245,7 @@ function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE, $status = N
 
   $result = $query->execute()->fetchCol(0);
 
-  // Cache the list of parents.
-  $static_cache[$cid] = $result;
-  cache_set($cid, $result);
+  oa_core_set_cache(OA_CACHE_GROUPS_BY_PARENT, $cid, $result);
 
   return $result;
 }
@@ -742,103 +718,4 @@ function oa_core_get_vocab_terms($vocabs) {
     }
   }
   return $options;
-}
-
-/** Functions below implement hooks and helpers for caching **/
-
-/**
- * Helper function to return a caching ids.
- * @param $cache_name : The name of the cache table.
- * @param null $id : if not-null, adds the id to the cache id.  Typically passes the $user->uid
- * @param bool $include_archived : if TRUE, adds _archived to the cache id
- * @param array $args : appends each argument to the cache id
- * @return string : the cache_id for cache_get/set
- */
-function _oa_core_get_cache_id($cache_name, $id = NULL, $include_archived = FALSE, $args = array()) {
-
-  $cid = $cache_name . '_';
-
-  if (!empty($id)) {
-    $cid .= $id;
-
-    if ($include_archived) {
-      $cid .= '_archived';
-    }
-
-    foreach ($args as $arg) {
-      $cid .= '_' . (!empty($arg) ? $arg : '');
-    }
-  }
-
-  return $cid;
-}
-
-/**
- * Helper function to clear the user group cache.
- */
-function oa_core_clear_group_cache($nid = NULL, $uid = NULL, $include_archived = FALSE) {
-  $cid = _oa_core_get_cache_id(OA_CACHE_GROUPS_BY_USER, $uid, $include_archived);
-  cache_clear_all($cid, 'cache', TRUE);
-  drupal_static_reset(OA_CACHE_GROUPS_BY_USER);
-
-  $cid = _oa_core_get_cache_id(OA_CACHE_GET_PARENTS, NULL, $include_archived);
-  cache_clear_all($cid, 'cache', TRUE);
-  drupal_static_reset(OA_CACHE_GET_PARENTS);
-
-  $cid = _oa_core_get_cache_id(OA_CACHE_GROUPS_BY_PARENT, $nid, $include_archived);
-  cache_clear_all($cid, 'cache', TRUE);
-  drupal_static_reset(OA_CACHE_GROUPS_BY_PARENT);
-}
-
-/**
- * Implements hook_flag().
- */
-function oa_core_flag($op, $flag, $content_id, $account, $fcid) {
-  if ($flag->name == 'trash') {
-    if (empty($account)) {
-      global $user;
-      $account = $user;
-    }
-    oa_core_clear_group_cache(NULL, $account->uid, TRUE);
-  }
-}
-
-/**
- * Implements hook_flag_reset().
- */
-function oa_core_flag_reset($flag, $entity_id, $rows) {
-  if ($flag->name == 'trash') {
-    oa_core_clear_group_cache();
-  }
-}
-
-/** hook_node_update is in oa_core.access.inc **/
-
-/**
- * Implements hook_node_insert().
- */
-function oa_core_node_insert($node) {
-  if (($node->type == OA_SPACE_TYPE) || ($node->type == OA_GROUP_TYPE)) {
-    oa_core_clear_group_cache($node->nid);
-  }
-}
-
-/**
- * Implements hook_node_delete().
- */
-function oa_core_node_delete($node) {
-  if (($node->type == OA_SPACE_TYPE) || ($node->type == OA_GROUP_TYPE)) {
-    oa_core_clear_group_cache($node->nid);
-  }
-}
-
-/**
- * Implements hook_user_update()
- */
-function oa_core_user_update(&$edit, $account, $category) {
-  if (empty($account)) {
-    global $user;
-    $account = $user;
-  }
-  oa_core_clear_group_cache(NULL, $account->uid);
 }
