@@ -43,7 +43,6 @@ function oa_core_get_groups_by_user($account = NULL, $group_type = NULL, $includ
   if (oa_core_get_cache(OA_CACHE_GROUPS_BY_USER, $cid, $result)) {
     return $result;
   }
-dsm('MISS');
 
   $user_groups = og_get_groups_by_user($account, $group_type);
   if (!empty($group_type) && !empty($user_groups)) {
