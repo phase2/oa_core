@@ -52,7 +52,7 @@ function oa_core_node_grants($account, $op) {
   $cache = &drupal_static(__FUNCTION__, array());
 
   if ($op != 'view' || !$account->uid) {
-    return;
+    return array();
   }
 
   if (isset($cache[$account->uid])) {
@@ -370,6 +370,15 @@ function oa_core_og_membership_insert($og_membership) {
   }
 }
 
+/**
+ * Utility function to return visibility data for a given node
+ * $data['public'] TRUE if node is public, FALSE if private
+ * $data['title'] either "Public" or "Private"
+ * $data['accessors']['group'] list of groups that can access
+ * $data['accessors']['space'] list of spaces that can access
+ * $data['accessors']['teams'] list of teams that can access
+ * $data['accessors']['users'] list of users that can access
+ */
 function oa_core_visibility_data($node) {
   $data = array();
   $data['published'] = !empty($node->status);

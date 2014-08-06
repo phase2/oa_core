@@ -488,7 +488,7 @@ function oa_core_get_public_spaces($group_types = array(OA_SPACE_TYPE => OA_SPAC
  * Return a list of sections within a space
  * Uses access control, so only sections with access are returned
  * @param  int $gid space ID
- * @return keyed array of section data: $array[$nid] = $title
+ * @return array of section data: $array[$nid] = $title
  */
 function oa_core_space_sections($gid, $status = NULL, $bypass_access_check = FALSE) {
   $query = db_select('node', 'n');
@@ -615,6 +615,9 @@ function oa_core_sort_users_by_name($u1, $u2) {
   return strcasecmp($name1, $name2);
 }
 
+/**
+ * Helper to return last word of a string
+ */
 function oa_core_get_last_word($string) {
   return ($pos =  strrpos($string, ' ')) ?  substr($string, $pos + 1) : $string;
 }

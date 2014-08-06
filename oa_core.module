@@ -54,6 +54,7 @@ function oa_core_ctools_plugin_directory($owner, $plugin_type) {
   elseif ($owner == 'entityreference') {
     return "plugins/entityreference/$plugin_type";
   }
+  return '';
 }
 
 /**
@@ -255,7 +256,6 @@ function oa_core_og_fields_info() {
         'target_type' => 'node',
       ),
       'translatable' => '0',
-      'type' => 'entityreference',
     ),
     'instance' => array(
       'label' => t('Open Atrium Section'),
@@ -474,7 +474,6 @@ function oa_core_add_member($group_type, $gid, $uid, $field_name = NULL, $type =
     return MENU_ACCESS_DENIED;
   }
 
-  $message = '';
   $account = user_load($uid);
 
   $is_user = ($user->uid == $account->uid) && ($user->uid != 1);
@@ -489,7 +488,7 @@ function oa_core_add_member($group_type, $gid, $uid, $field_name = NULL, $type =
     drupal_access_denied();
   }
 
-  $message = oa_core_add_member_api($group_type, $gid, $uid, !$is_user);
+  oa_core_add_member_api($group_type, $gid, $uid, !$is_user);
 
   if ($type != 'ajax') {
     drupal_goto();
@@ -500,8 +499,7 @@ function oa_core_add_member($group_type, $gid, $uid, $field_name = NULL, $type =
     $page = array('#type' => 'ajax', '#commands' => $commands);
     ajax_deliver($page);
   }
-
-  return;
+  return NULL;
 }
 
 /**
@@ -542,6 +540,7 @@ function oa_core_remove_member($group_type, $gid, $from_children, $uid, $type = 
     $page = array('#type' => 'ajax', '#commands' => $commands);
     ajax_deliver($page);
   }
+  return NULL;
 }
 
 /**
@@ -557,7 +556,6 @@ function oa_core_block_member($group_type, $gid, $uid, $type = 'nojs') {
   $account = user_load($uid);
   $group = entity_load_single($group_type, $gid);
   $label = entity_label($group_type, $group);
-  $username = format_username($account);
   og_ungroup('node', $group->nid, 'user', $account);
   // add user to group
   og_group('node', $group->nid, array('entity' => $account, 'state' => OG_STATE_BLOCKED));
@@ -573,6 +571,7 @@ function oa_core_block_member($group_type, $gid, $uid, $type = 'nojs') {
     $page = array('#type' => 'ajax', '#commands' => $commands);
     ajax_deliver($page);
   }
+  return NULL;
 }
 
 /**
@@ -606,6 +605,7 @@ function oa_core_add_admin($group_type, $gid, $uid, $type = 'nojs') {
     $page = array('#type' => 'ajax', '#commands' => $commands);
     ajax_deliver($page);
   }
+  return NULL;
 }
 
 /**
@@ -639,7 +639,7 @@ function oa_core_remove_admin($group_type, $gid, $uid, $type = 'nojs') {
     $page = array('#type' => 'ajax', '#commands' => $commands);
     ajax_deliver($page);
   }
-  return;
+  return NULL;
 }
 
 /**
@@ -702,15 +702,16 @@ function oa_core_form_views_content_views_panes_content_type_edit_form_alter(&$f
   // Add in te Active options
   // @todo be a bit smarter on this, check type of field.
   $group = oa_core_get_space_context();
-  $has_active_space = ($group_node = node_load($group)) && ($group_node->type == OA_SPACE_TYPE);
   if (isset($form['exposed']['filter-oa_parent_space_target_id']['oa_parent_space_target_id'])) {
-    $form['exposed']['filter-oa_parent_space_target_id']['oa_parent_space_target_id']['#options'] = array('' => t('- Active Group -')) + $form['exposed']['filter-oa_parent_space_target_id']['oa_parent_space_target_id']['#options'];
+    $form['exposed']['filter-oa_parent_space_target_id']['oa_parent_space_target_id']['#options'] =
+      array('' => t('- Active Group -')) + $form['exposed']['filter-oa_parent_space_target_id']['oa_parent_space_target_id']['#options'];
     if (!isset($pane->configuration['exposed']['oa_parent_space_target_id'])) {
       $pane->configuration['exposed']['oa_parent_space_target_id'] = '';
     }
   }
   if (isset($form['exposed']['filter-og_group_ref_target_id']['og_group_ref_target_id'])) {
-    $form['exposed']['filter-og_group_ref_target_id']['og_group_ref_target_id']['#options'] = array('' => t('- Active Space -')) + $form['exposed']['filter-og_group_ref_target_id']['og_group_ref_target_id']['#options'];
+    $form['exposed']['filter-og_group_ref_target_id']['og_group_ref_target_id']['#options'] =
+      array('' => t('- Active Space -')) + $form['exposed']['filter-og_group_ref_target_id']['og_group_ref_target_id']['#options'];
     if (!isset($pane->configuration['exposed']['og_group_ref_target_id'])) {
       $pane->configuration['exposed']['og_group_ref_target_id'] = '';
     }
@@ -733,12 +734,16 @@ function oa_core_form_views_content_views_panes_content_type_edit_form_alter(&$f
     }
 
     // Refresh the sections with currently selected group if not currently active group but not empty.
-    if (!empty($pane->configuration['exposed']['og_group_ref_target_id']) && !isset($_POST['exposed']['og_group_ref_target_id']) && $pane->configuration['exposed']['og_group_ref_target_id'] != $group && is_numeric($pane->configuration['exposed']['og_group_ref_target_id'])) {
+    if (!empty($pane->configuration['exposed']['og_group_ref_target_id']) &&
+        !isset($_POST['exposed']['og_group_ref_target_id']) &&
+        $pane->configuration['exposed']['og_group_ref_target_id'] != $group &&
+        is_numeric($pane->configuration['exposed']['og_group_ref_target_id'])) {
       _oa_sections_get_current_selected_space(NULL, $pane->configuration['exposed']['og_group_ref_target_id']);
     }
     $form['exposed']['filter-oa_section_ref_target_id']['oa_section_ref_target_id']['#after_build'][] = 'oa_core_refresh_section_values';
 
-    $form['exposed']['filter-oa_section_ref_target_id']['oa_section_ref_target_id']['#options'] = array('' => t('- Active Section -')) + $form['exposed']['filter-oa_section_ref_target_id']['oa_section_ref_target_id']['#options'];
+    $form['exposed']['filter-oa_section_ref_target_id']['oa_section_ref_target_id']['#options'] =
+      array('' => t('- Active Section -')) + $form['exposed']['filter-oa_section_ref_target_id']['oa_section_ref_target_id']['#options'];
     if (!isset($pane->configuration['exposed']['oa_section_ref_target_id'])) {
       $pane->configuration['exposed']['oa_section_ref_target_id'] = '';
     }
@@ -858,6 +863,9 @@ function oa_core_form_views_exposed_form_alter(&$form, $form_state) {
   }
 }
 
+/**
+ * Helper function to unset fields we do not need
+ */
 function oa_core_views_exposed_form_rearrange($form) {
   if (!empty($form['og_group_ref_target_id_mine']) || !empty($form['og_subspaces_view_all'])) {
     $form['og_group_ref_target_id'] = array(
@@ -915,9 +923,9 @@ function oa_core_get_alias($nid) {
  * Implements hook_tokens().
  */
 function oa_core_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacements = array();
   if ($type == 'node' && !empty($data['node']) && isset($tokens['group-or-section-alias'])) {
     $node = $data['node'];
-    $replacements = array();
     $original = $tokens['group-or-section-alias'];
     $section = field_get_items('node', $node, OA_SECTION_FIELD);
     $space = field_get_items('node', $node, OA_SPACE_FIELD);
@@ -949,8 +957,8 @@ function oa_core_tokens($type, $tokens, array $data = array(), array $options = 
     else {
       $replacements[$original] = 'content';
     }
-    return $replacements;
   }
+  return $replacements;
 }
 
 /**
