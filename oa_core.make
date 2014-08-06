@@ -8,7 +8,7 @@ core = 7.x
 
 ; Features
 ; Override panopoly_core.make: 2.0
-projects[features][version] = 2.1
+projects[features][version] = 2.2
 projects[features][subdir] = contrib
 
 ; Views
