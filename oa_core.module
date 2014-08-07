@@ -692,7 +692,6 @@ function oa_core_views_pre_view(&$view) {
   }
 }
 
-
 /**
  * Implements hook_form_FORM_ID_alter().
  */
@@ -795,6 +794,14 @@ function oa_core_refresh_section_values($element) {
  * module implements alter and puts itself last. Argh!
  */
 function oa_core_form_views_content_views_panes_content_type_edit_process($element, &$form_state) {
+  if (isset($form_state['complete form']['content_settings']['view_mode']['#default_value']) &&
+    !in_array($form_state['complete form']['content_settings']['view_mode']['#default_value'], array_keys($form_state['complete form']['content_settings']['view_mode']['#options']))) {
+    // In Recent Activity view, Message entities do not have a "teaser" view, which is the
+    // default view_mode.  So set the view_mode to the first available option (full)
+    // to avoid "Illegal choice" errors
+    $form_state['complete form']['content_settings']['view_mode']['#default_value'] = current(array_keys($form_state['complete form']['content_settings']['view_mode']['#options']));
+
+  }
   if (isset($element['preview']['#ajax'])) {
     $element['preview']['#ajax']['callback'] = 'oa_core_refresh_oa_section_ref_target_id';
   }
@@ -855,10 +862,25 @@ function oa_core_form_views_exposed_form_alter(&$form, $form_state) {
   // Otherwise you'll get the 'An illegal choice has been detected.' message
   // when selecting a Section in another Space.
   if (!empty($form_state['input']['og_group_ref_target_id']) && !empty($form['oa_section_ref_target_id'])) {
+    $view = $form_state['view'];
+    $exposed_form_overrides = $view->display_handler->get_option('exposed_form_overrides');
+    $pane_conf = $view->display_handler->get_option('pane_conf');
+    $bypass_access = FALSE;
+    if (isset($exposed_form_overrides['filters']['oa_section_ref_target_id'])) {
+      // filter is available on panel pane config form
+      if (empty($exposed_form_overrides['filters']['oa_section_ref_target_id']) ||
+        (isset($pane_conf['show_exposed_form']) && empty($pane_conf['show_exposed_form']))) {
+        // if field is not exposed, then bypass access so pane config
+        // options do not cause "Illegal choice" error on page
+        // when displaying widgets from private sections
+        $bypass_access = TRUE;
+      }
+    }
+
     $sections = array(
       ''    => t('- Active Section -'),
       'All' => t('- Any -')
-    ) + oa_core_space_sections($form_state['input']['og_group_ref_target_id'], NULL, TRUE);
+    ) + oa_core_space_sections($form_state['input']['og_group_ref_target_id'], NULL, $bypass_access);
     $form['oa_section_ref_target_id']['#options'] = $sections;
   }
 }
@@ -1242,7 +1264,9 @@ function oa_core_views_query_alter(&$view, &$query) {
       $group = $query->set_where_group('OR');
       foreach ($query->where[1]['conditions'] as $key => $condition) {
         // If the field is 'og_membership.gid' or an alias for the same column.
-        if (!empty($condition['field']) && ($condition['field'] === 'og_membership.gid' || substr($condition['field'], -19) === '__og_membership.gid')) {
+        $column = 'og_membership';
+        if (!empty($condition['field']) && ($condition['field'] === $column ||
+            substr($condition['field'], -strlen($column)-2) === "__{$column}")) {
           // Move the condition to our new where group.
           $query->add_where($group, $condition['field'], $condition['value'], $condition['operator']);
           $value = $condition['value'];
