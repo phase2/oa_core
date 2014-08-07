@@ -58,7 +58,16 @@ function oa_core_ctools_plugin_directory($owner, $plugin_type) {
 }
 
 /**
- * Implementations hook_menu().
+ * Implements hook_init();
+ */
+function oa_core_init() {
+  // prevent og-menu-single from participating in Drupal breadcrumb creation
+  // otherwise it will load every space node on the site
+  menu_tree_set_path('og-menu-single', '');
+}
+
+/**
+ * Implements hook_menu().
  */
 function oa_core_menu() {
   // Add an administration page for Open Atrium
