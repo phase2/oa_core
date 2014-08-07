@@ -158,6 +158,7 @@ function oa_news_panelizer_defaults() {
       'path' => NULL,
       'view_settings' => 'fields',
       'header_type' => 'none',
+      'show_exposed_form' => 0,
     );
     $pane->cache = array();
     $pane->style = array(
