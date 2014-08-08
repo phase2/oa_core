@@ -49,7 +49,7 @@ function oa_core_section_access($row, $spaces, $account) {
  * Define node access grant realm for Open Atrium sections
  */
 function oa_core_node_grants($account, $op) {
-  $cache = &drupal_static(__FUNCTION__, array());
+  $cache = &drupal_static('oa_core_node_grants', array());
 
   if ($op != 'view' || !$account->uid) {
     return array();
@@ -180,6 +180,7 @@ function oa_core_node_access_records($node) {
  * @param  array $nodes array of nids
  */
 function oa_core_update_access_records($nodes) {
+  drupal_static_reset('oa_core_node_grants');
   foreach ($nodes as $nid) {
     $node = node_load($nid);
     node_access_acquire_grants($node);
