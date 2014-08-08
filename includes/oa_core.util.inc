@@ -384,13 +384,25 @@ function oa_core_create_node($bundle, $title = '', $context = NULL) {
  * a list of node ids
  * @param  array  $ids array of node ids to fetch
  * @param  string $type optional node type to filter
+ * @param  array $fields a list of fields to fetch (link is a special fieldname)
  * @return array      associative array:
  *   'titles' is a list of node titles (clean)
  *   'links' is a list of node links
  *   'ids' is a list of the node ids
  */
-function oa_core_get_titles($ids = array(), $type = '', $sort_field = 'title') {
-  $items = array('titles' => array(), 'links' => array(), 'ids' => array(), 'type' => array());
+function oa_core_get_titles($ids = array(), $type = '', $sort_field = 'title', $fields = array('title', 'link', 'id', 'type')) {
+  $query_fields = array('nid', 'title');
+  $return = array();
+  foreach ($fields as $field) {
+    // for backwards compatibility the array keys of the $return are
+    // ids, titles, links, types.  So we append an 's' to the field name
+    $return[$field . 's'] = array();
+    // the 'link' and 'id' field names are handled specially and are not
+    // direct query field names
+    if (!in_array($field, array('link', 'id')) && !in_array($field, $query_fields)) {
+      $query_fields[] = $field;
+    }
+  }
   if (!empty($ids)) {
     $query = db_select('node', 'n');
     if (!empty($sort_field) && ($sort_field != 'title')) {
@@ -398,7 +410,7 @@ function oa_core_get_titles($ids = array(), $type = '', $sort_field = 'title') {
         "n.nid = s.entity_id AND s.entity_type = 'node'");
     }
     $query
-      ->fields('n', array('nid', 'title', 'type'))
+      ->fields('n', $query_fields)
       ->condition('n.nid', $ids, 'IN');
     if ($sort_field == 'title') {
       $query->orderBy('title');
@@ -411,13 +423,21 @@ function oa_core_get_titles($ids = array(), $type = '', $sort_field = 'title') {
     }
     $result = $query->execute();
     while ($row = $result->fetchAssoc()) {
-      $items['ids'][]    = $row['nid'];
-      $items['titles'][] = check_plain($row['title']);
-      $items['links'][]  = l($row['title'], 'node/' . $row['nid']);
-      $items['type'][]   = $row['type'];
+      foreach ($fields as $field) {
+        $field_name = ($field == 'id') ? 'nid' : $field;
+        $value = isset($row[$field_name]) ? $row[$field_name] : NULL;
+        if ($field == 'title') {
+          $value = check_plain($value);
+        }
+        if ($field == 'link') {
+          $value = l($row['title'], 'node/' . $row['nid']);
+        }
+        $return[$field . 's'][] = $value;
+      }
     }
   }
-  return $items;
+  dsm($return);
+  return $return;
 }
 
 /**
