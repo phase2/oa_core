@@ -16,24 +16,27 @@ class oa_coreSmoke extends oa_coreBaseWebTest {
   function test_oa_smoke() {
     extract($this->createOaSpaceAndUsers());
     $this->drupalLogin($space_admin);
-    $discussion_section_tid = taxonomy_get_term_by_name('Discussion Section')->tid;
+
+    $terms = taxonomy_get_term_by_name('Discussion Section');
     $discussion_section = $this->createNodeInOaSpace($space, array(
       'type' => 'oa_section',
-      'field_oa_section' => array(LANGUAGE_NONE => array(array('tid' => $discussion_section_tid)))
+      'field_oa_section' => array(LANGUAGE_NONE => array(array('tid' => current($terms)->tid)))
     ));
-    $calendar_section_tid = taxonomy_get_term_by_name('Calendar Section')->tid;
+
+    $terms = taxonomy_get_term_by_name('Calendar Section');
     $calendar_section = $this->createNodeInOaSpace($space, array(
       'type' => 'oa_section',
-      'field_oa_section' => array(LANGUAGE_NONE => array(array('tid' => $calendar_section_tid)))
+      'field_oa_section' => array(LANGUAGE_NONE => array(array('tid' => current($terms)->tid)))
     ));
-    $document_section_tid = taxonomy_get_term_by_name('News Section')->tid;
+
+    $terms = taxonomy_get_term_by_name('News Section');
     $document_section = $this->createNodeInOaSpace($space, array(
       'type' => 'oa_section',
-      'field_oa_section' => array(LANGUAGE_NONE => array(array('tid' => $document_section_tid)))
+      'field_oa_section' => array(LANGUAGE_NONE => array(array('tid' => current($terms)->tid)))
     ));
 
     $this->drupalGet('node/' . $space->nid);
-    $this->assertText('<h3 class="pane-title">Recent Activity</h3>',  t('Recent Activity widget visible on space'));
+    $this->assertRaw('<h3 class="pane-title">Recent Activity</h3>',  t('Recent Activity widget visible on space'));
     $this->assertText($discussion_section->title,  t('Discussion section visible on space'));
     $this->assertText($calendar_section->title,  t('Calendar section visible on space'));
     $this->assertText($document_section->title,  t('News section visible on space'));
