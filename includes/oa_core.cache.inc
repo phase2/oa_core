@@ -123,7 +123,15 @@ function oa_core_flag_reset($flag, $entity_id, $rows) {
  */
 function oa_core_node_insert($node) {
   if (($node->type == OA_SPACE_TYPE) || ($node->type == OA_GROUP_TYPE)) {
+    entity_get_controller('node')->resetCache(array($node->nid));
+    drupal_static_reset('oa_core_node_grants');
     oa_core_clear_group_cache($node);
+  }
+  elseif ($node->type == OA_SECTION_TYPE) {
+    // clear the static node cache for the space node so correct access
+    // values are tested in hook_node_access_records
+    entity_get_controller('node')->resetCache(array($node->nid));
+    drupal_static_reset('oa_core_node_grants');
   }
 }
 
