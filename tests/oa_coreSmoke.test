@@ -40,6 +40,9 @@ class oa_coreSmoke extends oa_coreBaseWebTest {
     $this->assertText($discussion_section->title,  t('Discussion section visible on space'));
     $this->assertText($calendar_section->title,  t('Calendar section visible on space'));
     $this->assertText($document_section->title,  t('News section visible on space'));
+    $this->assertText($space_admin->name . ' ' . t('created') . ' ' . $discussion_section->title,  t('Discussion section appears in recent activity'));
+    $this->assertText($space_admin->name . ' ' . t('created') . ' ' . $calendar_section->title,  t('Calendar section appears in recent activity'));
+    $this->assertText($space_admin->name . ' ' . t('created') . ' ' . $document_section->title,  t('News section appears in recent activity'));
     $this->assertText('Create Discussion Post',  t('Create Discussion visible on space'));
     $this->assertText('Create Document Page',  t('Create Document Page visible on space'));
     $this->assertText('Create Event',  t('Create Event visible on space'));
