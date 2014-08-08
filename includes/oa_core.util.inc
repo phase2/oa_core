@@ -436,7 +436,6 @@ function oa_core_get_titles($ids = array(), $type = '', $sort_field = 'title', $
       }
     }
   }
-  dsm($return);
   return $return;
 }
 
