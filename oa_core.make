@@ -247,11 +247,8 @@ projects[node_clone][subdir] = contrib
 
 ; ##### Organic Groups related #####
 ; Organic Groups
-projects[og][version] = 2.x-dev
+projects[og][version] = 2.7
 projects[og][subdir] = contrib
-projects[og][download][type] = git
-projects[og][download][branch] = 7.x-2.x
-projects[og][download][revision] = 8bdb48
 
 ; Organic Groups Vocabulary
 projects[og_vocab][version] = 1.2
