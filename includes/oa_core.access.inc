@@ -470,7 +470,8 @@ function _oa_core_build_visibility_links($type, $node, $field, $bundle = '') {
       }
       elseif ($type == 'user') {
         $user = user_load($value['target_id']);
-        $links[] = l($user->name, "user/" . $user->uid);
+        $user_name = format_username($user);
+        $links[] = l($user_name, "user/" . $user->uid);
       }
     }
   }
