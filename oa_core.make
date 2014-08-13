@@ -202,6 +202,7 @@ projects[conditional_fields][download][revision] = cd29b00
 projects[conditional_fields][patch][1982276] = http://drupal.org/files/conditional_fields-typo-in-if-condition-1982276-1.patch
 projects[conditional_fields][patch][2027307] = http://drupal.org/files/conditional_fields-export-0.patch
 projects[conditional_fields][patch][1916988] = http://drupal.org/files/1916988-conditional-fields-alter-3.patch
+projects[conditional_fields][patch][1542706] = http://drupal.org/files/issues/conditional-fields-1542706-values-not-saving-72.patch
 
 ; Reference Option Limit
 projects[reference_option_limit][version] = 1.x-dev
