@@ -11,6 +11,12 @@
   max-width: 100%;
 }
 
+#modal-content .widget-preview-title {
+  /* move Add button to left so wide tables doesnt scroll */
+  left: 10px;
+  right: auto;
+}
+
 .oa_pending_count {
   display: inline-block;
   background-color: green;
