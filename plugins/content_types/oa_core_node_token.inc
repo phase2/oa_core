@@ -56,7 +56,7 @@ function oa_core_node_token_edit_form($form, &$form_state) {
     '#title' => t('Displayed Text'),
     '#description' => t('Enter the full text to be displayed, including any token references.'),
     '#type' => 'text_format',
-    '#format' => 'panopoly_wysiwyg_text',
+    '#format' => isset($conf['token_body']['format']) ? $conf['token_body']['format'] : 'panopoly_wysiwyg_text',
     '#default_value' => isset($conf['token_body']['value']) ? $conf['token_body']['value'] : '',
   );
   $form['tokens'] = array(
