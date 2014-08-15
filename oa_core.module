@@ -1274,7 +1274,7 @@ function oa_core_views_query_alter(&$view, &$query) {
       foreach ($query->where[1]['conditions'] as $key => $condition) {
         // If the field is 'og_membership.gid' or an alias for the same column.
         $column = 'og_membership';
-        if (!empty($condition['field']) && ($condition['field'] === $column ||
+        if (!empty($condition['field']) && is_string($condition['field']) && ($condition['field'] === $column ||
             substr($condition['field'], -strlen($column)-2) === "__{$column}")) {
           // Move the condition to our new where group.
           $query->add_where($group, $condition['field'], $condition['value'], $condition['operator']);
