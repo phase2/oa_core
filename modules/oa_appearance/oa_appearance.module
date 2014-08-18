@@ -222,6 +222,10 @@ function oa_appearance_edit_form($form, &$form_state, $entity_type, $entity_id) 
     '#type' => 'submit',
     '#value' => t('Save configuration'),
   );
+  $form['actions']['save_default'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save as default'),
+  );
   $form['colorizer_clearcache'] = array(
     '#type' => 'submit',
     '#value' => t('Clear Colorizer Cache'),
@@ -466,6 +470,9 @@ function oa_appearance_get_space_colorizer_instance($base_instance, $space_id) {
           // fallback on the site-wide default.
           $instance = $base_instance;
         }
+      }
+      elseif (!$space) {
+        $instance = $base_instance;
       }
 
       $static_cache[$space_id] = $instance;
