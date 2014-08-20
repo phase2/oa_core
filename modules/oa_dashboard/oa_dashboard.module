@@ -55,6 +55,17 @@ function oa_dashboard_form_oa_core_configure_form_alter(&$form, &$form_state, $f
     '#description' => t('Select whether only top-level spaces are shown in list next to home button.'),
   );
 
+  $form['oa_toolbar']['oa_toolbar_default_to_public'] = array(
+    '#title' => t('Show all public Spaces when the user is not a member of any Spaces.'),
+    '#type' => 'select',
+    '#required' => TRUE,
+    '#options' => array(
+      '1' => 'Yes',
+      '0' => 'No',
+    ),
+    '#default_value' => variable_get('oa_toolbar_default_to_public', 1),
+  );
+
 }
 
 /**
@@ -292,13 +303,14 @@ function template_preprocess_oa_toolbar(&$vars) {
     $spaces = oa_core_get_groups_by_user($user, 'node');
     $menu_title = ($space_type == OA_SPACE_TYPE) ? t('Subscribed Spaces') : t('Groups');
   }
-  if (empty($spaces)) {
+  if (empty($spaces) && variable_get('oa_toolbar_default_to_public', 1)) {
     // og_get_entity_groups doesn't return anything for anonymous users
     // so return list of all public spaces
     $spaces = oa_core_get_public_spaces(array(OA_SPACE_TYPE => OA_SPACE_TYPE), NODE_PUBLISHED);
     $menu_title = t('Public Spaces');
   }
   if (empty($spaces)) {
+    $menu_title = '';
     $list = array();
   }
   else {
