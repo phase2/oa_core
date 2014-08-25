@@ -50,6 +50,9 @@
 .oa-menu-banner img {
   vertical-align: baseline;
 }
+#oa-navbar .panel-panel .pane-oa-space-banner {
+  padding-top: 0;
+}
 /* Farbtastic tweaks */
 .colorizer-form .farbtastic {
   position: fixed;
