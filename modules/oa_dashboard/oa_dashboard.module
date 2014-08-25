@@ -55,6 +55,13 @@ function oa_dashboard_form_oa_core_configure_form_alter(&$form, &$form_state, $f
     '#description' => t('Select whether only top-level spaces are shown in list next to home button.'),
   );
 
+  $form['oa_toolbar']['oa_toolbar_mouseover'] = array(
+    '#title' => t('Allow mouse-hover actions in toolbar'),
+    '#type' => 'checkbox',
+    '#default_value' => variable_get('oa_toolbar_mouseover', FALSE),
+    '#description' => t('If enabled, show dropdown menus in toobar on mouse-hover.'),
+  );
+
 }
 
 /**
@@ -217,6 +224,10 @@ function template_preprocess_oa_navigation(&$vars) {
 function template_preprocess_oa_toolbar(&$vars) {
   global $user;
 
+  $settings = array(
+    'mouseover' => variable_get('oa_toolbar_mouseover', FALSE),
+  );
+  drupal_add_js(array('oa_dashboard' => $settings), 'setting');
   drupal_add_js(drupal_get_path('module', 'oa_dashboard') . '/js/oa-dashboard.js');
 
   // Separators

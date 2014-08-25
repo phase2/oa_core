@@ -5,8 +5,15 @@
 
 (function ($) {
 
+  var $use_mouseover;
+
   Drupal.behaviors.oaDashboard = {
     attach: function(context, settings) {
+      // Remove Radix dropdown on hover.
+
+      console.log('resetting');
+      $use_mouseover = settings.oa_dashboard.mouseover;
+
       var $oa_navbar = $('#oa-navbar');
       var $navbar = $('#navbar-bar');
       var $oa_responsive_navbar = $('#oa-responsive-regions-navbar');
@@ -35,6 +42,17 @@
         $('body').css('padding-top', $height);
       }
     }
-  }
+  };
+
+  $(window).load(function() {
+    console.log('unloading');
+    if (!$use_mouseover) {
+      $('.radix-dropdown-processed').each(function(){
+        // Show dropdown on hover.
+        $(this).unbind('mouseenter');
+        $(this).unbind('mouseleave');
+      });
+    }
+  });
 
 }(jQuery));
