@@ -146,23 +146,6 @@ libraries[chosen][download][url] = "https://github.com/harvesthq/chosen/releases
 libraries[chosen][directory_name] = "chosen"
 libraries[chosen][destination] = "libraries"
 
-; Twitter Bootstrap UI
-;; Currently removed Twitter Bootstrap because of license issue:
-;; http://drupal.org/node/1449452 http://drupal.org/node/1445226#comment-7343538
-;; Instead, we load the Bootstrap JS via external CDN in template.php
-;;projects[twitter_bootstrap_ui][type] = module
-;;projects[twitter_bootstrap_ui][subdir] = contrib
-;;projects[twitter_bootstrap_ui][download][type] = git
-;;projects[twitter_bootstrap_ui][download][url] = http://git.drupal.org/project/twitter_bootstrap_ui.git
-;;projects[twitter_bootstrap_ui][download][branch] = 7.x-2.x
-;;projects[twitter_bootstrap_ui][patch][1906722] = http://drupal.org/files/twitter_bootstrap_ui-allow_admin_configuration-1906722-5.patch
-; tie to previous commit before the (2.x) was added to libraries
-; since that doesn't work when module is patched in inherited profile
-;;projects[twitter_bootstrap_ui][download][revision] = 0328b6ff027287fe7e62b058fc4dea12362956f5
-
-;;libraries[twitter_bootstrap][download][type] = file
-;;libraries[twitter_bootstrap][download][url] = http://twitter.github.com/bootstrap/assets/bootstrap.zip
-
 ; Feeds - latest dev needed by date_ical v3.1
 projects[feeds][version] = 2.x-dev
 projects[feeds][subdir] = contrib
