@@ -9,7 +9,7 @@
 <?php else: ?>
 <ul id="oa_breadcrumb" class="oa_toolbar">
   <?php if (!empty($space_label)): ?>
-    <li class="btn-group oa-breadcrumb">
+    <li class="btn-group oa-breadcrumb dropdown">
       <a href="<?php print $home_url; ?>" class="btn btn-home <?php print $oa_toolbar_btn_class; ?>"><i class="icon-home"></i><span class='element-invisible'>Home</span></a>
       <?php if (!empty($home_spaces)): ?>
         <a class="dropdown-toggle btn <?php print $oa_toolbar_btn_class; ?>" id="parent-dropdown" data-toggle="dropdown" href="#"><b class="caret"></b></a>
@@ -38,7 +38,7 @@
       </li>
       <?php endif; ?>
     <?php endif; ?>
-    <li class="btn-group oa-breadcrumb">
+    <li class="btn-group oa-breadcrumb dropdown">
       <a href="<?php print $space_url; ?>" class="btn <?php print $oa_toolbar_btn_class; ?>"><?php print $space_label; ?></a>
       <?php if (!empty($subspaces) || !empty($sections_list)): ?>
         <a class="dropdown-toggle btn <?php print $oa_toolbar_btn_class; ?>" id="subspace-dropdown" data-toggle="dropdown" href="#"><b class="caret"></b></a>
