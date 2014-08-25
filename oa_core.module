@@ -854,7 +854,7 @@ function _oa_core_set_default_value_for_view($name) {
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function oa_core_form_views_exposed_form_alter(&$form, $form_state) {
+function oa_core_form_views_exposed_form_alter(&$form, &$form_state) {
   if (_oa_core_set_default_value_for_view($form_state['view']->name) && $form_state['view']->display_handler->get_url() != $_GET['q']) {
     // Change exposed form to submit to given page instead of redirecting to
     // view all.
@@ -886,11 +886,23 @@ function oa_core_form_views_exposed_form_alter(&$form, $form_state) {
       }
     }
 
+    $space_id = $form_state['input']['og_group_ref_target_id'];
+
+    // reload section option list with sections from given space id
     $sections = array(
       ''    => t('- Active Section -'),
       'All' => t('- Any -')
-    ) + oa_core_space_sections($form_state['input']['og_group_ref_target_id'], NULL, $bypass_access);
+    ) + oa_core_space_sections($space_id, NULL, $bypass_access);
     $form['oa_section_ref_target_id']['#options'] = $sections;
+
+    // check if configured space id is in space options
+    if (!in_array($space_id, array_keys($form['og_group_ref_target_id']['#options']))) {
+      // if not, they don't have access to see this space, so change it to prevent
+      // the "Illegal choice" error on the space id filter field.
+      // Filter on space = -1 since that node id will never exist
+      $form_state['input']['og_group_ref_target_id'] = -1;
+      $form['og_group_ref_target_id']['#options'][] = array( -1 => 'None');
+    }
   }
 }
 
