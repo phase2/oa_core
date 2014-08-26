@@ -26,7 +26,6 @@ $plugin = array(
  * See ctools_plugin_examples for more advanced info
  */
 function oa_widgets_add_content_render($subtype, $conf, $args, $context = NULL) {
-  global $user;
 
   $nodes = $conf['oa_widgets_types'];
 
