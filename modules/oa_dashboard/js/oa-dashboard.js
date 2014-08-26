@@ -44,7 +44,6 @@
   };
 
   $(window).load(function() {
-    console.log('unloading');
     if (!$use_mouseover) {
       $('.radix-dropdown-processed').each(function(){
         // Show dropdown on hover.
