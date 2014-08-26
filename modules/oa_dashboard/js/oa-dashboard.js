@@ -11,7 +11,6 @@
     attach: function(context, settings) {
       // Remove Radix dropdown on hover.
 
-      console.log('resetting');
       $use_mouseover = settings.oa_dashboard.mouseover;
 
       var $oa_navbar = $('#oa-navbar');
