@@ -740,3 +740,29 @@ function oa_core_get_vocab_terms($vocabs) {
   }
   return $options;
 }
+
+/**
+ * Returns the version of Bootstrap (via Radix) being used
+ * Returns 2 or 3 for Bootstrap, returns 0 if no Bootstrap is used
+ */
+function oa_core_get_bootstrap_version() {
+  static $radix_version = NULL;
+  if (isset($radix_version)) {
+    return $radix_version;
+  }
+
+  // set default to 3 so if using a git clone without version info
+  // we assume it's the latest -dev version
+  $radix_version = 3;
+  // parse the Radix info file to determine version
+  $path = drupal_get_path('theme', 'radix') . '/' . 'radix.info';
+  $info = drupal_parse_info_file($path);
+  if (empty($info)) {
+    // no Radix theme found, so return zero.
+    $radix_version = 0;
+  }
+  elseif (!empty($info['version']) && strpos($info['version'], '7.x-') === 0) {
+    $radix_version = intval(substr($info['version'], 4, 1));
+  }
+  return $radix_version;
+}
