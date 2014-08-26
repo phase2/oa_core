@@ -1,15 +1,11 @@
 #oa_favorites {
-  margin: 0;
-  margin-top: 10px;
+  margin: 10px 0 0 0;
 }
 .pull-right #oa_favorites {
   margin-right: 5px;
 }
 .pull-left #oa_favorites {
   margin-left: 5px;
-}
-#oa_favorites a.dropdown-toggle {
-  font-size: 16px;
 }
 /* styles for flag button in favorites dropdown */
 #oa_favorites .flag {
