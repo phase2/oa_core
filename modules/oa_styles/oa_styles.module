@@ -34,5 +34,6 @@ function oa_styles_theme() {
  */
 function oa_styles_preprocess_flag(&$vars) {
   $vars['flag_classes_array'][] = 'btn';
+  $vars['flag_classes_array'][] = 'btn-default';
   $vars['flag_classes'] = implode(' ', $vars['flag_classes_array']);
 }
