@@ -922,6 +922,10 @@ function oa_core_views_exposed_form_rearrange($form) {
       $form['og_group_ref_target_id']['og_subspaces_view_all'] = $form['og_subspaces_view_all'];
       unset($form['og_subspaces_view_all']);
     }
+    if (!empty($form['og_subspaces_view_parent'])) {
+      $form['og_group_ref_target_id']['og_subspaces_view_parent'] = $form['og_subspaces_view_parent'];
+      unset($form['og_subspaces_view_parent']);
+    }
   }
   return $form;
 }
