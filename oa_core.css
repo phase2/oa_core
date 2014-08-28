@@ -25,7 +25,7 @@
   padding-bottom: 0.5em;
 }
 
-#modalContent {
+body.panels-ipe #modalContent {
   position: fixed !important;
 }
 
