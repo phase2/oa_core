@@ -507,18 +507,37 @@ function oa_core_get_public_spaces($group_types = array(OA_SPACE_TYPE => OA_SPAC
  * Return a list of sections within a space
  * Uses access control, so only sections with access are returned
  * @param  int $gid space ID
- * @return array of section data: $array[$nid] = $title
+ * @param  int $status NULL for any status, otherwise specify status to return
+ * @param  bool $bypass_access_check, TRUE to bypass access control
+ * @param  array $fields, array of additional fields to return, otherwise just title
+ *   fields array has format fieldname|column.  e.g., field_oa_space|tid
+ * @return array of section data: $array[$nid] = $title.  If $fields is specified
+ *   the return array is the full associative array of nid, title, fields
  */
-function oa_core_space_sections($gid, $status = NULL, $bypass_access_check = FALSE) {
+function oa_core_space_sections($gid, $status = NULL, $bypass_access_check = FALSE, $fields = array()) {
   $query = db_select('node', 'n');
   $query->rightJoin('og_membership', 'og', 'n.nid = og.etid');
   $query->leftJoin('field_data_field_oa_section_weight', 'w',
         "n.nid = w.entity_id AND w.entity_type = 'node'");
+  $extra_fields = array();
+  foreach ($fields as $field) {
+    if ((strpos($field, 'field_') === 0) || (strpos($field, '|') !== FALSE)) {
+      $field_list = explode('|', $field);
+      $field_name = $field_list[0];
+      $column = !empty($field_list[1]) ? $field_list[1] : 'value';
+      $query->leftJoin('field_data_' . $field_name, $field_name,
+        'n.nid = ' . $field_name . '.entity_id');
+      $query->fields($field_name, array($field_name . '_' . $column));
+    }
+    else {
+      $extra_fields[] = $field;
+    }
+  }
   if (isset($status)) {
     $query->condition('n.status', $status);
   }
   $query
-    ->fields('n', array('nid', 'title'))
+    ->fields('n', array('nid', 'title') + $fields)
     ->condition('n.type', OA_SECTION_TYPE)
     ->condition('og.entity_type', 'node')
     ->condition('og.field_name', OA_SPACE_FIELD)
@@ -528,7 +547,12 @@ function oa_core_space_sections($gid, $status = NULL, $bypass_access_check = FAL
     $query->addTag('node_access');
   }
   $result = $query->execute();
-  return $result->fetchAllKeyed(0, 1);
+  if (empty($fields)) {
+    return $result->fetchAllKeyed(0, 1);
+  }
+  else {
+    return $result->fetchAllAssoc('nid');
+  }
 }
 
 /**
