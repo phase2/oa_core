@@ -14,6 +14,10 @@ body.front #main-wrapper {
   background-color: transparent;
 }
 
+body.front #contextual-tabs {
+  display: none;
+}
+
 body.front #main,
 body.front.panels-ipe #main  {
   padding: 0;
