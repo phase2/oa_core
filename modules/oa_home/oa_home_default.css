@@ -4,8 +4,10 @@ body.front {
   padding: 0; margin: 0;
 }
 
-body.front #main-wrapper #main {
+body.front #main-wrapper #main,
+body.front.panels-ipe #main-wrapper #main {
   background: #003853;
+  padding: 0;
 }
 
 body.front #main-wrapper {
@@ -27,10 +29,7 @@ body.front #main .span12 {
 body.front #panels-ipe-control-container .panels-ipe-button-container {
   text-indent: -9000px;
   width: 0;
-}
-
-body.front .row {
-  margin-left: 0;
+  height: 0;
 }
 
 body.front #footer {
