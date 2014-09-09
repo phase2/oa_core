@@ -17,6 +17,11 @@
  */
 abstract class oa_coreBaseWebTest extends SimpleTestCloneTestCase {
   protected $profile = 'openatrium';
+  protected function setUp() {
+    parent::setUp();
+    // Override the mail system to prevent fatal errors.
+    variable_set('mail_system', array('default-system' => 'oaTestingMailSystem'));
+  }
 
   protected function createOaSpace($node_info = array()) {
     $node_info += array('type' => 'oa_space');
