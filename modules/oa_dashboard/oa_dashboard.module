@@ -340,6 +340,9 @@ function template_preprocess_oa_toolbar(&$vars) {
         array('attributes' => array('class' => array('more-link')))),
       $show_all);
   }
+  if (module_exists('oa_sitemap')) {
+    $list[] = l(t('Site map'), 'sitemap', array('attributes' => array('class' => array('more-link'))));
+  }
   if (user_access('create ' . $space_type . ' content', $user)) {
     $jump_links = oa_dashboard_get_jump_links('space');
     $list[] = array(
