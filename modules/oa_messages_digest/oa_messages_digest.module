@@ -12,12 +12,12 @@
  */
 function oa_messages_digest_oa_message_notifiers_alter(&$notifiers) {
   $notifiers[] = array(
-    'title' => 'Daily Digest Email',
+    'title' => t('Daily Digest Email'),
     'id'    => 'digest_day',
     'default' => FALSE,
   );
   $notifiers[] = array(
-    'title' => 'Weekly Digest Email',
+    'title' => t('Weekly Digest Email'),
     'id'    => 'digest_week',
     'default' => FALSE,
   );
