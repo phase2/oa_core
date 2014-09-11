@@ -390,7 +390,7 @@ function oa_core_create_node($bundle, $title = '', $context = NULL) {
  *   'links' is a list of node links
  *   'ids' is a list of the node ids
  */
-function oa_core_get_titles($ids = array(), $type = '', $sort_field = 'title', $fields = array('title', 'link', 'id', 'type')) {
+function oa_core_get_titles($ids = array(), $type = '', $sort_field = 'title', $fields = array('title', 'link', 'id', 'type'), $sanitize = TRUE) {
   $query_fields = array('nid', 'title');
   $return = array();
   foreach ($fields as $field) {
@@ -426,7 +426,7 @@ function oa_core_get_titles($ids = array(), $type = '', $sort_field = 'title', $
       foreach ($fields as $field) {
         $field_name = ($field == 'id') ? 'nid' : $field;
         $value = isset($row[$field_name]) ? $row[$field_name] : NULL;
-        if ($field == 'title') {
+        if (($field == 'title') && $sanitize) {
           $value = check_plain($value);
         }
         if ($field == 'link') {
