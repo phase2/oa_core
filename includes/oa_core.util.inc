@@ -213,7 +213,6 @@ function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE, $status = N
   $query->leftJoin('og_membership', 'f', "n.nid = f.etid");
   $query
     ->fields('n', array('nid'))
-    ->condition('n.type', $bundle)
     ->orderBy('n.title')
     ->addTag('node_access');
 
