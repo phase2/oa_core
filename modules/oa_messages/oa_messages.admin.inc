@@ -135,7 +135,7 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
       '#attributes' => array(
         'placeholder' => t('Space'),
       ),
-      '#prefix' => '<br /><h4>' . t('Space Preferences') . '</h4><label>' . t('Filter Spaces:') . '</label>',
+      '#prefix' => '<br /><h4>' . t('Space Preferences') . '</h4><label class="display-block">' . t('Filter Spaces:') . '</label>',
     );
 
     $form['filter']['actions']['submit'] = array(
@@ -160,7 +160,7 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
 
     $form['all_notifications'] = array(
       '#type' => 'select',
-      '#prefix' => '<label>' . t('Set Spaces Preferences:') . '</label>',
+      '#prefix' => '<label class="display-block">' . t('Set Spaces Preferences:') . '</label>',
       '#options' => $method_options,
       '#required' => FALSE,
       '#empty_option' => t('Choose a notification method'),
@@ -177,14 +177,14 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
 
     $form['header'] = array(
       '#type' => 'container',
-      '#prefix' => '<div class="row-fluid header">',
+      '#prefix' => '<div class="container-fluid header">',
       '#suffix' => '</div>',
     );
 
     $form['header']['select_all'] = array(
       '#type' => 'checkbox',
       '#title' => t('Spaces'),
-      '#prefix' => '<div class="column1 span3">',
+      '#prefix' => '<div class="column1 col-sm-3">',
       '#suffix' => '</div>',
       '#attributes' => array(
         'class' => array('select-all'),
@@ -193,13 +193,13 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
 
     $form['header']['methods'] = array(
       '#markup' => t('Notification Method'),
-      '#prefix' => '<div class="column2 span3">',
+      '#prefix' => '<div class="column2 col-sm-3">',
       '#suffix' => '</div>',
     );
 
     $form['header']['message'] = array(
       '#markup' => t('Messages'),
-      '#prefix' => '<div class="column3 span6">',
+      '#prefix' => '<div class="column3 col-sm-6">',
       '#suffix' => '</div>',
     );
 
@@ -243,14 +243,14 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
         '#title' => $space->title,
         '#title_display' => 'invisible',
         '#collapsible' => FALSE,
-        '#prefix' => '<div class="row-fluid">',
+        '#prefix' => '<div class="container-fluid">',
         '#suffix' => '</div>',
       );
 
       $form['all_spaces'][$space->nid]['checkbox'] = array(
         '#type' => 'checkbox',
         '#title' => $space->title,
-        '#prefix' => '<div class="column1 span3">',
+        '#prefix' => '<div class="column1 col-sm-3">',
         '#suffix' => '</div>',
         '#attributes' => array(
           'class' => array('apply-to'),
@@ -264,7 +264,7 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
         '#multiple' => TRUE,
         '#options' => $method_options,
         '#default_value' => $default_methods,
-        '#prefix' => '<div class="column2 span3">',
+        '#prefix' => '<div class="column2 col-sm-3">',
         '#suffix' => '</div>',
         '#id' => $space->nid,
       );
@@ -274,7 +274,7 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
         '#title' => t('Messages'),
         '#collapsible' => TRUE,
         '#collapsed' => TRUE,
-        '#prefix' => '<div class="column3 span6">',
+        '#prefix' => '<div class="column3 col-sm-6">',
         '#suffix' => '</div>',
         '#id' => 'message-container-' . $space->nid,
       );
