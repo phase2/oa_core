@@ -49,7 +49,7 @@ function oa_sidebar_search_pane_render($subtype, $conf, $args, $context) {
       ->condition('t.tid', $terms, 'IN')
       ->execute()
       ->fetchCol(0);
-    $titles = oa_core_get_titles($result, '', 'title', array('title', 'id'), FALSE);
+    $titles = oa_core_get_titles($result);
     $spaces[0] = 'Select a space';
     foreach ($titles['titles'] as $key => $name) {
       $spaces[$titles['ids'][$key]] = $name;

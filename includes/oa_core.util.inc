@@ -205,14 +205,15 @@ function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $inc
 function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $include_archived = FALSE) {
 
   $cid = oa_core_get_cache_id(OA_CACHE_GROUPS_BY_PARENT, $nid, $include_archived, array($bundle, $status));
-//  if (oa_core_get_cache(OA_CACHE_GROUPS_BY_PARENT, $cid, $result)) {
-//    return $result;
-//  }
+  if (oa_core_get_cache(OA_CACHE_GROUPS_BY_PARENT, $cid, $result)) {
+    return $result;
+  }
 
   $query = db_select('node', 'n');
   $query->leftJoin('og_membership', 'f', "n.nid = f.etid");
   $query
     ->fields('n', array('nid'))
+    ->condition('n.type', $bundle)
     ->orderBy('n.title')
     ->addTag('node_access');
 
@@ -242,34 +243,6 @@ function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE, $status = N
   }
 
   $result = $query->execute()->fetchCol(0);
-
-  if (($nid == 0) && isset($bundle)) {
-    // in addition to spaces with no parent, we also need to fetch spaces
-    // whose parent is the wrong bundle type
-    $query = db_select('node', 'n');
-    $query->join('og_membership', 'f', "n.nid = f.etid AND f.entity_type = 'node'");
-    $query->leftJoin('node', 'n2', "n2.nid = f.gid AND n2.type = :type", array(':type' => $bundle));
-    $query
-      ->fields('n', array('nid'))
-      ->orderBy('n.title')
-      ->addTag('node_access')
-      ->condition('n.type', $bundle)
-      ->isNull('n2.nid');
-
-    if (isset($status)) {
-      $query->condition('n.status', $status);
-    }
-
-    if (module_exists('flag') && !$include_archived) {
-      if ($flag = flag_get_flag('trash')) {
-        $query->leftJoin('flag_content', 'a', "a.fid = :fid AND a.content_id = n.nid", array(':fid' => $flag->fid));
-        // This makes sure that archived content isn't included, because 'uid'
-        // will be NULL if the join didn't connect anything.
-        $query->isNull('a.uid');
-      }
-    }
-    $result2 = $query->execute()->fetchCol(0);
-  }
 
   oa_core_set_cache(OA_CACHE_GROUPS_BY_PARENT, $cid, $result);
 
@@ -417,7 +390,7 @@ function oa_core_create_node($bundle, $title = '', $context = NULL) {
  *   'links' is a list of node links
  *   'ids' is a list of the node ids
  */
-function oa_core_get_titles($ids = array(), $type = '', $sort_field = 'title', $fields = array('title', 'link', 'id', 'type'), $sanitize = TRUE) {
+function oa_core_get_titles($ids = array(), $type = '', $sort_field = 'title', $fields = array('title', 'link', 'id', 'type')) {
   $query_fields = array('nid', 'title');
   $return = array();
   foreach ($fields as $field) {
@@ -453,7 +426,7 @@ function oa_core_get_titles($ids = array(), $type = '', $sort_field = 'title', $
       foreach ($fields as $field) {
         $field_name = ($field == 'id') ? 'nid' : $field;
         $value = isset($row[$field_name]) ? $row[$field_name] : NULL;
-        if (($field == 'title') && $sanitize) {
+        if ($field == 'title') {
           $value = check_plain($value);
         }
         if ($field == 'link') {
