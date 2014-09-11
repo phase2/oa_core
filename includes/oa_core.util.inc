@@ -12,7 +12,7 @@
 define('OA_CACHE_GROUPS_BY_USER', 'oa_groups_by_user');
 define('OA_CACHE_GET_PARENTS', 'oa_get_parents');
 define('OA_CACHE_GROUPS_BY_PARENT', 'oa_groups_by_parent');
-
+define('OA_CACHE_TOP_PARENTS', 'oa_top_parents');
 
 /**
  * Get the group IDs of all the groups a user is an approved member of.
@@ -204,6 +204,10 @@ function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $inc
  */
 function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $include_archived = FALSE) {
 
+  if ($nid == 0) {
+    return oa_core_get_top_parents($bundle, $status, $include_archived);
+  }
+
   $cid = oa_core_get_cache_id(OA_CACHE_GROUPS_BY_PARENT, $nid, $include_archived, array($bundle, $status));
   if (oa_core_get_cache(OA_CACHE_GROUPS_BY_PARENT, $cid, $result)) {
     return $result;
@@ -213,17 +217,10 @@ function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE, $status = N
   $query->leftJoin('og_membership', 'f', "n.nid = f.etid");
   $query
     ->fields('n', array('nid'))
+    ->condition('f.gid', $nid)
+    ->condition('f.entity_type', 'node')
     ->orderBy('n.title')
     ->addTag('node_access');
-
-  if ($nid == 0) {
-    $query->isNull('f.gid');
-  }
-  else {
-    $query
-      ->condition('f.gid', $nid)
-      ->condition('f.entity_type', 'node');
-  }
 
   if (isset($bundle)) {
     $query->condition('n.type', $bundle);
@@ -244,6 +241,66 @@ function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE, $status = N
   $result = $query->execute()->fetchCol(0);
 
   oa_core_set_cache(OA_CACHE_GROUPS_BY_PARENT, $cid, $result);
+
+  return $result;
+}
+
+/**
+ * Get top-level spaces/groups (no parents of same bundle type)
+ *
+ * @param string $bundle
+ *   The node type (default: OA_SPACE_TYPE).
+ * @param int|NULL $status
+ *   (optional) If specified, the node status (ex. NODE_PUBLISHED or
+ *   NODE_NOT_PUBLISHED) to look for. If not specified, it return
+ *   nodes of either status.
+ * @param bool $include_archived
+ *   (optional) Whether to include archived nodes or not. By default, archived
+ *   items aren't included.
+ *
+ * @return array
+ *   Array of children NIDs.
+ */
+function oa_core_get_top_parents($bundle, $status = NULL, $include_archived = FALSE) {
+
+  $cid = oa_core_get_cache_id(OA_CACHE_TOP_PARENTS, $include_archived, array($bundle, $status));
+  if (oa_core_get_cache(OA_CACHE_TOP_PARENTS, $cid, $result)) {
+    return $result;
+  }
+
+  // need to also add the spaces whose parents are not the correct bundle
+  $query_parents = db_select('node', 'n');
+  $query_parents->join('og_membership', 'f', "n.nid = f.etid");
+  $query_parents->join('node', 'n2', "n2.nid = f.gid");
+  $query_parents
+    ->fields('n', array('nid'))
+    ->condition('f.entity_type', 'node')
+    ->condition('n.type', $bundle)
+    ->condition('n2.type', $bundle);
+
+  $query = db_select('node', 'n');
+  $query->fields('n', array('nid'))
+    ->orderBy('n.title')
+    ->addTag('node_access')
+    ->condition('n.type', $bundle)
+    ->condition('n.nid', $query_parents, 'NOT IN');
+
+  if (isset($status)) {
+    $query->condition('n.status', $status);
+  }
+
+  if (module_exists('flag') && !$include_archived) {
+    if ($flag = flag_get_flag('trash')) {
+      $query->leftJoin('flag_content', 'a', "a.fid = :fid AND a.content_id = n.nid", array(':fid' => $flag->fid));
+      // This makes sure that archived content isn't included, because 'uid'
+      // will be NULL if the join didn't connect anything.
+      $query->isNull('a.uid');
+    }
+  }
+
+  $result = $query->execute()->fetchCol(0);
+
+  oa_core_set_cache(OA_CACHE_TOP_PARENTS, $cid, $result);
 
   return $result;
 }
