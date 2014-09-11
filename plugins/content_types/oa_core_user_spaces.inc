@@ -155,7 +155,7 @@ function oa_core_build_space_display($spaces, $conf, $account,
       continue;
     }
     $vars[$space->nid]['title'] = check_plain($space->title);
-    $vars[$space->nid]['href'] = check_plain(url('node/' . $space->nid));
+    $vars[$space->nid]['href'] = url('node/' . $space->nid);
     $vars[$space->nid]['body'] = '';
     $vars[$space->nid]['links'] = '';
     $vars[$space->nid]['sections'] = array();
