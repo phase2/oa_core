@@ -28,7 +28,7 @@ function oa_messages_digest_oa_message_notifiers_alter(&$notifiers) {
  */
 function oa_messages_digest_message_digest_view_mode_alter(&$context) {
 
-  $context['view_modes'] = array('message_notify_email_body');
+  $context['view_modes'] = array('message_notify_email_body' => TRUE);
   // Check global disable flag.
   if (!variable_get('oa_messages_notifications', TRUE) || empty($context['messages'])) {
     $context['deliver'] = FALSE;
