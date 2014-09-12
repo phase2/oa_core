@@ -214,6 +214,10 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
     // Build space options.
     foreach ($spaces as $key => $space) {
 
+      if (!node_access('view', $space, $user)) {
+        continue;
+      }
+
       // Set defaults.
       $method_values = NULL;
       $messages_values = NULL;
