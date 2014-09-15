@@ -303,6 +303,10 @@ function template_preprocess_oa_toolbar(&$vars) {
   $spaces = NULL;
   if ($user->uid) {
     $spaces = oa_core_get_groups_by_user($user, 'node');
+    $spaces = oa_core_get_groups_by_user_access($user);
+    $spaces = array_map(
+      function($node) { return $node->nid; },
+      $spaces);
     $menu_title = ($space_type == OA_SPACE_TYPE) ? t('Subscribed Spaces') : t('Groups');
   }
   if (empty($spaces)) {
