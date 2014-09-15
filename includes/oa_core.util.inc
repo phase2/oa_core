@@ -35,7 +35,7 @@ define('OA_CACHE_TOP_PARENTS', 'oa_top_parents');
  *   An array with the group IDs or an empty array, or returns NULL if there was an error
  */
 function oa_core_get_groups_by_user($account = NULL, $group_type = NULL, $include_archived = FALSE) {
-  if (empty($account)) {
+  if (!isset($account)) {
     global $user;
     $account = $user;
   }
