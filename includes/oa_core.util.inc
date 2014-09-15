@@ -723,13 +723,59 @@ function oa_core_get_all_groups() {
 }
 
 /**
- * Returns the users that are in a space.
+ * Get the users that are in a space (excluding inherited users).
+ *
+ * @param int $space_id
+ *   The NID of the Space.
+ * @param int $state
+ *   (Optional) The state of the OG membership, for example:
+ *   - OG_STATE_ACTIVE (the default)
+ *   - OG_STATE_PENDING
+ *   - OG_STATE_BLOCKED
+ *
+ * @return array
+ *   An associative array of fully loaded user objects, keyed by user id.
  */
 function oa_core_get_users_for_space($space_id, $state = OG_STATE_ACTIVE) {
-  $space = node_load($space_id);
-  $wrapper = entity_metadata_wrapper('node', $space);
-  $members = isset($wrapper->{'members__' . $state}) ? $wrapper->{'members__' . $state}->value() : array();
-  return (!empty($members)) ? $members : array();
+  $query = db_select('og_membership', 'og')
+    ->fields('og', array('etid'))
+    ->condition('og.entity_type', 'user')
+    ->condition('og.state', $state)
+    ->condition('og.group_type', 'node')
+    ->condition('og.gid', $space_id);
+  $uids = $query->execute()->fetchCol();
+  return user_load_multiple($uids);
+}
+
+/**
+ * Get the users that are in a space, including inherited users.
+ *
+ * @param int $space_id
+ *   The NID of the Space.
+ * @param int $state
+ *   (Optional) The state of the OG membership, for example:
+ *   - OG_STATE_ACTIVE (the default)
+ *   - OG_STATE_PENDING
+ *   - OG_STATE_BLOCKED
+ *
+ * @return array
+ *   An associative array of fully loaded user objects, keyed by user id.
+ */
+function oa_core_get_inherited_users_for_space($space_id, $state = OG_STATE_ACTIVE) {
+  $users = oa_core_get_users_for_space($space_id, $state);
+
+  if (module_exists('og_subgroups') && function_exists('_og_subgroups_get_inherited_users')) {
+    $inherited_users = _og_subgroups_get_inherited_users('node', $space_id);
+    foreach ($inherited_users as $uid => $data) {
+      foreach ($data as $item) {
+        if ($item['membership']->state == $state) {
+          $users[$uid] = $item['user'];
+        }
+      }
+    }
+  }
+
+  return $users;
 }
 
 /**
