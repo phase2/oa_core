@@ -19,7 +19,7 @@ define('OA_CACHE_TOP_PARENTS', 'oa_top_parents');
  * Get the group IDs of all the groups a user is an approved member of.
  *
  * REPLACES og_get_groups_by_user() in OG and returns a list of groups
- * including subspaces
+ * including subspaces including via INHERITED membership
  *
  * @param $account
  *   (optional) The user object to fetch group memberships for. Defaults to the
@@ -76,13 +76,12 @@ function oa_core_get_groups_by_user($account = NULL, $group_type = NULL, $includ
 /**
  * Get the group IDs and Titles of all the groups a user is an approved member of.
  *
- * REPLACES og_get_groups_by_user() in OG and returns a list of groups
- * including subspaces
- *
  * SIMILAR to oa_core_get_groups_by_user above but respects the NODE ACCESS
  * of the spaces and allows an optional space status (published)
  * Only returns spaces a user is ACTIVE in (not BLOCKED or PENDING)
  * Also, returns both nids and titles in result
+ *
+ * DOES NOT return INHERITED subspaces
  *
  * @param $account
  *   (optional) The user object to fetch group memberships for. Defaults to the
