@@ -10,6 +10,7 @@
  * Name of various caches.
  */
 define('OA_CACHE_GROUPS_BY_USER', 'oa_groups_by_user');
+define('OA_CACHE_GROUPS_BY_USER_ACCESS', 'oa_groups_by_user_access');
 define('OA_CACHE_GET_PARENTS', 'oa_get_parents');
 define('OA_CACHE_GROUPS_BY_PARENT', 'oa_groups_by_parent');
 define('OA_CACHE_TOP_PARENTS', 'oa_top_parents');
@@ -70,6 +71,103 @@ function oa_core_get_groups_by_user($account = NULL, $group_type = NULL, $includ
   oa_core_set_cache(OA_CACHE_GROUPS_BY_USER, $cid, $user_groups);
 
   return $user_groups;
+}
+
+/**
+ * Get the group IDs and Titles of all the groups a user is an approved member of.
+ *
+ * REPLACES og_get_groups_by_user() in OG and returns a list of groups
+ * including subspaces
+ *
+ * SIMILAR to oa_core_get_groups_by_user above but respects the NODE ACCESS
+ * of the spaces and allows an optional space status (published)
+ * Only returns spaces a user is ACTIVE in (not BLOCKED or PENDING)
+ * Also, returns both nids and titles in result
+ *
+ * @param $account
+ *   (optional) The user object to fetch group memberships for. Defaults to the
+ *   acting user.  Can be a full user node or just a user uid
+ * @param bool $include_archived
+ *   (optional) Whether to include archived nodes or not. By default, archived
+ *   items aren't included.
+ * @param int $status
+ *   (optional) The space node status to include.  If NULL, all spaces are
+ *   included.  If NODE_PUBLISHED, then only include published spaces
+ * @param array $page
+ *   (optional) Adds a pager to the query for the given page number
+ * @param string $filter
+ *   (optional) Filters the space titles that are returned
+ *
+ * @return array
+ *   An array with the group IDs or an empty array, or returns NULL if there was an error
+ */
+function oa_core_get_groups_by_user_access($account = NULL, $include_archived = FALSE, $status = NULL, $page = NULL, $filter = NULL) {
+  if (!isset($account)) {
+    global $user;
+    $uid = $user->uid;
+  }
+  elseif (is_numeric($account)) {
+    $uid = $account;
+  }
+  else {
+    $uid = $account->uid;
+  }
+
+  if (empty($states)) {
+    $states = array(OG_STATE_ACTIVE);
+  }
+
+  $cid = oa_core_get_cache_id(OA_CACHE_GROUPS_BY_USER_ACCESS, $uid, $include_archived, array($status, $page));
+  if (empty($filter) && oa_core_get_cache(OA_CACHE_GROUPS_BY_USER_ACCESS, $cid, $result)) {
+    return $result;
+  }
+
+  $query = db_select('node', 'n');
+  if (isset($page)) {
+    if (!isset($_GET['page'])) {
+      $_GET['page'] = $page;
+    }
+    $query = $query->extend('PagerDefault')->limit(20);
+  }
+
+  $query->join('og_membership', 'ogm', 'ogm.gid = n.nid');
+  $query
+    ->fields('n', array('nid', 'title'))
+    ->condition('ogm.etid', $uid)
+    ->condition('ogm.entity_type', 'user')
+    ->condition('ogm.state', OG_STATE_ACTIVE)
+    ->orderBy('n.title')
+    ->addTag('node_access');
+
+  if (isset($states)) {
+  }
+
+  if (isset($status)) {
+    $query->condition('n.status', $status);
+  }
+
+  if (!empty($filter)) {
+    $query->condition('n.title', '%' . db_like($filter) . '%', 'LIKE');
+  }
+
+  if (module_exists('flag') && !$include_archived) {
+    if ($flag = flag_get_flag('trash')) {
+      $query->leftJoin('flag_content', 'a', "a.fid = :fid AND a.content_id = n.nid", array(':fid' => $flag->fid));
+      // This makes sure that archived content isn't included, because 'uid'
+      // will be NULL if the join didn't connect anything.
+      $query->isNull('a.uid');
+    }
+  }
+
+  $result = $query
+    ->execute()
+    ->fetchAll();
+
+  if (empty($filter)) {
+    oa_core_set_cache(OA_CACHE_GROUPS_BY_USER_ACCESS, $cid, $result);
+  }
+
+  return $result;
 }
 
 /**
