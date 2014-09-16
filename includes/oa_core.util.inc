@@ -138,9 +138,6 @@ function oa_core_get_groups_by_user_access($account = NULL, $include_archived = 
     ->orderBy('n.title')
     ->addTag('node_access');
 
-  if (isset($states)) {
-  }
-
   if (isset($status)) {
     $query->condition('n.status', $status);
   }

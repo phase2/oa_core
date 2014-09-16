@@ -98,9 +98,8 @@ function oa_messages_build_message_notifications_table(&$form_state, $user, $def
     }
   }
 
-  $spaces = oa_core_get_groups_by_user_access($user, FALSE, NODE_PUBLISHED, $page, $filter);
-
   $form = array();
+  $spaces = oa_core_get_groups_by_user_access($user, FALSE, NULL, $page, $filter);
 
   if (!empty($spaces)) {
     $message_types = message_type_load();
