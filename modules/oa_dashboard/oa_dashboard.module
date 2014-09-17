@@ -302,8 +302,7 @@ function template_preprocess_oa_toolbar(&$vars) {
   $show_all = TRUE;
   $spaces = NULL;
   if ($user->uid) {
-    $spaces = oa_core_get_groups_by_user($user, 'node');
-    $spaces = oa_core_get_groups_by_user_access($user);
+    $spaces = oa_core_get_groups_by_user_access($user, FALSE, NULL);
     $spaces = array_map(
       function($node) { return $node->nid; },
       $spaces);
@@ -324,9 +323,9 @@ function template_preprocess_oa_toolbar(&$vars) {
       $remove = array();
       foreach ($spaces as $key => $value) {
         // parents are cached, so this should be fast
-        $parents = oa_core_get_parents($value, $space_type, NODE_PUBLISHED, TRUE);
+        $parents = oa_core_get_parents($value, $space_type, NULL, TRUE);
         foreach ($parents as $parent_id) {
-          if (isset($spaces[$parent_id])) {
+          if (in_array($parent_id, $spaces)) {
             // parent is also in spaces list, so remove child from list
             $remove[] = $key;
           }
@@ -335,9 +334,8 @@ function template_preprocess_oa_toolbar(&$vars) {
       foreach ($remove as $id) {
         unset($spaces[$id]);
       }
-//      $top_spaces = oa_core_get_groups_by_parent(0, $space_type);
-//      $spaces = array_intersect($spaces, $top_spaces);
     }
+
     $items = oa_core_get_titles($spaces, $space_type);
     $list = oa_core_truncate_list($items['links'], 25,
       l(t('All ' . $space_type_names . '...'), $all_spaces,
