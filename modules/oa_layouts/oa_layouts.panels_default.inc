@@ -201,7 +201,7 @@ function oa_layouts_default_panels_mini() {
     $pane->pid = 'new-3bd6fb98-8bec-48c8-9777-cf8850617d9f';
     $pane->panel = 'footer';
     $pane->type = 'block';
-    $pane->subtype = 'oa_dashboard-oa_toolbar_menu_button';
+    $pane->subtype = 'oa_toolbar-oa_toolbar_menu_button';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -226,7 +226,7 @@ function oa_layouts_default_panels_mini() {
     $pane->pid = 'new-2b828bf5-01a6-4805-a95d-6c64c67317ef';
     $pane->panel = 'footer';
     $pane->type = 'block';
-    $pane->subtype = 'oa_dashboard-oa_breadcrumb';
+    $pane->subtype = 'oa_toolbar-oa_breadcrumb';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -251,7 +251,7 @@ function oa_layouts_default_panels_mini() {
     $pane->pid = 'new-bf0e9047-1f82-4bcf-bf9b-f97fe6748f41';
     $pane->panel = 'footer';
     $pane->type = 'block';
-    $pane->subtype = 'oa_dashboard-oa_user_badge';
+    $pane->subtype = 'oa_toolbar-oa_user_badge';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -411,7 +411,7 @@ function oa_layouts_default_panels_mini() {
       'menu_name' => 'main-menu',
       'form_build_id' => 'form-EF6I4nvJ3PuMvArFhpFJ5Kp2OcDwMvG8gl4B3NlDRx0',
       'form_token' => 'BZ3KmS-psxrtVGe71oapeoJx9emdlcwu-NeoYSCB2XA',
-      'form_id' => 'oa_dashboard_oa_navigation_content_type_edit_form',
+      'form_id' => 'oa_toolbar_oa_navigation_content_type_edit_form',
       'op' => 'Save',
     );
     $pane->cache = array();

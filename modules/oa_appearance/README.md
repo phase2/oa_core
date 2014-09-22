@@ -34,7 +34,7 @@ added:
   non-stretched site banner images and when Show Main Menu is enabled.
 
 - **Replace Breadcrumb** (oa_breadcrumb_menu)
-  Replace Breadcrumb toolbar with main menu (in oa_dashboard submodule)
+  Replace Breadcrumb toolbar with main menu (in oa_toolbar submodule)
 
 - **Site banner image** (oa_site_banner_file)
   The image file used for the site banner
