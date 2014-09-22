@@ -160,3 +160,10 @@ function oa_core_update_7219() {
   media_update_7226();
 }
 
+/**
+ * Enable oa_toolbar, radix_layouts, bootstrap_library
+ */
+function oa_core_update_7220() {
+  module_enable(array('oa_toolbar', 'radix_layouts', 'bootstrap_library'));
+}
+
