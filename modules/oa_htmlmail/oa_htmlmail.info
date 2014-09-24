@@ -1,7 +1,0 @@
-name = Open Atrium HTML Email
-description = Provides HTML Email for messages
-package = Open Atrium
-core = 7.x
-
-dependencies[] = htmlmail
-dependencies[] = oa_messages
