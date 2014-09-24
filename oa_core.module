@@ -1253,7 +1253,7 @@ function oa_core_node_delete_redirect($form, &$form_state) {
       // redirect to parent space when deleting subspace
       $id = $form['#node']->{OA_PARENT_SPACE}[LANGUAGE_NONE][0]['target_id'];
     }
-    else if ($form['#node']->type == OA_SECTION_TYPE) {
+    elseif ($form['#node']->type == OA_SECTION_TYPE) {
       $id = oa_core_get_space_context();
     }
     if ($id == $form['#node']->nid) {
