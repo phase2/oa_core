@@ -214,7 +214,7 @@ function oa_layouts_default_panels_mini() {
     );
     $pane->css = array(
       'css_id' => '',
-      'css_class' => 'pull-left',
+      'css_class' => 'col-xs-12 col-sm-auto pull-xs-left',
     );
     $pane->extras = array();
     $pane->position = 0;
@@ -239,7 +239,7 @@ function oa_layouts_default_panels_mini() {
     );
     $pane->css = array(
       'css_id' => '',
-      'css_class' => 'pull-left',
+      'css_class' => 'col-xs-12 col-sm-auto pull-xs-left',
     );
     $pane->extras = array();
     $pane->position = 1;
@@ -264,7 +264,7 @@ function oa_layouts_default_panels_mini() {
     );
     $pane->css = array(
       'css_id' => '',
-      'css_class' => 'pull-right',
+      'css_class' => 'col-xs-12 col-sm-auto pull-sm-right',
     );
     $pane->extras = array();
     $pane->position = 2;
@@ -289,7 +289,7 @@ function oa_layouts_default_panels_mini() {
     );
     $pane->css = array(
       'css_id' => '',
-      'css_class' => 'pull-right',
+      'css_class' => 'pull-xs-left pull-sm-right',
     );
     $pane->extras = array();
     $pane->position = 3;
@@ -314,7 +314,7 @@ function oa_layouts_default_panels_mini() {
     );
     $pane->css = array(
       'css_id' => '',
-      'css_class' => 'pull-right',
+      'css_class' => 'col-xs-12 col-sm-auto pull-sm-right',
     );
     $pane->extras = array();
     $pane->position = 4;
@@ -339,7 +339,7 @@ function oa_layouts_default_panels_mini() {
     );
     $pane->css = array(
       'css_id' => '',
-      'css_class' => 'pull-right',
+      'css_class' => 'pull-xs-left pull-sm-right',
     );
     $pane->extras = array();
     $pane->position = 5;
@@ -364,7 +364,7 @@ function oa_layouts_default_panels_mini() {
     );
     $pane->css = array(
       'css_id' => '',
-      'css_class' => 'pull-right',
+      'css_class' => 'col-xs-12 col-sm-auto pull-sm-right',
     );
     $pane->extras = array();
     $pane->position = 6;
