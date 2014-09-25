@@ -96,8 +96,8 @@ function oa_core_menu() {
   );
   $items['admin/openatrium/setting'] = array(
     //changing from /settings since Drupal not refreshing parent of existing items
-    'title' => 'Plugin Settings',
-    'description' => 'Configuration related to Open Atrium plugins',
+    'title' => 'Settings',
+    'description' => 'Configuration settings related to Open Atrium',
     'weight' => 0,
     'page callback' => 'drupal_get_form',
     'page arguments' => array('oa_core_configure_form'),
@@ -231,6 +231,37 @@ function oa_core_views_data() {
 function oa_core_configure_form($form, &$form_state) {
   // blank for for now.  Other modules can alter this to add stuff
   $form = array();
+
+  drupal_add_js("misc/collapse.js");
+  drupal_add_js("misc/vertical-tabs.js");
+
+  $form['oa_settings'] = array(
+    '#type' => 'vertical_tabs',
+    '#weight' => 99,
+    '#prefix' => '<div class="oa-vertical-tabs">',
+    '#suffix' => '</div>',
+  );
+
+  $hook = 'oa_settings_form';
+  foreach (module_implements($hook) as $module) {
+    $function = $module . '_' . $hook;
+    if (function_exists($function)) {
+      $child_forms = call_user_func_array($function, array(&$form_state));
+      foreach ($child_forms as $key => $child_form) {
+        $form[$child_form['caption']] = array(
+          '#type' => 'fieldset',
+          '#title' => $child_form['caption'],
+          '#group' => 'oa_settings',
+          '#attributes' => array('class' => array('collapsible')),
+        );
+        $form[$child_form['caption']][] = $child_form['form'];
+        if (!empty($child_form['submit'])) {
+          $form['#submit'][] = $child_form['submit'];
+        }
+      }
+    }
+  }
+
   return system_settings_form($form);
 }
 

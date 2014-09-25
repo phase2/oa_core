@@ -303,19 +303,24 @@ function oa_messages_ajax_load_notification_methods($form, &$form_state) {
 }
 
 /**
- * Add plugin-specific configuration to main Open Atrium settings form.
+ * Add plugin-specific configuration to main Open Atrium settings form
+ * @param $form_state
+ * @param return array - array of subforms render array
  */
-function oa_messages_form_oa_core_configure_form_alter(&$form, &$form_state, $form_id) {
-  $form['oa_messages'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Notifications'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  );
-  $form['oa_messages']['oa_messages_notifications'] = array(
+function oa_messages_oa_settings_form(&$form_state) {
+  $forms = array();
+
+  $form = array();
+  $form['oa_messages_notifications'] = array(
     '#type' => 'checkbox',
     '#title' => 'Enable notifications',
     '#description' => 'If off, no notifications will be sent.  If on, notifications are controlled by individual user settings.',
     '#default_value' => variable_get('oa_messages_notifications', TRUE),
   );
+
+  $forms[] = array(
+    'caption' => t('Notifications'),
+    'form' => $form,
+  );
+  return $forms;
 }

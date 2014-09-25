@@ -22,7 +22,7 @@ this widget for the "below the toolbar" option and adds it to the content page
 below the header.
 
 Site banner fields are added via simple system variables via the
-oa_appearance_form_oa_core_configure_form_alter().  This allows modules to add
+oa_appearance_oa_settings_form().  This allows modules to add
 fields to the Open Atrium -> Plugin Settings form.  The following variables are
 added:
 
