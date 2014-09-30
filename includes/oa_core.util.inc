@@ -239,9 +239,19 @@ function oa_core_get_section_context() {
  * @return array
  *   Array of parent NIDs.
  */
-function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $include_archived = FALSE) {
+function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $include_archived = FALSE, $account = NULL) {
+  if (!isset($account)) {
+    global $user;
+    $uid = $user->uid;
+  }
+  elseif (is_numeric($account)) {
+    $uid = $account;
+  }
+  else {
+    $uid = $account->uid;
+  }
 
-  $cid = oa_core_get_cache_id(OA_CACHE_GET_PARENTS, $nid, $include_archived, array($bundle, $status));
+  $cid = oa_core_get_cache_id(OA_CACHE_GET_PARENTS, $nid . '_' . $uid, $include_archived, array($bundle, $status));
   if (oa_core_get_cache(OA_CACHE_GET_PARENTS, $cid, $result)) {
     return $result;
   }
@@ -296,13 +306,24 @@ function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $inc
  * @return array
  *   Array of children NIDs.
  */
-function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $include_archived = FALSE) {
+function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $include_archived = FALSE, $account = NULL) {
 
   if ($nid == 0) {
-    return oa_core_get_top_parents($bundle, $status, $include_archived);
+    return oa_core_get_top_parents($bundle, $status, $include_archived, $account);
   }
 
-  $cid = oa_core_get_cache_id(OA_CACHE_GROUPS_BY_PARENT, $nid, $include_archived, array($bundle, $status));
+  if (!isset($account)) {
+    global $user;
+    $uid = $user->uid;
+  }
+  elseif (is_numeric($account)) {
+    $uid = $account;
+  }
+  else {
+    $uid = $account->uid;
+  }
+
+  $cid = oa_core_get_cache_id(OA_CACHE_GROUPS_BY_PARENT, $nid . '_' . $uid, $include_archived, array($bundle, $status));
   if (oa_core_get_cache(OA_CACHE_GROUPS_BY_PARENT, $cid, $result)) {
     return $result;
   }
@@ -355,9 +376,19 @@ function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE, $status = N
  * @return array
  *   Array of children NIDs.
  */
-function oa_core_get_top_parents($bundle, $status = NULL, $include_archived = FALSE) {
+function oa_core_get_top_parents($bundle, $status = NULL, $include_archived = FALSE, $account = NULL) {
+  if (!isset($account)) {
+    global $user;
+    $uid = $user->uid;
+  }
+  elseif (is_numeric($account)) {
+    $uid = $account;
+  }
+  else {
+    $uid = $account->uid;
+  }
 
-  $cid = oa_core_get_cache_id(OA_CACHE_TOP_PARENTS, $include_archived, array($bundle, $status));
+  $cid = oa_core_get_cache_id(OA_CACHE_TOP_PARENTS, $uid, $include_archived, array($bundle, $status));
   if (oa_core_get_cache(OA_CACHE_TOP_PARENTS, $cid, $result)) {
     return $result;
   }
