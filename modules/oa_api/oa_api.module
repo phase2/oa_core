@@ -1,0 +1,29 @@
+<?php
+/**
+ * @file
+ * This module provides core API functions for Open Atrium
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function oa_api_menu() {
+  $items['api/oa/update_space/%node'] = array(
+    'page callback' => 'oa_api_update_space',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+  );
+
+  return $items;
+}
+
+/**
+ * API Callback for updating fields in a space
+ * @param $node
+ */
+function oa_api_update_space($node) {
+  $new_node = $_POST['node'];
+  dd($node);
+  dd('===');
+  dd($new_node);
+}
