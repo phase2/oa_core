@@ -295,7 +295,7 @@ function template_preprocess_oa_toolbar(&$vars) {
   if (empty($spaces)) {
     // og_get_entity_groups doesn't return anything for anonymous users
     // so return list of all public spaces
-    $spaces = oa_core_get_public_spaces(array(OA_SPACE_TYPE => OA_SPACE_TYPE), NODE_PUBLISHED);
+    $spaces = oa_core_get_top_level_spaces(array(OA_SPACE_TYPE => OA_SPACE_TYPE), NODE_PUBLISHED);
     $menu_title = t('Public Spaces');
   }
   if (empty($spaces)) {

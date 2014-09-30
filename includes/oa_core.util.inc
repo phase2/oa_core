@@ -73,6 +73,32 @@ function oa_core_get_groups_by_user($account = NULL, $group_type = NULL, $includ
 }
 
 /**
+ * Returns all top level spaces
+ * @return array
+ *   An array of Space NIDs.
+ */
+function oa_core_get_top_level_spaces() {
+  $efq = new EntityFieldQuery();
+  $temporary_results = $efq->entityCondition('entity_type', 'node')
+    ->propertyCondition('type', 'oa_space', '=')
+    ->propertyCondition('status', NODE_PUBLISHED, '=')
+    ->fieldCondition('oa_parent_space', 'target_id', NULL, 'IS NOT')
+    ->execute();
+  if (isset($temporary_results['node'])) {
+    //Now get all the other entities, that aren't in the list you just retrieved
+    $efq = new EntityFieldQuery();
+    $results = $efq->entityCondition('entity_type', 'node')
+      ->entityCondition('entity_id', array_keys($temporary_results['node']), 'NOT IN')
+      ->propertyCondition('type', 'oa_space', '=')
+      ->propertyCondition('status', NODE_PUBLISHED, '=')
+      ->execute();
+    $nids = array_keys($results['node']);
+    return $nids;
+  }
+  return array();
+}
+
+/**
  * Returns the current space id context
  * @param  boolean $from_session only use the context stored in $SESSION
  * @return int Space ID
