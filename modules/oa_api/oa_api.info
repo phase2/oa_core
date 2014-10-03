@@ -1,5 +1,0 @@
-name = Open Atrium API
-description = Core API functions for Open Atrium
-core = 7.x
-package = Open Atrium
-dependencies[] = oa_core
