@@ -718,7 +718,7 @@ function oa_core_space_sections($gid, $status = NULL, $bypass_access_check = FAL
     $query->condition('n.status', $status);
   }
   $query
-    ->fields('n', array('nid', 'title') + $fields)
+    ->fields('n', array('nid', 'title') + $extra_fields)
     ->condition('n.type', OA_SECTION_TYPE)
     ->condition('og.entity_type', 'node')
     ->condition('og.field_name', OA_SPACE_FIELD)
