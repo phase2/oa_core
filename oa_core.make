@@ -72,10 +72,6 @@ projects[field_group][subdir] = contrib
 projects[advagg][version] = 2.6
 projects[advagg][subdir] = contrib
 
-; Bootstrap Tour
-projects[bootstrap_tour][version] = 1.0-beta9
-projects[bootstrap_tour][subdir] = contrib
-
 ; Chosen
 projects[chosen][version] = 2.x-dev
 projects[chosen][subdir] = contrib
@@ -110,10 +106,6 @@ projects[conditional_fields][patch][1542706] = http://drupal.org/files/issues/co
 ; Conditional Style Sheets
 projects[conditional_styles][version] = 2.2
 projects[conditional_styles][subdir] = contrib
-
-; Contextual Tabs
-projects[contextual_tabs][version] = 1.0-beta2
-projects[contextual_tabs][subdir] = contrib
 
 ; Date Facets
 projects[date_facets][version] = 1.x-dev
@@ -198,10 +190,6 @@ projects[mimemail][download][type] = git
 projects[mimemail][download][branch] = 7.x-1.x
 projects[mimemail][download][revision] = e742766
 
-; Node clone
-projects[node_clone][version] = 1.0-rc2
-projects[node_clone][subdir] = contrib
-
 ; OA Responsive Regions
 projects[oa_responsive_regions][version] = 1.0-beta1
 projects[oa_responsive_regions][subdir] = contrib
@@ -232,10 +220,6 @@ projects[og_vocab][patch][2039009] = http://drupal.org/files/issues/2039009-allo
 projects[panels_customerror][version] = 1.0
 projects[panels_customerror][subdir] = contrib
 
-; RealName
-projects[realname][version] = 1.1
-projects[realname][subdir] = contrib
-
 ; Reference Option Limit
 projects[reference_option_limit][version] = 1.x-dev
 projects[reference_option_limit][subdir] = contrib
@@ -244,14 +228,6 @@ projects[reference_option_limit][download][branch] = 7.x-1.x
 projects[reference_option_limit][download][revision] = 0ea5303
 projects[reference_option_limit][patch][1986532] = http://drupal.org/files/1986532_reference_option_limit_og-5.patch
 projects[reference_option_limit][patch][1986526] = http://drupal.org/files/1986526_reference_option_limit_12.patch
-
-; Trash Flag
-projects[trash_flag][version] = 1.0-beta4
-projects[trash_flag][subdir] = contrib
-
-; Ultimate Cron
-projects[ultimate_cron][version] = 2.0-beta7
-projects[ultimate_cron][subdir] = contrib
 
 ; Variable
 projects[variable][version] = 2.3
