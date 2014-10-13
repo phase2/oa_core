@@ -220,6 +220,10 @@ projects[og_vocab][patch][2039009] = http://drupal.org/files/issues/2039009-allo
 projects[panels_customerror][version] = 1.0
 projects[panels_customerror][subdir] = contrib
 
+; Real Name
+projects[realname][version] = 1.2
+projects[realname][subdir] = contrib
+
 ; Reference Option Limit
 projects[reference_option_limit][version] = 1.x-dev
 projects[reference_option_limit][subdir] = contrib
