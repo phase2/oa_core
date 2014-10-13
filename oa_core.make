@@ -247,3 +247,18 @@ projects[views_load_more][download][revision] = 28de384
 ; Ultimate Cron
 projects[ultimate_cron][version] = 2.0-beta7
 projects[ultimate_cron][subdir] = contrib
+
+; Download dependencies of oa_mailhandler for backwards compatibility since
+; it used to be included with oa_core
+
+projects[mailhandler][version] = 2.9
+projects[mailhandler][subdir] = contrib
+
+projects[mailcomment][version] = 2.x-dev
+projects[mailcomment][subdir] = contrib
+projects[mailcomment][download][type] = git
+projects[mailcomment][download][branch] = 7.x-2.x
+projects[mailcomment][download][revision] = 2a7b52
+
+projects[feeds_comment_processor][version] = 1.0-beta1
+projects[feeds_comment_processor][subdir] = contrib
