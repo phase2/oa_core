@@ -167,3 +167,10 @@ function oa_core_update_7220() {
   module_enable(array('oa_toolbar', 'radix_layouts', 'bootstrap_library'));
 }
 
+/**
+ * Enable ultimate_cron
+ */
+function oa_core_update_7221() {
+  module_enable(array('ultimate_cron'));
+}
+
