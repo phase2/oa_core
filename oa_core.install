@@ -174,3 +174,13 @@ function oa_core_update_7221() {
   module_enable(array('ultimate_cron'));
 }
 
+/**
+ * Rebuild registry to handle modules that have moved
+ */
+function oa_core_update_7222() {
+  cache_clear_all('lookup_cache', 'cache_bootstrap');
+  cache_clear_all('variables', 'cache_bootstrap');
+  cache_clear_all('module_implements', 'cache_bootstrap');
+  registry_rebuild();
+}
+
