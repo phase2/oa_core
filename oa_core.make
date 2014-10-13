@@ -243,3 +243,7 @@ projects[views_load_more][subdir] = contrib
 projects[views_load_more][download][type] = git
 projects[views_load_more][download][branch] = 7.x-1.x
 projects[views_load_more][download][revision] = 28de384
+
+; Ultimate Cron
+projects[ultimate_cron][version] = 2.0-beta7
+projects[ultimate_cron][subdir] = contrib
