@@ -68,71 +68,13 @@ projects[field_group][subdir] = contrib
 ; ************ End Panopoly Overrides ************
 ; ************************************************
 
-; Features Override
-projects[features_override][version] = 2.0-rc2
-projects[features_override][subdir] = contrib
-
-; Diff
-projects[diff][version] = 3.2
-projects[diff][subdir] = contrib
-
-; Message
-projects[message][version] = 1.x-dev
-projects[message][subdir] = contrib
-projects[message][download][type] = git
-projects[message][download][branch] = 7.x-1.x
-projects[message][download][revision] = 3bbdd5e
-projects[message][patch][2046591] = http://drupal.org/files/message-token_replace-2046591-1.patch
-projects[message][patch][2040735] = http://drupal.org/files/message.target_bundles.2040735-3.patch
-
-; Message Notify
-projects[message_notify][version] = 2.5
-projects[message_notify][subdir] = contrib
-
-; Message Subscribe
-projects[message_subscribe][version] = 1.0-rc1
-projects[message_subscribe][subdir] = contrib
-projects[message_subscribe][patch][2094129] = http://drupal.org/files/message_subscribe_empty_array_2094129_1.patch
-
-; Message Digest
-projects[message_digest][version] = 1.0
-projects[message_digest][subdir] = contrib
-
-; Flag
-projects[flag][version] = 2.x-dev
-projects[flag][subdir] = contrib
-projects[flag][download][type] = git
-projects[flag][download][branch] = 7.x-2.x
-projects[flag][download][revision] = b8d94e
-projects[flag][patch][471212] = http://drupal.org/files/471212-14-flag-all-bundles.patch
-projects[flag][patch][2027091] = http://drupal.org/files/flag-default-flags-alter-hook-2027091-03.patch
-
-; Trash Flag
-projects[trash_flag][version] = 1.0-beta4
-projects[trash_flag][subdir] = contrib
-
-; MimeMail
-projects[mimemail][version] = 1.x-dev
-projects[mimemail][subdir] = contrib
-projects[mimemail][download][type] = git
-projects[mimemail][download][branch] = 7.x-1.x
-projects[mimemail][download][revision] = e742766
-
-; Mail System
-projects[mailsystem][version] = 2.34
-projects[mailsystem][subdir] = contrib
-
-; HTML Mail
-projects[htmlmail][version] = 2.65
-projects[htmlmail][subdir] = contrib
-
-; RealName
-projects[realname][version] = 1.1
-projects[realname][subdir] = contrib
-
 ; Advagg
 projects[advagg][version] = 2.6
 projects[advagg][subdir] = contrib
+
+; Bootstrap Tour
+projects[bootstrap_tour][version] = 1.0-beta9
+projects[bootstrap_tour][subdir] = contrib
 
 ; Chosen
 projects[chosen][version] = 2.x-dev
@@ -145,6 +87,48 @@ libraries[chosen][download][type] = "get"
 libraries[chosen][download][url] = "https://github.com/harvesthq/chosen/releases/download/1.0.0/chosen_v1.0.0.zip"
 libraries[chosen][directory_name] = "chosen"
 libraries[chosen][destination] = "libraries"
+
+; Colorizer
+projects[colorizer][version] = 1.3
+projects[colorizer][subdir] = contrib
+
+; Command buttons
+projects[command_buttons][version] = 1.2
+projects[command_buttons][subdir] = contrib
+
+; Conditional Fields
+projects[conditional_fields][version] = 3.x-dev
+projects[conditional_fields][subdir] = contrib
+projects[conditional_fields][download][type] = git
+projects[conditional_fields][download][branch] = 7.x-3.x
+projects[conditional_fields][download][revision] = cd29b00
+projects[conditional_fields][patch][1982276] = http://drupal.org/files/conditional_fields-typo-in-if-condition-1982276-1.patch
+projects[conditional_fields][patch][2027307] = http://drupal.org/files/conditional_fields-export-0.patch
+projects[conditional_fields][patch][1916988] = http://drupal.org/files/1916988-conditional-fields-alter-3.patch
+projects[conditional_fields][patch][1542706] = http://drupal.org/files/issues/conditional-fields-1542706-values-not-saving-72.patch
+
+; Conditional Style Sheets
+projects[conditional_styles][version] = 2.2
+projects[conditional_styles][subdir] = contrib
+
+; Contextual Tabs
+projects[contextual_tabs][version] = 1.0-beta2
+projects[contextual_tabs][subdir] = contrib
+
+; Date Facets
+projects[date_facets][version] = 1.x-dev
+projects[date_facets][subdir] = contrib
+projects[date_facets][download][type] = git
+projects[date_facets][download][branch] = 7.x-1.x
+projects[date_facets][download][revision] = a7a35f8
+
+; Diff
+projects[diff][version] = 3.2
+projects[diff][subdir] = contrib
+
+; Features Override
+projects[features_override][version] = 2.0-rc2
+projects[features_override][subdir] = contrib
 
 ; Feeds - latest dev needed by date_ical v3.1
 projects[feeds][version] = 2.x-dev
@@ -160,32 +144,97 @@ libraries[simplepie][download][url] = http://simplepie.org/downloads/simplepie_1
 libraries[simplepie][download][filename] = simplepie.compiled.php
 libraries[simplepie][directory_name] = simplepie
 
+; Flag
+projects[flag][version] = 2.x-dev
+projects[flag][subdir] = contrib
+projects[flag][download][type] = git
+projects[flag][download][branch] = 7.x-2.x
+projects[flag][download][revision] = b8d94e
+projects[flag][patch][471212] = http://drupal.org/files/471212-14-flag-all-bundles.patch
+projects[flag][patch][2027091] = http://drupal.org/files/flag-default-flags-alter-hook-2027091-03.patch
+
+; HTML Mail
+projects[htmlmail][version] = 2.65
+projects[htmlmail][subdir] = contrib
+
 ; Job Scheduler
 projects[job_scheduler][version] = 2.0-alpha3
 projects[job_scheduler][subdir] = contrib
 
-; Command buttons
-projects[command_buttons][version] = 1.2
-projects[command_buttons][subdir] = contrib
+; Jquery Update
+projects[jquery_update][version] = 2.4
+projects[jquery_update][subdir] = contrib
 
-; Contextual Tabs
-projects[contextual_tabs][version] = 1.0-beta2
-projects[contextual_tabs][subdir] = contrib
+; Mail System
+projects[mailsystem][version] = 2.34
+projects[mailsystem][subdir] = contrib
+
+; Message
+projects[message][version] = 1.x-dev
+projects[message][subdir] = contrib
+projects[message][download][type] = git
+projects[message][download][branch] = 7.x-1.x
+projects[message][download][revision] = 3bbdd5e
+projects[message][patch][2046591] = http://drupal.org/files/message-token_replace-2046591-1.patch
+projects[message][patch][2040735] = http://drupal.org/files/message.target_bundles.2040735-3.patch
+
+; Message Digest
+projects[message_digest][version] = 1.0
+projects[message_digest][subdir] = contrib
+
+; Message Notify
+projects[message_notify][version] = 2.5
+projects[message_notify][subdir] = contrib
+
+; Message Subscribe
+projects[message_subscribe][version] = 1.0-rc1
+projects[message_subscribe][subdir] = contrib
+projects[message_subscribe][patch][2094129] = http://drupal.org/files/message_subscribe_empty_array_2094129_1.patch
+
+; MimeMail
+projects[mimemail][version] = 1.x-dev
+projects[mimemail][subdir] = contrib
+projects[mimemail][download][type] = git
+projects[mimemail][download][branch] = 7.x-1.x
+projects[mimemail][download][revision] = e742766
+
+; Node clone
+projects[node_clone][version] = 1.0-rc2
+projects[node_clone][subdir] = contrib
+
+; OA Responsive Regions
+projects[oa_responsive_regions][version] = 1.0-beta1
+projects[oa_responsive_regions][subdir] = contrib
+
+; Organic Groups
+projects[og][version] = 2.7
+projects[og][subdir] = contrib
+
+; Og menu single
+projects[og_menu_single][version] = 1.0-beta1
+projects[og_menu_single][subdir] = contrib
+
+; OG Session Context
+projects[og_session_context][version] = 1.0-beta1
+projects[og_session_context][subdir] = contrib
+
+; Og Variables
+projects[og_variables][version] = 1.0-beta1
+projects[og_variables][subdir] = contrib
+
+; Organic Groups Vocabulary
+projects[og_vocab][version] = 1.2
+projects[og_vocab][subdir] = contrib
+; patch to support subgroups
+projects[og_vocab][patch][2039009] = http://drupal.org/files/issues/2039009-allow-shared-vocabularies-13.patch
 
 ; Panels Custom Error
 projects[panels_customerror][version] = 1.0
 projects[panels_customerror][subdir] = contrib
 
-; Conditional Fields
-projects[conditional_fields][version] = 3.x-dev
-projects[conditional_fields][subdir] = contrib
-projects[conditional_fields][download][type] = git
-projects[conditional_fields][download][branch] = 7.x-3.x
-projects[conditional_fields][download][revision] = cd29b00
-projects[conditional_fields][patch][1982276] = http://drupal.org/files/conditional_fields-typo-in-if-condition-1982276-1.patch
-projects[conditional_fields][patch][2027307] = http://drupal.org/files/conditional_fields-export-0.patch
-projects[conditional_fields][patch][1916988] = http://drupal.org/files/1916988-conditional-fields-alter-3.patch
-projects[conditional_fields][patch][1542706] = http://drupal.org/files/issues/conditional-fields-1542706-values-not-saving-72.patch
+; RealName
+projects[realname][version] = 1.1
+projects[realname][subdir] = contrib
 
 ; Reference Option Limit
 projects[reference_option_limit][version] = 1.x-dev
@@ -196,73 +245,21 @@ projects[reference_option_limit][download][revision] = 0ea5303
 projects[reference_option_limit][patch][1986532] = http://drupal.org/files/1986532_reference_option_limit_og-5.patch
 projects[reference_option_limit][patch][1986526] = http://drupal.org/files/1986526_reference_option_limit_12.patch
 
+; Trash Flag
+projects[trash_flag][version] = 1.0-beta4
+projects[trash_flag][subdir] = contrib
+
+; Ultimate Cron
+projects[ultimate_cron][version] = 2.0-beta7
+projects[ultimate_cron][subdir] = contrib
+
+; Variable
+projects[variable][version] = 2.3
+projects[variable][subdir] = contrib
+
 ; Views Load More
 projects[views_load_more][version] = 1.x-dev
 projects[views_load_more][subdir] = contrib
 projects[views_load_more][download][type] = git
 projects[views_load_more][download][branch] = 7.x-1.x
 projects[views_load_more][download][revision] = 28de384
-
-; Jquery Update
-projects[jquery_update][version] = 2.4
-projects[jquery_update][subdir] = contrib
-;projects[jquery_update][download][type] = git
-;projects[jquery_update][download][branch] = 7.x-2.x
-;projects[jquery_update][download][revision] = d84d48
-
-; Colorizer
-projects[colorizer][version] = 1.3
-projects[colorizer][subdir] = contrib
-
-; OA Responsive Regions
-projects[oa_responsive_regions][version] = 1.0-beta1
-projects[oa_responsive_regions][subdir] = contrib
-
-; Date Facets
-projects[date_facets][version] = 1.x-dev
-projects[date_facets][subdir] = contrib
-projects[date_facets][download][type] = git
-projects[date_facets][download][branch] = 7.x-1.x
-projects[date_facets][download][revision] = a7a35f8
-
-; Node clone
-projects[node_clone][version] = 1.0-rc2
-projects[node_clone][subdir] = contrib
-
-; ##### Organic Groups related #####
-; Organic Groups
-projects[og][version] = 2.7
-projects[og][subdir] = contrib
-
-; Organic Groups Vocabulary
-projects[og_vocab][version] = 1.2
-projects[og_vocab][subdir] = contrib
-; patch to support subgroups
-projects[og_vocab][patch][2039009] = http://drupal.org/files/issues/2039009-allow-shared-vocabularies-13.patch
-
-; OG Session Context
-projects[og_session_context][version] = 1.0-beta1
-projects[og_session_context][subdir] = contrib
-
-; Og menu single
-projects[og_menu_single][version] = 1.0-beta1
-projects[og_menu_single][subdir] = contrib
-
-; ##### oa_variables #####
-; Variable
-projects[variable][version] = 2.3
-projects[variable][subdir] = contrib
-
-; Og Variables
-projects[og_variables][version] = 1.0-beta1
-projects[og_variables][subdir] = contrib
-
-; Bootstrap Tour
-projects[bootstrap_tour][version] = 1.0-beta9
-projects[bootstrap_tour][subdir] = contrib
-
-; Conditional Style Sheets
-projects[conditional_styles][version] = 2.2
-projects[conditional_styles][subdir] = contrib
-
-
