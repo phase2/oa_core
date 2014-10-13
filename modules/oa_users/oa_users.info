@@ -9,6 +9,7 @@ dependencies[] = image
 dependencies[] = og
 dependencies[] = og_ui
 dependencies[] = page_manager
+dependencies[] = realname
 dependencies[] = strongarm
 dependencies[] = text
 features[ctools][] = page_manager:pages_default:1
