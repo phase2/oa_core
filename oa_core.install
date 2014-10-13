@@ -178,19 +178,8 @@ function oa_core_update_7221() {
  * Rebuild registry to handle modules that have moved
  */
 function oa_core_update_7222() {
-  // move oa_mailhandler module
-  $old_module = 'profiles/openatrium/modules/contrib/oa_mailhandler';
-  $new_module = 'profiles/openatrium/modules/apps/oa_mailhandler';
-  //Change system flag path
-  db_update('system')
-    ->expression('filename', 'replace(filename, :old_module, :new_module)', array(':old_module' => $old_module, ':new_module' => $new_module))
-    ->execute();
-  //Change registry flag path
-  db_update('registry')
-    ->expression('filename', 'replace(filename, :old_module, :new_module)', array(':old_module' => $old_module, ':new_module' => $new_module))
-    ->execute();
-  //
   // rebuild the registry for other module moves
+  cache_clear_all('ctools_plugin_type_info', 'cache');
   cache_clear_all('lookup_cache', 'cache_bootstrap');
   cache_clear_all('variables', 'cache_bootstrap');
   cache_clear_all('module_implements', 'cache_bootstrap');
