@@ -266,6 +266,55 @@ function oa_core_configure_form($form, &$form_state) {
 }
 
 /**
+ * Creates a configure form for the current app.
+ */
+function oa_core_app_configure_form($form, &$form_state) {
+  // blank for for now.  Other modules can alter this to add stuff
+  $form = array();
+
+  if (($app_name = arg(3)) && ($function = $app_name . '_oa_settings_form') && function_exists($function)) {
+    $child_forms = call_user_func_array($function, array(&$form_state));
+
+    // Add child forms as vertical tabs if exist.
+    if (count($child_forms) > 1) {
+      drupal_add_js("misc/collapse.js");
+      drupal_add_js("misc/vertical-tabs.js");
+      $form['oa_settings'] = array(
+        '#type' => 'vertical_tabs',
+        '#weight' => 99,
+        '#prefix' => '<div class="oa-vertical-tabs">',
+        '#suffix' => '</div>',
+      );
+      foreach ($child_forms as $key => $child_form) {
+        $form[$child_form['caption']] = array(
+          '#type' => 'fieldset',
+          '#title' => $child_form['caption'],
+          '#group' => 'oa_settings',
+          '#attributes' => array('class' => array('collapsible')),
+        );
+        $form[$child_form['caption']][] = $child_form['form'];
+        if (!empty($child_form['submit'])) {
+          $form['#submit'][] = $child_form['submit'];
+        }
+      }
+    }
+    // Set up a header and add form if only one child form.
+    elseif (count($child_form)) {
+      $child_form = reset($child_form);
+      $form['title']['#markup'] = '<h2>' . $child_form['caption'] . '</h2>';
+      $form += $child_form['form'];
+      if (!empty($child_form['submit'])) {
+        $form['#submit'][] = $child_form['submit'];
+      }
+    }
+  }
+
+  return $form ? system_settings_form($form) : array(
+    '#markup' => t('Unable to generate form'),
+  );
+}
+
+/**
  * Implements hook_og_fields_info().
  */
 function oa_core_og_fields_info() {
