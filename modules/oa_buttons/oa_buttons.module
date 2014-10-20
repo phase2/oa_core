@@ -385,6 +385,7 @@ function oa_buttons_create_term($taxonomy, $name, $description, $node_options, $
     }
 
     if ($term && $update) {
+      $term->field_oa_icon_class[LANGUAGE_NONE][0]['value'] = $icon;
       $term->field_oa_section_layout[LANGUAGE_NONE][0]['value'] = $layout;
       $term->field_oa_node_types[LANGUAGE_NONE] = array();
     }
@@ -394,6 +395,11 @@ function oa_buttons_create_term($taxonomy, $name, $description, $node_options, $
         'name' => $name,
         'description' => $description,
         'format' => 'panopoly_wysiwyg_text',
+        'field_oa_icon_class' => array(
+          LANGUAGE_NONE => array(
+            array('value' => $icon),
+          ),
+        ),
         'field_oa_section_layout' => array(
           LANGUAGE_NONE => array(
             array('value' => $layout),
