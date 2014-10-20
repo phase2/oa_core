@@ -96,9 +96,9 @@ function oa_core_menu() {
   );
   $items['admin/openatrium/setting'] = array(
     //changing from /settings since Drupal not refreshing parent of existing items
-    'title' => 'Settings',
+    'title' => 'Config',
     'description' => 'Configuration settings related to Open Atrium',
-    'weight' => 0,
+    'weight' => -1,
     'page callback' => 'drupal_get_form',
     'page arguments' => array('oa_core_configure_form'),
     'access arguments' => array('administer site configuration'),
@@ -299,8 +299,8 @@ function oa_core_app_configure_form($form, &$form_state) {
       }
     }
     // Set up a header and add form if only one child form.
-    elseif (count($child_form)) {
-      $child_form = reset($child_form);
+    elseif (count($child_forms)) {
+      $child_form = reset($child_forms);
       $form['title']['#markup'] = '<h2>' . $child_form['caption'] . '</h2>';
       $form += $child_form['form'];
       if (!empty($child_form['submit'])) {
