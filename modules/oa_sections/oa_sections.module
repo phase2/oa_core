@@ -195,3 +195,22 @@ function oa_sections_views_pre_view(&$view) {
     oa_core_views_copy_get_arguments_to_link($view);
   }
 }
+
+/**
+ * Return array of icon/images keyed by section type tid
+ */
+function oa_sections_get_icons() {
+  $vid = taxonomy_vocabulary_machine_name_load('section_type')->vid;
+  $terms = taxonomy_get_tree($vid);
+  $query = db_select('taxonomy_term_data', 't');
+  $query->leftJoin('field_data_field_icon_class', 'ic', "ic.entity_id = t.tid");
+  $query->leftJoin('field_data_field_icon_image', 'im', "im.entity_id = t.tid");
+  $query
+    ->fields('t', array('tid'))
+    ->fields('ic', array('field_icon_class_value'))
+    ->fields('im', array('field_icon_image_fid'))
+    ->condition('t.vid',$vid);
+
+  $result = $query->execute()->fetchAllAssoc('tid');
+  return $result;
+}

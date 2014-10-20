@@ -32,6 +32,7 @@ ul.oa_toolbar {
 }
 #oa-navbar {
   margin-bottom: 0;
+  border-width: 0;
 }
 
 #oa-navbar .btn-toolbar {
@@ -130,13 +131,15 @@ width: 100%;
 /***************/
 #toolbar-menu-button {
   font-size: 12px;
-  line-height: 22px;
   text-transform: uppercase;
+  line-height: 20px;
 }
 .navbar-inverse #toolbar-menu-button {
   color: #999;
 }
-
+.pull-left #toolbar-menu-button {
+  margin-left: 5px !important;
+}
 /* Space Menu */
 .oa-space-menu ul.nav {
   display: inline-block;
