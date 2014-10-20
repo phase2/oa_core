@@ -6,6 +6,7 @@
 
 /**
  * Get the group IDs of all the groups a user is an approved member of.
+ *
  * REPLACES og_get_groups_by_user() in OG and returns a list of groups
  * including subspaces
  *
@@ -15,11 +16,14 @@
  * @param $group_type
  *   (optional) The entity type of the groups to fetch. By default all group
  *   types will be fetched.
+ * @param bool $include_archived
+ *   (optional) Whether to include archived nodes or not. By default, archived
+ *   items aren't included.
  *
- * @return
+ * @return array
  *   An array with the group IDs or an empty array, or returns NULL if there was an error
  */
-function oa_core_get_groups_by_user($account = NULL, $group_type = NULL) {
+function oa_core_get_groups_by_user($account = NULL, $group_type = NULL, $include_archived = FALSE) {
   $user_groups = og_get_groups_by_user($account, $group_type);
   if (!empty($group_type) && !empty($user_groups)) {
     $user_groups = array($group_type => $user_groups);
@@ -28,9 +32,21 @@ function oa_core_get_groups_by_user($account = NULL, $group_type = NULL) {
     $user_groups = og_subgroups_children_load_multiple($user_groups);
   }
 
+  if (!empty($user_groups) && !$include_archived) {
+    if ($flag = flag_get_flag('trash')) {
+      // Filter out groups that are archived.
+      foreach ($user_groups['node'] as $nid) {
+        if ($flag->is_flagged($nid)) {
+          unset($user_groups['node'][$nid]);
+        }
+      }
+    }
+  }
+
   if (!empty($group_type)) {
     $user_groups = (!empty($user_groups[$group_type])) ? $user_groups[$group_type] : array();
   }
+
   return $user_groups;
 }
 
@@ -89,83 +105,119 @@ function oa_core_get_section_context() {
 }
 
 /**
- * Return an array of parent nids
- * @param  int $nid    nid of space/group to check
- * @param  string $bundle node type
- * @return array of parent nids
+ * Get parent Spaces and Groups.
+ *
+ * @param int $nid
+ *   The NID of the Space or Group to check.
+ * @param string|NULL $bundle
+ *   (optional) The node type (default: OA_SPACE_TYPE). If NULL is passed, it
+ *   will include all node types.
+ * @param int|NULL $status 
+ *   (optional) If specified, the node status (ex. NODE_PUBLISHED or
+ *   NODE_NOT_PUBLISHED) to look for. If not specified, it return 
+ *   nodes of either status.
+ * @param bool $include_archived
+ *   (optional) Whether to include archived nodes or not. By default, archived
+ *   items aren't included.
+ *
+ * @return array
+ *   Array of parent NIDs.
  */
-function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL) {
+function oa_core_get_parents($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $include_archived = FALSE) {
   $cache = &drupal_static(__FUNCTION__);
 
-  if (!isset($cache[$nid][$bundle])) {
+  if (!isset($cache[$nid][$bundle][$status][$include_archived])) {
     $query = db_select('node', 'n');
     $query->leftJoin('og_membership', 'f', "n.nid = f.gid");
+    if (isset($bundle)) {
+      $query->condition('n.type', $bundle);
+    }
     if (isset($status)) {
       $query->condition('n.status', $status);
     }
-    $result = $query
+    $query
       ->fields('n', array('nid'))
       ->condition('f.etid', $nid)
       ->condition('f.entity_type', 'node')
-      ->condition('n.type', $bundle)
       ->orderBy('n.title')
-      ->addTag('node_access')
-      ->execute()
-      ->fetchCol(0);
-    $cache[$nid][$bundle] = $result;
+      ->addTag('node_access');
+
+    if (!$include_archived) {
+      if ($flag = flag_get_flag('trash')) {
+        $query->leftJoin('flag_content', 'a', "a.fid = :fid AND a.content_id = n.nid", array(':fid' => $flag->fid));
+        // This makes sure that archived content isn't included, because 'uid'
+        // will be NULL if the join didn't connect anything.
+        $query->isNull('a.uid');
+      }
+    }
+
+    $result = $query->execute()->fetchCol(0);
+    $cache[$nid][$bundle][$status][$include_archived] = $result;
   }
-  return $cache[$nid][$bundle];
+  return $cache[$nid][$bundle][$status][$include_archived];
 }
 
 /**
- * Return an array of children groups
- * @param  int $nid    nid of space/group to check
- * @param  string $bundle node type
- * @return array of children nids
+ * Get child Spaces or Groups.
+ *
+ * @param int $nid
+ *   The NID of the Space or Group to check.
+ * @param string|NULL $bundle
+ *   (optional) The node type (default: OA_SPACE_TYPE). If NULL is passed, it
+ *   will include all node types.
+ * @param int|NULL $status 
+ *   (optional) If specified, the node status (ex. NODE_PUBLISHED or
+ *   NODE_NOT_PUBLISHED) to look for. If not specified, it return 
+ *   nodes of either status.
+ * @param bool $include_archived
+ *   (optional) Whether to include archived nodes or not. By default, archived
+ *   items aren't included.
+ *
+ * @return array
+ *   Array of children NIDs.
  */
-function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE, $status = NULL) {
+function oa_core_get_groups_by_parent($nid, $bundle = OA_SPACE_TYPE, $status = NULL, $include_archived = FALSE) {
   $cache = &drupal_static(__FUNCTION__);
 
-  if (!isset($cache[$nid][$bundle])) {
+  if (!isset($cache[$nid][$bundle][$status][$include_archived])) {
+    $query = db_select('node', 'n');
+    $query->leftJoin('og_membership', 'f', "n.nid = f.etid");
+    $query
+      ->fields('n', array('nid'))
+      ->condition('n.type', $bundle)
+      ->orderBy('n.title')
+      ->addTag('node_access');
 
     if ($nid == 0) {
-      $query = db_select('node', 'n');
-      $query->leftJoin('og_membership', 'f', "n.nid = f.etid");
-      if (isset($bundle)) {
-        $query->condition('n.type', $bundle);
-      }
-      if (isset($status)) {
-        $query->condition('n.status', $status);
-      }
-      $result = $query
-        ->fields('n', array('nid'))
-        ->isNull('f.gid')
-        ->orderBy('n.title')
-        ->addTag('node_access')
-        ->execute()
-        ->fetchCol(0);
+      $query->isNull('f.gid');
     }
     else {
-      $query = db_select('node', 'n');
-      $query->leftJoin('og_membership', 'f', "n.nid = f.etid");
-      if (isset($bundle)) {
-        $query->condition('n.type', $bundle);
-      }
-      if (isset($status)) {
-        $query->condition('n.status', $status);
-      }
-      $result = $query
-        ->fields('n', array('nid'))
+      $query
         ->condition('f.gid', $nid)
-        ->condition('f.entity_type', 'node')
-        ->orderBy('n.title')
-        ->addTag('node_access')
-        ->execute()
-        ->fetchCol(0);
+        ->condition('f.entity_type', 'node');
+    }
+
+    if (isset($bundle)) {
+      $query->condition('n.type', $bundle);
+    }
+    if (isset($status)) {
+      $query->condition('n.status', $status);
+    }
+
+    if (!$include_archived) {
+      if ($flag = flag_get_flag('trash')) {
+        $query->leftJoin('flag_content', 'a', "a.fid = :fid AND a.content_id = n.nid", array(':fid' => $flag->fid));
+        // This makes sure that archived content isn't included, because 'uid'
+        // will be NULL if the join didn't connect anything.
+        $query->isNull('a.uid');
       }
-    $cache[$nid][$bundle] = $result;
+    }
+
+    $result = $query->execute()->fetchCol(0);
+    $cache[$nid][$bundle][$status][$include_archived] = $result;
   }
-  return $cache[$nid][$bundle];
+
+  return $cache[$nid][$bundle][$status][$include_archived];
 }
 
 /**
@@ -355,15 +407,29 @@ function oa_core_truncate_list($list, $count, $more_link = '', $always_link = FA
 }
 
 /**
- * Return a list of public spaces
- * since og_get_entity_groups doesn't return anything for anonymous users
+ * Get a list of public spaces.
+ *
+ * Necessary since og_get_entity_groups() doesn't return anything for anonymous users
+ *
+ * @param array $group_types
+ *   (optional) An associative array of node types.
+ *   (default: array(OA_SPACE_TYPE => OA_SPACE_TYPE)
+ * @param int $status 
+ *   (optional) If specified, the node status (ex. NODE_PUBLISHED or
+ *   NODE_NOT_PUBLISHED) to look for. If not specified, it return 
+ *   nodes of either status.
+ * @param bool $include_archived
+ *   (optional) Whether to include archived nodes or not. By default, archived
+ *   items aren't included.
  *
  * @return array
- * An array of public gids
+ *   An array of Space NIDs.
  */
-function oa_core_get_public_spaces($group_types = array(OA_SPACE_TYPE => OA_SPACE_TYPE), $status = NULL) {
-  $public_spaces = &drupal_static(__FUNCTION__);
-  if (!isset($public_spaces)) {
+function oa_core_get_public_spaces($group_types = array(OA_SPACE_TYPE => OA_SPACE_TYPE), $status = NULL, $include_archived = FALSE) {
+  $cache = &drupal_static(__FUNCTION__);
+
+  $group_types_cid = implode(',', $group_types);
+  if (!isset($cache[$group_types_cid][$status][$include_archived])) {
     $query = db_select('node', 'n');
     $query->rightJoin('field_data_group_access', 'g', "n.nid = g.entity_id AND g.entity_type = 'node'");
     $query
@@ -373,9 +439,19 @@ function oa_core_get_public_spaces($group_types = array(OA_SPACE_TYPE => OA_SPAC
     if (isset($status)) {
       $query->condition('n.status', $status);
     }
-    $public_spaces = $query->execute()->fetchCol(0);
+    if (!$include_archived) {
+      if ($flag = flag_get_flag('trash')) {
+        $query->leftJoin('flag_content', 'a', "a.fid = :fid AND a.content_id = n.nid", array(':fid' => $flag->fid));
+        // This makes sure that archived content isn't included, because 'uid'
+        // will be NULL if the join didn't connect anything.
+        $query->isNull('a.uid');
+      }
+    }
+
+    $cache[$group_types_cid][$status][$include_archived] = $query->execute()->fetchCol(0);
   }
-  return $public_spaces;
+
+  return $cache[$group_types_cid][$status][$include_archived];
 }
 
 /**
@@ -458,12 +534,14 @@ function oa_core_get_group_users_for_space($space_id, $group_id) {
 
 /**
  * Return a list of space ids that a user belongs to.
+ *
+ * @deprecated This function is redundant - use oa_core_get_groups_by_user().
+ *
+ * @see oa_core_get_groups_by_user()
  */
 function oa_core_get_user_spaces($uid) {
-  if ($groups = og_get_entity_groups('user', $uid)) {
-    return !empty($groups['node']) ? $groups['node'] : array();
-  }
-  return array();
+  $groups = oa_core_get_groups_by_user(user_load($uid), 'node');
+  return !empty($groups) ? $groups : array();
 }
 
 /**
