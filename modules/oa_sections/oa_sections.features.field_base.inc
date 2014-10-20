@@ -10,13 +10,13 @@
 function oa_sections_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_icon_class'
-  $field_bases['field_icon_class'] = array(
+  // Exported field_base: 'field_oa_icon_class'
+  $field_bases['field_oa_icon_class'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_icon_class',
+    'field_name' => 'field_oa_icon_class',
     'foreign keys' => array(
       'format' => array(
         'columns' => array(
@@ -40,13 +40,13 @@ function oa_sections_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_icon_image'
-  $field_bases['field_icon_image'] = array(
+  // Exported field_base: 'field_oa_icon_image'
+  $field_bases['field_oa_icon_image'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_icon_image',
+    'field_name' => 'field_oa_icon_image',
     'foreign keys' => array(
       'fid' => array(
         'columns' => array(

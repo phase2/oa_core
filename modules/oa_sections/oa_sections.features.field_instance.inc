@@ -440,8 +440,8 @@ function oa_sections_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'taxonomy_term-section_type-field_icon_class'
-  $field_instances['taxonomy_term-section_type-field_icon_class'] = array(
+  // Exported field_instance: 'taxonomy_term-section_type-field_oa_icon_class'
+  $field_instances['taxonomy_term-section_type-field_oa_icon_class'] = array(
     'bundle' => 'section_type',
     'default_value' => NULL,
     'deleted' => 0,
@@ -462,7 +462,7 @@ function oa_sections_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'taxonomy_term',
-    'field_name' => 'field_icon_class',
+    'field_name' => 'field_oa_icon_class',
     'label' => 'Icon class',
     'required' => 0,
     'settings' => array(
@@ -484,8 +484,8 @@ function oa_sections_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'taxonomy_term-section_type-field_icon_image'
-  $field_instances['taxonomy_term-section_type-field_icon_image'] = array(
+  // Exported field_instance: 'taxonomy_term-section_type-field_oa_icon_image'
+  $field_instances['taxonomy_term-section_type-field_oa_icon_image'] = array(
     'bundle' => 'section_type',
     'deleted' => 0,
     'description' => 'Image file to use in place of icon',
@@ -508,7 +508,7 @@ function oa_sections_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'taxonomy_term',
-    'field_name' => 'field_icon_image',
+    'field_name' => 'field_oa_icon_image',
     'label' => 'Icon image',
     'required' => 0,
     'settings' => array(
