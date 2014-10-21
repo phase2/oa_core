@@ -65,6 +65,16 @@ projects[field_group][subdir] = contrib
 ;following patch not ready yet
 ;projects[field_group][patch][1278618] = http://drupal.org/files/issues/field_group-panels-integration-1278618-58.patch
 
+; File Entity
+; Override panopoly_widgets.make: 20f3070
+projects[file_entity][version] = 2.x-dev
+projects[file_entity][subdir] = contrib
+projects[file_entity][download][type] = git
+projects[file_entity][download][revision] = 20f3070
+projects[file_entity][download][branch] = 7.x-2.x
+; additional patches for OA
+projects[file_entity][patch][2360043] = https://www.drupal.org/files/issues/file_entity-destination-token-decode-2360043-1.patch
+
 ; ************ End Panopoly Overrides ************
 ; ************************************************
 
