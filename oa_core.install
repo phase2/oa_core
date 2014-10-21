@@ -6,6 +6,32 @@
  */
 
 /**
+ * Implements hook_install().
+ */
+function oa_core_install() {
+  oa_core_create_default_terms();
+}
+
+/**
+ * Create the default Space and Section taxonomy terms
+ */
+function oa_core_create_default_terms() {
+  $params = array(
+    'description' => 'This is the default space layout with the Recent Activity stream in the main region.',
+    'node_options' => array(),
+    'layout' => 'node:oa_space:default',
+  );
+  oa_core_create_term('space_type', 'Default', $params);
+
+  $params = array(
+    'description' => 'This is the default section layout with the Recent Activity stream in the main region.',
+    'node_options' => array(),
+    'layout' => 'node:oa_section:default',
+  );
+  oa_core_create_term('section_type', 'Default', $params);
+}
+
+/**
  * Enable oa_search.
  */
 function oa_core_update_7001() {

@@ -1017,3 +1017,105 @@ function oa_core_get_bootstrap_version() {
   }
   return $radix_version;
 }
+
+/**
+ * Helper function to create a new Section or Space Type taxonomy term
+ * @param string $vocab
+ *   Machine name of vocabulary to add term to
+ * @param string $name
+ *   Human readable label of the term
+ * @param array $params
+ *   expected to have fields for:
+ *   'taxonomy' - vocabulary machine name.
+ *   'name' - The human readable label of the term.
+ *   'description' - The human readable description of the term.
+ *   'node_options' - An array of node types which should be allowed within the section.
+ *   'layout' - The panelizer layout key to use for this section.
+ *   'icon' - The icon class to use in the sitemap.
+ * @param bool $update
+ *   Whether an existing term is allowed to be updated.
+ */
+function oa_core_create_term($vocab_name, $name, $params, $update = TRUE) {
+  $vocab = oa_core_taxonomy_vocabulary($vocab_name);
+  $term = NULL;
+
+  // This function can get called from install hooks.
+  // Make sure the Taxonomy is available.
+  if (!$vocab) {
+    features_revert(array(
+      'oa_core' => array('taxonomy'),
+      'oa_sections' => array('taxonomy'),
+    ));
+    drupal_static('taxonomy_vocabulary_get_names');
+    $vocab = oa_core_taxonomy_vocabulary($vocab_name);
+  }
+
+  if (!empty($vocab)) {
+    $conditions = array(
+      'name' => trim($name),
+      'vid' => $vocab->vid,
+    );
+    $term = entity_load('taxonomy_term', array(), $conditions);
+
+    if (!$term || $update) {
+
+      // Make sure the fields from oa_buttons are available.
+      $field_info = field_info_instances('taxonomy_term', $vocab_name);
+      if (empty($field_info['field_oa_node_types'])) {
+        features_revert(array(
+          'oa_buttons' => array('field_base', 'field_instance'),
+        ));
+        field_info_cache_clear();
+      }
+
+      $description = $params['description'];
+      $node_options = $params['node_options'];
+      $layout = $params['layout'];
+      $icon = !empty($params['icon']) ? $params['icon'] : '';
+
+      if ($term && $update) {
+        // Update existing term.
+        if (isset($term->field_oa_icon_class[LANGUAGE_NONE])) {
+          $term->field_oa_icon_class[LANGUAGE_NONE][0]['value'] = $icon;
+        }
+        $term->field_oa_section_layout[LANGUAGE_NONE][0]['value'] = $layout;
+        $term->field_oa_node_types[LANGUAGE_NONE] = array();
+      }
+      else {
+        // Create new term.
+        $term = (object)array(
+          'vid' => $vocab->vid,
+          'name' => $name,
+          'description' => $description,
+          'format' => 'panopoly_wysiwyg_text',
+          'field_oa_icon_class' => array(
+            LANGUAGE_NONE => array(
+              array('value' => $icon),
+            ),
+          ),
+          'field_oa_section_layout' => array(
+            LANGUAGE_NONE => array(
+              array('value' => $layout),
+            ),
+          ),
+          'field_oa_node_types' => array(
+            LANGUAGE_NONE => array(),
+          ),
+          'path' => array(
+            'alias' => '',
+            'pathauto' => '',
+          ),
+          'oa_button' => TRUE,
+        );
+      }
+
+      if (!empty($node_options)) {
+        foreach ($node_options as $type) {
+          $term->field_oa_node_types[LANGUAGE_NONE][] = array('value' => $type);
+        }
+      }
+      taxonomy_term_save($term);
+    }
+  }
+  return $term;
+}
