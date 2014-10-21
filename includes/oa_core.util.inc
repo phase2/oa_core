@@ -1055,7 +1055,7 @@ function oa_core_create_term($vocab_name, $name, $params, $update = TRUE) {
       'name' => trim($name),
       'vid' => $vocab->vid,
     );
-    $term = entity_load('taxonomy_term', array(), $conditions);
+    $term = current( entity_load('taxonomy_term', array(), $conditions));
 
     if (!$term || $update) {
 
