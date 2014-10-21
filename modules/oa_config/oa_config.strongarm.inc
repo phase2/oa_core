@@ -34,6 +34,20 @@ function oa_config_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'apps_grouping_mode';
+  $strongarm->value = 1;
+  $export['apps_grouping_mode'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'apps_grouping_vertical';
+  $strongarm->value = 1;
+  $export['apps_grouping_vertical'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'bootstrap_library_settings';
   $strongarm->value = array(
     'bootstrap' => array(
