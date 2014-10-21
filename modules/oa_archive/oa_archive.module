@@ -84,6 +84,34 @@ function _oa_archive_alter_archived_exposed_filter(&$element) {
 }
 
 /**
+ * Implements hook_views_query_alter().
+ */
+function oa_archive_views_query_alter(&$view, &$query) {
+  if ($flag = flag_get_flag('trash')) {
+    // If the current Space is archived, then we need to remove any exposed
+    // filters from the View query, so that we see both archived and unarchived
+    // content.
+    if (($space_nid = oa_core_get_space_context()) && $flag->is_flagged($space_nid)) {
+      $archive_filters = _oa_archive_find_archived_exposed_filters($view);
+      foreach ($archive_filters as $filter_name) {
+        $field_name = $view->filter[$filter_name]->relationship . '.uid';
+        // Loop through each of the where groups, and filter out any conditions
+        // that match the $field_name for this exposed filter.
+        foreach ($query->where as $where_group => $where) {
+          $new_where = array();
+          foreach ($where['conditions'] as $condition) {
+            if ($condition['field'] != $field_name) {
+              $new_where[] = $condition;
+            }
+          }
+          $query->where[$where_group] = $new_where;
+        }
+      }
+    }
+  }
+}
+
+/**
  * Implements hook_flag().
  *
  * We need to archive/unarchive child content when archiving a Space or
