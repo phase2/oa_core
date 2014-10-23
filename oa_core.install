@@ -214,3 +214,9 @@ function oa_core_update_7222() {
   registry_rebuild();
 }
 
+/**
+ * Enable sitemap and wizard apps
+ */
+function oa_core_update_7223() {
+  module_enable(array('oa_sitemap', 'oa_wizard'));
+}

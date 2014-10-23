@@ -1075,7 +1075,7 @@ function oa_core_create_term($vocab_name, $name, $params, $update = TRUE) {
 
       if ($term && $update) {
         // Update existing term.
-        if (isset($term->field_oa_icon_class[LANGUAGE_NONE])) {
+        if (isset($term->field_oa_icon_class)) {
           $term->field_oa_icon_class[LANGUAGE_NONE][0]['value'] = $icon;
         }
         $term->field_oa_section_layout[LANGUAGE_NONE][0]['value'] = $layout;
