@@ -431,6 +431,28 @@ function oa_core_get_top_parents($bundle, $status = NULL, $include_archived = FA
 }
 
 /**
+ * Get all the content within a particular Section.
+ *
+ * @param int $nid
+ *   The node ID of the Section.
+ *
+ * @return array
+ *   An array of node IDs.
+ */
+function oa_core_get_section_content($nid) {
+  $query = new EntityFieldQuery();
+  $query
+    ->entityCondition('entity_type', 'node')
+    ->propertyCondition('status', 1)
+    ->fieldCondition('oa_section_ref', 'target_id', $nid);
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    return array_keys($result['node']);
+  }
+  return array();
+}
+
+/**
  * Determine if a user is a member of a team
  * @param  int $team_id
  * @param  int $user_id
