@@ -87,7 +87,7 @@ function oa_layouts_default_panels_mini() {
   $mini->contexts = array();
   $mini->relationships = array();
   $display = new panels_display();
-  $display->layout = 'geary';
+  $display->layout = 'sutro_double';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
@@ -96,6 +96,10 @@ function oa_layouts_default_panels_mini() {
       'column1' => NULL,
       'column2' => NULL,
       'column3' => NULL,
+      'middle' => NULL,
+      'secondcolumn1' => NULL,
+      'secondcolumn2' => NULL,
+      'footer' => NULL,
     ),
   );
   $display->cache = array();
@@ -105,7 +109,7 @@ function oa_layouts_default_panels_mini() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-39727060-3c1c-4478-ac3f-fa1a0800ad6f';
-    $pane->panel = 'column1';
+    $pane->panel = 'footer';
     $pane->type = 'menu_tree';
     $pane->subtype = 'menu-footer';
     $pane->shown = TRUE;
@@ -128,16 +132,19 @@ function oa_layouts_default_panels_mini() {
       'style' => 'default',
       'settings' => NULL,
     );
-    $pane->css = array();
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => 'pull-left',
+    );
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
     $pane->uuid = '39727060-3c1c-4478-ac3f-fa1a0800ad6f';
     $display->content['new-39727060-3c1c-4478-ac3f-fa1a0800ad6f'] = $pane;
-    $display->panels['column1'][0] = 'new-39727060-3c1c-4478-ac3f-fa1a0800ad6f';
+    $display->panels['footer'][0] = 'new-39727060-3c1c-4478-ac3f-fa1a0800ad6f';
     $pane = new stdClass();
     $pane->pid = 'new-acef9208-6753-4fee-8b2b-834b2ed0909a';
-    $pane->panel = 'column3';
+    $pane->panel = 'footer';
     $pane->type = 'oa_widgets_powered_by';
     $pane->subtype = 'oa_widgets_powered_by';
     $pane->shown = TRUE;
@@ -155,11 +162,11 @@ function oa_layouts_default_panels_mini() {
       'css_class' => 'pull-right',
     );
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = array();
     $pane->uuid = 'acef9208-6753-4fee-8b2b-834b2ed0909a';
     $display->content['new-acef9208-6753-4fee-8b2b-834b2ed0909a'] = $pane;
-    $display->panels['column3'][0] = 'new-acef9208-6753-4fee-8b2b-834b2ed0909a';
+    $display->panels['footer'][1] = 'new-acef9208-6753-4fee-8b2b-834b2ed0909a';
   $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $mini->display = $display;
