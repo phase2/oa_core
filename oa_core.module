@@ -1352,7 +1352,9 @@ function oa_core_views_query_alter(&$view, &$query) {
   // We only modify views that have 'og_group_ref_target_id' as an exposed
   // filter and only when that filter has a value. We are adding support for
   // the 'Visible in other Spaces' (oa_other_spaces_ref) field.
-  if (!empty($view->exposed_input['og_group_ref_target_id']) && is_numeric($view->exposed_input['og_group_ref_target_id']) && !empty($view->filter['og_group_ref_target_id']->options['exposed'])) {
+  if (!empty($view->exposed_input['og_group_ref_target_id'])
+    && is_numeric($view->exposed_input['og_group_ref_target_id'])
+    && !empty($view->filter['og_group_ref_target_id']->options['exposed'])) {
     // Ensure that we've joined against 'field_data_oa_other_spaces_ref' table.
     $join = new views_join();
     $join->construct('field_data_oa_other_spaces_ref', 'node', 'nid', 'entity_id', array(
@@ -1370,8 +1372,11 @@ function oa_core_views_query_alter(&$view, &$query) {
       foreach ($query->where[1]['conditions'] as $key => $condition) {
         // If the field is 'og_membership.gid' or an alias for the same column.
         $column = 'og_membership';
-        if (!empty($condition['field']) && is_string($condition['field']) && ($condition['field'] === $column ||
-            substr($condition['field'], -strlen($column)-2) === "__{$column}")) {
+        if (!empty($condition['field'])
+          && is_string($condition['field'])
+          && ($condition['field'] === $column
+            || $condition['field'] === $column . ".gid"
+            || substr($condition['field'], -strlen($column)-2) === "__{$column}")) {
           // Move the condition to our new where group.
           $query->add_where($group, $condition['field'], $condition['value'], $condition['operator']);
           $value = $condition['value'];
