@@ -25,10 +25,6 @@
   padding-bottom: 0.5em;
 }
 
-body.panels-ipe #modalContent {
-  position: fixed !important;
-}
-
 .oa_pending_count {
   display: inline-block;
   background-color: green;
