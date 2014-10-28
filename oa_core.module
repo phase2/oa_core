@@ -1367,7 +1367,7 @@ function oa_core_views_query_alter(&$view, &$query) {
       //
       // Add a new 'where group' which is an OR and move 'og_group_ref_target_id'
       // to it (and grab it's value).
-      $value = array();
+      $extra_groups = array();
       $group = $query->set_where_group('OR');
       foreach ($query->where[1]['conditions'] as $key => $condition) {
         // If the field is 'og_membership.gid' or an alias for the same column.
@@ -1379,7 +1379,7 @@ function oa_core_views_query_alter(&$view, &$query) {
             || substr($condition['field'], -strlen($column)-2) === "__{$column}")) {
           // Move the condition to our new where group.
           $query->add_where($group, $condition['field'], $condition['value'], $condition['operator']);
-          $value = $condition['value'];
+          $extra_groups = $condition['value'];
           unset($query->where[1]['conditions'][$key]);
           break;
         }
@@ -1387,8 +1387,26 @@ function oa_core_views_query_alter(&$view, &$query) {
 
       // Finally, we filter against 'field_data_oa_other_spaces_ref' with the
       // same value as was given to 'oa_group_ref_target_id'.
-      if (!empty($value)) {
-        $query->add_where($group, "{$alias}.oa_other_spaces_ref_target_id", $value, 'IN');
+      if (!empty($extra_groups)) {
+        $query->add_where($group, "{$alias}.oa_other_spaces_ref_target_id", $extra_groups, 'IN');
+
+        // Next, check if the section filter condition needs to be updated
+        if (module_exists('oa_subspaces')
+          && !empty($view->exposed_input['oa_section_ref_target_id'])
+          && is_numeric($view->exposed_input['oa_section_ref_target_id'])
+          && !empty($view->filter['oa_section_ref_target_id']->options['exposed'])) {
+          $column = 'field_data_oa_section_ref.oa_section_ref_target_id';
+          // get a list of matching section names in the other spaces
+          $extra_sections = oa_subspaces_matching_sections($view->exposed_input['oa_section_ref_target_id'], array(), $extra_groups);
+          foreach (array_keys($query->where) as $where_group) {
+            foreach ($query->where[$where_group]['conditions'] as $key => $condition) {
+              if ($condition['field'] === $column ||
+                (is_string($condition['field']) && substr($condition['field'], -strlen($column) - 2) === "__{$column}")) {
+                $query->where[$where_group]['conditions'][$key]['value'] = array_merge($query->where[$where_group]['conditions'][$key]['value'], $extra_sections);
+              }
+            }
+          }
+        }
       }
     }
   }
