@@ -1081,12 +1081,20 @@ function oa_core_create_term($vocab_name, $name, $params, $update = TRUE) {
 
     if (!$term || $update) {
 
-      // Make sure the fields from oa_buttons are available.
+      // Make sure the fields are available.
       $field_info = field_info_instances('taxonomy_term', $vocab_name);
+      $revert = array();
       if (empty($field_info['field_oa_node_types'])) {
-        features_revert(array(
-          'oa_buttons' => array('field_base', 'field_instance'),
-        ));
+        $revert['oa_buttons'] = array('field_base', 'field_instance');
+      }
+      if (empty($field_info['field_oa_section_layout'])) {
+        $revert['oa_core'] = array('field_base', 'field_instance');
+      }
+      if (empty($field_info['field_oa_icon_class'])) {
+        $revert['oa_sections'] = array('field_base', 'field_instance');
+      }
+      if (!empty($revert)) {
+        features_revert($revert);
         field_info_cache_clear();
       }
 
