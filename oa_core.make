@@ -168,6 +168,7 @@ projects[job_scheduler][subdir] = contrib
 ; Jquery Update
 projects[jquery_update][version] = 2.4
 projects[jquery_update][subdir] = contrib
+projects[message][patch][2149395] = http://drupal.org/files/issues/jquery_update-local-ui-effects-not-found-2149395.patch
 
 ; Mail System
 projects[mailsystem][version] = 2.34
