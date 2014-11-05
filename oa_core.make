@@ -32,6 +32,7 @@ projects[ctools][patch][1910608] = http://drupal.org/files/issues/1910608-views_
 projects[ctools][patch][1901106] = http://drupal.org/files/issues/ctools-views_content-exposed_form_override-1901106-24.patch
 projects[ctools][patch][2023705] = http://drupal.org/files/2023705-ctools-autosubmit-2_0.patch
 projects[ctools][patch][2195471] = http://drupal.org/files/issues/ctools-n2195471-1.patch
+projects[ctools][patch][2055785] = http://drupal.org/files/issues/Modal-window-top-and-left-style-values-2055785-3.patch
 
 ; Entity API
 ; Override panopoly_core.make: 1.5
