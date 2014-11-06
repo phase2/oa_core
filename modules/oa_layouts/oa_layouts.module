@@ -14,12 +14,3 @@ function oa_layouts_ctools_plugin_directory($module, $plugin) {
     return 'plugins/' . $plugin;
   }
 }
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function oa_layouts_form_node_form_alter(&$form, &$form_state) {
-  if (!empty($form['menu']['#attached'])) {
-    $form['menu']['#attached']['js'][] = drupal_get_path('module', 'oa_layouts') . '/menu-selector-fix.js';
-  }
-}
