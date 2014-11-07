@@ -213,7 +213,7 @@ projects[og][version] = 2.7
 projects[og][subdir] = contrib
 
 ; Og menu single
-projects[og_menu_single][version] = 1.0-beta1
+projects[og_menu_single][version] = 1.0-beta2
 projects[og_menu_single][subdir] = contrib
 
 ; OG Session Context

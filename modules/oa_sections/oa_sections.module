@@ -215,6 +215,12 @@ function oa_sections_form_oa_section_node_form_alter(&$form, &$form_state, $form
       '#weight' => 100,
     );
   }
+
+  // Enable menu link and group menu by default
+  if (empty($form['#node']->nid) && !empty($form['#node']->group_plid)) {
+    $form['menu']['enabled']['#default_value'] = 1;
+    $form['menu']['link']['parent']['#default_value'] = OG_MENU_SINGLE_MENU_NAME . ':' . $form['#node']->group_plid;
+  }
 }
 
 /**
