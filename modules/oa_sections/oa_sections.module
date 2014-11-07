@@ -205,6 +205,16 @@ function oa_sections_form_oa_section_node_form_alter(&$form, &$form_state, $form
 
   _oa_core_hide_comment_settings($form);
   _oa_core_setup_node_space_type($form, 'section_type', 'field_oa_section');
+
+  if (!empty($form['menu'])) {
+    $form['menu']['link']['hidden'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Disabled'),
+      '#default_value' => $form['#node']->menu['hidden'],
+      '#description' => t('Allow items to be placed under this section, but prevent display in section menu.'),
+      '#weight' => 100,
+    );
+  }
 }
 
 /**
