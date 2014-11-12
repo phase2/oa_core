@@ -16,6 +16,13 @@ projects[views][patch][2037469] = http://drupal.org/files/views-exposed-sorts-20
 projects[views][patch][1979926] = http://drupal.org/files/1979926-views-reset_fetch_data-2.patch
 projects[views][patch][1735096] = http://drupal.org/files/1735096-views-mltiple-instance-exposed-form-8.patch
 
+; Views Bulk Operations
+; Override panopoly_core.make: 3.2
+projects[views_bulk_operations][version] = 3.2
+projects[views_bulk_operations][subdir] = contrib
+; additional patches for OA
+projects[views_bulk_operations][patch][2192775] = http://drupal.org/files/issues/views-bulk-operations-2192775-1_0.patch
+
 ; CTools
 ; Override panopoly_core.make: 1.4
 projects[ctools][version] = 1.4
