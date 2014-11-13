@@ -108,7 +108,7 @@ projects[colorizer][version] = 1.4
 projects[colorizer][subdir] = contrib
 
 ; Command buttons
-projects[command_buttons][version] = 1.3
+projects[command_buttons][version] = 1.4
 projects[command_buttons][subdir] = contrib
 
 ; Conditional Fields
