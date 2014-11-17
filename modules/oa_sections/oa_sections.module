@@ -210,7 +210,8 @@ function oa_sections_form_oa_section_node_form_alter(&$form, &$form_state, $form
     $form['menu']['link']['hidden'] = array(
       '#type' => 'checkbox',
       '#title' => t('Disabled'),
-      '#default_value' => $form['#node']->menu['hidden'],
+      // Default to hidden so in menu for organization but not showing.
+      '#default_value' => !empty($form['#node']->nid) ? $form['#node']->menu['hidden'] : TRUE,
       '#description' => t('Allow items to be placed under this section, but prevent display in section menu.'),
       '#weight' => 100,
     );
