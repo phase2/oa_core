@@ -139,7 +139,8 @@ function oa_core_get_groups_by_user_access($account = NULL, $include_archived = 
 
   $query->join('og_membership', 'ogm', 'ogm.gid = n.nid');
   if ($sort == 'history') {
-    $query->leftJoin('history', 'h', 'h.nid = n.nid');
+    $query->join('history', 'h', 'h.nid = n.nid');
+    $query->condition('h.uid', $uid);
     $query->orderBy('h.timestamp', 'DESC');
   }
   $query
