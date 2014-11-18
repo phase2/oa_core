@@ -174,7 +174,7 @@ function oa_core_get_groups_by_user_access($account = NULL, $include_archived = 
   }
 
   if ($limit > 0) {
-    $query->range(NULL, $limit);
+    $query->range(0, $limit);
   }
 
   if (module_exists('flag') && !$include_archived) {
