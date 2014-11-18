@@ -130,6 +130,7 @@ function oa_news_panelizer_defaults() {
         'term_node_tid' => 1,
         'field_featured_image' => 1,
         'field_oa_media' => 1,
+        'edit_node' => 1,
       ),
       'exposed' => array(
         'type' => array(
