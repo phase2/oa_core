@@ -74,6 +74,13 @@ projects[field_group][subdir] = contrib
 ;following patch not ready yet
 ;projects[field_group][patch][1278618] = http://drupal.org/files/issues/field_group-panels-integration-1278618-58.patch
 
+; Features
+; Override panopoly_core.make: 2.2
+projects[features][version] = 2.2
+projects[features][subdir] = contrib
+; additional patches for OA
+projects[features][patch][2378343] = http://drupal.org/files/issues/features_improve_features-2378343-1.patch
+
 ; File Entity
 ; Override panopoly_widgets.make: 20f3070
 projects[file_entity][version] = 2.x-dev
