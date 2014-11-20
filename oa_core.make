@@ -168,6 +168,7 @@ projects[flag][patch][2027091] = http://drupal.org/files/flag-default-flags-alte
 ; HTML Mail
 projects[htmlmail][version] = 2.65
 projects[htmlmail][subdir] = contrib
+projects[htmlmail][patch][1692966] = https://www.drupal.org/files/1692966-htmlmail-mailsystem-html-to-text.patch
 
 ; Job Scheduler
 projects[job_scheduler][version] = 2.0-alpha3
