@@ -12,7 +12,7 @@ include_once 'oa_teams.features.inc';
 define('OA_TEAM_USERS_FIELD', 'field_oa_team_users');
 
 /**
- * Implements hook_ctools_plugin_directory
+ * Implements hook_ctools_plugin_directory().
  */
 function oa_teams_ctools_plugin_directory($owner, $plugin_type) {
   if ($owner == 'ctools' && $plugin_type == 'content_types') {
@@ -21,7 +21,7 @@ function oa_teams_ctools_plugin_directory($owner, $plugin_type) {
 }
 
 /**
- * Implementation of hook_menu
+ * Implements hook_menu().
  */
 function oa_teams_menu() {
   $items['group/%/%/remove-team/%/%'] = array(
@@ -36,7 +36,7 @@ function oa_teams_menu() {
 }
 
 /**
- * Implements hook_theme()
+ * Implements hook_theme().
  */
 function oa_teams_theme() {
   $path = drupal_get_path('module', 'oa_teams') . '/templates';
@@ -84,7 +84,7 @@ function oa_teams_get_team_members($team_id) {
 }
 
 /**
- * Implements hook_form_alter
+ * Implements hook_form_FORM_ID_alter() for node_form.
  */
 function oa_teams_form_node_form_alter(&$form, &$form_state, $form_id) {
   global $user;
