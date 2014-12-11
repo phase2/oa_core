@@ -21,7 +21,7 @@ function oa_update_menu() {
 }
 
 /**
- * Implements hook_menu_alter
+ * Implements hook_menu_alter().
  */
 function oa_update_menu_alter(&$items) {
   // swap out normal update links with our own pages
@@ -39,6 +39,9 @@ function oa_update_menu_alter(&$items) {
   unset($items['admin/reports/update_distro']);
 }
 
+/**
+ * Update distro help page..
+ */
 function oa_update_admin_form() {
   $form = array();
 

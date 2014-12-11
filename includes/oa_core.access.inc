@@ -225,10 +225,8 @@ function oa_core_node_access($node, $op, $account) {
 function oa_core_node_update($node) {
   if (($node->type == OA_SPACE_TYPE) || ($node->type == OA_GROUP_TYPE)) {
     // check if group access changed and update space content grants
-    if (isset($node->group_access[LANGUAGE_NONE][0]['value']) &&
-      isset($node->original->group_access[LANGUAGE_NONE][0]['value']) &&
-      ($node->group_access[LANGUAGE_NONE][0]['value'] !=
-       $node->original->group_access[LANGUAGE_NONE][0]['value'])) {
+    $rebuild = module_invoke_all('oa_core_og_content_needs_rebuild', $node);
+    if (in_array(TRUE, $rebuild, TRUE)) {
       // rebuild space content nodes
       $nodes = db_select('og_membership', 'og')
         ->fields('og', array('etid'))
@@ -261,6 +259,16 @@ function oa_core_node_update($node) {
       oa_core_update_access_records($nodes);
     }
   }
+}
+
+/**
+ * Implements hook_oa_core_og_content_needs_rebuild().
+ */
+function oa_core_oa_core_og_content_needs_rebuild($node) {
+  return isset($node->group_access[LANGUAGE_NONE][0]['value']) &&
+    isset($node->original->group_access[LANGUAGE_NONE][0]['value']) &&
+    ($node->group_access[LANGUAGE_NONE][0]['value'] !=
+     $node->original->group_access[LANGUAGE_NONE][0]['value']);
 }
 
 /**
