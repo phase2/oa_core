@@ -286,6 +286,25 @@ function oa_core_file_entity_access($op, $file, $account) {
         ->addTag('node_access')
         ->execute()
         ->fetchCol(0);
+      // add paragraph references
+      if (module_exists('paragraphs')) {
+        $query = db_select('node', 'n');
+        if (user_access('view revisions')) {
+          $query->join('field_revision_field_oa_related', 'r', "n.nid = r.entity_id AND r.entity_type = 'node'");
+          $query->join('field_revision_field_oa_media', 'f', "r.field_oa_related_value = f.entity_id AND f.entity_type = 'paragraphs_item'");
+        }
+        else {
+          $query->join('field_data_field_oa_related', 'r', "n.nid = r.entity_id AND r.entity_type = 'node'");
+          $query->join('field_data_field_oa_media', 'f', "r.field_oa_related_value = f.entity_id AND f.entity_type = 'paragraphs_item'");
+        }
+        $related_nids = $query
+          ->fields('n', array('nid'))
+          ->condition('f.field_oa_media_fid', $file->fid)
+          ->addTag('node_access')
+          ->execute()
+          ->fetchCol(0);
+        $nids = array_merge($nids, $related_nids);
+      }
       if (!empty($nids)) {
         $nids = array_unique($nids);
         // Ensure the user *really* has access to the nodes
@@ -313,6 +332,18 @@ function oa_core_file_entity_access($op, $file, $account) {
           ->condition('f.field_oa_media_fid', $file->fid)
           ->execute()
           ->fetchCol(0);
+        // add paragraph references
+        if (module_exists('paragraphs')) {
+          $query = db_select('node', 'n');
+          $query->join('field_data_field_oa_related', 'r', "n.nid = r.entity_id AND r.entity_type = 'node'");
+          $query->join('field_data_field_oa_media', 'f', "r.field_oa_related_value = f.entity_id AND f.entity_type = 'paragraphs_item'");
+          $related_nids = $query
+            ->fields('n', array('nid'))
+            ->condition('f.field_oa_media_fid', $file->fid)
+            ->execute()
+            ->fetchCol(0);
+          $nids = array_merge($nids, $related_nids);
+        }
         if (empty($nids)) {
           // File is not referenced by any node revision, so allow it if they can access content
           // Open Atrium treats unattached files as public since everything is
