@@ -142,6 +142,10 @@ projects[diff][subdir] = contrib
 projects[features_override][version] = 2.0-rc2
 projects[features_override][subdir] = contrib
 
+; Features Template
+projects[features_template][version] = 1.0-beta1
+projects[features_template][subdir] = contrib
+
 ; Feeds - latest dev needed by date_ical v3.1
 projects[feeds][version] = 2.x-dev
 projects[feeds][subdir] = contrib
