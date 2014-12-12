@@ -498,6 +498,35 @@ function oa_layouts_default_panels_mini() {
     $pane->uuid = '9ed591f8-ab5b-4f63-b168-5acab75ccfb7';
     $display->content['new-9ed591f8-ab5b-4f63-b168-5acab75ccfb7'] = $pane;
     $display->panels['middle'][0] = 'new-9ed591f8-ab5b-4f63-b168-5acab75ccfb7';
+    $pane = new stdClass();
+    $pane->pid = 'new-4b7c0659-05aa-411e-a07a-230b17d77b6b';
+    $pane->panel = 'middle';
+    $pane->type = 'oa_related_ref';
+    $pane->subtype = 'oa_related_ref';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'return' => 'Finish',
+      'cancel' => 'Cancel',
+      'context' => 'requiredcontext_entity:node_1',
+      'override_title' => 0,
+      'override_title_text' => '',
+      'form_build_id' => 'form-q2WONg3M0iaHTEnP7QXDXZvknl5-QSIpmVdULPTqYgc',
+      'form_token' => '6gDe-0oKLid466aveG1Pz21kCxrr0ZEkp8corDP0Mzs',
+      'form_id' => 'oa_related_ref_edit_form',
+      'op' => 'Finish',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $pane->uuid = '4b7c0659-05aa-411e-a07a-230b17d77b6b';
+    $display->content['new-4b7c0659-05aa-411e-a07a-230b17d77b6b'] = $pane;
+    $display->panels['middle'][1] = 'new-4b7c0659-05aa-411e-a07a-230b17d77b6b';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $mini->display = $display;
