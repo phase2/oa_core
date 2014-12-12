@@ -536,7 +536,7 @@ function oa_core_section_is_public($node) {
  *
  * @return array of strings denoting content types marked for omission
  */
-function oa_core_list_content_types($space_content = FALSE) {
+function oa_core_list_content_types($space_content = FALSE, $include_core = TRUE) {
   $nodes = node_type_get_types();
   if ($space_content) {
     // remove types that are not space content
@@ -550,6 +550,9 @@ function oa_core_list_content_types($space_content = FALSE) {
   // Queries hook_oa_omit_content_types to determine what content types
   //   modules wants to hide.
   $deny = module_invoke_all('oa_omit_content_types');
+  if (!$include_core) {
+    $deny = array_merge($deny, array(OA_SPACE_TYPE, OA_GROUP_TYPE, OA_SECTION_TYPE, OA_TEAM_TYPE));
+  }
   if (!empty($deny)) {
     foreach ($deny as $remove) {
       unset($nodes[$remove]);
