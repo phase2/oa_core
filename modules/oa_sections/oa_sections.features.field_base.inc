@@ -165,7 +165,7 @@ function oa_sections_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(),
-      'allowed_values_function' => 'oa_sections_field_oa_section_type_menu_allowed_values'
+      'allowed_values_function' => 'oa_sections_field_oa_section_type_menu_allowed_values',
     ),
     'translatable' => 0,
     'type' => 'list_integer',
