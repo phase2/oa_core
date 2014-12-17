@@ -26,6 +26,7 @@ dependencies[] = og_ui
 dependencies[] = og_vocab
 dependencies[] = panelizer
 dependencies[] = panopoly_pages
+dependencies[] = paragraphs
 dependencies[] = views_content
 dependencies[] = views_load_more
 stylesheets[all][] = oa_core.css

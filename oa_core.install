@@ -220,3 +220,10 @@ function oa_core_update_7222() {
 function oa_core_update_7223() {
   module_enable(array('oa_sitemap', 'oa_wizard'));
 }
+
+/**
+ * Enable paragraphs module
+ */
+function oa_core_update_7224() {
+  module_enable(array('paragraphs'));
+}
