@@ -227,3 +227,10 @@ function oa_core_update_7223() {
 function oa_core_update_7224() {
   module_enable(array('paragraphs'));
 }
+
+/**
+ * Enable oa_angular module
+ */
+function oa_core_update_7225() {
+  module_enable(array('oa_angular'));
+}
