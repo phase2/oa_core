@@ -1565,8 +1565,6 @@ function oa_core_element_test_page() {
   return drupal_get_form('oa_core_test_form');
 }
 
-
-
 /**
   * Form callback for testing th oa_core system fields.
   */
