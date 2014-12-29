@@ -1024,16 +1024,20 @@ function oa_core_get_alias($nid) {
     return $cache[$nid];
   }
 
-  $node = node_load($nid);
-  $uri = entity_uri('node', $node);
-  $path = drupal_get_path_alias($uri['path']);
-  if (!isset($node->path['pathauto'])) {
-    module_load_include('inc', 'pathauto');
-    // return what the proper alias for this node will eventually be
-    // don't use 'update' yet since the drupal_get_path_alias() will still be cached
-    $path = pathauto_create_alias('node', 'return', $uri['path'], array('node' => $node), $node->type, $node->language);
+  if ($node = node_load($nid)) {
+    $uri = entity_uri('node', $node);
+    $path = drupal_get_path_alias($uri['path']);
+    if (!isset($node->path['pathauto'])) {
+      module_load_include('inc', 'pathauto');
+      // return what the proper alias for this node will eventually be
+      // don't use 'update' yet since the drupal_get_path_alias() will still be cached
+      $path = pathauto_create_alias('node', 'return', $uri['path'], array('node' => $node), $node->type, $node->language);
+    }
+    $cache[$nid] = $path;
   }
-  $cache[$nid] = $path;
+  else {
+    $cache[$nid] = FALSE;
+  }
   return $path;
 }
 
@@ -1049,7 +1053,7 @@ function oa_core_tokens($type, $tokens, array $data = array(), array $options = 
     $space = field_get_items('node', $node, OA_SPACE_FIELD);
     $section_id = !empty($section[0]['target_id']) ? $section[0]['target_id'] : 0;
     $space_id = !empty($space[0]['target_id']) ? $space[0]['target_id'] : 0;
-    if ($section_id > 0) {
+    if ($section_id && node_load($section_id)) {
       $path = drupal_get_path_alias('node/' . $section_id);
       if (module_exists('pathauto') && preg_match('#^node/(\d+)#', $path)) {
         // section alias not defined yet, so define it
@@ -1059,7 +1063,7 @@ function oa_core_tokens($type, $tokens, array $data = array(), array $options = 
         $replacements[$original] = $path;
       }
     }
-    elseif ($space_id > 0) {
+    elseif ($space_id && node_load($space_id)) {
       $path = drupal_get_path_alias('node/' . $space_id);
       if (module_exists('pathauto') && preg_match('#^node/(\d+)#', $path)) {
         // space alias not defined yet, so define it
