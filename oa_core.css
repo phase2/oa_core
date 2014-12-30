@@ -11,6 +11,10 @@
   max-width: 100%;
 }
 
+.help-block {
+  white-space: normal;
+}
+
 #modal-content .widget-preview-title {
   /* move Add button to left so wide tables doesnt scroll */
   left: 10px;
