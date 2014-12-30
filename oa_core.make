@@ -241,6 +241,7 @@ projects[og_vocab][version] = 1.2
 projects[og_vocab][subdir] = contrib
 ; patch to support subgroups
 projects[og_vocab][patch][2039009] = http://drupal.org/files/issues/2039009-allow-shared-vocabularies-13.patch
+projects[og_vocab][patch][2399883] = https://www.drupal.org/files/issues/2399883-og_vocab-menuitem-2.patch
 
 ; Panels Custom Error
 projects[panels_customerror][version] = 1.0

@@ -683,7 +683,7 @@ function oa_core_get_titles($ids = array(), $type = '', $sort_field = 'title', $
           if ($field == 'link') {
             $value = l($nid_row[$id]['title'], 'node/' . $nid_row[$id]['nid']);
           }
-          $return[$field . 's'][] = $value;
+          $return[$field . 's'][$nid_row[$id]['nid']] = $value;
         }
       }
       $index++;

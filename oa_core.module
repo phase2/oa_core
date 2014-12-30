@@ -157,6 +157,14 @@ function oa_core_menu() {
     'access arguments' => array('create', OA_SPACE_TYPE),
     'type' => MENU_CALLBACK,
   );
+
+  if (module_exists('devel')) {
+    $items['oa-core/system-elements'] = array(
+      'access arguments' => array('access devel information'),
+      'page callback' => 'oa_core_element_test_page',
+      'type' => MENU_CALLBACK,
+    );
+  }
   return $items;
 }
 
@@ -206,23 +214,6 @@ function oa_core_menu_alter(&$items) {
   if (!empty($items['node/%/group'])) {
     $items['node/%/group']['title'] = 'Config';
   }
-}
-
-/**
- * Implements hook_views_data().
- */
-function oa_core_views_data() {
-  $data = array();
-
-  $data['field_data_oa_parent']['is_parent'] = array(
-    'title' => t('Is Parent'),
-    'help' => t('Content is a parent'),
-    'filter' => array(
-      'handler' => 'views_handler_filter_is_parent',
-    ),
-  );
-
-  return $data;
 }
 
 /**
@@ -1033,16 +1024,20 @@ function oa_core_get_alias($nid) {
     return $cache[$nid];
   }
 
-  $node = node_load($nid);
-  $uri = entity_uri('node', $node);
-  $path = drupal_get_path_alias($uri['path']);
-  if (!isset($node->path['pathauto'])) {
-    module_load_include('inc', 'pathauto');
-    // return what the proper alias for this node will eventually be
-    // don't use 'update' yet since the drupal_get_path_alias() will still be cached
-    $path = pathauto_create_alias('node', 'return', $uri['path'], array('node' => $node), $node->type, $node->language);
+  if ($node = node_load($nid)) {
+    $uri = entity_uri('node', $node);
+    $path = drupal_get_path_alias($uri['path']);
+    if (!isset($node->path['pathauto'])) {
+      module_load_include('inc', 'pathauto');
+      // return what the proper alias for this node will eventually be
+      // don't use 'update' yet since the drupal_get_path_alias() will still be cached
+      $path = pathauto_create_alias('node', 'return', $uri['path'], array('node' => $node), $node->type, $node->language);
+    }
+    $cache[$nid] = $path;
   }
-  $cache[$nid] = $path;
+  else {
+    $cache[$nid] = FALSE;
+  }
   return $path;
 }
 
@@ -1058,7 +1053,7 @@ function oa_core_tokens($type, $tokens, array $data = array(), array $options = 
     $space = field_get_items('node', $node, OA_SPACE_FIELD);
     $section_id = !empty($section[0]['target_id']) ? $section[0]['target_id'] : 0;
     $space_id = !empty($space[0]['target_id']) ? $space[0]['target_id'] : 0;
-    if ($section_id > 0) {
+    if ($section_id && node_load($section_id)) {
       $path = drupal_get_path_alias('node/' . $section_id);
       if (module_exists('pathauto') && preg_match('#^node/(\d+)#', $path)) {
         // section alias not defined yet, so define it
@@ -1068,7 +1063,7 @@ function oa_core_tokens($type, $tokens, array $data = array(), array $options = 
         $replacements[$original] = $path;
       }
     }
-    elseif ($space_id > 0) {
+    elseif ($space_id && node_load($space_id)) {
       $path = drupal_get_path_alias('node/' . $space_id);
       if (module_exists('pathauto') && preg_match('#^node/(\d+)#', $path)) {
         // space alias not defined yet, so define it
@@ -1410,4 +1405,183 @@ function oa_core_views_query_alter(&$view, &$query) {
       }
     }
   }
+}
+
+/**
+ * Implements hook_element_info().
+ */
+function oa_core_element_info() {
+  return array(
+    'og_group_ref' => array(
+      '#input' => TRUE,
+      '#process' => array('oa_core_og_group_ref_process', 'ajax_process_form'),
+    ),
+    'oa_section_ref' => array(
+      '#input' => TRUE,
+      '#process' => array('oa_core_oa_section_ref_process', 'ajax_process_form'),
+    ),
+  );
+}
+
+/**
+ * Process function of the og_group_ref field.
+ */
+function oa_core_og_group_ref_process($element, $form_state, $complete_form) {
+  global $user;
+  $element['#type'] = 'select';
+  $element += array(
+    '#title' => t('Space'),
+    '#description' => t('Select a space'),
+  );
+  $element['#options'][-1] = t(' - Current Space - ');
+  if (empty($element['#required'])) {
+    $element['#options'][0] = t(' - None - ');
+  }
+  if (($groups = oa_core_get_groups_by_user($user, 'node')) && ($titles = oa_core_get_titles($groups, '', 'title', array('title')))) {
+    $element['#options'] += $titles['titles'];
+  }
+  $element += element_info('select');
+  return $element;
+}
+
+/**
+ * Process function of the oa_section_ref field.
+ */
+function oa_core_oa_section_ref_process($element, &$form_state, &$complete_form) {
+  global $user;
+  $element['#type'] = 'select';
+  $element += array(
+    '#title' => t('Section'),
+    '#description' => t('Select a Section'),
+  );
+  $element['#options'][-1] = t(' - Current Section - ');
+  if (empty($element['#required'])) {
+    $element['#options'][0] = t(' - None - ');
+  }
+  if (!isset($element['#default_value'])) {
+    $element['#default_value'] = -1;
+  }
+  $element += element_info('select');
+
+  if (!empty($element['#og_group_ref'])) {
+    $group_ref = !is_array($element['#og_group_ref']) ? array($element['#og_group_ref']) : $element['#og_group_ref'];
+    $group_ref_key = implode('--', $group_ref);
+    $value = drupal_array_get_nested_value($form_state['input'], $group_ref);
+    // Gid == 0 is no group.
+    $gid = $value === 0 || $value != -1 ? $value : oa_core_get_space_context();
+    // Add options based on current selected group.
+    if ($gid && $sections = oa_core_space_sections($gid, NODE_PUBLISHED)) {
+      foreach($sections as $nid => $title) {
+        $element['#options'][$nid] = check_plain($title);
+      }
+    }
+    // Since IDs change with ajax (to be unique), need a static id for wrappers.
+    $element['#ajax_id'] = isset($form_state['oa_section_ref_replace'][$group_ref_key]['id']) ?
+      $form_state['oa_section_ref_replace'][$group_ref_key]['id'] : $element['#id'];
+
+    // Add wrapper to replace via ajax.
+    $element['#prefix'] = '<div id="' . $element['#ajax_id'] . '-replace">';
+    $element['#suffix'] = '</div>';
+    // Find the group element and add ajax processing to it.
+    $group_element = &_oa_core_oa_section_ref_process_find_element($complete_form, $group_ref);
+    $group_element['#ajax'] = array(
+      'callback' => 'oa_core_oa_section_ref_replace',
+      'wrapper' => $element['#ajax_id'] . '-replace',
+      'method' => 'replace',
+      'effect' => 'fade',
+      'event' => 'change',
+    );
+    // Add a message area to see messages.
+    $group_element['messages'] = array(
+      '#tag' => 'div',
+      '#value' => '',
+      '#attributes' => array(
+        'id' => $element['#ajax_id'] . '-messages',
+      ),
+      '#type' => 'html_tag',
+      '#weight' => -100,
+    );
+    // Store information about this replacement for the ajax callback.
+    if (!isset($form_state['oa_section_ref_replace'][$group_ref_key])) {
+      $form_state['oa_section_ref_replace'][$group_ref_key]['parents'] = $element['#parents'];
+      $form_state['oa_section_ref_replace'][$group_ref_key]['id'] = $element['#ajax_id'];
+    }
+    // Because we are altering an already processed form element, need to redo.
+    unset($group_element['#ajax_processed']);
+    $group_element = ajax_process_form($group_element, $form_state);
+    if (!empty($form_state['triggering_element']) && $form_state['triggering_element']['#parents'] == $group_ref) {
+      $form_state['triggering_element'] = $group_element;
+    }
+  }
+
+  // Make sure if ajax with change group, invalid sections are forgotten.
+  if (!empty($element['#value']) && $element['#value'] > 0 && empty($element['#options'][$element['#value']])) {
+    $element['#value'] = -1;
+  }
+
+  return $element;
+}
+
+/**
+ * Ajax callback to return the section field.
+ */
+function oa_core_oa_section_ref_replace($form, $form_state) {
+  $field_name_triggering = implode('--', $form_state['triggering_element']['#parents']);
+
+  $return = array(
+    '#type' => 'ajax',
+    '#commands' => array(),
+  );
+  $group_element = &_oa_core_oa_section_ref_process_find_element($form, $form_state['triggering_element']['#parents']);
+
+  if ($messages = theme('status_messages')) {
+    $selector = '#' . $group_element['messages']['#attributes']['id'];
+    $html = '<div class="views-messages">' . $messages . '</div>';
+    $return['#commands'][] = ajax_command_replace($selector, $html);
+  }
+  if (!isset($form_state['oa_section_ref_replace'][$field_name_triggering])) {
+    return $return;
+  }
+  // Replace the section element.
+  $section_element = _oa_core_oa_section_ref_process_find_element($form, $form_state['oa_section_ref_replace'][$field_name_triggering]['parents']);
+  $return['#commands'][] = ajax_command_replace('#' . $section_element['#ajax_id'] . '-replace', render($section_element));
+  return $return;
+}
+
+/**
+ * Find the element based on tree parents.
+ */
+function &_oa_core_oa_section_ref_process_find_element(&$form, $parents) {
+  foreach (element_children($form) as $key) {
+    if (isset($form[$key]['#parents']) && $form[$key]['#parents'] == $parents) {
+      return $form[$key];
+    }
+    if ($element = &_oa_core_oa_section_ref_process_find_element($form[$key], $parents)) {
+      return $element;
+    }
+  }
+}
+
+/**
+  * Menu callback for testing th oa_core system fields.
+  */
+function oa_core_element_test_page() {
+  return drupal_get_form('oa_core_test_form');
+}
+
+/**
+  * Form callback for testing th oa_core system fields.
+  */
+function oa_core_test_form() {
+  $form = array();
+
+  $form['test_element'] = array(
+    '#type' => 'og_group_ref',
+  );
+  $form['test_element_2'] = array(
+    '#og_group_ref' => 'test_element',
+    '#type' => 'oa_section_ref',
+  );
+
+  return $form;
 }

@@ -7,6 +7,23 @@
 
 
 /**
+ * Implements hook_views_data().
+ */
+function oa_core_views_data() {
+  $data = array();
+
+  $data['field_data_oa_parent']['is_parent'] = array(
+    'title' => t('Is Parent'),
+    'help' => t('Content is a parent'),
+    'filter' => array(
+      'handler' => 'views_handler_filter_is_parent',
+    ),
+  );
+
+  return $data;
+}
+
+/**
  * Implements hook_views_data_alter
  */
 function oa_core_views_data_alter(&$data) {
