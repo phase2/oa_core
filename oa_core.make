@@ -40,6 +40,18 @@ projects[entity][version] = 1.5
 projects[entity][subdir] = contrib
 ; additional patches for OA
 projects[entity][patch][1782134] = http://drupal.org/files/entity-translatable_fields_not_overriding_und_with_empty_values-1782134-5.patch
+; related to Entity Reference revisions patch (1837650)
+projects[entity][patch][1788568] = http://drupal.org/files/issues/entity-1788568-12-entity_metadata_wrapper_revisions.patch
+
+; Entity Reference
+; Override panopoly_core.make: 1.1
+projects[entityreference][version] = 1.x-dev
+projects[entityreference][subdir] = contrib
+projects[entityreference][download][type] = git
+projects[entityreference][download][branch] = 7.x-1.x
+projects[entityreference][download][revision] = c4bb9b
+; Add revision support.  Related patches in Entity (1788568) and OG (2363599)
+projects[entityreference][patch][1837650] = http://drupal.org/files/issues/entityreference-n1837650-47.patch
 
 ; Panelizer
 ; Override panopoly_core.make: 3.1 -> 3.x-dev
@@ -223,6 +235,8 @@ projects[oa_responsive_regions][subdir] = contrib
 ; Organic Groups
 projects[og][version] = 2.7
 projects[og][subdir] = contrib
+; Related to Entity Reference revisions patch (1837650)
+projects[og][patch][2363599] = http://drupal.org/files/issues/og-2363599-1-infinite-loop-entityreference-revisions-load.patch
 
 ; Og menu single
 projects[og_menu_single][version] = 1.0-beta2
