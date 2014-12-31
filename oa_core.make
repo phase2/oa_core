@@ -247,7 +247,7 @@ projects[og_session_context][version] = 1.0-beta2
 projects[og_session_context][subdir] = contrib
 
 ; Og Variables
-projects[og_variables][version] = 1.0-beta1
+projects[og_variables][version] = 1.0-beta2
 projects[og_variables][subdir] = contrib
 
 ; Organic Groups Vocabulary
