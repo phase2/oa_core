@@ -7,6 +7,7 @@
 /**
  * Determine access to a Open Atrium Section
  * do NOT use node_load here as it gets called from hook_node_grants()
+ * TODO: No longer called from node_grants, but called from tests.  Is this still needed?
  */
 function oa_core_section_access($row, $spaces, $account) {
 
