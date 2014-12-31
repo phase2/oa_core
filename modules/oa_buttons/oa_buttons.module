@@ -116,11 +116,13 @@ function oa_buttons_get_node_type_options() {
 
 /**
  * Determines which command buttons should be shown within the current context.
+ * @param $all if FALSE and within a section, only return commands for that section
+ *   if TRUE, return commands for all sections regardless of current context
  */
-function oa_buttons_get_command_buttons($node) {
+function oa_buttons_get_command_buttons($node, $all = FALSE) {
   $buttons = array();
   $node_types = array_flip(node_type_get_names());
-  _oa_buttons_get_space_command_buttons($node, $buttons);
+  _oa_buttons_get_space_command_buttons($node, $buttons, $all);
   _oa_buttons_get_parent_command_buttons($node, $buttons);
   // look for node_add command buttons and check the 'create X content'
   // node_access dynamically so we don't show command buttons the user
@@ -216,24 +218,24 @@ function _oa_buttons_get_parent_command_buttons($node, &$buttons) {
  * Get the command buttons allowed by a single space, as well as any sections
  * within it.
  */
-function _oa_buttons_get_space_command_buttons($node, &$buttons) {
+function _oa_buttons_get_space_command_buttons($node, &$buttons, $all = FALSE) {
   _oa_buttons_get_node_command_buttons($node, $buttons);
 
   if ($node->type == 'oa_space') {
     $sections = oa_core_space_sections($node->nid);
     if (count($sections)) {
       // If we are within a section only show the buttons for this specific section.
-      if ($section = oa_core_get_section_context()) {
+      if (!$all && ($section = oa_core_get_section_context())) {
         if (isset($sections[$section])) {
           $section_node = node_load($section);
-          _oa_buttons_get_space_command_buttons($section_node, $buttons);
+          _oa_buttons_get_space_command_buttons($section_node, $buttons, $all);
         }
       }
       else {
         // Otherwise show the buttons for all sections.
         foreach ($sections as $nid => $section) {
           $section_node = node_load($nid);
-          _oa_buttons_get_space_command_buttons($section_node, $buttons);
+          _oa_buttons_get_space_command_buttons($section_node, $buttons, $all);
         }
       }
     }
