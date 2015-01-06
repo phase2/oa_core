@@ -41,7 +41,7 @@ projects[entity][subdir] = contrib
 ; additional patches for OA
 projects[entity][patch][1782134] = http://drupal.org/files/entity-translatable_fields_not_overriding_und_with_empty_values-1782134-5.patch
 ; related to Entity Reference revisions patch (1837650)
-projects[entity][patch][1788568] = http://drupal.org/files/issues/entity-1788568-12-entity_metadata_wrapper_revisions.patch
+projects[entity][patch][1788568] = https://www.drupal.org/files/issues/entity-1788568-21-entity_metadata_wrapper_revisions.patch
 
 ; Entity Reference
 ; Override panopoly_core.make: 1.1
