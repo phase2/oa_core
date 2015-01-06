@@ -27,7 +27,7 @@ function oa_buttons_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(),
-      'allowed_values_function' => '',
+      'allowed_values_function' => 'oa_buttons_get_command_buttons_options',
     ),
     'translatable' => 0,
     'type' => 'list_text',
