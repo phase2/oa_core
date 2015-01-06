@@ -4,6 +4,7 @@ core = 7.x
 package = Open Atrium
 dependencies[] = ctools
 dependencies[] = oa_core
+dependencies[] = oa_sections
 dependencies[] = panelizer
 dependencies[] = strongarm
 dependencies[] = views
