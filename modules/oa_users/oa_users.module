@@ -109,22 +109,39 @@ function oa_users_picture($user = NULL, $image_style = 'oa_small_thumbnail', $ur
       return theme('image_style', $image);
     }
   }
+  elseif (isset($user) && empty($user->field_user_picture)) {
+    $null = NULL;
+    _field_invoke_multiple('prepare_view', 'user', array($user->uid => $user), $null, $null, array('field_id' => 'field_user_picture'));
+    if (!empty($user->field_user_picture[LANGUAGE_NONE])) {
+      $image_info = image_get_info($user->field_user_picture[LANGUAGE_NONE][0]['uri']);
+
+      $image = array(
+        'style_name' => $image_style,
+        'path' => $user->field_user_picture[LANGUAGE_NONE][0]['uri'],
+        'width' => $image_info['width'],
+        'height' => $image_info['height'],
+        'alt' => t('Your profile picture'),
+      );
+
+      return theme('image_style', $image);
+    }
+  }
+
+  // Failsafe, if all else fails.
+  $image = array(
+    'style_name' => $image_style,
+    'path' => drupal_get_path('module', 'oa_users') . '/oa-user.png',
+    'width' => 30,
+    'height' => 30,
+    'alt' => t('Your profile picture'),
+  );
+  // Image styles only supported for images in /files dir so for now, ignore
+  // the image style.
+  if ($url) {
+    return drupal_get_path('module', 'oa_users') . '/oa-user.png';
+  }
   else {
-    $image = array(
-      'style_name' => $image_style,
-      'path' => drupal_get_path('module', 'oa_users') . '/oa-user.png',
-      'width' => 30,
-      'height' => 30,
-      'alt' => t('Your profile picture'),
-    );
-    // Image styles only supported for images in /files dir so for now, ignore
-    // the image style.
-    if ($url) {
-      return drupal_get_path('module', 'oa_users') . '/oa-user.png';
-    }
-    else {
-      return theme('image', $image);
-    }
+    return theme('image', $image);
   }
 }
 
