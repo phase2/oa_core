@@ -203,7 +203,7 @@ function oa_core_views_default_views() {
     'oa_space' => 'oa_space',
     'oa_team' => 'oa_team',
   );
-  /* Filter criterion: Content: Groups audience (og_group_ref:target_id) */
+  /* Filter criterion: Content: Groups audience (og_group_ref) */
   $handler->display->display_options['filters']['og_group_ref_target_id']['id'] = 'og_group_ref_target_id';
   $handler->display->display_options['filters']['og_group_ref_target_id']['table'] = 'og_membership';
   $handler->display->display_options['filters']['og_group_ref_target_id']['field'] = 'og_group_ref_target_id';
@@ -220,7 +220,7 @@ function oa_core_views_default_views() {
     4 => 0,
     6 => 0,
   );
-  /* Filter criterion: Content: Open Atrium Section (oa_section_ref:target_id) */
+  /* Filter criterion: Content: Open Atrium Section (oa_section_ref) */
   $handler->display->display_options['filters']['oa_section_ref_target_id']['id'] = 'oa_section_ref_target_id';
   $handler->display->display_options['filters']['oa_section_ref_target_id']['table'] = 'field_data_oa_section_ref';
   $handler->display->display_options['filters']['oa_section_ref_target_id']['field'] = 'oa_section_ref_target_id';
@@ -479,7 +479,7 @@ function oa_core_views_default_views() {
     'oa_space' => 'oa_space',
     'oa_team' => 'oa_team',
   );
-  /* Filter criterion: Content: Groups audience (og_group_ref:target_id) */
+  /* Filter criterion: Content: Groups audience (og_group_ref) */
   $handler->display->display_options['filters']['og_group_ref_target_id']['id'] = 'og_group_ref_target_id';
   $handler->display->display_options['filters']['og_group_ref_target_id']['table'] = 'og_membership';
   $handler->display->display_options['filters']['og_group_ref_target_id']['field'] = 'og_group_ref_target_id';
@@ -496,7 +496,7 @@ function oa_core_views_default_views() {
     4 => 0,
     6 => 0,
   );
-  /* Filter criterion: Content: Open Atrium Section (oa_section_ref:target_id) */
+  /* Filter criterion: Content: Open Atrium Section (oa_section_ref) */
   $handler->display->display_options['filters']['oa_section_ref_target_id']['id'] = 'oa_section_ref_target_id';
   $handler->display->display_options['filters']['oa_section_ref_target_id']['table'] = 'field_data_oa_section_ref';
   $handler->display->display_options['filters']['oa_section_ref_target_id']['field'] = 'oa_section_ref_target_id';
@@ -664,7 +664,7 @@ function oa_core_views_default_views() {
     'oa_group' => 'oa_group',
     'oa_space' => 'oa_space',
   );
-  /* Filter criterion: Content: Parents (oa_parent_space:target_id) */
+  /* Filter criterion: Content: Parents (oa_parent_space) */
   $handler->display->display_options['filters']['oa_parent_space_target_id']['id'] = 'oa_parent_space_target_id';
   $handler->display->display_options['filters']['oa_parent_space_target_id']['table'] = 'og_membership';
   $handler->display->display_options['filters']['oa_parent_space_target_id']['field'] = 'oa_parent_space_target_id';
@@ -741,6 +741,106 @@ function oa_core_views_default_views() {
       'title' => '',
     ),
   );
+
+  /* Display: "All subspaces" page */
+  $handler = $view->new_display('page', '"All subspaces" page', 'page_1');
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'list';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['inline'] = array(
+    'title' => 'title',
+    'ops' => 'ops',
+  );
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['empty'] = FALSE;
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'There are no subspaces in this Space.';
+  $handler->display->display_options['empty']['area']['format'] = 'plain_text';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Parents (oa_parent_space) */
+  $handler->display->display_options['arguments']['oa_parent_space_target_id']['id'] = 'oa_parent_space_target_id';
+  $handler->display->display_options['arguments']['oa_parent_space_target_id']['table'] = 'og_membership';
+  $handler->display->display_options['arguments']['oa_parent_space_target_id']['field'] = 'oa_parent_space_target_id';
+  $handler->display->display_options['arguments']['oa_parent_space_target_id']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['oa_parent_space_target_id']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['oa_parent_space_target_id']['title'] = 'All subspaces in %1';
+  $handler->display->display_options['arguments']['oa_parent_space_target_id']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['oa_parent_space_target_id']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['oa_parent_space_target_id']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['oa_parent_space_target_id']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['oa_parent_space_target_id']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['oa_parent_space_target_id']['validate']['type'] = 'node';
+  $handler->display->display_options['arguments']['oa_parent_space_target_id']['validate_options']['types'] = array(
+    'oa_space' => 'oa_space',
+  );
+  $handler->display->display_options['arguments']['oa_parent_space_target_id']['validate_options']['access'] = TRUE;
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type_1']['id'] = 'type_1';
+  $handler->display->display_options['filters']['type_1']['table'] = 'node';
+  $handler->display->display_options['filters']['type_1']['field'] = 'type';
+  $handler->display->display_options['filters']['type_1']['value'] = array(
+    'oa_space' => 'oa_space',
+  );
+  /* Filter criterion: Flags: Flagged */
+  $handler->display->display_options['filters']['flagged']['id'] = 'flagged';
+  $handler->display->display_options['filters']['flagged']['table'] = 'flag_content';
+  $handler->display->display_options['filters']['flagged']['field'] = 'flagged';
+  $handler->display->display_options['filters']['flagged']['relationship'] = 'flag_content_rel';
+  $handler->display->display_options['filters']['flagged']['value'] = 'All';
+  $handler->display->display_options['filters']['flagged']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['flagged']['expose']['operator_id'] = '';
+  $handler->display->display_options['filters']['flagged']['expose']['label'] = 'Favorited';
+  $handler->display->display_options['filters']['flagged']['expose']['operator'] = 'flagged_op';
+  $handler->display->display_options['filters']['flagged']['expose']['identifier'] = 'flagged';
+  $handler->display->display_options['filters']['flagged']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+  );
+  /* Filter criterion: Flags: Flagged */
+  $handler->display->display_options['filters']['flagged_1']['id'] = 'flagged_1';
+  $handler->display->display_options['filters']['flagged_1']['table'] = 'flag_content';
+  $handler->display->display_options['filters']['flagged_1']['field'] = 'flagged';
+  $handler->display->display_options['filters']['flagged_1']['relationship'] = 'flag_content_rel_1';
+  $handler->display->display_options['filters']['flagged_1']['value'] = '0';
+  $handler->display->display_options['filters']['flagged_1']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['flagged_1']['expose']['operator_id'] = '';
+  $handler->display->display_options['filters']['flagged_1']['expose']['label'] = 'Include archived content';
+  $handler->display->display_options['filters']['flagged_1']['expose']['operator'] = 'flagged_1_op';
+  $handler->display->display_options['filters']['flagged_1']['expose']['identifier'] = 'flagged_1';
+  $handler->display->display_options['filters']['flagged_1']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+  );
+  $handler->display->display_options['path'] = 'node/%/subspaces';
+  $handler->display->display_options['menu']['type'] = 'tab';
+  $handler->display->display_options['menu']['title'] = 'Show all subspaces';
+  $handler->display->display_options['menu']['weight'] = '50';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
   $export['open_atrium_groups'] = $view;
 
   $view = new view();
